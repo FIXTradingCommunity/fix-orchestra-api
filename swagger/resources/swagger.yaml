@@ -1,0 +1,873 @@
+---
+swagger: "2.0"
+info:
+  description: "API to edit FIX Orchestra (machine readable rules of engagement) specification\
+    \ version 1.0 RC3"
+  version: "1.0.0"
+  title: "Orchestra API"
+  contact:
+    name: "Don Mendelson"
+    email: "donmendelson@silverflash.net"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "virtserver.swaggerhub.com"
+basePath: "/FIXTradingCommunity/orchestra-api/1.0.0"
+tags:
+- name: "file"
+  description: "File management operations"
+- name: "messages"
+  description: "Message structure operations"
+- name: "workflow"
+  description: "Workflow operations"
+schemes:
+- "https"
+paths:
+  /orchestra:
+    get:
+      tags:
+      - "file"
+      summary: "searches Orchestra files"
+      description: "By passing in the appropriate options, you can search for\nOrchestra\
+        \ files\n"
+      operationId: "searchOrchestra"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "searchString"
+        in: "query"
+        description: "pass an optional search string for looking up components"
+        required: false
+        type: "string"
+      - name: "skip"
+        in: "query"
+        description: "number of records to skip for pagination"
+        required: false
+        type: "integer"
+        minimum: 0
+        format: "int32"
+      - name: "limit"
+        in: "query"
+        description: "maximum number of records to return"
+        required: false
+        type: "integer"
+        maximum: 50.0
+        minimum: 0
+        format: "int32"
+      responses:
+        200:
+          description: "search results matching criteria"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Orchestra"
+        400:
+          description: "bad input parameter"
+    post:
+      tags:
+      - "file"
+      summary: "adds an Orchestra file"
+      description: "Adds an Orchestra file"
+      operationId: "addOrchestra"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "orchestra"
+        description: "Orchestra file to add"
+        required: true
+        schema:
+          $ref: "#/definitions/Orchestra"
+      responses:
+        201:
+          description: "item created"
+          headers:
+            Location:
+              type: "string"
+              format: "uri"
+              description: "URL of created resource"
+        400:
+          description: "invalid input, object invalid"
+        409:
+          description: "an existing item already exists"
+  /orchestra/{fileid}:
+    get:
+      tags:
+      - "file"
+      summary: "Returns a single Orchestra file metadata, if found"
+      operationId: "findOrchestraById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra file to fetch"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "file response"
+          schema:
+            $ref: "#/definitions/Orchestra"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    put:
+      tags:
+      - "messages"
+      summary: "Updates a Orchestra file, if found (idempotent)"
+      operationId: "updateOrchestraById"
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra file to update"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "orchestra"
+        description: "Orchestra file to update"
+        required: true
+        schema:
+          $ref: "#/definitions/Orchestra"
+      responses:
+        204:
+          description: "file updated"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    delete:
+      tags:
+      - "messages"
+      summary: "deletes a single Orchestra file based on the ID supplied"
+      operationId: "deleteOrchestra"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra file to delete"
+        required: true
+        type: "string"
+      responses:
+        204:
+          description: "file deleted"
+        404:
+          description: "file not found"
+  /orchestra/{fileid}/components:
+    get:
+      tags:
+      - "messages"
+      summary: "searches components"
+      description: "By passing in the appropriate options, you can search for\ncomponents\n"
+      operationId: "searchComponents"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra file"
+        required: true
+        type: "string"
+      - name: "searchString"
+        in: "query"
+        description: "pass an optional search string for looking up components"
+        required: false
+        type: "string"
+      - name: "skip"
+        in: "query"
+        description: "number of records to skip for pagination"
+        required: false
+        type: "integer"
+        minimum: 0
+        format: "int32"
+      - name: "limit"
+        in: "query"
+        description: "maximum number of records to return"
+        required: false
+        type: "integer"
+        maximum: 50.0
+        minimum: 0
+        format: "int32"
+      responses:
+        200:
+          description: "search results matching criteria"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Component"
+        400:
+          description: "bad input parameter"
+    post:
+      tags:
+      - "messages"
+      summary: "adds a component"
+      description: "Adds a component"
+      operationId: "addComponent"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra file"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "component"
+        description: "Component to add"
+        required: false
+        schema:
+          $ref: "#/definitions/Component"
+      responses:
+        201:
+          description: "item created"
+          headers:
+            Location:
+              type: "string"
+              format: "uri"
+              description: "URL of created resource"
+        400:
+          description: "invalid input, object invalid"
+        409:
+          description: "an existing item already exists"
+  /orchestra/{fileid}/components/{id}:
+    get:
+      tags:
+      - "messages"
+      summary: "Returns a single component, if found"
+      operationId: "findComponentById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra file"
+        required: true
+        type: "string"
+      - name: "id"
+        in: "path"
+        description: "ID of component to fetch"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        200:
+          description: "component response"
+          schema:
+            $ref: "#/definitions/Component"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    put:
+      tags:
+      - "messages"
+      summary: "Updates a single component, if found (idempotent)"
+      operationId: "updateComponentById"
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra file"
+        required: true
+        type: "string"
+      - name: "id"
+        in: "path"
+        description: "ID of component to update"
+        required: true
+        type: "integer"
+        format: "int32"
+      - in: "body"
+        name: "component"
+        description: "component to update"
+        required: true
+        schema:
+          $ref: "#/definitions/Component"
+      responses:
+        204:
+          description: "component updated"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    delete:
+      tags:
+      - "messages"
+      summary: "deletes a single component based on the ID supplied"
+      operationId: "deleteComponent"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra file"
+        required: true
+        type: "string"
+      - name: "id"
+        in: "path"
+        description: "ID of field to delete"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        204:
+          description: "component deleted"
+        404:
+          description: "component not found"
+  /orchestra/{fileid}/fields:
+    get:
+      tags:
+      - "messages"
+      summary: "searches fields"
+      description: "By passing in the appropriate options, you can search for\nfields\n"
+      operationId: "searchFields"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra file"
+        required: true
+        type: "string"
+      - name: "searchString"
+        in: "query"
+        description: "pass an optional search string for looking up fields"
+        required: false
+        type: "string"
+      - name: "skip"
+        in: "query"
+        description: "number of records to skip for pagination"
+        required: false
+        type: "integer"
+        minimum: 0
+        format: "int32"
+      - name: "limit"
+        in: "query"
+        description: "maximum number of records to return"
+        required: false
+        type: "integer"
+        maximum: 50.0
+        minimum: 0
+        format: "int32"
+      responses:
+        200:
+          description: "search results matching criteria"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Field"
+        400:
+          description: "bad input parameter"
+    post:
+      tags:
+      - "messages"
+      summary: "adds a field"
+      description: "Adds a field"
+      operationId: "addField"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra file"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "field"
+        description: "field to add"
+        required: false
+        schema:
+          $ref: "#/definitions/Field"
+      responses:
+        201:
+          description: "item created"
+          headers:
+            Location:
+              type: "string"
+              format: "uri"
+              description: "URL of created resource"
+        400:
+          description: "invalid input, object invalid"
+        409:
+          description: "an existing item already exists"
+  /orchestra/{fileid}/fields/{id}:
+    get:
+      tags:
+      - "messages"
+      summary: "Returns a single field, if found"
+      operationId: "findFieldById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra file"
+        required: true
+        type: "string"
+      - name: "id"
+        in: "path"
+        description: "ID of field to fetch"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        200:
+          description: "field response"
+          schema:
+            $ref: "#/definitions/Field"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    put:
+      tags:
+      - "messages"
+      summary: "Updates a single field, if found (idempotent)"
+      operationId: "updateFieldById"
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra file"
+        required: true
+        type: "string"
+      - name: "id"
+        in: "path"
+        description: "ID of field to update"
+        required: true
+        type: "integer"
+        format: "int32"
+      - in: "body"
+        name: "field"
+        description: "field to update"
+        required: true
+        schema:
+          $ref: "#/definitions/Field"
+      responses:
+        204:
+          description: "field updated"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    delete:
+      tags:
+      - "messages"
+      summary: "deletes a single field based on the ID supplied"
+      operationId: "deleteField"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra file"
+        required: true
+        type: "string"
+      - name: "id"
+        in: "path"
+        description: "ID of field to delete"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        204:
+          description: "field deleted"
+        404:
+          description: "field not found"
+  /orchestra/{fileid}/messages:
+    get:
+      tags:
+      - "messages"
+      summary: "searches messages"
+      description: "By passing in the appropriate options, you can search for\nmessages\n"
+      operationId: "searchMessages"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra file"
+        required: true
+        type: "string"
+      - name: "searchString"
+        in: "query"
+        description: "pass an optional search string for looking up messages"
+        required: false
+        type: "string"
+      - name: "skip"
+        in: "query"
+        description: "number of records to skip for pagination"
+        required: false
+        type: "integer"
+        minimum: 0
+        format: "int32"
+      - name: "limit"
+        in: "query"
+        description: "maximum number of records to return"
+        required: false
+        type: "integer"
+        maximum: 50.0
+        minimum: 0
+        format: "int32"
+      responses:
+        200:
+          description: "search results matching criteria"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Message"
+        400:
+          description: "bad input parameter"
+    post:
+      tags:
+      - "messages"
+      summary: "adds a message scenario"
+      description: "Adds a message scenario"
+      operationId: "addMessage"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra file"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "message"
+        description: "message to add"
+        required: false
+        schema:
+          $ref: "#/definitions/Message"
+      responses:
+        201:
+          description: "item created"
+          headers:
+            Location:
+              type: "string"
+              format: "uri"
+              description: "URL of created resource"
+        400:
+          description: "invalid input, object invalid"
+        409:
+          description: "an existing item already exists"
+  /orchesra/{fileid}/messages/{id}:
+    get:
+      tags:
+      - "messages"
+      summary: "Returns a single message, if found"
+      operationId: "findMessageById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra file"
+        required: true
+        type: "string"
+      - name: "id"
+        in: "path"
+        description: "ID of message to fetch"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        200:
+          description: "message response"
+          schema:
+            $ref: "#/definitions/Message"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    put:
+      tags:
+      - "messages"
+      summary: "Updates a single message, if found (idempotent)"
+      operationId: "updateMessageById"
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra file"
+        required: true
+        type: "string"
+      - name: "id"
+        in: "path"
+        description: "ID of message to update"
+        required: true
+        type: "integer"
+        format: "int32"
+      - in: "body"
+        name: "message"
+        description: "message to update"
+        required: true
+        schema:
+          $ref: "#/definitions/Message"
+      responses:
+        204:
+          description: "message updated"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    delete:
+      tags:
+      - "messages"
+      summary: "deletes a single message based on the ID supplied"
+      operationId: "deleteMessage"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra file"
+        required: true
+        type: "string"
+      - name: "id"
+        in: "path"
+        description: "ID of message to delete"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        204:
+          description: "message deleted"
+        404:
+          description: "message not found"
+definitions:
+  Annotation:
+    type: "object"
+    properties:
+      appinfo:
+        type: "array"
+        items:
+          $ref: "#/definitions/Appinfo"
+      documentation:
+        type: "array"
+        items:
+          $ref: "#/definitions/Documentation"
+  Appinfo:
+    type: "object"
+    required:
+    - "$"
+    properties:
+      $:
+        type: "string"
+      specURL:
+        type: "string"
+        format: "uri"
+      langId:
+        type: "string"
+      purpose:
+        type: "string"
+    description: "Usage specific annotation, optionally with link to an external reference\
+      \ or standard"
+  Component:
+    allOf:
+    - $ref: "#/definitions/MessageElement"
+    - type: "object"
+      properties:
+        elements:
+          $ref: "#/definitions/MessageElements"
+  ComponentRef:
+    allOf:
+    - $ref: "#/definitions/ElementRef"
+    - {}
+  Documentation:
+    type: "object"
+    required:
+    - "$"
+    properties:
+      $:
+        type: "string"
+      langId:
+        type: "string"
+      purpose:
+        type: "string"
+  EntityAttributes:
+    type: "object"
+    properties:
+      added:
+        type: "string"
+      addedEP:
+        type: "integer"
+      changeType:
+        type: "string"
+        enum:
+        - "Editorial"
+        - "Definitional"
+      deprecated:
+        type: "string"
+      deprecatedEP:
+        type: "integer"
+      issue:
+        type: "string"
+      lastModified:
+        type: "string"
+      replaced:
+        type: "string"
+      replacedEP:
+        type: "integer"
+      replacedByField:
+        type: "integer"
+      supported:
+        type: "string"
+        enum:
+        - "supported"
+        - "forbidden"
+        - "ignored"
+        default: "supported"
+      updated:
+        type: "string"
+      updatedEP:
+        type: "integer"
+  ErrorModel:
+    type: "object"
+    required:
+    - "code"
+    - "message"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      message:
+        type: "string"
+  Field:
+    allOf:
+    - $ref: "#/definitions/MessageElement"
+    - {}
+  FieldRef:
+    allOf:
+    - $ref: "#/definitions/ElementRef"
+    - {}
+  ElementRef:
+    type: "object"
+    required:
+    - "elementType"
+    - "oid"
+    discriminator: "elementType"
+    properties:
+      elementType:
+        type: "string"
+      oid:
+        $ref: "#/definitions/ObjectId"
+      annotation:
+        $ref: "#/definitions/Annotation"
+      entityAttributes:
+        $ref: "#/definitions/EntityAttributes"
+      category:
+        type: "string"
+  Group:
+    allOf:
+    - $ref: "#/definitions/Component"
+    - type: "object"
+      required:
+      - "numInGroupId"
+      - "numInGroupName"
+      properties:
+        numInGroupId:
+          type: "integer"
+        numInGroupName:
+          type: "string"
+        implMinOccurs:
+          type: "integer"
+        implMaxOccurs:
+          type: "integer"
+  GroupRef:
+    allOf:
+    - $ref: "#/definitions/ElementRef"
+    - {}
+  Message:
+    type: "object"
+    properties:
+      scenario:
+        type: "string"
+        description: "Use case of a message type"
+        maxLength: 64
+        default: "base"
+      flow:
+        type: "string"
+        description: "A stream of messages between actors"
+        maxLength: 64
+      msgType:
+        type: "string"
+        maxLength: 2
+      structure:
+        $ref: "#/definitions/MessageElements"
+      responses:
+        type: "array"
+        items:
+          $ref: "#/definitions/Response"
+  MessageElement:
+    type: "object"
+    required:
+    - "elementType"
+    - "oid"
+    discriminator: "elementType"
+    properties:
+      elementType:
+        type: "string"
+      oid:
+        $ref: "#/definitions/ObjectId"
+      annotation:
+        $ref: "#/definitions/Annotation"
+      entityAttributes:
+        $ref: "#/definitions/EntityAttributes"
+      category:
+        type: "string"
+  MessageElements:
+    type: "array"
+    items:
+      $ref: "#/definitions/ElementRef"
+  ObjectId:
+    type: "object"
+    required:
+    - "id"
+    - "name"
+    properties:
+      name:
+        type: "string"
+        example: "Account"
+        description: "Name, unique within a file"
+        maxLength: 64
+      id:
+        type: "integer"
+        format: "int32"
+        example: 1
+        description: "Numeric ID, unique within a file"
+      abbrName:
+        type: "string"
+        example: "Acct"
+        description: "Short name"
+        maxLength: 64
+      oid:
+        type: "string"
+        description: "Globally unique object identifier, a URI or UUID"
+  Orchestra:
+    type: "object"
+    required:
+    - "identifier"
+    properties:
+      identifier:
+        type: "string"
+        description: "unique ID of an Orchestra file"
+      conformsTo:
+        type: "string"
+      coverage:
+        type: "string"
+      creator:
+        type: "string"
+      date:
+        type: "string"
+        format: "date"
+      title:
+        type: "string"
+    description: "Dublin Core Terms metadata"
+  Response:
+    type: "object"
