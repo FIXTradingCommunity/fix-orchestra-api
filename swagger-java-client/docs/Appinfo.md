@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **value** | **String** |  | 
 **specURL** | **String** |  |  [optional]
-**langId** | **String** |  |  [optional]
+**langId** | **String** | a language code (ISO 639-1) |  [optional]
 **purpose** | **String** |  |  [optional]
 
 

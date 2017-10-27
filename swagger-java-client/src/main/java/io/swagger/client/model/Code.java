@@ -9,15 +9,15 @@ import io.swagger.client.model.EntityAttributes;
 import io.swagger.client.model.ObjectId;
 
 /**
- * ElementRef
+ * Code
  */
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-10-27T18:19:20.110Z")
-public class ElementRef {
-  @SerializedName("elementType")
-  private String elementType = null;
-
+public class Code {
   @SerializedName("oid")
   private ObjectId oid = null;
+
+  @SerializedName("value")
+  private String value = null;
 
   @SerializedName("annotation")
   private Annotation annotation = null;
@@ -25,28 +25,7 @@ public class ElementRef {
   @SerializedName("entityAttributes")
   private EntityAttributes entityAttributes = null;
 
-  @SerializedName("category")
-  private String category = null;
-
-  public ElementRef elementType(String elementType) {
-    this.elementType = elementType;
-    return this;
-  }
-
-   /**
-   * Get elementType
-   * @return elementType
-  **/
-  @ApiModelProperty(required = true, value = "")
-  public String getElementType() {
-    return elementType;
-  }
-
-  public void setElementType(String elementType) {
-    this.elementType = elementType;
-  }
-
-  public ElementRef oid(ObjectId oid) {
+  public Code oid(ObjectId oid) {
     this.oid = oid;
     return this;
   }
@@ -64,7 +43,25 @@ public class ElementRef {
     this.oid = oid;
   }
 
-  public ElementRef annotation(Annotation annotation) {
+  public Code value(String value) {
+    this.value = value;
+    return this;
+  }
+
+   /**
+   * Get value
+   * @return value
+  **/
+  @ApiModelProperty(required = true, value = "")
+  public String getValue() {
+    return value;
+  }
+
+  public void setValue(String value) {
+    this.value = value;
+  }
+
+  public Code annotation(Annotation annotation) {
     this.annotation = annotation;
     return this;
   }
@@ -82,7 +79,7 @@ public class ElementRef {
     this.annotation = annotation;
   }
 
-  public ElementRef entityAttributes(EntityAttributes entityAttributes) {
+  public Code entityAttributes(EntityAttributes entityAttributes) {
     this.entityAttributes = entityAttributes;
     return this;
   }
@@ -100,24 +97,6 @@ public class ElementRef {
     this.entityAttributes = entityAttributes;
   }
 
-  public ElementRef category(String category) {
-    this.category = category;
-    return this;
-  }
-
-   /**
-   * Get category
-   * @return category
-  **/
-  @ApiModelProperty(value = "")
-  public String getCategory() {
-    return category;
-  }
-
-  public void setCategory(String category) {
-    this.category = category;
-  }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -127,30 +106,28 @@ public class ElementRef {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ElementRef elementRef = (ElementRef) o;
-    return Objects.equals(this.elementType, elementRef.elementType) &&
-        Objects.equals(this.oid, elementRef.oid) &&
-        Objects.equals(this.annotation, elementRef.annotation) &&
-        Objects.equals(this.entityAttributes, elementRef.entityAttributes) &&
-        Objects.equals(this.category, elementRef.category);
+    Code code = (Code) o;
+    return Objects.equals(this.oid, code.oid) &&
+        Objects.equals(this.value, code.value) &&
+        Objects.equals(this.annotation, code.annotation) &&
+        Objects.equals(this.entityAttributes, code.entityAttributes);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(elementType, oid, annotation, entityAttributes, category);
+    return Objects.hash(oid, value, annotation, entityAttributes);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ElementRef {\n");
+    sb.append("class Code {\n");
     
-    sb.append("    elementType: ").append(toIndentedString(elementType)).append("\n");
     sb.append("    oid: ").append(toIndentedString(oid)).append("\n");
+    sb.append("    value: ").append(toIndentedString(value)).append("\n");
     sb.append("    annotation: ").append(toIndentedString(annotation)).append("\n");
     sb.append("    entityAttributes: ").append(toIndentedString(entityAttributes)).append("\n");
-    sb.append("    category: ").append(toIndentedString(category)).append("\n");
     sb.append("}");
     return sb.toString();
   }

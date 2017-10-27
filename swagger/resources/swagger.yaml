@@ -5,32 +5,25 @@ info:
     \ version 1.0 RC3"
   version: "1.0.0"
   title: "Orchestra API"
-  contact:
-    name: "Don Mendelson"
-    email: "donmendelson@silverflash.net"
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
 host: "virtserver.swaggerhub.com"
 basePath: "/FIXTradingCommunity/orchestra-api/1.0.0"
 tags:
-- name: "file"
-  description: "File management operations"
-- name: "messages"
+- name: "repository"
   description: "Message structure operations"
-- name: "workflow"
-  description: "Workflow operations"
 schemes:
 - "https"
 paths:
-  /orchestra:
+  /repository:
     get:
       tags:
-      - "file"
-      summary: "searches Orchestra files"
+      - "repository"
+      summary: "searches Orchestra repository files"
       description: "By passing in the appropriate options, you can search for\nOrchestra\
-        \ files\n"
-      operationId: "searchOrchestra"
+        \ repository files\n"
+      operationId: "searchRepository"
       produces:
       - "application/json"
       parameters:
@@ -60,26 +53,26 @@ paths:
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/Orchestra"
+              $ref: "#/definitions/Metadata"
         400:
           description: "bad input parameter"
     post:
       tags:
-      - "file"
-      summary: "adds an Orchestra file"
-      description: "Adds an Orchestra file"
-      operationId: "addOrchestra"
+      - "repository"
+      summary: "adds an Orchestra repository file"
+      description: "Adds an Orchestra repository file"
+      operationId: "addRepository"
       consumes:
       - "application/json"
       produces:
       - "application/json"
       parameters:
       - in: "body"
-        name: "orchestra"
-        description: "Orchestra file to add"
+        name: "repository"
+        description: "Orchestra repository file to add"
         required: true
         schema:
-          $ref: "#/definitions/Orchestra"
+          $ref: "#/definitions/Metadata"
       responses:
         201:
           description: "item created"
@@ -92,48 +85,48 @@ paths:
           description: "invalid input, object invalid"
         409:
           description: "an existing item already exists"
-  /orchestra/{fileid}:
+  /repository/{fileid}:
     get:
       tags:
-      - "file"
-      summary: "Returns a single Orchestra file metadata, if found"
-      operationId: "findOrchestraById"
+      - "repository"
+      summary: "Returns a single Orchestra repository file metadata, if found"
+      operationId: "findRepositoryById"
       produces:
       - "application/json"
       parameters:
       - name: "fileid"
         in: "path"
-        description: "ID of Orchestra file to fetch"
+        description: "ID of Orchestra repository file to fetch"
         required: true
         type: "string"
       responses:
         200:
           description: "file response"
           schema:
-            $ref: "#/definitions/Orchestra"
+            $ref: "#/definitions/Metadata"
         default:
           description: "unexpected error"
           schema:
             $ref: "#/definitions/ErrorModel"
     put:
       tags:
-      - "messages"
-      summary: "Updates a Orchestra file, if found (idempotent)"
-      operationId: "updateOrchestraById"
+      - "repository"
+      summary: "Updates an Orchestra repository file, if found (idempotent)"
+      operationId: "updateRepositoryById"
       consumes:
       - "application/json"
       parameters:
       - name: "fileid"
         in: "path"
-        description: "ID of Orchestra file to update"
+        description: "ID of Orchestra repository file to update"
         required: true
         type: "string"
       - in: "body"
-        name: "orchestra"
-        description: "Orchestra file to update"
+        name: "repository"
+        description: "Orchestra repository file to update"
         required: true
         schema:
-          $ref: "#/definitions/Orchestra"
+          $ref: "#/definitions/Metadata"
       responses:
         204:
           description: "file updated"
@@ -143,13 +136,13 @@ paths:
             $ref: "#/definitions/ErrorModel"
     delete:
       tags:
-      - "messages"
-      summary: "deletes a single Orchestra file based on the ID supplied"
-      operationId: "deleteOrchestra"
+      - "repository"
+      summary: "deletes a single Orchestra repository file based on the ID supplied"
+      operationId: "deleteRepository"
       parameters:
       - name: "fileid"
         in: "path"
-        description: "ID of Orchestra file to delete"
+        description: "ID of Orchestra repository file to delete"
         required: true
         type: "string"
       responses:
@@ -157,10 +150,357 @@ paths:
           description: "file deleted"
         404:
           description: "file not found"
-  /orchestra/{fileid}/components:
+  /repository/{fileid}/codesets{codesetid}/code:
     get:
       tags:
-      - "messages"
+      - "repository"
+      summary: "searches Codes within a CodeSet"
+      description: "By passing in the appropriate options, you can search for\nCodes\n"
+      operationId: "searchCodes"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra repository file"
+        required: true
+        type: "string"
+      - name: "codesetid"
+        in: "path"
+        description: "ID of CodeSet"
+        required: true
+        type: "string"
+      - name: "searchString"
+        in: "query"
+        description: "pass an optional search string for looking up Codes"
+        required: false
+        type: "string"
+      - name: "skip"
+        in: "query"
+        description: "number of records to skip for pagination"
+        required: false
+        type: "integer"
+        minimum: 0
+        format: "int32"
+      - name: "limit"
+        in: "query"
+        description: "maximum number of records to return"
+        required: false
+        type: "integer"
+        maximum: 50.0
+        minimum: 0
+        format: "int32"
+      responses:
+        200:
+          description: "search results matching criteria"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Code"
+        400:
+          description: "bad input parameter"
+    post:
+      tags:
+      - "repository"
+      summary: "adds a Code to CodeSet"
+      description: "Adds a Code"
+      operationId: "addCode"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra repository file"
+        required: true
+        type: "string"
+      - name: "codesetid"
+        in: "path"
+        description: "ID of CodeSet"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "Code"
+        description: "Code to add"
+        required: false
+        schema:
+          $ref: "#/definitions/Code"
+      responses:
+        201:
+          description: "item created"
+          headers:
+            Location:
+              type: "string"
+              format: "uri"
+              description: "URL of created resource"
+        400:
+          description: "invalid input, object invalid"
+        409:
+          description: "an existing item already exists"
+  /repository/{fileid}/codesets/{codesetid}/code{id}:
+    get:
+      tags:
+      - "repository"
+      summary: "Returns a single Code, if found"
+      operationId: "findCodeById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra repository file"
+        required: true
+        type: "string"
+      - name: "codesetid"
+        in: "path"
+        description: "ID of CodeSet"
+        required: true
+        type: "string"
+      - name: "id"
+        in: "path"
+        description: "ID of Code to fetch"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        200:
+          description: "Code response"
+          schema:
+            $ref: "#/definitions/Code"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    put:
+      tags:
+      - "repository"
+      summary: "Updates a single Code, if found (idempotent)"
+      operationId: "updateCodeById"
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra repository file"
+        required: true
+        type: "string"
+      - name: "codesetid"
+        in: "path"
+        description: "ID of CodeSet"
+        required: true
+        type: "string"
+      - name: "id"
+        in: "path"
+        description: "ID of Code to update"
+        required: true
+        type: "integer"
+        format: "int32"
+      - in: "body"
+        name: "Code"
+        description: "Code to update"
+        required: true
+        schema:
+          $ref: "#/definitions/Code"
+      responses:
+        204:
+          description: "Code updated"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    delete:
+      tags:
+      - "repository"
+      summary: "deletes a single Code based on the ID supplied"
+      operationId: "deleteCode"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra repository file"
+        required: true
+        type: "string"
+      - name: "codesetid"
+        in: "path"
+        description: "ID of CodeSet"
+        required: true
+        type: "string"
+      - name: "id"
+        in: "path"
+        description: "ID of field to delete"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        204:
+          description: "Code deleted"
+        404:
+          description: "Code not found"
+  /repository/{fileid}/codesets:
+    get:
+      tags:
+      - "repository"
+      summary: "searches CodeSets"
+      description: "By passing in the appropriate options, you can search for\nCodeSets\n"
+      operationId: "searchCodeSets"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra repository file"
+        required: true
+        type: "string"
+      - name: "searchString"
+        in: "query"
+        description: "pass an optional search string for looking up CodeSets"
+        required: false
+        type: "string"
+      - name: "skip"
+        in: "query"
+        description: "number of records to skip for pagination"
+        required: false
+        type: "integer"
+        minimum: 0
+        format: "int32"
+      - name: "limit"
+        in: "query"
+        description: "maximum number of records to return"
+        required: false
+        type: "integer"
+        maximum: 50.0
+        minimum: 0
+        format: "int32"
+      responses:
+        200:
+          description: "search results matching criteria"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/CodeSet"
+        400:
+          description: "bad input parameter"
+    post:
+      tags:
+      - "repository"
+      summary: "adds a CodeSet"
+      description: "Adds a CodeSet"
+      operationId: "addCodeSet"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra repository file"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "CodeSet"
+        description: "CodeSet to add"
+        required: false
+        schema:
+          $ref: "#/definitions/CodeSet"
+      responses:
+        201:
+          description: "item created"
+          headers:
+            Location:
+              type: "string"
+              format: "uri"
+              description: "URL of created resource"
+        400:
+          description: "invalid input, object invalid"
+        409:
+          description: "an existing item already exists"
+  /repository/{fileid}/codesets/{id}:
+    get:
+      tags:
+      - "repository"
+      summary: "Returns a single CodeSet, if found"
+      operationId: "findCodeSetById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra repository file"
+        required: true
+        type: "string"
+      - name: "id"
+        in: "path"
+        description: "ID of CodeSet to fetch"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        200:
+          description: "CodeSet response"
+          schema:
+            $ref: "#/definitions/CodeSet"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    put:
+      tags:
+      - "repository"
+      summary: "Updates a single CodeSet, if found (idempotent)"
+      operationId: "updateCodeSetById"
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra repository file"
+        required: true
+        type: "string"
+      - name: "id"
+        in: "path"
+        description: "ID of CodeSet to update"
+        required: true
+        type: "integer"
+        format: "int32"
+      - in: "body"
+        name: "CodeSet"
+        description: "CodeSet to update"
+        required: true
+        schema:
+          $ref: "#/definitions/CodeSet"
+      responses:
+        204:
+          description: "CodeSet updated"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    delete:
+      tags:
+      - "repository"
+      summary: "deletes a single CodeSet based on the ID supplied"
+      operationId: "deleteCodeSet"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra repository file"
+        required: true
+        type: "string"
+      - name: "id"
+        in: "path"
+        description: "ID of field to delete"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        204:
+          description: "CodeSet deleted"
+        404:
+          description: "CodeSet not found"
+  /repository/{fileid}/components:
+    get:
+      tags:
+      - "repository"
       summary: "searches components"
       description: "By passing in the appropriate options, you can search for\ncomponents\n"
       operationId: "searchComponents"
@@ -169,7 +509,7 @@ paths:
       parameters:
       - name: "fileid"
         in: "path"
-        description: "ID of Orchestra file"
+        description: "ID of Orchestra repository file"
         required: true
         type: "string"
       - name: "searchString"
@@ -203,7 +543,7 @@ paths:
           description: "bad input parameter"
     post:
       tags:
-      - "messages"
+      - "repository"
       summary: "adds a component"
       description: "Adds a component"
       operationId: "addComponent"
@@ -214,7 +554,7 @@ paths:
       parameters:
       - name: "fileid"
         in: "path"
-        description: "ID of Orchestra file"
+        description: "ID of Orchestra repository file"
         required: true
         type: "string"
       - in: "body"
@@ -235,10 +575,10 @@ paths:
           description: "invalid input, object invalid"
         409:
           description: "an existing item already exists"
-  /orchestra/{fileid}/components/{id}:
+  /repository/{fileid}/components/{id}:
     get:
       tags:
-      - "messages"
+      - "repository"
       summary: "Returns a single component, if found"
       operationId: "findComponentById"
       produces:
@@ -246,7 +586,7 @@ paths:
       parameters:
       - name: "fileid"
         in: "path"
-        description: "ID of Orchestra file"
+        description: "ID of Orchestra repository file"
         required: true
         type: "string"
       - name: "id"
@@ -266,7 +606,7 @@ paths:
             $ref: "#/definitions/ErrorModel"
     put:
       tags:
-      - "messages"
+      - "repository"
       summary: "Updates a single component, if found (idempotent)"
       operationId: "updateComponentById"
       consumes:
@@ -274,7 +614,7 @@ paths:
       parameters:
       - name: "fileid"
         in: "path"
-        description: "ID of Orchestra file"
+        description: "ID of Orchestra repository file"
         required: true
         type: "string"
       - name: "id"
@@ -298,18 +638,18 @@ paths:
             $ref: "#/definitions/ErrorModel"
     delete:
       tags:
-      - "messages"
+      - "repository"
       summary: "deletes a single component based on the ID supplied"
       operationId: "deleteComponent"
       parameters:
       - name: "fileid"
         in: "path"
-        description: "ID of Orchestra file"
+        description: "ID of Orchestra repository file"
         required: true
         type: "string"
       - name: "id"
         in: "path"
-        description: "ID of field to delete"
+        description: "ID of component to delete"
         required: true
         type: "integer"
         format: "int64"
@@ -318,10 +658,168 @@ paths:
           description: "component deleted"
         404:
           description: "component not found"
-  /orchestra/{fileid}/fields:
+  /repository/{fileid}/datatypes:
     get:
       tags:
-      - "messages"
+      - "repository"
+      summary: "searches datatypes"
+      description: "By passing in the appropriate options, you can search for\ndatatypes\n"
+      operationId: "searchDatatypes"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra repository file"
+        required: true
+        type: "string"
+      - name: "searchString"
+        in: "query"
+        description: "pass an optional search string for looking up datatypes"
+        required: false
+        type: "string"
+      - name: "skip"
+        in: "query"
+        description: "number of records to skip for pagination"
+        required: false
+        type: "integer"
+        minimum: 0
+        format: "int32"
+      - name: "limit"
+        in: "query"
+        description: "maximum number of records to return"
+        required: false
+        type: "integer"
+        maximum: 50.0
+        minimum: 0
+        format: "int32"
+      responses:
+        200:
+          description: "search results matching criteria"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Datatype"
+        400:
+          description: "bad input parameter"
+    post:
+      tags:
+      - "repository"
+      summary: "adds a datatype"
+      description: "Adds a datatype"
+      operationId: "addDatatype"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra repository file"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "datatype"
+        description: "Datatype to add"
+        required: false
+        schema:
+          $ref: "#/definitions/Datatype"
+      responses:
+        201:
+          description: "item created"
+          headers:
+            Location:
+              type: "string"
+              format: "uri"
+              description: "URL of created resource"
+        400:
+          description: "invalid input, object invalid"
+        409:
+          description: "an existing item already exists"
+  /repository/{fileid}/datatypes/{name}:
+    get:
+      tags:
+      - "repository"
+      summary: "Returns a single datatype, if found"
+      operationId: "findDatatypeByName"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra repository file"
+        required: true
+        type: "string"
+      - name: "name"
+        in: "path"
+        description: "name of datatype to fetch"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "datatype response"
+          schema:
+            $ref: "#/definitions/Datatype"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    put:
+      tags:
+      - "repository"
+      summary: "Updates a single datatype, if found (idempotent)"
+      operationId: "updateDatatypeByName"
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra repository file"
+        required: true
+        type: "string"
+      - name: "name"
+        in: "path"
+        description: "name of datatype to update"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "datatype"
+        description: "datatype to update"
+        required: true
+        schema:
+          $ref: "#/definitions/Datatype"
+      responses:
+        204:
+          description: "datatype updated"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    delete:
+      tags:
+      - "repository"
+      summary: "deletes a single datatype based on the name supplied"
+      operationId: "deleteDatatype"
+      parameters:
+      - name: "fileid"
+        in: "path"
+        description: "ID of Orchestra repository file"
+        required: true
+        type: "string"
+      - name: "name"
+        in: "path"
+        description: "name of datatype to delete"
+        required: true
+        type: "string"
+      responses:
+        204:
+          description: "datatype deleted"
+        404:
+          description: "datatype not found"
+  /repository/{fileid}/fields:
+    get:
+      tags:
+      - "repository"
       summary: "searches fields"
       description: "By passing in the appropriate options, you can search for\nfields\n"
       operationId: "searchFields"
@@ -330,7 +828,7 @@ paths:
       parameters:
       - name: "fileid"
         in: "path"
-        description: "ID of Orchestra file"
+        description: "ID of Orchestra repository file"
         required: true
         type: "string"
       - name: "searchString"
@@ -364,7 +862,7 @@ paths:
           description: "bad input parameter"
     post:
       tags:
-      - "messages"
+      - "repository"
       summary: "adds a field"
       description: "Adds a field"
       operationId: "addField"
@@ -375,7 +873,7 @@ paths:
       parameters:
       - name: "fileid"
         in: "path"
-        description: "ID of Orchestra file"
+        description: "ID of Orchestra repository file"
         required: true
         type: "string"
       - in: "body"
@@ -396,10 +894,10 @@ paths:
           description: "invalid input, object invalid"
         409:
           description: "an existing item already exists"
-  /orchestra/{fileid}/fields/{id}:
+  /repository/{fileid}/fields/{id}:
     get:
       tags:
-      - "messages"
+      - "repository"
       summary: "Returns a single field, if found"
       operationId: "findFieldById"
       produces:
@@ -407,7 +905,7 @@ paths:
       parameters:
       - name: "fileid"
         in: "path"
-        description: "ID of Orchestra file"
+        description: "ID of Orchestra repository file"
         required: true
         type: "string"
       - name: "id"
@@ -427,7 +925,7 @@ paths:
             $ref: "#/definitions/ErrorModel"
     put:
       tags:
-      - "messages"
+      - "repository"
       summary: "Updates a single field, if found (idempotent)"
       operationId: "updateFieldById"
       consumes:
@@ -435,7 +933,7 @@ paths:
       parameters:
       - name: "fileid"
         in: "path"
-        description: "ID of Orchestra file"
+        description: "ID of Orchestra repository file"
         required: true
         type: "string"
       - name: "id"
@@ -459,13 +957,13 @@ paths:
             $ref: "#/definitions/ErrorModel"
     delete:
       tags:
-      - "messages"
+      - "repository"
       summary: "deletes a single field based on the ID supplied"
       operationId: "deleteField"
       parameters:
       - name: "fileid"
         in: "path"
-        description: "ID of Orchestra file"
+        description: "ID of Orchestra repository file"
         required: true
         type: "string"
       - name: "id"
@@ -479,10 +977,10 @@ paths:
           description: "field deleted"
         404:
           description: "field not found"
-  /orchestra/{fileid}/messages:
+  /repository/{fileid}/messages:
     get:
       tags:
-      - "messages"
+      - "repository"
       summary: "searches messages"
       description: "By passing in the appropriate options, you can search for\nmessages\n"
       operationId: "searchMessages"
@@ -491,7 +989,7 @@ paths:
       parameters:
       - name: "fileid"
         in: "path"
-        description: "ID of Orchestra file"
+        description: "ID of Orchestra repository file"
         required: true
         type: "string"
       - name: "searchString"
@@ -525,7 +1023,7 @@ paths:
           description: "bad input parameter"
     post:
       tags:
-      - "messages"
+      - "repository"
       summary: "adds a message scenario"
       description: "Adds a message scenario"
       operationId: "addMessage"
@@ -536,7 +1034,7 @@ paths:
       parameters:
       - name: "fileid"
         in: "path"
-        description: "ID of Orchestra file"
+        description: "ID of Orchestra repository file"
         required: true
         type: "string"
       - in: "body"
@@ -557,18 +1055,18 @@ paths:
           description: "invalid input, object invalid"
         409:
           description: "an existing item already exists"
-  /orchesra/{fileid}/messages/{id}:
+  /repository/{fileid}/messages/{id}:
     get:
       tags:
-      - "messages"
-      summary: "Returns a single message, if found"
+      - "repository"
+      summary: "Returns a single message scenario, if found"
       operationId: "findMessageById"
       produces:
       - "application/json"
       parameters:
       - name: "fileid"
         in: "path"
-        description: "ID of Orchestra file"
+        description: "ID of Orchestra repository file"
         required: true
         type: "string"
       - name: "id"
@@ -588,15 +1086,15 @@ paths:
             $ref: "#/definitions/ErrorModel"
     put:
       tags:
-      - "messages"
-      summary: "Updates a single message, if found (idempotent)"
+      - "repository"
+      summary: "Updates a single message scenario, if found (idempotent)"
       operationId: "updateMessageById"
       consumes:
       - "application/json"
       parameters:
       - name: "fileid"
         in: "path"
-        description: "ID of Orchestra file"
+        description: "ID of Orchestra repository file"
         required: true
         type: "string"
       - name: "id"
@@ -620,13 +1118,13 @@ paths:
             $ref: "#/definitions/ErrorModel"
     delete:
       tags:
-      - "messages"
-      summary: "deletes a single message based on the ID supplied"
+      - "repository"
+      summary: "deletes a single message scenario based on the ID supplied"
       operationId: "deleteMessage"
       parameters:
       - name: "fileid"
         in: "path"
-        description: "ID of Orchestra file"
+        description: "ID of Orchestra repository file"
         required: true
         type: "string"
       - name: "id"
@@ -664,10 +1162,50 @@ definitions:
         format: "uri"
       langId:
         type: "string"
+        example: "en"
+        description: "a language code (ISO 639-1)"
       purpose:
         type: "string"
+        example: "SYNOPSIS"
     description: "Usage specific annotation, optionally with link to an external reference\
       \ or standard"
+  Code:
+    type: "object"
+    required:
+    - "oid"
+    - "value"
+    properties:
+      oid:
+        $ref: "#/definitions/ObjectId"
+      value:
+        type: "string"
+      annotation:
+        $ref: "#/definitions/Annotation"
+      entityAttributes:
+        $ref: "#/definitions/EntityAttributes"
+  CodeSet:
+    type: "object"
+    required:
+    - "oid"
+    - "type"
+    properties:
+      oid:
+        $ref: "#/definitions/ObjectId"
+      type:
+        type: "string"
+      specURL:
+        type: "string"
+        format: "uri"
+      default:
+        type: "string"
+      codes:
+        type: "array"
+        items:
+          $ref: "#/definitions/Code"
+      annotation:
+        $ref: "#/definitions/Annotation"
+      entityAttributes:
+        $ref: "#/definitions/EntityAttributes"
   Component:
     allOf:
     - $ref: "#/definitions/MessageElement"
@@ -686,10 +1224,27 @@ definitions:
     properties:
       $:
         type: "string"
+        description: "text of Documentation"
       langId:
         type: "string"
+        example: "en"
+        description: "a language code (ISO 639-1)"
       purpose:
         type: "string"
+        example: "SYNOPSIS"
+  Datatype:
+    type: "object"
+    required:
+    - "name"
+    properties:
+      name:
+        type: "string"
+      baseType:
+        type: "string"
+      annotation:
+        $ref: "#/definitions/Annotation"
+      entityAttributes:
+        $ref: "#/definitions/EntityAttributes"
   EntityAttributes:
     type: "object"
     properties:
@@ -727,6 +1282,7 @@ definitions:
         type: "string"
       updatedEP:
         type: "integer"
+    description: "element metadata including pedigree"
   ErrorModel:
     type: "object"
     required:
@@ -825,6 +1381,44 @@ definitions:
     type: "array"
     items:
       $ref: "#/definitions/ElementRef"
+  Metadata:
+    type: "object"
+    required:
+    - "identifier"
+    properties:
+      identifier:
+        type: "string"
+        description: "unique ID of an Orchestra file"
+      abstract:
+        type: "string"
+        description: "a summary"
+      audience:
+        type: "string"
+        description: "who it applies to"
+      conformsTo:
+        type: "string"
+        example: "FIX 5.0SP2"
+        description: "a governing standard or specification"
+      coverage:
+        type: "string"
+        example: "SingleGeneralOrderHandling"
+        description: "a FIX category or guideline"
+      creator:
+        type: "string"
+      date:
+        type: "string"
+        format: "date"
+        description: "when the file was produced"
+      publisher:
+        type: "string"
+        example: "FIX Trading Community"
+      title:
+        type: "string"
+      valid:
+        type: "string"
+        format: "date"
+        description: "when the file becomes valid"
+    description: "description of an Orchestra file, conforms to Dublin Core Terms"
   ObjectId:
     type: "object"
     required:
@@ -840,7 +1434,7 @@ definitions:
         type: "integer"
         format: "int32"
         example: 1
-        description: "Numeric ID, unique within a file"
+        description: "Numeric ID, unique within a file, e.g. a field tag"
       abbrName:
         type: "string"
         example: "Acct"
@@ -849,25 +1443,5 @@ definitions:
       oid:
         type: "string"
         description: "Globally unique object identifier, a URI or UUID"
-  Orchestra:
-    type: "object"
-    required:
-    - "identifier"
-    properties:
-      identifier:
-        type: "string"
-        description: "unique ID of an Orchestra file"
-      conformsTo:
-        type: "string"
-      coverage:
-        type: "string"
-      creator:
-        type: "string"
-      date:
-        type: "string"
-        format: "date"
-      title:
-        type: "string"
-    description: "Dublin Core Terms metadata"
   Response:
     type: "object"

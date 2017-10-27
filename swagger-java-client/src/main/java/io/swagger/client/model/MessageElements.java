@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * MessageElements
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-10-26T18:59:32.669Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-10-27T18:19:20.110Z")
 public class MessageElements extends ArrayList<ElementRef> {
 
   @Override

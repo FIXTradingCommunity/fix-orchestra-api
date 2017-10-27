@@ -8,7 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * ObjectId
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-10-26T18:59:32.669Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-10-27T18:19:20.110Z")
 public class ObjectId {
   @SerializedName("name")
   private String name = null;
@@ -46,10 +46,10 @@ public class ObjectId {
   }
 
    /**
-   * Numeric ID, unique within a file
+   * Numeric ID, unique within a file, e.g. a field tag
    * @return id
   **/
-  @ApiModelProperty(example = "1", required = true, value = "Numeric ID, unique within a file")
+  @ApiModelProperty(example = "1", required = true, value = "Numeric ID, unique within a file, e.g. a field tag")
   public Integer getId() {
     return id;
   }

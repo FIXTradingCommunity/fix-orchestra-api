@@ -8,7 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * Documentation
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-10-26T18:59:32.669Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-10-27T18:19:20.110Z")
 public class Documentation {
   @SerializedName("$")
   private String value = null;
@@ -25,10 +25,10 @@ public class Documentation {
   }
 
    /**
-   * Get value
+   * text of Documentation
    * @return value
   **/
-  @ApiModelProperty(required = true, value = "")
+  @ApiModelProperty(required = true, value = "text of Documentation")
   public String getValue() {
     return value;
   }
@@ -43,10 +43,10 @@ public class Documentation {
   }
 
    /**
-   * Get langId
+   * a language code (ISO 639-1)
    * @return langId
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(example = "en", value = "a language code (ISO 639-1)")
   public String getLangId() {
     return langId;
   }
@@ -64,7 +64,7 @@ public class Documentation {
    * Get purpose
    * @return purpose
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(example = "SYNOPSIS", value = "")
   public String getPurpose() {
     return purpose;
   }

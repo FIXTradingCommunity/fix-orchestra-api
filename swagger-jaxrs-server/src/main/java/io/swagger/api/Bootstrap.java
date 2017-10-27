@@ -18,7 +18,7 @@ public class Bootstrap extends HttpServlet {
       .description("API to edit FIX Orchestra (machine readable rules of engagement) specification version 1.0 RC3")
       .termsOfService("")
       .contact(new Contact()
-        .email("donmendelson@silverflash.net"))
+        .email(""))
       .license(new License()
         .name("Apache 2.0")
         .url("http://www.apache.org/licenses/LICENSE-2.0.html"));

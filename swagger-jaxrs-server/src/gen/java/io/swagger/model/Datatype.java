@@ -32,18 +32,17 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.model.Annotation;
 import io.swagger.model.EntityAttributes;
-import io.swagger.model.ObjectId;
 
 /**
- * MessageElement
+ * Datatype
  */
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-10-27T18:20:26.929Z")
-public class MessageElement   {
-  @JsonProperty("elementType")
-  private String elementType = null;
+public class Datatype   {
+  @JsonProperty("name")
+  private String name = null;
 
-  @JsonProperty("oid")
-  private ObjectId oid = null;
+  @JsonProperty("baseType")
+  private String baseType = null;
 
   @JsonProperty("annotation")
   private Annotation annotation = null;
@@ -51,46 +50,43 @@ public class MessageElement   {
   @JsonProperty("entityAttributes")
   private EntityAttributes entityAttributes = null;
 
-  @JsonProperty("category")
-  private String category = null;
-
-  public MessageElement elementType(String elementType) {
-    this.elementType = elementType;
+  public Datatype name(String name) {
+    this.name = name;
     return this;
   }
 
    /**
-   * Get elementType
-   * @return elementType
+   * Get name
+   * @return name
   **/
   @ApiModelProperty(required = true, value = "")
-  public String getElementType() {
-    return elementType;
+  public String getName() {
+    return name;
   }
 
-  public void setElementType(String elementType) {
-    this.elementType = elementType;
+  public void setName(String name) {
+    this.name = name;
   }
 
-  public MessageElement oid(ObjectId oid) {
-    this.oid = oid;
+  public Datatype baseType(String baseType) {
+    this.baseType = baseType;
     return this;
   }
 
    /**
-   * Get oid
-   * @return oid
+   * Get baseType
+   * @return baseType
   **/
-  @ApiModelProperty(required = true, value = "")
-  public ObjectId getOid() {
-    return oid;
+  @ApiModelProperty(value = "")
+  public String getBaseType() {
+    return baseType;
   }
 
-  public void setOid(ObjectId oid) {
-    this.oid = oid;
+  public void setBaseType(String baseType) {
+    this.baseType = baseType;
   }
 
-  public MessageElement annotation(Annotation annotation) {
+  public Datatype annotation(Annotation annotation) {
     this.annotation = annotation;
     return this;
   }
@@ -108,7 +104,7 @@ public class MessageElement   {
     this.annotation = annotation;
   }
 
-  public MessageElement entityAttributes(EntityAttributes entityAttributes) {
+  public Datatype entityAttributes(EntityAttributes entityAttributes) {
     this.entityAttributes = entityAttributes;
     return this;
   }
@@ -126,24 +122,6 @@ public class MessageElement   {
     this.entityAttributes = entityAttributes;
   }
 
-  public MessageElement category(String category) {
-    this.category = category;
-    return this;
-  }
-
-   /**
-   * Get category
-   * @return category
-  **/
-  @ApiModelProperty(value = "")
-  public String getCategory() {
-    return category;
-  }
-
-  public void setCategory(String category) {
-    this.category = category;
-  }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -153,30 +131,28 @@ public class MessageElement   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    MessageElement messageElement = (MessageElement) o;
-    return Objects.equals(this.elementType, messageElement.elementType) &&
-        Objects.equals(this.oid, messageElement.oid) &&
-        Objects.equals(this.annotation, messageElement.annotation) &&
-        Objects.equals(this.entityAttributes, messageElement.entityAttributes) &&
-        Objects.equals(this.category, messageElement.category);
+    Datatype datatype = (Datatype) o;
+    return Objects.equals(this.name, datatype.name) &&
+        Objects.equals(this.baseType, datatype.baseType) &&
+        Objects.equals(this.annotation, datatype.annotation) &&
+        Objects.equals(this.entityAttributes, datatype.entityAttributes);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(elementType, oid, annotation, entityAttributes, category);
+    return Objects.hash(name, baseType, annotation, entityAttributes);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class MessageElement {\n");
+    sb.append("class Datatype {\n");
     
-    sb.append("    elementType: ").append(toIndentedString(elementType)).append("\n");
-    sb.append("    oid: ").append(toIndentedString(oid)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    baseType: ").append(toIndentedString(baseType)).append("\n");
     sb.append("    annotation: ").append(toIndentedString(annotation)).append("\n");
     sb.append("    entityAttributes: ").append(toIndentedString(entityAttributes)).append("\n");
-    sb.append("    category: ").append(toIndentedString(category)).append("\n");
     sb.append("}");
     return sb.toString();
   }

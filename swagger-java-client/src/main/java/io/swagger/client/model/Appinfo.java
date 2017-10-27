@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
  * Usage specific annotation, optionally with link to an external reference or standard
  */
 @ApiModel(description = "Usage specific annotation, optionally with link to an external reference or standard")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-10-26T18:59:32.669Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-10-27T18:19:20.110Z")
 public class Appinfo {
   @SerializedName("$")
   private String value = null;
@@ -65,10 +65,10 @@ public class Appinfo {
   }
 
    /**
-   * Get langId
+   * a language code (ISO 639-1)
    * @return langId
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(example = "en", value = "a language code (ISO 639-1)")
   public String getLangId() {
     return langId;
   }
@@ -86,7 +86,7 @@ public class Appinfo {
    * Get purpose
    * @return purpose
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(example = "SYNOPSIS", value = "")
   public String getPurpose() {
     return purpose;
   }
