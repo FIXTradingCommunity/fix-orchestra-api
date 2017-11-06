@@ -50,7 +50,7 @@ public class RepositoryApi {
     }
 
     /* Build call for addCode */
-    private com.squareup.okhttp.Call addCodeCall(String fileid, String codesetid, Code code, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call addCodeCall(String fileid, Integer codesetid, Code code, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = code;
         
         // verify the required parameter 'fileid' is set
@@ -65,7 +65,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}/codesets{codesetid}/code".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}/codesets/{codesetid}/codes".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()))
         .replaceAll("\\{" + "codesetid" + "\\}", apiClient.escapeString(codesetid.toString()));
 
@@ -111,7 +111,7 @@ public class RepositoryApi {
      * @param code Code to add (optional)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void addCode(String fileid, String codesetid, Code code) throws ApiException {
+    public void addCode(String fileid, Integer codesetid, Code code) throws ApiException {
         addCodeWithHttpInfo(fileid, codesetid, code);
     }
 
@@ -124,7 +124,7 @@ public class RepositoryApi {
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> addCodeWithHttpInfo(String fileid, String codesetid, Code code) throws ApiException {
+    public ApiResponse<Void> addCodeWithHttpInfo(String fileid, Integer codesetid, Code code) throws ApiException {
         com.squareup.okhttp.Call call = addCodeCall(fileid, codesetid, code, null, null);
         return apiClient.execute(call);
     }
@@ -139,7 +139,7 @@ public class RepositoryApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call addCodeAsync(String fileid, String codesetid, Code code, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call addCodeAsync(String fileid, Integer codesetid, Code code, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -175,7 +175,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}/codesets".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}/codesets".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -271,7 +271,7 @@ public class RepositoryApi {
         return call;
     }
     /* Build call for addComponent */
-    private com.squareup.okhttp.Call addComponentCall(String fileid, Component component, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call addComponentCall(String fileid, Component component, Integer toClone, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = component;
         
         // verify the required parameter 'fileid' is set
@@ -281,10 +281,12 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}/components".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}/components".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        if (toClone != null)
+        localVarQueryParams.addAll(apiClient.parameterToPairs("", "toClone", toClone));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -323,10 +325,11 @@ public class RepositoryApi {
      * Adds a component
      * @param fileid ID of Orchestra repository file (required)
      * @param component Component to add (optional)
+     * @param toClone ID of component to clone (optional)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void addComponent(String fileid, Component component) throws ApiException {
-        addComponentWithHttpInfo(fileid, component);
+    public void addComponent(String fileid, Component component, Integer toClone) throws ApiException {
+        addComponentWithHttpInfo(fileid, component, toClone);
     }
 
     /**
@@ -334,11 +337,12 @@ public class RepositoryApi {
      * Adds a component
      * @param fileid ID of Orchestra repository file (required)
      * @param component Component to add (optional)
+     * @param toClone ID of component to clone (optional)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> addComponentWithHttpInfo(String fileid, Component component) throws ApiException {
-        com.squareup.okhttp.Call call = addComponentCall(fileid, component, null, null);
+    public ApiResponse<Void> addComponentWithHttpInfo(String fileid, Component component, Integer toClone) throws ApiException {
+        com.squareup.okhttp.Call call = addComponentCall(fileid, component, toClone, null, null);
         return apiClient.execute(call);
     }
 
@@ -347,11 +351,12 @@ public class RepositoryApi {
      * Adds a component
      * @param fileid ID of Orchestra repository file (required)
      * @param component Component to add (optional)
+     * @param toClone ID of component to clone (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call addComponentAsync(String fileid, Component component, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call addComponentAsync(String fileid, Component component, Integer toClone, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -372,7 +377,7 @@ public class RepositoryApi {
             };
         }
 
-        com.squareup.okhttp.Call call = addComponentCall(fileid, component, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = addComponentCall(fileid, component, toClone, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
@@ -387,7 +392,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}/datatypes".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}/datatypes".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -493,7 +498,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}/fields".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}/fields".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -589,7 +594,7 @@ public class RepositoryApi {
         return call;
     }
     /* Build call for addMessage */
-    private com.squareup.okhttp.Call addMessageCall(String fileid, Message message, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call addMessageCall(String fileid, Message message, Integer toClone, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = message;
         
         // verify the required parameter 'fileid' is set
@@ -599,10 +604,12 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}/messages".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}/messages".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        if (toClone != null)
+        localVarQueryParams.addAll(apiClient.parameterToPairs("", "toClone", toClone));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -641,10 +648,11 @@ public class RepositoryApi {
      * Adds a message scenario
      * @param fileid ID of Orchestra repository file (required)
      * @param message message to add (optional)
+     * @param toClone ID of message to clone (optional)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void addMessage(String fileid, Message message) throws ApiException {
-        addMessageWithHttpInfo(fileid, message);
+    public void addMessage(String fileid, Message message, Integer toClone) throws ApiException {
+        addMessageWithHttpInfo(fileid, message, toClone);
     }
 
     /**
@@ -652,11 +660,12 @@ public class RepositoryApi {
      * Adds a message scenario
      * @param fileid ID of Orchestra repository file (required)
      * @param message message to add (optional)
+     * @param toClone ID of message to clone (optional)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> addMessageWithHttpInfo(String fileid, Message message) throws ApiException {
-        com.squareup.okhttp.Call call = addMessageCall(fileid, message, null, null);
+    public ApiResponse<Void> addMessageWithHttpInfo(String fileid, Message message, Integer toClone) throws ApiException {
+        com.squareup.okhttp.Call call = addMessageCall(fileid, message, toClone, null, null);
         return apiClient.execute(call);
     }
 
@@ -665,11 +674,12 @@ public class RepositoryApi {
      * Adds a message scenario
      * @param fileid ID of Orchestra repository file (required)
      * @param message message to add (optional)
+     * @param toClone ID of message to clone (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call addMessageAsync(String fileid, Message message, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call addMessageAsync(String fileid, Message message, Integer toClone, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -690,12 +700,12 @@ public class RepositoryApi {
             };
         }
 
-        com.squareup.okhttp.Call call = addMessageCall(fileid, message, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = addMessageCall(fileid, message, toClone, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
     /* Build call for addRepository */
-    private com.squareup.okhttp.Call addRepositoryCall(Metadata repository, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call addRepositoryCall(Metadata repository, String toClone, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = repository;
         
         // verify the required parameter 'repository' is set
@@ -705,9 +715,11 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository".replaceAll("\\{format\\}","json");
+        String localVarPath = "/repositories".replaceAll("\\{format\\}","json");
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        if (toClone != null)
+        localVarQueryParams.addAll(apiClient.parameterToPairs("", "toClone", toClone));
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
 
@@ -745,21 +757,23 @@ public class RepositoryApi {
      * adds an Orchestra repository file
      * Adds an Orchestra repository file
      * @param repository Orchestra repository file to add (required)
+     * @param toClone ID of Orchestra repository file to clone (optional)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void addRepository(Metadata repository) throws ApiException {
-        addRepositoryWithHttpInfo(repository);
+    public void addRepository(Metadata repository, String toClone) throws ApiException {
+        addRepositoryWithHttpInfo(repository, toClone);
     }
 
     /**
      * adds an Orchestra repository file
      * Adds an Orchestra repository file
      * @param repository Orchestra repository file to add (required)
+     * @param toClone ID of Orchestra repository file to clone (optional)
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> addRepositoryWithHttpInfo(Metadata repository) throws ApiException {
-        com.squareup.okhttp.Call call = addRepositoryCall(repository, null, null);
+    public ApiResponse<Void> addRepositoryWithHttpInfo(Metadata repository, String toClone) throws ApiException {
+        com.squareup.okhttp.Call call = addRepositoryCall(repository, toClone, null, null);
         return apiClient.execute(call);
     }
 
@@ -767,11 +781,12 @@ public class RepositoryApi {
      * adds an Orchestra repository file (asynchronously)
      * Adds an Orchestra repository file
      * @param repository Orchestra repository file to add (required)
+     * @param toClone ID of Orchestra repository file to clone (optional)
      * @param callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call addRepositoryAsync(Metadata repository, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call addRepositoryAsync(Metadata repository, String toClone, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -792,12 +807,12 @@ public class RepositoryApi {
             };
         }
 
-        com.squareup.okhttp.Call call = addRepositoryCall(repository, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = addRepositoryCall(repository, toClone, progressListener, progressRequestListener);
         apiClient.executeAsync(call, callback);
         return call;
     }
     /* Build call for deleteCode */
-    private com.squareup.okhttp.Call deleteCodeCall(String fileid, String codesetid, Long id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call deleteCodeCall(String fileid, Integer codesetid, Integer id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'fileid' is set
@@ -817,7 +832,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}/codesets/{codesetid}/code{id}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}/codesets/{codesetid}/codes/{id}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()))
         .replaceAll("\\{" + "codesetid" + "\\}", apiClient.escapeString(codesetid.toString()))
         .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -864,7 +879,7 @@ public class RepositoryApi {
      * @param id ID of field to delete (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void deleteCode(String fileid, String codesetid, Long id) throws ApiException {
+    public void deleteCode(String fileid, Integer codesetid, Integer id) throws ApiException {
         deleteCodeWithHttpInfo(fileid, codesetid, id);
     }
 
@@ -877,7 +892,7 @@ public class RepositoryApi {
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> deleteCodeWithHttpInfo(String fileid, String codesetid, Long id) throws ApiException {
+    public ApiResponse<Void> deleteCodeWithHttpInfo(String fileid, Integer codesetid, Integer id) throws ApiException {
         com.squareup.okhttp.Call call = deleteCodeCall(fileid, codesetid, id, null, null);
         return apiClient.execute(call);
     }
@@ -892,7 +907,7 @@ public class RepositoryApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteCodeAsync(String fileid, String codesetid, Long id, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call deleteCodeAsync(String fileid, Integer codesetid, Integer id, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -918,7 +933,7 @@ public class RepositoryApi {
         return call;
     }
     /* Build call for deleteCodeSet */
-    private com.squareup.okhttp.Call deleteCodeSetCall(String fileid, Long id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call deleteCodeSetCall(String fileid, Integer id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'fileid' is set
@@ -933,7 +948,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}/codesets/{id}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}/codesets/{id}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()))
         .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
 
@@ -978,7 +993,7 @@ public class RepositoryApi {
      * @param id ID of field to delete (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void deleteCodeSet(String fileid, Long id) throws ApiException {
+    public void deleteCodeSet(String fileid, Integer id) throws ApiException {
         deleteCodeSetWithHttpInfo(fileid, id);
     }
 
@@ -990,7 +1005,7 @@ public class RepositoryApi {
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> deleteCodeSetWithHttpInfo(String fileid, Long id) throws ApiException {
+    public ApiResponse<Void> deleteCodeSetWithHttpInfo(String fileid, Integer id) throws ApiException {
         com.squareup.okhttp.Call call = deleteCodeSetCall(fileid, id, null, null);
         return apiClient.execute(call);
     }
@@ -1004,7 +1019,7 @@ public class RepositoryApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteCodeSetAsync(String fileid, Long id, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call deleteCodeSetAsync(String fileid, Integer id, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1030,7 +1045,7 @@ public class RepositoryApi {
         return call;
     }
     /* Build call for deleteComponent */
-    private com.squareup.okhttp.Call deleteComponentCall(String fileid, Long id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call deleteComponentCall(String fileid, Integer id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'fileid' is set
@@ -1045,7 +1060,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}/components/{id}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}/components/{id}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()))
         .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
 
@@ -1090,7 +1105,7 @@ public class RepositoryApi {
      * @param id ID of component to delete (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void deleteComponent(String fileid, Long id) throws ApiException {
+    public void deleteComponent(String fileid, Integer id) throws ApiException {
         deleteComponentWithHttpInfo(fileid, id);
     }
 
@@ -1102,7 +1117,7 @@ public class RepositoryApi {
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> deleteComponentWithHttpInfo(String fileid, Long id) throws ApiException {
+    public ApiResponse<Void> deleteComponentWithHttpInfo(String fileid, Integer id) throws ApiException {
         com.squareup.okhttp.Call call = deleteComponentCall(fileid, id, null, null);
         return apiClient.execute(call);
     }
@@ -1116,7 +1131,7 @@ public class RepositoryApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteComponentAsync(String fileid, Long id, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call deleteComponentAsync(String fileid, Integer id, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1157,7 +1172,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}/datatypes/{name}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}/datatypes/{name}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()))
         .replaceAll("\\{" + "name" + "\\}", apiClient.escapeString(name.toString()));
 
@@ -1254,7 +1269,7 @@ public class RepositoryApi {
         return call;
     }
     /* Build call for deleteField */
-    private com.squareup.okhttp.Call deleteFieldCall(String fileid, Long id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call deleteFieldCall(String fileid, Integer id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'fileid' is set
@@ -1269,7 +1284,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}/fields/{id}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}/fields/{id}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()))
         .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
 
@@ -1314,7 +1329,7 @@ public class RepositoryApi {
      * @param id ID of field to delete (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void deleteField(String fileid, Long id) throws ApiException {
+    public void deleteField(String fileid, Integer id) throws ApiException {
         deleteFieldWithHttpInfo(fileid, id);
     }
 
@@ -1326,7 +1341,7 @@ public class RepositoryApi {
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> deleteFieldWithHttpInfo(String fileid, Long id) throws ApiException {
+    public ApiResponse<Void> deleteFieldWithHttpInfo(String fileid, Integer id) throws ApiException {
         com.squareup.okhttp.Call call = deleteFieldCall(fileid, id, null, null);
         return apiClient.execute(call);
     }
@@ -1340,7 +1355,7 @@ public class RepositoryApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteFieldAsync(String fileid, Long id, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call deleteFieldAsync(String fileid, Integer id, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1366,7 +1381,7 @@ public class RepositoryApi {
         return call;
     }
     /* Build call for deleteMessage */
-    private com.squareup.okhttp.Call deleteMessageCall(String fileid, Long id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call deleteMessageCall(String fileid, Integer id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'fileid' is set
@@ -1381,7 +1396,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}/messages/{id}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}/messages/{id}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()))
         .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
 
@@ -1426,7 +1441,7 @@ public class RepositoryApi {
      * @param id ID of message to delete (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void deleteMessage(String fileid, Long id) throws ApiException {
+    public void deleteMessage(String fileid, Integer id) throws ApiException {
         deleteMessageWithHttpInfo(fileid, id);
     }
 
@@ -1438,7 +1453,7 @@ public class RepositoryApi {
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> deleteMessageWithHttpInfo(String fileid, Long id) throws ApiException {
+    public ApiResponse<Void> deleteMessageWithHttpInfo(String fileid, Integer id) throws ApiException {
         com.squareup.okhttp.Call call = deleteMessageCall(fileid, id, null, null);
         return apiClient.execute(call);
     }
@@ -1452,7 +1467,7 @@ public class RepositoryApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call deleteMessageAsync(String fileid, Long id, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call deleteMessageAsync(String fileid, Integer id, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1488,7 +1503,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -1581,7 +1596,7 @@ public class RepositoryApi {
         return call;
     }
     /* Build call for findCodeById */
-    private com.squareup.okhttp.Call findCodeByIdCall(String fileid, String codesetid, Integer id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call findCodeByIdCall(String fileid, Integer codesetid, Integer id, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'fileid' is set
@@ -1601,7 +1616,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}/codesets/{codesetid}/code{id}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}/codesets/{codesetid}/codes/{id}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()))
         .replaceAll("\\{" + "codesetid" + "\\}", apiClient.escapeString(codesetid.toString()))
         .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -1649,7 +1664,7 @@ public class RepositoryApi {
      * @return Code
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public Code findCodeById(String fileid, String codesetid, Integer id) throws ApiException {
+    public Code findCodeById(String fileid, Integer codesetid, Integer id) throws ApiException {
         ApiResponse<Code> resp = findCodeByIdWithHttpInfo(fileid, codesetid, id);
         return resp.getData();
     }
@@ -1663,7 +1678,7 @@ public class RepositoryApi {
      * @return ApiResponse&lt;Code&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Code> findCodeByIdWithHttpInfo(String fileid, String codesetid, Integer id) throws ApiException {
+    public ApiResponse<Code> findCodeByIdWithHttpInfo(String fileid, Integer codesetid, Integer id) throws ApiException {
         com.squareup.okhttp.Call call = findCodeByIdCall(fileid, codesetid, id, null, null);
         Type localVarReturnType = new TypeToken<Code>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -1679,7 +1694,7 @@ public class RepositoryApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call findCodeByIdAsync(String fileid, String codesetid, Integer id, final ApiCallback<Code> callback) throws ApiException {
+    public com.squareup.okhttp.Call findCodeByIdAsync(String fileid, Integer codesetid, Integer id, final ApiCallback<Code> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -1721,7 +1736,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}/codesets/{id}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}/codesets/{id}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()))
         .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
 
@@ -1837,7 +1852,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}/components/{id}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}/components/{id}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()))
         .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
 
@@ -1953,7 +1968,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}/datatypes/{name}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}/datatypes/{name}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()))
         .replaceAll("\\{" + "name" + "\\}", apiClient.escapeString(name.toString()));
 
@@ -2069,7 +2084,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}/fields/{id}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}/fields/{id}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()))
         .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
 
@@ -2185,7 +2200,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}/messages/{id}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}/messages/{id}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()))
         .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
 
@@ -2296,7 +2311,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -2403,7 +2418,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}/codesets".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}/codesets".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -2515,7 +2530,7 @@ public class RepositoryApi {
         return call;
     }
     /* Build call for searchCodes */
-    private com.squareup.okhttp.Call searchCodesCall(String fileid, String codesetid, String searchString, Integer skip, Integer limit, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call searchCodesCall(String fileid, Integer codesetid, String searchString, Integer skip, Integer limit, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
         
         // verify the required parameter 'fileid' is set
@@ -2530,7 +2545,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}/codesets{codesetid}/code".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}/codesets/{codesetid}/codes".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()))
         .replaceAll("\\{" + "codesetid" + "\\}", apiClient.escapeString(codesetid.toString()));
 
@@ -2585,7 +2600,7 @@ public class RepositoryApi {
      * @return List&lt;Code&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public List<Code> searchCodes(String fileid, String codesetid, String searchString, Integer skip, Integer limit) throws ApiException {
+    public List<Code> searchCodes(String fileid, Integer codesetid, String searchString, Integer skip, Integer limit) throws ApiException {
         ApiResponse<List<Code>> resp = searchCodesWithHttpInfo(fileid, codesetid, searchString, skip, limit);
         return resp.getData();
     }
@@ -2601,7 +2616,7 @@ public class RepositoryApi {
      * @return ApiResponse&lt;List&lt;Code&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<List<Code>> searchCodesWithHttpInfo(String fileid, String codesetid, String searchString, Integer skip, Integer limit) throws ApiException {
+    public ApiResponse<List<Code>> searchCodesWithHttpInfo(String fileid, Integer codesetid, String searchString, Integer skip, Integer limit) throws ApiException {
         com.squareup.okhttp.Call call = searchCodesCall(fileid, codesetid, searchString, skip, limit, null, null);
         Type localVarReturnType = new TypeToken<List<Code>>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
@@ -2619,7 +2634,7 @@ public class RepositoryApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call searchCodesAsync(String fileid, String codesetid, String searchString, Integer skip, Integer limit, final ApiCallback<List<Code>> callback) throws ApiException {
+    public com.squareup.okhttp.Call searchCodesAsync(String fileid, Integer codesetid, String searchString, Integer skip, Integer limit, final ApiCallback<List<Code>> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -2656,7 +2671,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}/components".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}/components".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -2778,7 +2793,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}/datatypes".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}/datatypes".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -2900,7 +2915,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}/fields".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}/fields".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -3022,7 +3037,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}/messages".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}/messages".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -3133,13 +3148,13 @@ public class RepositoryApi {
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
-    /* Build call for searchRepository */
-    private com.squareup.okhttp.Call searchRepositoryCall(String searchString, Integer skip, Integer limit, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    /* Build call for searchRepositories */
+    private com.squareup.okhttp.Call searchRepositoriesCall(String searchString, Integer skip, Integer limit, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = null;
         
 
         // create path and map variables
-        String localVarPath = "/repository".replaceAll("\\{format\\}","json");
+        String localVarPath = "/repositories".replaceAll("\\{format\\}","json");
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         if (searchString != null)
@@ -3190,8 +3205,8 @@ public class RepositoryApi {
      * @return List&lt;Metadata&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public List<Metadata> searchRepository(String searchString, Integer skip, Integer limit) throws ApiException {
-        ApiResponse<List<Metadata>> resp = searchRepositoryWithHttpInfo(searchString, skip, limit);
+    public List<Metadata> searchRepositories(String searchString, Integer skip, Integer limit) throws ApiException {
+        ApiResponse<List<Metadata>> resp = searchRepositoriesWithHttpInfo(searchString, skip, limit);
         return resp.getData();
     }
 
@@ -3204,8 +3219,8 @@ public class RepositoryApi {
      * @return ApiResponse&lt;List&lt;Metadata&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<List<Metadata>> searchRepositoryWithHttpInfo(String searchString, Integer skip, Integer limit) throws ApiException {
-        com.squareup.okhttp.Call call = searchRepositoryCall(searchString, skip, limit, null, null);
+    public ApiResponse<List<Metadata>> searchRepositoriesWithHttpInfo(String searchString, Integer skip, Integer limit) throws ApiException {
+        com.squareup.okhttp.Call call = searchRepositoriesCall(searchString, skip, limit, null, null);
         Type localVarReturnType = new TypeToken<List<Metadata>>(){}.getType();
         return apiClient.execute(call, localVarReturnType);
     }
@@ -3220,7 +3235,7 @@ public class RepositoryApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call searchRepositoryAsync(String searchString, Integer skip, Integer limit, final ApiCallback<List<Metadata>> callback) throws ApiException {
+    public com.squareup.okhttp.Call searchRepositoriesAsync(String searchString, Integer skip, Integer limit, final ApiCallback<List<Metadata>> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -3241,13 +3256,13 @@ public class RepositoryApi {
             };
         }
 
-        com.squareup.okhttp.Call call = searchRepositoryCall(searchString, skip, limit, progressListener, progressRequestListener);
+        com.squareup.okhttp.Call call = searchRepositoriesCall(searchString, skip, limit, progressListener, progressRequestListener);
         Type localVarReturnType = new TypeToken<List<Metadata>>(){}.getType();
         apiClient.executeAsync(call, localVarReturnType, callback);
         return call;
     }
     /* Build call for updateCodeById */
-    private com.squareup.okhttp.Call updateCodeByIdCall(String fileid, String codesetid, Integer id, Code code, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
+    private com.squareup.okhttp.Call updateCodeByIdCall(String fileid, Integer codesetid, Integer id, Code code, final ProgressResponseBody.ProgressListener progressListener, final ProgressRequestBody.ProgressRequestListener progressRequestListener) throws ApiException {
         Object localVarPostBody = code;
         
         // verify the required parameter 'fileid' is set
@@ -3272,7 +3287,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}/codesets/{codesetid}/code{id}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}/codesets/{codesetid}/codes/{id}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()))
         .replaceAll("\\{" + "codesetid" + "\\}", apiClient.escapeString(codesetid.toString()))
         .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -3320,7 +3335,7 @@ public class RepositoryApi {
      * @param code Code to update (required)
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public void updateCodeById(String fileid, String codesetid, Integer id, Code code) throws ApiException {
+    public void updateCodeById(String fileid, Integer codesetid, Integer id, Code code) throws ApiException {
         updateCodeByIdWithHttpInfo(fileid, codesetid, id, code);
     }
 
@@ -3334,7 +3349,7 @@ public class RepositoryApi {
      * @return ApiResponse&lt;Void&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      */
-    public ApiResponse<Void> updateCodeByIdWithHttpInfo(String fileid, String codesetid, Integer id, Code code) throws ApiException {
+    public ApiResponse<Void> updateCodeByIdWithHttpInfo(String fileid, Integer codesetid, Integer id, Code code) throws ApiException {
         com.squareup.okhttp.Call call = updateCodeByIdCall(fileid, codesetid, id, code, null, null);
         return apiClient.execute(call);
     }
@@ -3350,7 +3365,7 @@ public class RepositoryApi {
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      */
-    public com.squareup.okhttp.Call updateCodeByIdAsync(String fileid, String codesetid, Integer id, Code code, final ApiCallback<Void> callback) throws ApiException {
+    public com.squareup.okhttp.Call updateCodeByIdAsync(String fileid, Integer codesetid, Integer id, Code code, final ApiCallback<Void> callback) throws ApiException {
 
         ProgressResponseBody.ProgressListener progressListener = null;
         ProgressRequestBody.ProgressRequestListener progressRequestListener = null;
@@ -3396,7 +3411,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}/codesets/{id}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}/codesets/{id}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()))
         .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
 
@@ -3516,7 +3531,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}/components/{id}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}/components/{id}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()))
         .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
 
@@ -3636,7 +3651,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}/datatypes/{name}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}/datatypes/{name}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()))
         .replaceAll("\\{" + "name" + "\\}", apiClient.escapeString(name.toString()));
 
@@ -3756,7 +3771,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}/fields/{id}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}/fields/{id}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()))
         .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
 
@@ -3876,7 +3891,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}/messages/{id}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}/messages/{id}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()))
         .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
 
@@ -3991,7 +4006,7 @@ public class RepositoryApi {
         
 
         // create path and map variables
-        String localVarPath = "/repository/{fileid}".replaceAll("\\{format\\}","json")
+        String localVarPath = "/repositories/{fileid}".replaceAll("\\{format\\}","json")
         .replaceAll("\\{" + "fileid" + "\\}", apiClient.escapeString(fileid.toString()));
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();

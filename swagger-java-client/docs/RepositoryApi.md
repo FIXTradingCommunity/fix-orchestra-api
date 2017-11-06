@@ -4,41 +4,41 @@ All URIs are relative to *https://virtserver.swaggerhub.com/FIXTradingCommunity/
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**addCode**](RepositoryApi.md#addCode) | **POST** /repository/{fileid}/codesets{codesetid}/code | adds a Code to CodeSet
-[**addCodeSet**](RepositoryApi.md#addCodeSet) | **POST** /repository/{fileid}/codesets | adds a CodeSet
-[**addComponent**](RepositoryApi.md#addComponent) | **POST** /repository/{fileid}/components | adds a component
-[**addDatatype**](RepositoryApi.md#addDatatype) | **POST** /repository/{fileid}/datatypes | adds a datatype
-[**addField**](RepositoryApi.md#addField) | **POST** /repository/{fileid}/fields | adds a field
-[**addMessage**](RepositoryApi.md#addMessage) | **POST** /repository/{fileid}/messages | adds a message scenario
-[**addRepository**](RepositoryApi.md#addRepository) | **POST** /repository | adds an Orchestra repository file
-[**deleteCode**](RepositoryApi.md#deleteCode) | **DELETE** /repository/{fileid}/codesets/{codesetid}/code{id} | deletes a single Code based on the ID supplied
-[**deleteCodeSet**](RepositoryApi.md#deleteCodeSet) | **DELETE** /repository/{fileid}/codesets/{id} | deletes a single CodeSet based on the ID supplied
-[**deleteComponent**](RepositoryApi.md#deleteComponent) | **DELETE** /repository/{fileid}/components/{id} | deletes a single component based on the ID supplied
-[**deleteDatatype**](RepositoryApi.md#deleteDatatype) | **DELETE** /repository/{fileid}/datatypes/{name} | deletes a single datatype based on the name supplied
-[**deleteField**](RepositoryApi.md#deleteField) | **DELETE** /repository/{fileid}/fields/{id} | deletes a single field based on the ID supplied
-[**deleteMessage**](RepositoryApi.md#deleteMessage) | **DELETE** /repository/{fileid}/messages/{id} | deletes a single message scenario based on the ID supplied
-[**deleteRepository**](RepositoryApi.md#deleteRepository) | **DELETE** /repository/{fileid} | deletes a single Orchestra repository file based on the ID supplied
-[**findCodeById**](RepositoryApi.md#findCodeById) | **GET** /repository/{fileid}/codesets/{codesetid}/code{id} | Returns a single Code, if found
-[**findCodeSetById**](RepositoryApi.md#findCodeSetById) | **GET** /repository/{fileid}/codesets/{id} | Returns a single CodeSet, if found
-[**findComponentById**](RepositoryApi.md#findComponentById) | **GET** /repository/{fileid}/components/{id} | Returns a single component, if found
-[**findDatatypeByName**](RepositoryApi.md#findDatatypeByName) | **GET** /repository/{fileid}/datatypes/{name} | Returns a single datatype, if found
-[**findFieldById**](RepositoryApi.md#findFieldById) | **GET** /repository/{fileid}/fields/{id} | Returns a single field, if found
-[**findMessageById**](RepositoryApi.md#findMessageById) | **GET** /repository/{fileid}/messages/{id} | Returns a single message scenario, if found
-[**findRepositoryById**](RepositoryApi.md#findRepositoryById) | **GET** /repository/{fileid} | Returns a single Orchestra repository file metadata, if found
-[**searchCodeSets**](RepositoryApi.md#searchCodeSets) | **GET** /repository/{fileid}/codesets | searches CodeSets
-[**searchCodes**](RepositoryApi.md#searchCodes) | **GET** /repository/{fileid}/codesets{codesetid}/code | searches Codes within a CodeSet
-[**searchComponents**](RepositoryApi.md#searchComponents) | **GET** /repository/{fileid}/components | searches components
-[**searchDatatypes**](RepositoryApi.md#searchDatatypes) | **GET** /repository/{fileid}/datatypes | searches datatypes
-[**searchFields**](RepositoryApi.md#searchFields) | **GET** /repository/{fileid}/fields | searches fields
-[**searchMessages**](RepositoryApi.md#searchMessages) | **GET** /repository/{fileid}/messages | searches messages
-[**searchRepository**](RepositoryApi.md#searchRepository) | **GET** /repository | searches Orchestra repository files
-[**updateCodeById**](RepositoryApi.md#updateCodeById) | **PUT** /repository/{fileid}/codesets/{codesetid}/code{id} | Updates a single Code, if found (idempotent)
-[**updateCodeSetById**](RepositoryApi.md#updateCodeSetById) | **PUT** /repository/{fileid}/codesets/{id} | Updates a single CodeSet, if found (idempotent)
-[**updateComponentById**](RepositoryApi.md#updateComponentById) | **PUT** /repository/{fileid}/components/{id} | Updates a single component, if found (idempotent)
-[**updateDatatypeByName**](RepositoryApi.md#updateDatatypeByName) | **PUT** /repository/{fileid}/datatypes/{name} | Updates a single datatype, if found (idempotent)
-[**updateFieldById**](RepositoryApi.md#updateFieldById) | **PUT** /repository/{fileid}/fields/{id} | Updates a single field, if found (idempotent)
-[**updateMessageById**](RepositoryApi.md#updateMessageById) | **PUT** /repository/{fileid}/messages/{id} | Updates a single message scenario, if found (idempotent)
-[**updateRepositoryById**](RepositoryApi.md#updateRepositoryById) | **PUT** /repository/{fileid} | Updates an Orchestra repository file, if found (idempotent)
+[**addCode**](RepositoryApi.md#addCode) | **POST** /repositories/{fileid}/codesets/{codesetid}/codes | adds a Code to CodeSet
+[**addCodeSet**](RepositoryApi.md#addCodeSet) | **POST** /repositories/{fileid}/codesets | adds a CodeSet
+[**addComponent**](RepositoryApi.md#addComponent) | **POST** /repositories/{fileid}/components | adds a component
+[**addDatatype**](RepositoryApi.md#addDatatype) | **POST** /repositories/{fileid}/datatypes | adds a datatype
+[**addField**](RepositoryApi.md#addField) | **POST** /repositories/{fileid}/fields | adds a field
+[**addMessage**](RepositoryApi.md#addMessage) | **POST** /repositories/{fileid}/messages | adds a message scenario
+[**addRepository**](RepositoryApi.md#addRepository) | **POST** /repositories | adds an Orchestra repository file
+[**deleteCode**](RepositoryApi.md#deleteCode) | **DELETE** /repositories/{fileid}/codesets/{codesetid}/codes/{id} | deletes a single Code based on the ID supplied
+[**deleteCodeSet**](RepositoryApi.md#deleteCodeSet) | **DELETE** /repositories/{fileid}/codesets/{id} | deletes a single CodeSet based on the ID supplied
+[**deleteComponent**](RepositoryApi.md#deleteComponent) | **DELETE** /repositories/{fileid}/components/{id} | deletes a single component based on the ID supplied
+[**deleteDatatype**](RepositoryApi.md#deleteDatatype) | **DELETE** /repositories/{fileid}/datatypes/{name} | deletes a single datatype based on the name supplied
+[**deleteField**](RepositoryApi.md#deleteField) | **DELETE** /repositories/{fileid}/fields/{id} | deletes a single field based on the ID supplied
+[**deleteMessage**](RepositoryApi.md#deleteMessage) | **DELETE** /repositories/{fileid}/messages/{id} | deletes a single message scenario based on the ID supplied
+[**deleteRepository**](RepositoryApi.md#deleteRepository) | **DELETE** /repositories/{fileid} | deletes a single Orchestra repository file based on the ID supplied
+[**findCodeById**](RepositoryApi.md#findCodeById) | **GET** /repositories/{fileid}/codesets/{codesetid}/codes/{id} | Returns a single Code, if found
+[**findCodeSetById**](RepositoryApi.md#findCodeSetById) | **GET** /repositories/{fileid}/codesets/{id} | Returns a single CodeSet, if found
+[**findComponentById**](RepositoryApi.md#findComponentById) | **GET** /repositories/{fileid}/components/{id} | Returns a single component, if found
+[**findDatatypeByName**](RepositoryApi.md#findDatatypeByName) | **GET** /repositories/{fileid}/datatypes/{name} | Returns a single datatype, if found
+[**findFieldById**](RepositoryApi.md#findFieldById) | **GET** /repositories/{fileid}/fields/{id} | Returns a single field, if found
+[**findMessageById**](RepositoryApi.md#findMessageById) | **GET** /repositories/{fileid}/messages/{id} | Returns a single message scenario, if found
+[**findRepositoryById**](RepositoryApi.md#findRepositoryById) | **GET** /repositories/{fileid} | Returns a single Orchestra repository file metadata, if found
+[**searchCodeSets**](RepositoryApi.md#searchCodeSets) | **GET** /repositories/{fileid}/codesets | searches CodeSets
+[**searchCodes**](RepositoryApi.md#searchCodes) | **GET** /repositories/{fileid}/codesets/{codesetid}/codes | searches Codes within a CodeSet
+[**searchComponents**](RepositoryApi.md#searchComponents) | **GET** /repositories/{fileid}/components | searches components
+[**searchDatatypes**](RepositoryApi.md#searchDatatypes) | **GET** /repositories/{fileid}/datatypes | searches datatypes
+[**searchFields**](RepositoryApi.md#searchFields) | **GET** /repositories/{fileid}/fields | searches fields
+[**searchMessages**](RepositoryApi.md#searchMessages) | **GET** /repositories/{fileid}/messages | searches messages
+[**searchRepositories**](RepositoryApi.md#searchRepositories) | **GET** /repositories | searches Orchestra repository files
+[**updateCodeById**](RepositoryApi.md#updateCodeById) | **PUT** /repositories/{fileid}/codesets/{codesetid}/codes/{id} | Updates a single Code, if found (idempotent)
+[**updateCodeSetById**](RepositoryApi.md#updateCodeSetById) | **PUT** /repositories/{fileid}/codesets/{id} | Updates a single CodeSet, if found (idempotent)
+[**updateComponentById**](RepositoryApi.md#updateComponentById) | **PUT** /repositories/{fileid}/components/{id} | Updates a single component, if found (idempotent)
+[**updateDatatypeByName**](RepositoryApi.md#updateDatatypeByName) | **PUT** /repositories/{fileid}/datatypes/{name} | Updates a single datatype, if found (idempotent)
+[**updateFieldById**](RepositoryApi.md#updateFieldById) | **PUT** /repositories/{fileid}/fields/{id} | Updates a single field, if found (idempotent)
+[**updateMessageById**](RepositoryApi.md#updateMessageById) | **PUT** /repositories/{fileid}/messages/{id} | Updates a single message scenario, if found (idempotent)
+[**updateRepositoryById**](RepositoryApi.md#updateRepositoryById) | **PUT** /repositories/{fileid} | Updates an Orchestra repository file, if found (idempotent)
 
 
 <a name="addCode"></a>
@@ -58,7 +58,7 @@ Adds a Code
 
 RepositoryApi apiInstance = new RepositoryApi();
 String fileid = "fileid_example"; // String | ID of Orchestra repository file
-String codesetid = "codesetid_example"; // String | ID of CodeSet
+Integer codesetid = 56; // Integer | ID of CodeSet
 Code code = new Code(); // Code | Code to add
 try {
     apiInstance.addCode(fileid, codesetid, code);
@@ -73,7 +73,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **fileid** | **String**| ID of Orchestra repository file |
- **codesetid** | **String**| ID of CodeSet |
+ **codesetid** | **Integer**| ID of CodeSet |
  **code** | [**Code**](Code.md)| Code to add | [optional]
 
 ### Return type
@@ -137,7 +137,7 @@ No authorization required
 
 <a name="addComponent"></a>
 # **addComponent**
-> addComponent(fileid, component)
+> addComponent(fileid, component, toClone)
 
 adds a component
 
@@ -153,8 +153,9 @@ Adds a component
 RepositoryApi apiInstance = new RepositoryApi();
 String fileid = "fileid_example"; // String | ID of Orchestra repository file
 Component component = new Component(); // Component | Component to add
+Integer toClone = 56; // Integer | ID of component to clone
 try {
-    apiInstance.addComponent(fileid, component);
+    apiInstance.addComponent(fileid, component, toClone);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#addComponent");
     e.printStackTrace();
@@ -167,6 +168,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **fileid** | **String**| ID of Orchestra repository file |
  **component** | [**Component**](Component.md)| Component to add | [optional]
+ **toClone** | **Integer**| ID of component to clone | [optional]
 
 ### Return type
 
@@ -275,7 +277,7 @@ No authorization required
 
 <a name="addMessage"></a>
 # **addMessage**
-> addMessage(fileid, message)
+> addMessage(fileid, message, toClone)
 
 adds a message scenario
 
@@ -291,8 +293,9 @@ Adds a message scenario
 RepositoryApi apiInstance = new RepositoryApi();
 String fileid = "fileid_example"; // String | ID of Orchestra repository file
 Message message = new Message(); // Message | message to add
+Integer toClone = 56; // Integer | ID of message to clone
 try {
-    apiInstance.addMessage(fileid, message);
+    apiInstance.addMessage(fileid, message, toClone);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#addMessage");
     e.printStackTrace();
@@ -305,6 +308,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **fileid** | **String**| ID of Orchestra repository file |
  **message** | [**Message**](Message.md)| message to add | [optional]
+ **toClone** | **Integer**| ID of message to clone | [optional]
 
 ### Return type
 
@@ -321,7 +325,7 @@ No authorization required
 
 <a name="addRepository"></a>
 # **addRepository**
-> addRepository(repository)
+> addRepository(repository, toClone)
 
 adds an Orchestra repository file
 
@@ -336,8 +340,9 @@ Adds an Orchestra repository file
 
 RepositoryApi apiInstance = new RepositoryApi();
 Metadata repository = new Metadata(); // Metadata | Orchestra repository file to add
+String toClone = "toClone_example"; // String | ID of Orchestra repository file to clone
 try {
-    apiInstance.addRepository(repository);
+    apiInstance.addRepository(repository, toClone);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#addRepository");
     e.printStackTrace();
@@ -349,6 +354,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **repository** | [**Metadata**](Metadata.md)| Orchestra repository file to add |
+ **toClone** | **String**| ID of Orchestra repository file to clone | [optional]
 
 ### Return type
 
@@ -378,8 +384,8 @@ deletes a single Code based on the ID supplied
 
 RepositoryApi apiInstance = new RepositoryApi();
 String fileid = "fileid_example"; // String | ID of Orchestra repository file
-String codesetid = "codesetid_example"; // String | ID of CodeSet
-Long id = 789L; // Long | ID of field to delete
+Integer codesetid = 56; // Integer | ID of CodeSet
+Integer id = 56; // Integer | ID of field to delete
 try {
     apiInstance.deleteCode(fileid, codesetid, id);
 } catch (ApiException e) {
@@ -393,8 +399,8 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **fileid** | **String**| ID of Orchestra repository file |
- **codesetid** | **String**| ID of CodeSet |
- **id** | **Long**| ID of field to delete |
+ **codesetid** | **Integer**| ID of CodeSet |
+ **id** | **Integer**| ID of field to delete |
 
 ### Return type
 
@@ -424,7 +430,7 @@ deletes a single CodeSet based on the ID supplied
 
 RepositoryApi apiInstance = new RepositoryApi();
 String fileid = "fileid_example"; // String | ID of Orchestra repository file
-Long id = 789L; // Long | ID of field to delete
+Integer id = 56; // Integer | ID of field to delete
 try {
     apiInstance.deleteCodeSet(fileid, id);
 } catch (ApiException e) {
@@ -438,7 +444,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **fileid** | **String**| ID of Orchestra repository file |
- **id** | **Long**| ID of field to delete |
+ **id** | **Integer**| ID of field to delete |
 
 ### Return type
 
@@ -468,7 +474,7 @@ deletes a single component based on the ID supplied
 
 RepositoryApi apiInstance = new RepositoryApi();
 String fileid = "fileid_example"; // String | ID of Orchestra repository file
-Long id = 789L; // Long | ID of component to delete
+Integer id = 56; // Integer | ID of component to delete
 try {
     apiInstance.deleteComponent(fileid, id);
 } catch (ApiException e) {
@@ -482,7 +488,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **fileid** | **String**| ID of Orchestra repository file |
- **id** | **Long**| ID of component to delete |
+ **id** | **Integer**| ID of component to delete |
 
 ### Return type
 
@@ -556,7 +562,7 @@ deletes a single field based on the ID supplied
 
 RepositoryApi apiInstance = new RepositoryApi();
 String fileid = "fileid_example"; // String | ID of Orchestra repository file
-Long id = 789L; // Long | ID of field to delete
+Integer id = 56; // Integer | ID of field to delete
 try {
     apiInstance.deleteField(fileid, id);
 } catch (ApiException e) {
@@ -570,7 +576,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **fileid** | **String**| ID of Orchestra repository file |
- **id** | **Long**| ID of field to delete |
+ **id** | **Integer**| ID of field to delete |
 
 ### Return type
 
@@ -600,7 +606,7 @@ deletes a single message scenario based on the ID supplied
 
 RepositoryApi apiInstance = new RepositoryApi();
 String fileid = "fileid_example"; // String | ID of Orchestra repository file
-Long id = 789L; // Long | ID of message to delete
+Integer id = 56; // Integer | ID of message to delete
 try {
     apiInstance.deleteMessage(fileid, id);
 } catch (ApiException e) {
@@ -614,7 +620,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **fileid** | **String**| ID of Orchestra repository file |
- **id** | **Long**| ID of message to delete |
+ **id** | **Integer**| ID of message to delete |
 
 ### Return type
 
@@ -686,7 +692,7 @@ Returns a single Code, if found
 
 RepositoryApi apiInstance = new RepositoryApi();
 String fileid = "fileid_example"; // String | ID of Orchestra repository file
-String codesetid = "codesetid_example"; // String | ID of CodeSet
+Integer codesetid = 56; // Integer | ID of CodeSet
 Integer id = 56; // Integer | ID of Code to fetch
 try {
     Code result = apiInstance.findCodeById(fileid, codesetid, id);
@@ -702,7 +708,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **fileid** | **String**| ID of Orchestra repository file |
- **codesetid** | **String**| ID of CodeSet |
+ **codesetid** | **Integer**| ID of CodeSet |
  **id** | **Integer**| ID of Code to fetch |
 
 ### Return type
@@ -1054,7 +1060,7 @@ By passing in the appropriate options, you can search for Codes
 
 RepositoryApi apiInstance = new RepositoryApi();
 String fileid = "fileid_example"; // String | ID of Orchestra repository file
-String codesetid = "codesetid_example"; // String | ID of CodeSet
+Integer codesetid = 56; // Integer | ID of CodeSet
 String searchString = "searchString_example"; // String | pass an optional search string for looking up Codes
 Integer skip = 56; // Integer | number of records to skip for pagination
 Integer limit = 56; // Integer | maximum number of records to return
@@ -1072,7 +1078,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **fileid** | **String**| ID of Orchestra repository file |
- **codesetid** | **String**| ID of CodeSet |
+ **codesetid** | **Integer**| ID of CodeSet |
  **searchString** | **String**| pass an optional search string for looking up Codes | [optional]
  **skip** | **Integer**| number of records to skip for pagination | [optional]
  **limit** | **Integer**| maximum number of records to return | [optional]
@@ -1294,9 +1300,9 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
-<a name="searchRepository"></a>
-# **searchRepository**
-> List&lt;Metadata&gt; searchRepository(searchString, skip, limit)
+<a name="searchRepositories"></a>
+# **searchRepositories**
+> List&lt;Metadata&gt; searchRepositories(searchString, skip, limit)
 
 searches Orchestra repository files
 
@@ -1314,10 +1320,10 @@ String searchString = "searchString_example"; // String | pass an optional searc
 Integer skip = 56; // Integer | number of records to skip for pagination
 Integer limit = 56; // Integer | maximum number of records to return
 try {
-    List<Metadata> result = apiInstance.searchRepository(searchString, skip, limit);
+    List<Metadata> result = apiInstance.searchRepositories(searchString, skip, limit);
     System.out.println(result);
 } catch (ApiException e) {
-    System.err.println("Exception when calling RepositoryApi#searchRepository");
+    System.err.println("Exception when calling RepositoryApi#searchRepositories");
     e.printStackTrace();
 }
 ```
@@ -1358,7 +1364,7 @@ Updates a single Code, if found (idempotent)
 
 RepositoryApi apiInstance = new RepositoryApi();
 String fileid = "fileid_example"; // String | ID of Orchestra repository file
-String codesetid = "codesetid_example"; // String | ID of CodeSet
+Integer codesetid = 56; // Integer | ID of CodeSet
 Integer id = 56; // Integer | ID of Code to update
 Code code = new Code(); // Code | Code to update
 try {
@@ -1374,7 +1380,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **fileid** | **String**| ID of Orchestra repository file |
- **codesetid** | **String**| ID of CodeSet |
+ **codesetid** | **Integer**| ID of CodeSet |
  **id** | **Integer**| ID of Code to update |
  **code** | [**Code**](Code.md)| Code to update |
 

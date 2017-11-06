@@ -22,10 +22,10 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-10-27T18:20:26.929Z")
-public class RepositoryApiServiceImpl extends RepositoryApiService {
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-06T20:15:25.553Z")
+public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     @Override
-    public Response addCode(String fileid, String codesetid, Code code, SecurityContext securityContext) throws NotFoundException {
+    public Response addCode(String fileid, Integer codesetid, Code code, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
@@ -35,7 +35,7 @@ public class RepositoryApiServiceImpl extends RepositoryApiService {
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
     @Override
-    public Response addComponent(String fileid, Component component, SecurityContext securityContext) throws NotFoundException {
+    public Response addComponent(String fileid, Component component, Integer toClone, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
@@ -50,27 +50,27 @@ public class RepositoryApiServiceImpl extends RepositoryApiService {
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
     @Override
-    public Response addMessage(String fileid, Message message, SecurityContext securityContext) throws NotFoundException {
+    public Response addMessage(String fileid, Message message, Integer toClone, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
     @Override
-    public Response addRepository(Metadata repository, SecurityContext securityContext) throws NotFoundException {
+    public Response addRepository(Metadata repository, String toClone, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
     @Override
-    public Response deleteCode(String fileid, String codesetid, Long id, SecurityContext securityContext) throws NotFoundException {
+    public Response deleteCode(String fileid, Integer codesetid, Integer id, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
     @Override
-    public Response deleteCodeSet(String fileid, Long id, SecurityContext securityContext) throws NotFoundException {
+    public Response deleteCodeSet(String fileid, Integer id, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
     @Override
-    public Response deleteComponent(String fileid, Long id, SecurityContext securityContext) throws NotFoundException {
+    public Response deleteComponent(String fileid, Integer id, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
@@ -80,12 +80,12 @@ public class RepositoryApiServiceImpl extends RepositoryApiService {
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
     @Override
-    public Response deleteField(String fileid, Long id, SecurityContext securityContext) throws NotFoundException {
+    public Response deleteField(String fileid, Integer id, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
     @Override
-    public Response deleteMessage(String fileid, Long id, SecurityContext securityContext) throws NotFoundException {
+    public Response deleteMessage(String fileid, Integer id, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
@@ -95,7 +95,7 @@ public class RepositoryApiServiceImpl extends RepositoryApiService {
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
     @Override
-    public Response findCodeById(String fileid, String codesetid, Integer id, SecurityContext securityContext) throws NotFoundException {
+    public Response findCodeById(String fileid, Integer codesetid, Integer id, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
@@ -135,7 +135,7 @@ public class RepositoryApiServiceImpl extends RepositoryApiService {
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
     @Override
-    public Response searchCodes(String fileid, String codesetid, String searchString, Integer skip, Integer limit, SecurityContext securityContext) throws NotFoundException {
+    public Response searchCodes(String fileid, Integer codesetid, String searchString, Integer skip, Integer limit, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
@@ -160,12 +160,12 @@ public class RepositoryApiServiceImpl extends RepositoryApiService {
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
     @Override
-    public Response searchRepository(String searchString, Integer skip, Integer limit, SecurityContext securityContext) throws NotFoundException {
+    public Response searchRepositories(String searchString, Integer skip, Integer limit, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }
     @Override
-    public Response updateCodeById(String fileid, String codesetid, Integer id, Code code, SecurityContext securityContext) throws NotFoundException {
+    public Response updateCodeById(String fileid, Integer codesetid, Integer id, Code code, SecurityContext securityContext) throws NotFoundException {
         // do some magic!
         return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
     }

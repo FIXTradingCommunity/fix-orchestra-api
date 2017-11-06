@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
  * element metadata including pedigree
  */
 @ApiModel(description = "element metadata including pedigree")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-10-27T18:19:20.110Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-06T20:14:38.153Z")
 public class EntityAttributes {
   @SerializedName("added")
   private String added = null;

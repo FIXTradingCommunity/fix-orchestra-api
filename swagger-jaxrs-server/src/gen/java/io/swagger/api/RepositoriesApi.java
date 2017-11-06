@@ -1,8 +1,8 @@
 package io.swagger.api;
 
 import io.swagger.model.*;
-import io.swagger.api.RepositoryApiService;
-import io.swagger.api.factories.RepositoryApiServiceFactory;
+import io.swagger.api.RepositoriesApiService;
+import io.swagger.api.factories.RepositoriesApiServiceFactory;
 
 import io.swagger.annotations.ApiParam;
 import io.swagger.jaxrs.*;
@@ -29,16 +29,16 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.*;
 
-@Path("/repository")
+@Path("/repositories")
 
 
-@io.swagger.annotations.Api(description = "the repository API")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-10-27T18:20:26.929Z")
-public class RepositoryApi  {
-   private final RepositoryApiService delegate = RepositoryApiServiceFactory.getRepositoryApi();
+@io.swagger.annotations.Api(description = "the repositories API")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-06T20:15:25.553Z")
+public class RepositoriesApi  {
+   private final RepositoriesApiService delegate = RepositoriesApiServiceFactory.getRepositoriesApi();
 
     @POST
-    @Path("/{fileid}/codesets{codesetid}/code")
+    @Path("/{fileid}/codesets/{codesetid}/codes")
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "adds a Code to CodeSet", notes = "Adds a Code", response = void.class, tags={ "repository", })
@@ -49,7 +49,7 @@ public class RepositoryApi  {
         
         @io.swagger.annotations.ApiResponse(code = 409, message = "an existing item already exists", response = void.class) })
     public Response addCode(@ApiParam(value = "ID of Orchestra repository file",required=true) @PathParam("fileid") String fileid
-,@ApiParam(value = "ID of CodeSet",required=true) @PathParam("codesetid") String codesetid
+,@ApiParam(value = "ID of CodeSet",required=true) @PathParam("codesetid") Integer codesetid
 ,@ApiParam(value = "Code to add" ) Code code
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
@@ -85,9 +85,10 @@ public class RepositoryApi  {
         @io.swagger.annotations.ApiResponse(code = 409, message = "an existing item already exists", response = void.class) })
     public Response addComponent(@ApiParam(value = "ID of Orchestra repository file",required=true) @PathParam("fileid") String fileid
 ,@ApiParam(value = "Component to add" ) Component component
+,@ApiParam(value = "ID of component to clone") @QueryParam("toClone") Integer toClone
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.addComponent(fileid,component,securityContext);
+        return delegate.addComponent(fileid,component,toClone,securityContext);
     }
     @POST
     @Path("/{fileid}/datatypes")
@@ -136,9 +137,10 @@ public class RepositoryApi  {
         @io.swagger.annotations.ApiResponse(code = 409, message = "an existing item already exists", response = void.class) })
     public Response addMessage(@ApiParam(value = "ID of Orchestra repository file",required=true) @PathParam("fileid") String fileid
 ,@ApiParam(value = "message to add" ) Message message
+,@ApiParam(value = "ID of message to clone") @QueryParam("toClone") Integer toClone
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.addMessage(fileid,message,securityContext);
+        return delegate.addMessage(fileid,message,toClone,securityContext);
     }
     @POST
     
@@ -152,12 +154,13 @@ public class RepositoryApi  {
         
         @io.swagger.annotations.ApiResponse(code = 409, message = "an existing item already exists", response = void.class) })
     public Response addRepository(@ApiParam(value = "Orchestra repository file to add" ,required=true) Metadata repository
+,@ApiParam(value = "ID of Orchestra repository file to clone") @QueryParam("toClone") String toClone
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.addRepository(repository,securityContext);
+        return delegate.addRepository(repository,toClone,securityContext);
     }
     @DELETE
-    @Path("/{fileid}/codesets/{codesetid}/code{id}")
+    @Path("/{fileid}/codesets/{codesetid}/codes/{id}")
     
     
     @io.swagger.annotations.ApiOperation(value = "deletes a single Code based on the ID supplied", notes = "", response = void.class, tags={ "repository", })
@@ -166,8 +169,8 @@ public class RepositoryApi  {
         
         @io.swagger.annotations.ApiResponse(code = 404, message = "Code not found", response = void.class) })
     public Response deleteCode(@ApiParam(value = "ID of Orchestra repository file",required=true) @PathParam("fileid") String fileid
-,@ApiParam(value = "ID of CodeSet",required=true) @PathParam("codesetid") String codesetid
-,@ApiParam(value = "ID of field to delete",required=true) @PathParam("id") Long id
+,@ApiParam(value = "ID of CodeSet",required=true) @PathParam("codesetid") Integer codesetid
+,@ApiParam(value = "ID of field to delete",required=true) @PathParam("id") Integer id
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.deleteCode(fileid,codesetid,id,securityContext);
@@ -182,7 +185,7 @@ public class RepositoryApi  {
         
         @io.swagger.annotations.ApiResponse(code = 404, message = "CodeSet not found", response = void.class) })
     public Response deleteCodeSet(@ApiParam(value = "ID of Orchestra repository file",required=true) @PathParam("fileid") String fileid
-,@ApiParam(value = "ID of field to delete",required=true) @PathParam("id") Long id
+,@ApiParam(value = "ID of field to delete",required=true) @PathParam("id") Integer id
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.deleteCodeSet(fileid,id,securityContext);
@@ -197,7 +200,7 @@ public class RepositoryApi  {
         
         @io.swagger.annotations.ApiResponse(code = 404, message = "component not found", response = void.class) })
     public Response deleteComponent(@ApiParam(value = "ID of Orchestra repository file",required=true) @PathParam("fileid") String fileid
-,@ApiParam(value = "ID of component to delete",required=true) @PathParam("id") Long id
+,@ApiParam(value = "ID of component to delete",required=true) @PathParam("id") Integer id
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.deleteComponent(fileid,id,securityContext);
@@ -227,7 +230,7 @@ public class RepositoryApi  {
         
         @io.swagger.annotations.ApiResponse(code = 404, message = "field not found", response = void.class) })
     public Response deleteField(@ApiParam(value = "ID of Orchestra repository file",required=true) @PathParam("fileid") String fileid
-,@ApiParam(value = "ID of field to delete",required=true) @PathParam("id") Long id
+,@ApiParam(value = "ID of field to delete",required=true) @PathParam("id") Integer id
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.deleteField(fileid,id,securityContext);
@@ -242,7 +245,7 @@ public class RepositoryApi  {
         
         @io.swagger.annotations.ApiResponse(code = 404, message = "message not found", response = void.class) })
     public Response deleteMessage(@ApiParam(value = "ID of Orchestra repository file",required=true) @PathParam("fileid") String fileid
-,@ApiParam(value = "ID of message to delete",required=true) @PathParam("id") Long id
+,@ApiParam(value = "ID of message to delete",required=true) @PathParam("id") Integer id
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.deleteMessage(fileid,id,securityContext);
@@ -262,7 +265,7 @@ public class RepositoryApi  {
         return delegate.deleteRepository(fileid,securityContext);
     }
     @GET
-    @Path("/{fileid}/codesets/{codesetid}/code{id}")
+    @Path("/{fileid}/codesets/{codesetid}/codes/{id}")
     
     @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Returns a single Code, if found", notes = "", response = Code.class, tags={ "repository", })
@@ -271,7 +274,7 @@ public class RepositoryApi  {
         
         @io.swagger.annotations.ApiResponse(code = 200, message = "unexpected error", response = Code.class) })
     public Response findCodeById(@ApiParam(value = "ID of Orchestra repository file",required=true) @PathParam("fileid") String fileid
-,@ApiParam(value = "ID of CodeSet",required=true) @PathParam("codesetid") String codesetid
+,@ApiParam(value = "ID of CodeSet",required=true) @PathParam("codesetid") Integer codesetid
 ,@ApiParam(value = "ID of Code to fetch",required=true) @PathParam("id") Integer id
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
@@ -384,7 +387,7 @@ public class RepositoryApi  {
         return delegate.searchCodeSets(fileid,searchString,skip,limit,securityContext);
     }
     @GET
-    @Path("/{fileid}/codesets{codesetid}/code")
+    @Path("/{fileid}/codesets/{codesetid}/codes")
     
     @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "searches Codes within a CodeSet", notes = "By passing in the appropriate options, you can search for Codes ", response = Code.class, responseContainer = "List", tags={ "repository", })
@@ -393,7 +396,7 @@ public class RepositoryApi  {
         
         @io.swagger.annotations.ApiResponse(code = 400, message = "bad input parameter", response = Code.class, responseContainer = "List") })
     public Response searchCodes(@ApiParam(value = "ID of Orchestra repository file",required=true) @PathParam("fileid") String fileid
-,@ApiParam(value = "ID of CodeSet",required=true) @PathParam("codesetid") String codesetid
+,@ApiParam(value = "ID of CodeSet",required=true) @PathParam("codesetid") Integer codesetid
 ,@ApiParam(value = "pass an optional search string for looking up Codes") @QueryParam("searchString") String searchString
 ,@ApiParam(value = "number of records to skip for pagination") @QueryParam("skip") Integer skip
 ,@ApiParam(value = "maximum number of records to return") @QueryParam("limit") Integer limit
@@ -478,15 +481,15 @@ public class RepositoryApi  {
         @io.swagger.annotations.ApiResponse(code = 200, message = "search results matching criteria", response = Metadata.class, responseContainer = "List"),
         
         @io.swagger.annotations.ApiResponse(code = 400, message = "bad input parameter", response = Metadata.class, responseContainer = "List") })
-    public Response searchRepository(@ApiParam(value = "pass an optional search string for looking up components") @QueryParam("searchString") String searchString
+    public Response searchRepositories(@ApiParam(value = "pass an optional search string for looking up components") @QueryParam("searchString") String searchString
 ,@ApiParam(value = "number of records to skip for pagination") @QueryParam("skip") Integer skip
 ,@ApiParam(value = "maximum number of records to return") @QueryParam("limit") Integer limit
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.searchRepository(searchString,skip,limit,securityContext);
+        return delegate.searchRepositories(searchString,skip,limit,securityContext);
     }
     @PUT
-    @Path("/{fileid}/codesets/{codesetid}/code{id}")
+    @Path("/{fileid}/codesets/{codesetid}/codes/{id}")
     @Consumes({ "application/json" })
     
     @io.swagger.annotations.ApiOperation(value = "Updates a single Code, if found (idempotent)", notes = "", response = void.class, tags={ "repository", })
@@ -495,7 +498,7 @@ public class RepositoryApi  {
         
         @io.swagger.annotations.ApiResponse(code = 200, message = "unexpected error", response = void.class) })
     public Response updateCodeById(@ApiParam(value = "ID of Orchestra repository file",required=true) @PathParam("fileid") String fileid
-,@ApiParam(value = "ID of CodeSet",required=true) @PathParam("codesetid") String codesetid
+,@ApiParam(value = "ID of CodeSet",required=true) @PathParam("codesetid") Integer codesetid
 ,@ApiParam(value = "ID of Code to update",required=true) @PathParam("id") Integer id
 ,@ApiParam(value = "Code to update" ,required=true) Code code
 ,@Context SecurityContext securityContext)

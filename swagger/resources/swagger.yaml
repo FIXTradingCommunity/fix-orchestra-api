@@ -16,14 +16,14 @@ tags:
 schemes:
 - "https"
 paths:
-  /repository:
+  /repositories:
     get:
       tags:
       - "repository"
       summary: "searches Orchestra repository files"
       description: "By passing in the appropriate options, you can search for\nOrchestra\
         \ repository files\n"
-      operationId: "searchRepository"
+      operationId: "searchRepositories"
       produces:
       - "application/json"
       parameters:
@@ -73,6 +73,11 @@ paths:
         required: true
         schema:
           $ref: "#/definitions/Metadata"
+      - name: "toClone"
+        in: "query"
+        description: "ID of Orchestra repository file to clone"
+        required: false
+        type: "string"
       responses:
         201:
           description: "item created"
@@ -85,7 +90,7 @@ paths:
           description: "invalid input, object invalid"
         409:
           description: "an existing item already exists"
-  /repository/{fileid}:
+  /repositories/{fileid}:
     get:
       tags:
       - "repository"
@@ -150,7 +155,7 @@ paths:
           description: "file deleted"
         404:
           description: "file not found"
-  /repository/{fileid}/codesets{codesetid}/code:
+  /repositories/{fileid}/codesets/{codesetid}/codes:
     get:
       tags:
       - "repository"
@@ -169,7 +174,8 @@ paths:
         in: "path"
         description: "ID of CodeSet"
         required: true
-        type: "string"
+        type: "integer"
+        format: "int32"
       - name: "searchString"
         in: "query"
         description: "pass an optional search string for looking up Codes"
@@ -219,7 +225,8 @@ paths:
         in: "path"
         description: "ID of CodeSet"
         required: true
-        type: "string"
+        type: "integer"
+        format: "int32"
       - in: "body"
         name: "Code"
         description: "Code to add"
@@ -238,7 +245,7 @@ paths:
           description: "invalid input, object invalid"
         409:
           description: "an existing item already exists"
-  /repository/{fileid}/codesets/{codesetid}/code{id}:
+  /repositories/{fileid}/codesets/{codesetid}/codes/{id}:
     get:
       tags:
       - "repository"
@@ -256,7 +263,8 @@ paths:
         in: "path"
         description: "ID of CodeSet"
         required: true
-        type: "string"
+        type: "integer"
+        format: "int32"
       - name: "id"
         in: "path"
         description: "ID of Code to fetch"
@@ -289,7 +297,8 @@ paths:
         in: "path"
         description: "ID of CodeSet"
         required: true
-        type: "string"
+        type: "integer"
+        format: "int32"
       - name: "id"
         in: "path"
         description: "ID of Code to update"
@@ -324,19 +333,20 @@ paths:
         in: "path"
         description: "ID of CodeSet"
         required: true
-        type: "string"
+        type: "integer"
+        format: "int32"
       - name: "id"
         in: "path"
         description: "ID of field to delete"
         required: true
         type: "integer"
-        format: "int64"
+        format: "int32"
       responses:
         204:
           description: "Code deleted"
         404:
           description: "Code not found"
-  /repository/{fileid}/codesets:
+  /repositories/{fileid}/codesets:
     get:
       tags:
       - "repository"
@@ -414,7 +424,7 @@ paths:
           description: "invalid input, object invalid"
         409:
           description: "an existing item already exists"
-  /repository/{fileid}/codesets/{id}:
+  /repositories/{fileid}/codesets/{id}:
     get:
       tags:
       - "repository"
@@ -491,13 +501,13 @@ paths:
         description: "ID of field to delete"
         required: true
         type: "integer"
-        format: "int64"
+        format: "int32"
       responses:
         204:
           description: "CodeSet deleted"
         404:
           description: "CodeSet not found"
-  /repository/{fileid}/components:
+  /repositories/{fileid}/components:
     get:
       tags:
       - "repository"
@@ -563,6 +573,12 @@ paths:
         required: false
         schema:
           $ref: "#/definitions/Component"
+      - name: "toClone"
+        in: "query"
+        description: "ID of component to clone"
+        required: false
+        type: "integer"
+        format: "int32"
       responses:
         201:
           description: "item created"
@@ -575,7 +591,7 @@ paths:
           description: "invalid input, object invalid"
         409:
           description: "an existing item already exists"
-  /repository/{fileid}/components/{id}:
+  /repositories/{fileid}/components/{id}:
     get:
       tags:
       - "repository"
@@ -652,13 +668,13 @@ paths:
         description: "ID of component to delete"
         required: true
         type: "integer"
-        format: "int64"
+        format: "int32"
       responses:
         204:
           description: "component deleted"
         404:
           description: "component not found"
-  /repository/{fileid}/datatypes:
+  /repositories/{fileid}/datatypes:
     get:
       tags:
       - "repository"
@@ -736,7 +752,7 @@ paths:
           description: "invalid input, object invalid"
         409:
           description: "an existing item already exists"
-  /repository/{fileid}/datatypes/{name}:
+  /repositories/{fileid}/datatypes/{name}:
     get:
       tags:
       - "repository"
@@ -816,7 +832,7 @@ paths:
           description: "datatype deleted"
         404:
           description: "datatype not found"
-  /repository/{fileid}/fields:
+  /repositories/{fileid}/fields:
     get:
       tags:
       - "repository"
@@ -894,7 +910,7 @@ paths:
           description: "invalid input, object invalid"
         409:
           description: "an existing item already exists"
-  /repository/{fileid}/fields/{id}:
+  /repositories/{fileid}/fields/{id}:
     get:
       tags:
       - "repository"
@@ -971,13 +987,13 @@ paths:
         description: "ID of field to delete"
         required: true
         type: "integer"
-        format: "int64"
+        format: "int32"
       responses:
         204:
           description: "field deleted"
         404:
           description: "field not found"
-  /repository/{fileid}/messages:
+  /repositories/{fileid}/messages:
     get:
       tags:
       - "repository"
@@ -1043,6 +1059,12 @@ paths:
         required: false
         schema:
           $ref: "#/definitions/Message"
+      - name: "toClone"
+        in: "query"
+        description: "ID of message to clone"
+        required: false
+        type: "integer"
+        format: "int32"
       responses:
         201:
           description: "item created"
@@ -1055,7 +1077,7 @@ paths:
           description: "invalid input, object invalid"
         409:
           description: "an existing item already exists"
-  /repository/{fileid}/messages/{id}:
+  /repositories/{fileid}/messages/{id}:
     get:
       tags:
       - "repository"
@@ -1132,7 +1154,7 @@ paths:
         description: "ID of message to delete"
         required: true
         type: "integer"
-        format: "int64"
+        format: "int32"
       responses:
         204:
           description: "message deleted"
@@ -1389,16 +1411,8 @@ definitions:
       identifier:
         type: "string"
         description: "unique ID of an Orchestra file"
-      abstract:
+      contributor:
         type: "string"
-        description: "a summary"
-      audience:
-        type: "string"
-        description: "who it applies to"
-      conformsTo:
-        type: "string"
-        example: "FIX 5.0SP2"
-        description: "a governing standard or specification"
       coverage:
         type: "string"
         example: "SingleGeneralOrderHandling"
@@ -1409,15 +1423,31 @@ definitions:
         type: "string"
         format: "date"
         description: "when the file was produced"
+      description:
+        type: "string"
+        description: "a summary"
+      format:
+        type: "string"
+        description: "file format"
+      language:
+        type: "string"
+      relation:
+        type: "string"
+        description: "a related resource"
+      rights:
+        type: "string"
       publisher:
         type: "string"
         example: "FIX Trading Community"
+      source:
+        type: "string"
+        description: "a resource from which this one was derived"
+      subject:
+        type: "string"
       title:
         type: "string"
-      valid:
+      type:
         type: "string"
-        format: "date"
-        description: "when the file becomes valid"
     description: "description of an Orchestra file, conforms to Dublin Core Terms"
   ObjectId:
     type: "object"

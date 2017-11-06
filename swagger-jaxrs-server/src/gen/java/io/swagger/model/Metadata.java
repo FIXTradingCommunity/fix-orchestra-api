@@ -36,19 +36,13 @@ import java.util.Date;
  * description of an Orchestra file, conforms to Dublin Core Terms
  */
 @ApiModel(description = "description of an Orchestra file, conforms to Dublin Core Terms")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-10-27T18:20:26.929Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-06T20:15:25.553Z")
 public class Metadata   {
   @JsonProperty("identifier")
   private String identifier = null;
 
-  @JsonProperty("abstract")
-  private String _abstract = null;
-
-  @JsonProperty("audience")
-  private String audience = null;
-
-  @JsonProperty("conformsTo")
-  private String conformsTo = null;
+  @JsonProperty("contributor")
+  private String contributor = null;
 
   @JsonProperty("coverage")
   private String coverage = null;
@@ -59,14 +53,35 @@ public class Metadata   {
   @JsonProperty("date")
   private Date date = null;
 
+  @JsonProperty("description")
+  private String description = null;
+
+  @JsonProperty("format")
+  private String format = null;
+
+  @JsonProperty("language")
+  private String language = null;
+
+  @JsonProperty("relation")
+  private String relation = null;
+
+  @JsonProperty("rights")
+  private String rights = null;
+
   @JsonProperty("publisher")
   private String publisher = null;
+
+  @JsonProperty("source")
+  private String source = null;
+
+  @JsonProperty("subject")
+  private String subject = null;
 
   @JsonProperty("title")
   private String title = null;
 
-  @JsonProperty("valid")
-  private Date valid = null;
+  @JsonProperty("type")
+  private String type = null;
 
   public Metadata identifier(String identifier) {
     this.identifier = identifier;
@@ -86,58 +101,22 @@ public class Metadata   {
     this.identifier = identifier;
   }
 
-  public Metadata _abstract(String _abstract) {
-    this._abstract = _abstract;
+  public Metadata contributor(String contributor) {
+    this.contributor = contributor;
     return this;
   }
 
    /**
-   * a summary
-   * @return _abstract
+   * Get contributor
+   * @return contributor
   **/
-  @ApiModelProperty(value = "a summary")
-  public String getAbstract() {
-    return _abstract;
+  @ApiModelProperty(value = "")
+  public String getContributor() {
+    return contributor;
   }
 
-  public void setAbstract(String _abstract) {
-    this._abstract = _abstract;
-  }
-
-  public Metadata audience(String audience) {
-    this.audience = audience;
-    return this;
-  }
-
-   /**
-   * who it applies to
-   * @return audience
-  **/
-  @ApiModelProperty(value = "who it applies to")
-  public String getAudience() {
-    return audience;
-  }
-
-  public void setAudience(String audience) {
-    this.audience = audience;
-  }
-
-  public Metadata conformsTo(String conformsTo) {
-    this.conformsTo = conformsTo;
-    return this;
-  }
-
-   /**
-   * a governing standard or specification
-   * @return conformsTo
-  **/
-  @ApiModelProperty(example = "FIX 5.0SP2", value = "a governing standard or specification")
-  public String getConformsTo() {
-    return conformsTo;
-  }
-
-  public void setConformsTo(String conformsTo) {
-    this.conformsTo = conformsTo;
+  public void setContributor(String contributor) {
+    this.contributor = contributor;
   }
 
   public Metadata coverage(String coverage) {
@@ -194,6 +173,96 @@ public class Metadata   {
     this.date = date;
   }
 
+  public Metadata description(String description) {
+    this.description = description;
+    return this;
+  }
+
+   /**
+   * a summary
+   * @return description
+  **/
+  @ApiModelProperty(value = "a summary")
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public Metadata format(String format) {
+    this.format = format;
+    return this;
+  }
+
+   /**
+   * file format
+   * @return format
+  **/
+  @ApiModelProperty(value = "file format")
+  public String getFormat() {
+    return format;
+  }
+
+  public void setFormat(String format) {
+    this.format = format;
+  }
+
+  public Metadata language(String language) {
+    this.language = language;
+    return this;
+  }
+
+   /**
+   * Get language
+   * @return language
+  **/
+  @ApiModelProperty(value = "")
+  public String getLanguage() {
+    return language;
+  }
+
+  public void setLanguage(String language) {
+    this.language = language;
+  }
+
+  public Metadata relation(String relation) {
+    this.relation = relation;
+    return this;
+  }
+
+   /**
+   * a related resource
+   * @return relation
+  **/
+  @ApiModelProperty(value = "a related resource")
+  public String getRelation() {
+    return relation;
+  }
+
+  public void setRelation(String relation) {
+    this.relation = relation;
+  }
+
+  public Metadata rights(String rights) {
+    this.rights = rights;
+    return this;
+  }
+
+   /**
+   * Get rights
+   * @return rights
+  **/
+  @ApiModelProperty(value = "")
+  public String getRights() {
+    return rights;
+  }
+
+  public void setRights(String rights) {
+    this.rights = rights;
+  }
+
   public Metadata publisher(String publisher) {
     this.publisher = publisher;
     return this;
@@ -210,6 +279,42 @@ public class Metadata   {
 
   public void setPublisher(String publisher) {
     this.publisher = publisher;
+  }
+
+  public Metadata source(String source) {
+    this.source = source;
+    return this;
+  }
+
+   /**
+   * a resource from which this one was derived
+   * @return source
+  **/
+  @ApiModelProperty(value = "a resource from which this one was derived")
+  public String getSource() {
+    return source;
+  }
+
+  public void setSource(String source) {
+    this.source = source;
+  }
+
+  public Metadata subject(String subject) {
+    this.subject = subject;
+    return this;
+  }
+
+   /**
+   * Get subject
+   * @return subject
+  **/
+  @ApiModelProperty(value = "")
+  public String getSubject() {
+    return subject;
+  }
+
+  public void setSubject(String subject) {
+    this.subject = subject;
   }
 
   public Metadata title(String title) {
@@ -230,22 +335,22 @@ public class Metadata   {
     this.title = title;
   }
 
-  public Metadata valid(Date valid) {
-    this.valid = valid;
+  public Metadata type(String type) {
+    this.type = type;
     return this;
   }
 
    /**
-   * when the file becomes valid
-   * @return valid
+   * Get type
+   * @return type
   **/
-  @ApiModelProperty(value = "when the file becomes valid")
-  public Date getValid() {
-    return valid;
+  @ApiModelProperty(value = "")
+  public String getType() {
+    return type;
   }
 
-  public void setValid(Date valid) {
-    this.valid = valid;
+  public void setType(String type) {
+    this.type = type;
   }
 
 
@@ -259,20 +364,25 @@ public class Metadata   {
     }
     Metadata metadata = (Metadata) o;
     return Objects.equals(this.identifier, metadata.identifier) &&
-        Objects.equals(this._abstract, metadata._abstract) &&
-        Objects.equals(this.audience, metadata.audience) &&
-        Objects.equals(this.conformsTo, metadata.conformsTo) &&
+        Objects.equals(this.contributor, metadata.contributor) &&
         Objects.equals(this.coverage, metadata.coverage) &&
         Objects.equals(this.creator, metadata.creator) &&
         Objects.equals(this.date, metadata.date) &&
+        Objects.equals(this.description, metadata.description) &&
+        Objects.equals(this.format, metadata.format) &&
+        Objects.equals(this.language, metadata.language) &&
+        Objects.equals(this.relation, metadata.relation) &&
+        Objects.equals(this.rights, metadata.rights) &&
         Objects.equals(this.publisher, metadata.publisher) &&
+        Objects.equals(this.source, metadata.source) &&
+        Objects.equals(this.subject, metadata.subject) &&
         Objects.equals(this.title, metadata.title) &&
-        Objects.equals(this.valid, metadata.valid);
+        Objects.equals(this.type, metadata.type);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(identifier, _abstract, audience, conformsTo, coverage, creator, date, publisher, title, valid);
+    return Objects.hash(identifier, contributor, coverage, creator, date, description, format, language, relation, rights, publisher, source, subject, title, type);
   }
 
 
@@ -282,15 +392,20 @@ public class Metadata   {
     sb.append("class Metadata {\n");
     
     sb.append("    identifier: ").append(toIndentedString(identifier)).append("\n");
-    sb.append("    _abstract: ").append(toIndentedString(_abstract)).append("\n");
-    sb.append("    audience: ").append(toIndentedString(audience)).append("\n");
-    sb.append("    conformsTo: ").append(toIndentedString(conformsTo)).append("\n");
+    sb.append("    contributor: ").append(toIndentedString(contributor)).append("\n");
     sb.append("    coverage: ").append(toIndentedString(coverage)).append("\n");
     sb.append("    creator: ").append(toIndentedString(creator)).append("\n");
     sb.append("    date: ").append(toIndentedString(date)).append("\n");
+    sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    format: ").append(toIndentedString(format)).append("\n");
+    sb.append("    language: ").append(toIndentedString(language)).append("\n");
+    sb.append("    relation: ").append(toIndentedString(relation)).append("\n");
+    sb.append("    rights: ").append(toIndentedString(rights)).append("\n");
     sb.append("    publisher: ").append(toIndentedString(publisher)).append("\n");
+    sb.append("    source: ").append(toIndentedString(source)).append("\n");
+    sb.append("    subject: ").append(toIndentedString(subject)).append("\n");
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
-    sb.append("    valid: ").append(toIndentedString(valid)).append("\n");
+    sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("}");
     return sb.toString();
   }

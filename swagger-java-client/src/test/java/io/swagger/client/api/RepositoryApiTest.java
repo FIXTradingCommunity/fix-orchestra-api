@@ -35,7 +35,7 @@ public class RepositoryApiTest {
     @Test
     public void addCodeTest() throws ApiException {
         String fileid = null;
-        String codesetid = null;
+        Integer codesetid = null;
         Code code = null;
         // api.addCode(fileid, codesetid, code);
 
@@ -71,7 +71,8 @@ public class RepositoryApiTest {
     public void addComponentTest() throws ApiException {
         String fileid = null;
         Component component = null;
-        // api.addComponent(fileid, component);
+        Integer toClone = null;
+        // api.addComponent(fileid, component, toClone);
 
         // TODO: test validations
     }
@@ -122,7 +123,8 @@ public class RepositoryApiTest {
     public void addMessageTest() throws ApiException {
         String fileid = null;
         Message message = null;
-        // api.addMessage(fileid, message);
+        Integer toClone = null;
+        // api.addMessage(fileid, message, toClone);
 
         // TODO: test validations
     }
@@ -138,7 +140,8 @@ public class RepositoryApiTest {
     @Test
     public void addRepositoryTest() throws ApiException {
         Metadata repository = null;
-        // api.addRepository(repository);
+        String toClone = null;
+        // api.addRepository(repository, toClone);
 
         // TODO: test validations
     }
@@ -154,8 +157,8 @@ public class RepositoryApiTest {
     @Test
     public void deleteCodeTest() throws ApiException {
         String fileid = null;
-        String codesetid = null;
-        Long id = null;
+        Integer codesetid = null;
+        Integer id = null;
         // api.deleteCode(fileid, codesetid, id);
 
         // TODO: test validations
@@ -172,7 +175,7 @@ public class RepositoryApiTest {
     @Test
     public void deleteCodeSetTest() throws ApiException {
         String fileid = null;
-        Long id = null;
+        Integer id = null;
         // api.deleteCodeSet(fileid, id);
 
         // TODO: test validations
@@ -189,7 +192,7 @@ public class RepositoryApiTest {
     @Test
     public void deleteComponentTest() throws ApiException {
         String fileid = null;
-        Long id = null;
+        Integer id = null;
         // api.deleteComponent(fileid, id);
 
         // TODO: test validations
@@ -223,7 +226,7 @@ public class RepositoryApiTest {
     @Test
     public void deleteFieldTest() throws ApiException {
         String fileid = null;
-        Long id = null;
+        Integer id = null;
         // api.deleteField(fileid, id);
 
         // TODO: test validations
@@ -240,7 +243,7 @@ public class RepositoryApiTest {
     @Test
     public void deleteMessageTest() throws ApiException {
         String fileid = null;
-        Long id = null;
+        Integer id = null;
         // api.deleteMessage(fileid, id);
 
         // TODO: test validations
@@ -273,7 +276,7 @@ public class RepositoryApiTest {
     @Test
     public void findCodeByIdTest() throws ApiException {
         String fileid = null;
-        String codesetid = null;
+        Integer codesetid = null;
         Integer id = null;
         // Code response = api.findCodeById(fileid, codesetid, id);
 
@@ -411,7 +414,7 @@ public class RepositoryApiTest {
     @Test
     public void searchCodesTest() throws ApiException {
         String fileid = null;
-        String codesetid = null;
+        Integer codesetid = null;
         String searchString = null;
         Integer skip = null;
         Integer limit = null;
@@ -505,11 +508,11 @@ public class RepositoryApiTest {
      *          if the Api call fails
      */
     @Test
-    public void searchRepositoryTest() throws ApiException {
+    public void searchRepositoriesTest() throws ApiException {
         String searchString = null;
         Integer skip = null;
         Integer limit = null;
-        // List<Metadata> response = api.searchRepository(searchString, skip, limit);
+        // List<Metadata> response = api.searchRepositories(searchString, skip, limit);
 
         // TODO: test validations
     }
@@ -525,7 +528,7 @@ public class RepositoryApiTest {
     @Test
     public void updateCodeByIdTest() throws ApiException {
         String fileid = null;
-        String codesetid = null;
+        Integer codesetid = null;
         Integer id = null;
         Code code = null;
         // api.updateCodeById(fileid, codesetid, id, code);
