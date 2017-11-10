@@ -4,46 +4,46 @@ All URIs are relative to *https://virtserver.swaggerhub.com/FIXTradingCommunity/
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**addCode**](RepositoryApi.md#addCode) | **POST** /repositories/{fileid}/codesets/{codesetid}/codes | adds a Code to CodeSet
-[**addCodeSet**](RepositoryApi.md#addCodeSet) | **POST** /repositories/{fileid}/codesets | adds a CodeSet
-[**addComponent**](RepositoryApi.md#addComponent) | **POST** /repositories/{fileid}/components | adds a component
-[**addDatatype**](RepositoryApi.md#addDatatype) | **POST** /repositories/{fileid}/datatypes | adds a datatype
-[**addField**](RepositoryApi.md#addField) | **POST** /repositories/{fileid}/fields | adds a field
-[**addMessage**](RepositoryApi.md#addMessage) | **POST** /repositories/{fileid}/messages | adds a message scenario
-[**addRepository**](RepositoryApi.md#addRepository) | **POST** /repositories | adds an Orchestra repository file
-[**deleteCode**](RepositoryApi.md#deleteCode) | **DELETE** /repositories/{fileid}/codesets/{codesetid}/codes/{id} | deletes a single Code based on the ID supplied
-[**deleteCodeSet**](RepositoryApi.md#deleteCodeSet) | **DELETE** /repositories/{fileid}/codesets/{id} | deletes a single CodeSet based on the ID supplied
-[**deleteComponent**](RepositoryApi.md#deleteComponent) | **DELETE** /repositories/{fileid}/components/{id} | deletes a single component based on the ID supplied
-[**deleteDatatype**](RepositoryApi.md#deleteDatatype) | **DELETE** /repositories/{fileid}/datatypes/{name} | deletes a single datatype based on the name supplied
-[**deleteField**](RepositoryApi.md#deleteField) | **DELETE** /repositories/{fileid}/fields/{id} | deletes a single field based on the ID supplied
-[**deleteMessage**](RepositoryApi.md#deleteMessage) | **DELETE** /repositories/{fileid}/messages/{id} | deletes a single message scenario based on the ID supplied
-[**deleteRepository**](RepositoryApi.md#deleteRepository) | **DELETE** /repositories/{fileid} | deletes a single Orchestra repository file based on the ID supplied
-[**findCodeById**](RepositoryApi.md#findCodeById) | **GET** /repositories/{fileid}/codesets/{codesetid}/codes/{id} | Returns a single Code, if found
-[**findCodeSetById**](RepositoryApi.md#findCodeSetById) | **GET** /repositories/{fileid}/codesets/{id} | Returns a single CodeSet, if found
-[**findComponentById**](RepositoryApi.md#findComponentById) | **GET** /repositories/{fileid}/components/{id} | Returns a single component, if found
-[**findDatatypeByName**](RepositoryApi.md#findDatatypeByName) | **GET** /repositories/{fileid}/datatypes/{name} | Returns a single datatype, if found
-[**findFieldById**](RepositoryApi.md#findFieldById) | **GET** /repositories/{fileid}/fields/{id} | Returns a single field, if found
-[**findMessageById**](RepositoryApi.md#findMessageById) | **GET** /repositories/{fileid}/messages/{id} | Returns a single message scenario, if found
-[**findRepositoryById**](RepositoryApi.md#findRepositoryById) | **GET** /repositories/{fileid} | Returns a single Orchestra repository file metadata, if found
-[**searchCodeSets**](RepositoryApi.md#searchCodeSets) | **GET** /repositories/{fileid}/codesets | searches CodeSets
-[**searchCodes**](RepositoryApi.md#searchCodes) | **GET** /repositories/{fileid}/codesets/{codesetid}/codes | searches Codes within a CodeSet
-[**searchComponents**](RepositoryApi.md#searchComponents) | **GET** /repositories/{fileid}/components | searches components
-[**searchDatatypes**](RepositoryApi.md#searchDatatypes) | **GET** /repositories/{fileid}/datatypes | searches datatypes
-[**searchFields**](RepositoryApi.md#searchFields) | **GET** /repositories/{fileid}/fields | searches fields
-[**searchMessages**](RepositoryApi.md#searchMessages) | **GET** /repositories/{fileid}/messages | searches messages
-[**searchRepositories**](RepositoryApi.md#searchRepositories) | **GET** /repositories | searches Orchestra repository files
-[**updateCodeById**](RepositoryApi.md#updateCodeById) | **PUT** /repositories/{fileid}/codesets/{codesetid}/codes/{id} | Updates a single Code, if found (idempotent)
-[**updateCodeSetById**](RepositoryApi.md#updateCodeSetById) | **PUT** /repositories/{fileid}/codesets/{id} | Updates a single CodeSet, if found (idempotent)
-[**updateComponentById**](RepositoryApi.md#updateComponentById) | **PUT** /repositories/{fileid}/components/{id} | Updates a single component, if found (idempotent)
-[**updateDatatypeByName**](RepositoryApi.md#updateDatatypeByName) | **PUT** /repositories/{fileid}/datatypes/{name} | Updates a single datatype, if found (idempotent)
-[**updateFieldById**](RepositoryApi.md#updateFieldById) | **PUT** /repositories/{fileid}/fields/{id} | Updates a single field, if found (idempotent)
-[**updateMessageById**](RepositoryApi.md#updateMessageById) | **PUT** /repositories/{fileid}/messages/{id} | Updates a single message scenario, if found (idempotent)
-[**updateRepositoryById**](RepositoryApi.md#updateRepositoryById) | **PUT** /repositories/{fileid} | Updates an Orchestra repository file, if found (idempotent)
+[**addCode**](RepositoryApi.md#addCode) | **POST** /repositories/{repos-name}/{version}/codesets/{codesetid}/codes | adds a Code to CodeSet
+[**addCodeSet**](RepositoryApi.md#addCodeSet) | **POST** /repositories/{repos-name}/{version}/codesets | adds a CodeSet
+[**addComponent**](RepositoryApi.md#addComponent) | **POST** /repositories/{repos-name}/{version}/components | adds a component
+[**addDatatype**](RepositoryApi.md#addDatatype) | **POST** /repositories/{repos-name}/{version}/datatypes | adds a datatype
+[**addField**](RepositoryApi.md#addField) | **POST** /repositories/{repos-name}/{version}/fields | adds a field
+[**addMessage**](RepositoryApi.md#addMessage) | **POST** /repositories/{repos-name}/{version}/messages | adds a message scenario
+[**addRepository**](RepositoryApi.md#addRepository) | **POST** /repositories | adds an Orchestra repository
+[**deleteCode**](RepositoryApi.md#deleteCode) | **DELETE** /repositories/{repos-name}/{version}/codesets/{codesetid}/codes/{id} | deletes a single Code based on the ID supplied
+[**deleteCodeSet**](RepositoryApi.md#deleteCodeSet) | **DELETE** /repositories/{repos-name}/{version}/codesets/{id} | deletes a single CodeSet based on the ID supplied
+[**deleteComponent**](RepositoryApi.md#deleteComponent) | **DELETE** /repositories/{repos-name}/{version}/components/{id} | deletes a single component based on the ID supplied
+[**deleteDatatype**](RepositoryApi.md#deleteDatatype) | **DELETE** /repositories/{repos-name}/{version}/datatypes/{name} | deletes a single datatype based on the name supplied
+[**deleteField**](RepositoryApi.md#deleteField) | **DELETE** /repositories/{repos-name}/{version}/fields/{id} | deletes a single field based on the ID supplied
+[**deleteMessage**](RepositoryApi.md#deleteMessage) | **DELETE** /repositories/{repos-name}/{version}/messages/{id} | deletes a single message scenario based on the ID supplied
+[**deleteRepository**](RepositoryApi.md#deleteRepository) | **DELETE** /repositories/{repos-name}/{version} | deletes a single Orchestra repository  based on the ID supplied
+[**findCodeById**](RepositoryApi.md#findCodeById) | **GET** /repositories/{repos-name}/{version}/codesets/{codesetid}/codes/{id} | Returns a single Code, if found
+[**findCodeSetById**](RepositoryApi.md#findCodeSetById) | **GET** /repositories/{repos-name}/{version}/codesets/{id} | Returns a single CodeSet, if found
+[**findComponentById**](RepositoryApi.md#findComponentById) | **GET** /repositories/{repos-name}/{version}/components/{id} | Returns a single component, if found
+[**findDatatypeByName**](RepositoryApi.md#findDatatypeByName) | **GET** /repositories/{repos-name}/{version}/datatypes/{name} | Returns a single datatype, if found
+[**findFieldById**](RepositoryApi.md#findFieldById) | **GET** /repositories/{repos-name}/{version}/fields/{id} | Returns a single field, if found
+[**findMessageById**](RepositoryApi.md#findMessageById) | **GET** /repositories/{repos-name}/{version}/messages/{id} | Returns a single message scenario, if found
+[**findRepositoryById**](RepositoryApi.md#findRepositoryById) | **GET** /repositories/{repos-name}/{version} | Returns a single Orchestra repository metadata, if found
+[**searchCodeSets**](RepositoryApi.md#searchCodeSets) | **GET** /repositories/{repos-name}/{version}/codesets | searches CodeSets
+[**searchCodes**](RepositoryApi.md#searchCodes) | **GET** /repositories/{repos-name}/{version}/codesets/{codesetid}/codes | searches Codes within a CodeSet
+[**searchComponents**](RepositoryApi.md#searchComponents) | **GET** /repositories/{repos-name}/{version}/components | searches components
+[**searchDatatypes**](RepositoryApi.md#searchDatatypes) | **GET** /repositories/{repos-name}/{version}/datatypes | searches datatypes
+[**searchFields**](RepositoryApi.md#searchFields) | **GET** /repositories/{repos-name}/{version}/fields | searches fields
+[**searchMessages**](RepositoryApi.md#searchMessages) | **GET** /repositories/{repos-name}/{version}/messages | searches messages
+[**searchRepositories**](RepositoryApi.md#searchRepositories) | **GET** /repositories | searches Orchestra repositories
+[**updateCodeById**](RepositoryApi.md#updateCodeById) | **PUT** /repositories/{repos-name}/{version}/codesets/{codesetid}/codes/{id} | Updates a single Code, if found (idempotent)
+[**updateCodeSetById**](RepositoryApi.md#updateCodeSetById) | **PUT** /repositories/{repos-name}/{version}/codesets/{id} | Updates a single CodeSet, if found (idempotent)
+[**updateComponentById**](RepositoryApi.md#updateComponentById) | **PUT** /repositories/{repos-name}/{version}/components/{id} | Updates a single component, if found (idempotent)
+[**updateDatatypeByName**](RepositoryApi.md#updateDatatypeByName) | **PUT** /repositories/{repos-name}/{version}/datatypes/{name} | Updates a single datatype, if found (idempotent)
+[**updateFieldById**](RepositoryApi.md#updateFieldById) | **PUT** /repositories/{repos-name}/{version}/fields/{id} | Updates a single field, if found (idempotent)
+[**updateMessageById**](RepositoryApi.md#updateMessageById) | **PUT** /repositories/{repos-name}/{version}/messages/{id} | Updates a single message scenario, if found (idempotent)
+[**updateRepositoryById**](RepositoryApi.md#updateRepositoryById) | **PUT** /repositories/{repos-name}/{version} | Updates an Orchestra repository, if found (idempotent)
 
 
 <a name="addCode"></a>
 # **addCode**
-> addCode(fileid, codesetid, code)
+> addCode(reposName, version, codesetid, code)
 
 adds a Code to CodeSet
 
@@ -52,16 +52,17 @@ Adds a Code
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
 Integer codesetid = 56; // Integer | ID of CodeSet
 Code code = new Code(); // Code | Code to add
 try {
-    apiInstance.addCode(fileid, codesetid, code);
+    apiInstance.addCode(reposName, version, codesetid, code);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#addCode");
     e.printStackTrace();
@@ -72,7 +73,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file |
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
  **codesetid** | **Integer**| ID of CodeSet |
  **code** | [**Code**](Code.md)| Code to add | [optional]
 
@@ -91,7 +93,7 @@ No authorization required
 
 <a name="addCodeSet"></a>
 # **addCodeSet**
-> addCodeSet(fileid, codeSet)
+> addCodeSet(reposName, version, codeSet)
 
 adds a CodeSet
 
@@ -100,15 +102,16 @@ Adds a CodeSet
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
 CodeSet codeSet = new CodeSet(); // CodeSet | CodeSet to add
 try {
-    apiInstance.addCodeSet(fileid, codeSet);
+    apiInstance.addCodeSet(reposName, version, codeSet);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#addCodeSet");
     e.printStackTrace();
@@ -119,7 +122,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file |
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
  **codeSet** | [**CodeSet**](CodeSet.md)| CodeSet to add | [optional]
 
 ### Return type
@@ -137,7 +141,7 @@ No authorization required
 
 <a name="addComponent"></a>
 # **addComponent**
-> addComponent(fileid, component, toClone)
+> addComponent(reposName, version, component, toClone)
 
 adds a component
 
@@ -146,16 +150,17 @@ Adds a component
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
 Component component = new Component(); // Component | Component to add
 Integer toClone = 56; // Integer | ID of component to clone
 try {
-    apiInstance.addComponent(fileid, component, toClone);
+    apiInstance.addComponent(reposName, version, component, toClone);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#addComponent");
     e.printStackTrace();
@@ -166,7 +171,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file |
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
  **component** | [**Component**](Component.md)| Component to add | [optional]
  **toClone** | **Integer**| ID of component to clone | [optional]
 
@@ -185,7 +191,7 @@ No authorization required
 
 <a name="addDatatype"></a>
 # **addDatatype**
-> addDatatype(fileid, datatype)
+> addDatatype(reposName, version, datatype)
 
 adds a datatype
 
@@ -194,15 +200,16 @@ Adds a datatype
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
 Datatype datatype = new Datatype(); // Datatype | Datatype to add
 try {
-    apiInstance.addDatatype(fileid, datatype);
+    apiInstance.addDatatype(reposName, version, datatype);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#addDatatype");
     e.printStackTrace();
@@ -213,7 +220,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file |
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
  **datatype** | [**Datatype**](Datatype.md)| Datatype to add | [optional]
 
 ### Return type
@@ -231,7 +239,7 @@ No authorization required
 
 <a name="addField"></a>
 # **addField**
-> addField(fileid, field)
+> addField(reposName, version, field)
 
 adds a field
 
@@ -240,15 +248,16 @@ Adds a field
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
 Field field = new Field(); // Field | field to add
 try {
-    apiInstance.addField(fileid, field);
+    apiInstance.addField(reposName, version, field);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#addField");
     e.printStackTrace();
@@ -259,7 +268,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file |
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
  **field** | [**Field**](Field.md)| field to add | [optional]
 
 ### Return type
@@ -277,7 +287,7 @@ No authorization required
 
 <a name="addMessage"></a>
 # **addMessage**
-> addMessage(fileid, message, toClone)
+> addMessage(reposName, version, message, toClone)
 
 adds a message scenario
 
@@ -286,16 +296,17 @@ Adds a message scenario
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
 Message message = new Message(); // Message | message to add
 Integer toClone = 56; // Integer | ID of message to clone
 try {
-    apiInstance.addMessage(fileid, message, toClone);
+    apiInstance.addMessage(reposName, version, message, toClone);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#addMessage");
     e.printStackTrace();
@@ -306,7 +317,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file |
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
  **message** | [**Message**](Message.md)| message to add | [optional]
  **toClone** | **Integer**| ID of message to clone | [optional]
 
@@ -325,24 +337,25 @@ No authorization required
 
 <a name="addRepository"></a>
 # **addRepository**
-> addRepository(repository, toClone)
+> addRepository(repository, nameToClone, versionToClone)
 
-adds an Orchestra repository file
+adds an Orchestra repository
 
-Adds an Orchestra repository file
+Adds an Orchestra repository
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-Metadata repository = new Metadata(); // Metadata | Orchestra repository file to add
-String toClone = "toClone_example"; // String | ID of Orchestra repository file to clone
+Repository repository = new Repository(); // Repository | Orchestra repository to add
+String nameToClone = "nameToClone_example"; // String | name of Orchestra repository to clone
+String versionToClone = "versionToClone_example"; // String | version of Orchestra repository to clone
 try {
-    apiInstance.addRepository(repository, toClone);
+    apiInstance.addRepository(repository, nameToClone, versionToClone);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#addRepository");
     e.printStackTrace();
@@ -353,8 +366,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **repository** | [**Metadata**](Metadata.md)| Orchestra repository file to add |
- **toClone** | **String**| ID of Orchestra repository file to clone | [optional]
+ **repository** | [**Repository**](Repository.md)| Orchestra repository to add |
+ **nameToClone** | **String**| name of Orchestra repository to clone | [optional]
+ **versionToClone** | **String**| version of Orchestra repository to clone | [optional]
 
 ### Return type
 
@@ -371,23 +385,24 @@ No authorization required
 
 <a name="deleteCode"></a>
 # **deleteCode**
-> deleteCode(fileid, codesetid, id)
+> deleteCode(reposName, version, codesetid, id)
 
 deletes a single Code based on the ID supplied
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
 Integer codesetid = 56; // Integer | ID of CodeSet
-Integer id = 56; // Integer | ID of field to delete
+Integer id = 56; // Integer | ID of Code to delete
 try {
-    apiInstance.deleteCode(fileid, codesetid, id);
+    apiInstance.deleteCode(reposName, version, codesetid, id);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#deleteCode");
     e.printStackTrace();
@@ -398,9 +413,10 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file |
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
  **codesetid** | **Integer**| ID of CodeSet |
- **id** | **Integer**| ID of field to delete |
+ **id** | **Integer**| ID of Code to delete |
 
 ### Return type
 
@@ -417,22 +433,23 @@ No authorization required
 
 <a name="deleteCodeSet"></a>
 # **deleteCodeSet**
-> deleteCodeSet(fileid, id)
+> deleteCodeSet(reposName, version, id)
 
 deletes a single CodeSet based on the ID supplied
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file
-Integer id = 56; // Integer | ID of field to delete
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
+Integer id = 56; // Integer | ID of CodeSet to delete
 try {
-    apiInstance.deleteCodeSet(fileid, id);
+    apiInstance.deleteCodeSet(reposName, version, id);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#deleteCodeSet");
     e.printStackTrace();
@@ -443,8 +460,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file |
- **id** | **Integer**| ID of field to delete |
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
+ **id** | **Integer**| ID of CodeSet to delete |
 
 ### Return type
 
@@ -461,22 +479,23 @@ No authorization required
 
 <a name="deleteComponent"></a>
 # **deleteComponent**
-> deleteComponent(fileid, id)
+> deleteComponent(reposName, version, id)
 
 deletes a single component based on the ID supplied
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
 Integer id = 56; // Integer | ID of component to delete
 try {
-    apiInstance.deleteComponent(fileid, id);
+    apiInstance.deleteComponent(reposName, version, id);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#deleteComponent");
     e.printStackTrace();
@@ -487,7 +506,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file |
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
  **id** | **Integer**| ID of component to delete |
 
 ### Return type
@@ -505,22 +525,23 @@ No authorization required
 
 <a name="deleteDatatype"></a>
 # **deleteDatatype**
-> deleteDatatype(fileid, name)
+> deleteDatatype(reposName, version, name)
 
 deletes a single datatype based on the name supplied
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
 String name = "name_example"; // String | name of datatype to delete
 try {
-    apiInstance.deleteDatatype(fileid, name);
+    apiInstance.deleteDatatype(reposName, version, name);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#deleteDatatype");
     e.printStackTrace();
@@ -531,7 +552,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file |
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
  **name** | **String**| name of datatype to delete |
 
 ### Return type
@@ -549,22 +571,23 @@ No authorization required
 
 <a name="deleteField"></a>
 # **deleteField**
-> deleteField(fileid, id)
+> deleteField(reposName, version, id)
 
 deletes a single field based on the ID supplied
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
 Integer id = 56; // Integer | ID of field to delete
 try {
-    apiInstance.deleteField(fileid, id);
+    apiInstance.deleteField(reposName, version, id);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#deleteField");
     e.printStackTrace();
@@ -575,7 +598,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file |
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
  **id** | **Integer**| ID of field to delete |
 
 ### Return type
@@ -593,22 +617,23 @@ No authorization required
 
 <a name="deleteMessage"></a>
 # **deleteMessage**
-> deleteMessage(fileid, id)
+> deleteMessage(reposName, version, id)
 
 deletes a single message scenario based on the ID supplied
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
 Integer id = 56; // Integer | ID of message to delete
 try {
-    apiInstance.deleteMessage(fileid, id);
+    apiInstance.deleteMessage(reposName, version, id);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#deleteMessage");
     e.printStackTrace();
@@ -619,7 +644,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file |
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
  **id** | **Integer**| ID of message to delete |
 
 ### Return type
@@ -637,21 +663,22 @@ No authorization required
 
 <a name="deleteRepository"></a>
 # **deleteRepository**
-> deleteRepository(fileid)
+> deleteRepository(reposName, version)
 
-deletes a single Orchestra repository file based on the ID supplied
+deletes a single Orchestra repository  based on the ID supplied
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file to delete
+String reposName = "reposName_example"; // String | name of Orchestra repository to delete
+String version = "version_example"; // String | version of Orchestra repository to delete
 try {
-    apiInstance.deleteRepository(fileid);
+    apiInstance.deleteRepository(reposName, version);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#deleteRepository");
     e.printStackTrace();
@@ -662,7 +689,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file to delete |
+ **reposName** | **String**| name of Orchestra repository to delete |
+ **version** | **String**| version of Orchestra repository to delete |
 
 ### Return type
 
@@ -679,23 +707,24 @@ No authorization required
 
 <a name="findCodeById"></a>
 # **findCodeById**
-> Code findCodeById(fileid, codesetid, id)
+> Code findCodeById(reposName, version, codesetid, id)
 
 Returns a single Code, if found
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
 Integer codesetid = 56; // Integer | ID of CodeSet
 Integer id = 56; // Integer | ID of Code to fetch
 try {
-    Code result = apiInstance.findCodeById(fileid, codesetid, id);
+    Code result = apiInstance.findCodeById(reposName, version, codesetid, id);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#findCodeById");
@@ -707,7 +736,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file |
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
  **codesetid** | **Integer**| ID of CodeSet |
  **id** | **Integer**| ID of Code to fetch |
 
@@ -726,22 +756,23 @@ No authorization required
 
 <a name="findCodeSetById"></a>
 # **findCodeSetById**
-> CodeSet findCodeSetById(fileid, id)
+> CodeSet findCodeSetById(reposName, version, id)
 
 Returns a single CodeSet, if found
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
 Integer id = 56; // Integer | ID of CodeSet to fetch
 try {
-    CodeSet result = apiInstance.findCodeSetById(fileid, id);
+    CodeSet result = apiInstance.findCodeSetById(reposName, version, id);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#findCodeSetById");
@@ -753,7 +784,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file |
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
  **id** | **Integer**| ID of CodeSet to fetch |
 
 ### Return type
@@ -771,22 +803,23 @@ No authorization required
 
 <a name="findComponentById"></a>
 # **findComponentById**
-> Component findComponentById(fileid, id)
+> Component findComponentById(reposName, version, id)
 
 Returns a single component, if found
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
 Integer id = 56; // Integer | ID of component to fetch
 try {
-    Component result = apiInstance.findComponentById(fileid, id);
+    Component result = apiInstance.findComponentById(reposName, version, id);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#findComponentById");
@@ -798,7 +831,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file |
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
  **id** | **Integer**| ID of component to fetch |
 
 ### Return type
@@ -816,22 +850,23 @@ No authorization required
 
 <a name="findDatatypeByName"></a>
 # **findDatatypeByName**
-> Datatype findDatatypeByName(fileid, name)
+> Datatype findDatatypeByName(reposName, version, name)
 
 Returns a single datatype, if found
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
 String name = "name_example"; // String | name of datatype to fetch
 try {
-    Datatype result = apiInstance.findDatatypeByName(fileid, name);
+    Datatype result = apiInstance.findDatatypeByName(reposName, version, name);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#findDatatypeByName");
@@ -843,7 +878,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file |
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
  **name** | **String**| name of datatype to fetch |
 
 ### Return type
@@ -861,22 +897,23 @@ No authorization required
 
 <a name="findFieldById"></a>
 # **findFieldById**
-> Field findFieldById(fileid, id)
+> Field findFieldById(reposName, version, id)
 
 Returns a single field, if found
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
 Integer id = 56; // Integer | ID of field to fetch
 try {
-    Field result = apiInstance.findFieldById(fileid, id);
+    Field result = apiInstance.findFieldById(reposName, version, id);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#findFieldById");
@@ -888,7 +925,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file |
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
  **id** | **Integer**| ID of field to fetch |
 
 ### Return type
@@ -906,22 +944,23 @@ No authorization required
 
 <a name="findMessageById"></a>
 # **findMessageById**
-> Message findMessageById(fileid, id)
+> Message findMessageById(reposName, version, id)
 
 Returns a single message scenario, if found
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
 Integer id = 56; // Integer | ID of message to fetch
 try {
-    Message result = apiInstance.findMessageById(fileid, id);
+    Message result = apiInstance.findMessageById(reposName, version, id);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#findMessageById");
@@ -933,7 +972,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file |
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
  **id** | **Integer**| ID of message to fetch |
 
 ### Return type
@@ -951,21 +991,22 @@ No authorization required
 
 <a name="findRepositoryById"></a>
 # **findRepositoryById**
-> Metadata findRepositoryById(fileid)
+> Repository findRepositoryById(reposName, version)
 
-Returns a single Orchestra repository file metadata, if found
+Returns a single Orchestra repository metadata, if found
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file to fetch
+String reposName = "reposName_example"; // String | name of Orchestra repository to fetch
+String version = "version_example"; // String | version of Orchestra repository to fetch
 try {
-    Metadata result = apiInstance.findRepositoryById(fileid);
+    Repository result = apiInstance.findRepositoryById(reposName, version);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#findRepositoryById");
@@ -977,11 +1018,12 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file to fetch |
+ **reposName** | **String**| name of Orchestra repository to fetch |
+ **version** | **String**| version of Orchestra repository to fetch |
 
 ### Return type
 
-[**Metadata**](Metadata.md)
+[**Repository**](Repository.md)
 
 ### Authorization
 
@@ -994,7 +1036,7 @@ No authorization required
 
 <a name="searchCodeSets"></a>
 # **searchCodeSets**
-> List&lt;CodeSet&gt; searchCodeSets(fileid, searchString, skip, limit)
+> List&lt;CodeSet&gt; searchCodeSets(reposName, version, searchString, skip, limit)
 
 searches CodeSets
 
@@ -1003,17 +1045,18 @@ By passing in the appropriate options, you can search for CodeSets
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
 String searchString = "searchString_example"; // String | pass an optional search string for looking up CodeSets
 Integer skip = 56; // Integer | number of records to skip for pagination
 Integer limit = 56; // Integer | maximum number of records to return
 try {
-    List<CodeSet> result = apiInstance.searchCodeSets(fileid, searchString, skip, limit);
+    List<CodeSet> result = apiInstance.searchCodeSets(reposName, version, searchString, skip, limit);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#searchCodeSets");
@@ -1025,7 +1068,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file |
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
  **searchString** | **String**| pass an optional search string for looking up CodeSets | [optional]
  **skip** | **Integer**| number of records to skip for pagination | [optional]
  **limit** | **Integer**| maximum number of records to return | [optional]
@@ -1045,27 +1089,28 @@ No authorization required
 
 <a name="searchCodes"></a>
 # **searchCodes**
-> List&lt;Code&gt; searchCodes(fileid, codesetid, searchString, skip, limit)
+> List&lt;Code&gt; searchCodes(reposName, version, codesetid, searchString, skip, limit)
 
 searches Codes within a CodeSet
 
-By passing in the appropriate options, you can search for Codes 
+By passing in the appropriate options, you can search for Codes
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
 Integer codesetid = 56; // Integer | ID of CodeSet
 String searchString = "searchString_example"; // String | pass an optional search string for looking up Codes
 Integer skip = 56; // Integer | number of records to skip for pagination
 Integer limit = 56; // Integer | maximum number of records to return
 try {
-    List<Code> result = apiInstance.searchCodes(fileid, codesetid, searchString, skip, limit);
+    List<Code> result = apiInstance.searchCodes(reposName, version, codesetid, searchString, skip, limit);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#searchCodes");
@@ -1077,7 +1122,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file |
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
  **codesetid** | **Integer**| ID of CodeSet |
  **searchString** | **String**| pass an optional search string for looking up Codes | [optional]
  **skip** | **Integer**| number of records to skip for pagination | [optional]
@@ -1098,7 +1144,7 @@ No authorization required
 
 <a name="searchComponents"></a>
 # **searchComponents**
-> List&lt;Component&gt; searchComponents(fileid, searchString, skip, limit)
+> List&lt;Component&gt; searchComponents(reposName, version, searchString, skip, limit)
 
 searches components
 
@@ -1107,17 +1153,18 @@ By passing in the appropriate options, you can search for components
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
 String searchString = "searchString_example"; // String | pass an optional search string for looking up components
 Integer skip = 56; // Integer | number of records to skip for pagination
 Integer limit = 56; // Integer | maximum number of records to return
 try {
-    List<Component> result = apiInstance.searchComponents(fileid, searchString, skip, limit);
+    List<Component> result = apiInstance.searchComponents(reposName, version, searchString, skip, limit);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#searchComponents");
@@ -1129,7 +1176,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file |
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
  **searchString** | **String**| pass an optional search string for looking up components | [optional]
  **skip** | **Integer**| number of records to skip for pagination | [optional]
  **limit** | **Integer**| maximum number of records to return | [optional]
@@ -1149,7 +1197,7 @@ No authorization required
 
 <a name="searchDatatypes"></a>
 # **searchDatatypes**
-> List&lt;Datatype&gt; searchDatatypes(fileid, searchString, skip, limit)
+> List&lt;Datatype&gt; searchDatatypes(reposName, version, searchString, skip, limit)
 
 searches datatypes
 
@@ -1158,17 +1206,18 @@ By passing in the appropriate options, you can search for datatypes
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
 String searchString = "searchString_example"; // String | pass an optional search string for looking up datatypes
 Integer skip = 56; // Integer | number of records to skip for pagination
 Integer limit = 56; // Integer | maximum number of records to return
 try {
-    List<Datatype> result = apiInstance.searchDatatypes(fileid, searchString, skip, limit);
+    List<Datatype> result = apiInstance.searchDatatypes(reposName, version, searchString, skip, limit);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#searchDatatypes");
@@ -1180,7 +1229,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file |
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
  **searchString** | **String**| pass an optional search string for looking up datatypes | [optional]
  **skip** | **Integer**| number of records to skip for pagination | [optional]
  **limit** | **Integer**| maximum number of records to return | [optional]
@@ -1200,7 +1250,7 @@ No authorization required
 
 <a name="searchFields"></a>
 # **searchFields**
-> List&lt;Field&gt; searchFields(fileid, searchString, skip, limit)
+> List&lt;Field&gt; searchFields(reposName, version, searchString, skip, limit)
 
 searches fields
 
@@ -1209,17 +1259,18 @@ By passing in the appropriate options, you can search for fields
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
 String searchString = "searchString_example"; // String | pass an optional search string for looking up fields
 Integer skip = 56; // Integer | number of records to skip for pagination
 Integer limit = 56; // Integer | maximum number of records to return
 try {
-    List<Field> result = apiInstance.searchFields(fileid, searchString, skip, limit);
+    List<Field> result = apiInstance.searchFields(reposName, version, searchString, skip, limit);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#searchFields");
@@ -1231,7 +1282,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file |
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
  **searchString** | **String**| pass an optional search string for looking up fields | [optional]
  **skip** | **Integer**| number of records to skip for pagination | [optional]
  **limit** | **Integer**| maximum number of records to return | [optional]
@@ -1251,7 +1303,7 @@ No authorization required
 
 <a name="searchMessages"></a>
 # **searchMessages**
-> List&lt;Message&gt; searchMessages(fileid, searchString, skip, limit)
+> List&lt;Message&gt; searchMessages(reposName, version, searchString, skip, limit)
 
 searches messages
 
@@ -1260,17 +1312,18 @@ By passing in the appropriate options, you can search for messages
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
 String searchString = "searchString_example"; // String | pass an optional search string for looking up messages
 Integer skip = 56; // Integer | number of records to skip for pagination
 Integer limit = 56; // Integer | maximum number of records to return
 try {
-    List<Message> result = apiInstance.searchMessages(fileid, searchString, skip, limit);
+    List<Message> result = apiInstance.searchMessages(reposName, version, searchString, skip, limit);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#searchMessages");
@@ -1282,7 +1335,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file |
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
  **searchString** | **String**| pass an optional search string for looking up messages | [optional]
  **skip** | **Integer**| number of records to skip for pagination | [optional]
  **limit** | **Integer**| maximum number of records to return | [optional]
@@ -1302,17 +1356,17 @@ No authorization required
 
 <a name="searchRepositories"></a>
 # **searchRepositories**
-> List&lt;Metadata&gt; searchRepositories(searchString, skip, limit)
+> List&lt;Repository&gt; searchRepositories(searchString, skip, limit)
 
-searches Orchestra repository files
+searches Orchestra repositories
 
-By passing in the appropriate options, you can search for Orchestra repository files 
+By passing in the appropriate options, you can search for Orchestra repositories
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -1320,7 +1374,7 @@ String searchString = "searchString_example"; // String | pass an optional searc
 Integer skip = 56; // Integer | number of records to skip for pagination
 Integer limit = 56; // Integer | maximum number of records to return
 try {
-    List<Metadata> result = apiInstance.searchRepositories(searchString, skip, limit);
+    List<Repository> result = apiInstance.searchRepositories(searchString, skip, limit);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#searchRepositories");
@@ -1338,7 +1392,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List&lt;Metadata&gt;**](Metadata.md)
+[**List&lt;Repository&gt;**](Repository.md)
 
 ### Authorization
 
@@ -1351,24 +1405,25 @@ No authorization required
 
 <a name="updateCodeById"></a>
 # **updateCodeById**
-> updateCodeById(fileid, codesetid, id, code)
+> updateCodeById(reposName, version, codesetid, id, code)
 
 Updates a single Code, if found (idempotent)
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
 Integer codesetid = 56; // Integer | ID of CodeSet
 Integer id = 56; // Integer | ID of Code to update
 Code code = new Code(); // Code | Code to update
 try {
-    apiInstance.updateCodeById(fileid, codesetid, id, code);
+    apiInstance.updateCodeById(reposName, version, codesetid, id, code);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#updateCodeById");
     e.printStackTrace();
@@ -1379,7 +1434,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file |
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
  **codesetid** | **Integer**| ID of CodeSet |
  **id** | **Integer**| ID of Code to update |
  **code** | [**Code**](Code.md)| Code to update |
@@ -1399,23 +1455,24 @@ No authorization required
 
 <a name="updateCodeSetById"></a>
 # **updateCodeSetById**
-> updateCodeSetById(fileid, id, codeSet)
+> updateCodeSetById(reposName, version, id, codeSet)
 
 Updates a single CodeSet, if found (idempotent)
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
 Integer id = 56; // Integer | ID of CodeSet to update
 CodeSet codeSet = new CodeSet(); // CodeSet | CodeSet to update
 try {
-    apiInstance.updateCodeSetById(fileid, id, codeSet);
+    apiInstance.updateCodeSetById(reposName, version, id, codeSet);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#updateCodeSetById");
     e.printStackTrace();
@@ -1426,7 +1483,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file |
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
  **id** | **Integer**| ID of CodeSet to update |
  **codeSet** | [**CodeSet**](CodeSet.md)| CodeSet to update |
 
@@ -1445,23 +1503,24 @@ No authorization required
 
 <a name="updateComponentById"></a>
 # **updateComponentById**
-> updateComponentById(fileid, id, component)
+> updateComponentById(reposName, version, id, component)
 
 Updates a single component, if found (idempotent)
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
 Integer id = 56; // Integer | ID of component to update
 Component component = new Component(); // Component | component to update
 try {
-    apiInstance.updateComponentById(fileid, id, component);
+    apiInstance.updateComponentById(reposName, version, id, component);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#updateComponentById");
     e.printStackTrace();
@@ -1472,7 +1531,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file |
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
  **id** | **Integer**| ID of component to update |
  **component** | [**Component**](Component.md)| component to update |
 
@@ -1491,23 +1551,24 @@ No authorization required
 
 <a name="updateDatatypeByName"></a>
 # **updateDatatypeByName**
-> updateDatatypeByName(fileid, name, datatype)
+> updateDatatypeByName(reposName, version, name, datatype)
 
 Updates a single datatype, if found (idempotent)
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
 String name = "name_example"; // String | name of datatype to update
 Datatype datatype = new Datatype(); // Datatype | datatype to update
 try {
-    apiInstance.updateDatatypeByName(fileid, name, datatype);
+    apiInstance.updateDatatypeByName(reposName, version, name, datatype);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#updateDatatypeByName");
     e.printStackTrace();
@@ -1518,7 +1579,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file |
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
  **name** | **String**| name of datatype to update |
  **datatype** | [**Datatype**](Datatype.md)| datatype to update |
 
@@ -1537,23 +1599,24 @@ No authorization required
 
 <a name="updateFieldById"></a>
 # **updateFieldById**
-> updateFieldById(fileid, id, field)
+> updateFieldById(reposName, version, id, field)
 
 Updates a single field, if found (idempotent)
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
 Integer id = 56; // Integer | ID of field to update
 Field field = new Field(); // Field | field to update
 try {
-    apiInstance.updateFieldById(fileid, id, field);
+    apiInstance.updateFieldById(reposName, version, id, field);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#updateFieldById");
     e.printStackTrace();
@@ -1564,7 +1627,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file |
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
  **id** | **Integer**| ID of field to update |
  **field** | [**Field**](Field.md)| field to update |
 
@@ -1583,23 +1647,24 @@ No authorization required
 
 <a name="updateMessageById"></a>
 # **updateMessageById**
-> updateMessageById(fileid, id, message)
+> updateMessageById(reposName, version, id, message)
 
 Updates a single message scenario, if found (idempotent)
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
 Integer id = 56; // Integer | ID of message to update
 Message message = new Message(); // Message | message to update
 try {
-    apiInstance.updateMessageById(fileid, id, message);
+    apiInstance.updateMessageById(reposName, version, id, message);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#updateMessageById");
     e.printStackTrace();
@@ -1610,7 +1675,8 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file |
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
  **id** | **Integer**| ID of message to update |
  **message** | [**Message**](Message.md)| message to update |
 
@@ -1629,22 +1695,23 @@ No authorization required
 
 <a name="updateRepositoryById"></a>
 # **updateRepositoryById**
-> updateRepositoryById(fileid, repository)
+> updateRepositoryById(reposName, version, repository)
 
-Updates an Orchestra repository file, if found (idempotent)
+Updates an Orchestra repository, if found (idempotent)
 
 ### Example
 ```java
 // Import classes:
-//import io.swagger.client.ApiException;
-//import io.swagger.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String fileid = "fileid_example"; // String | ID of Orchestra repository file to update
-Metadata repository = new Metadata(); // Metadata | Orchestra repository file to update
+String reposName = "reposName_example"; // String | name of Orchestra repository to update
+String version = "version_example"; // String | version of Orchestra repository to update
+Repository repository = new Repository(); // Repository | Orchestra repository to update
 try {
-    apiInstance.updateRepositoryById(fileid, repository);
+    apiInstance.updateRepositoryById(reposName, version, repository);
 } catch (ApiException e) {
     System.err.println("Exception when calling RepositoryApi#updateRepositoryById");
     e.printStackTrace();
@@ -1655,8 +1722,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **fileid** | **String**| ID of Orchestra repository file to update |
- **repository** | [**Metadata**](Metadata.md)| Orchestra repository file to update |
+ **reposName** | **String**| name of Orchestra repository to update |
+ **version** | **String**| version of Orchestra repository to update |
+ **repository** | [**Repository**](Repository.md)| Orchestra repository to update |
 
 ### Return type
 

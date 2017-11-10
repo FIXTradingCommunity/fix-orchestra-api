@@ -20,9 +20,9 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>io.swagger</groupId>
+			<groupId>io.fixprotocol.orchestra.api</groupId>
 			<artifactId>swagger-jaxrs-server</artifactId>
-			<version>1.0.0</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>io.fixprotocol.orchestra</groupId>

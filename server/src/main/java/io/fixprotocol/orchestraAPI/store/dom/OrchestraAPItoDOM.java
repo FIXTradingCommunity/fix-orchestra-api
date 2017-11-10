@@ -1,11 +1,11 @@
 package io.fixprotocol.orchestraAPI.store.dom;
 
-import java.text.DateFormat;
+import java.math.BigInteger;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 import javax.xml.bind.JAXBElement;
 
@@ -13,9 +13,16 @@ import org.purl.dc.elements._1.ObjectFactory;
 import org.purl.dc.elements._1.SimpleLiteral;
 import org.purl.dc.terms.ElementOrRefinementContainer;
 
-import io.swagger.model.Metadata;
+import io.fixprotocol._2016.fixrepository.FieldType;
+import io.fixprotocol._2016.fixrepository.Repository;
+import io.fixprotocol.orchestra.api.RFC3339DateFormat;
+import io.fixprotocol.orchestra.model.Field;
+import io.fixprotocol.orchestra.model.Metadata;
+
 
 public final class OrchestraAPItoDOM {
+
+  private final static RFC3339DateFormat dateFormat = new RFC3339DateFormat();
 
   public static ElementOrRefinementContainer MetadataToDOM(Metadata metadata) {
     ElementOrRefinementContainer container = new ElementOrRefinementContainer();
@@ -27,18 +34,19 @@ public final class OrchestraAPItoDOM {
       SimpleLiteral literal = new SimpleLiteral();
       literal.getContent().add(coverage);
       literals.add(objectFactory.createCoverage(literal));
-    }   
+    }
     String creator = metadata.getCreator();
     if (creator != null) {
       SimpleLiteral literal = new SimpleLiteral();
       literal.getContent().add(creator);
       literals.add(objectFactory.createCreator(literal));
-    }    
-    Date date = metadata.getDate();
+    }
+    LocalDate date = metadata.getDate();
     if (date != null) {
       SimpleLiteral dateLiteral = new SimpleLiteral();
-      dateLiteral.getContent().add(DateFormat.getDateInstance().format(date));
-      literals.add(objectFactory.createDate(dateLiteral)); 
+      dateLiteral.getContent()
+          .add(dateFormat.format(Date.from(date.atStartOfDay(ZoneId.of("UTC")).toInstant())));
+      literals.add(objectFactory.createDate(dateLiteral));
     }
     String description = metadata.getDescription();
     if (description != null) {
@@ -50,29 +58,35 @@ public final class OrchestraAPItoDOM {
     if (identifier != null) {
       SimpleLiteral idLiteral = new SimpleLiteral();
       idLiteral.getContent().add(identifier);
-      literals.add(objectFactory.createIdentifier(idLiteral)); 
+      literals.add(objectFactory.createIdentifier(idLiteral));
     }
     String publisher = metadata.getPublisher();
     if (publisher != null) {
       SimpleLiteral literal = new SimpleLiteral();
       literal.getContent().add(publisher);
       literals.add(objectFactory.createPublisher(literal));
-    } 
+    }
+    String subject = metadata.getSubject();
+    if (subject != null) {
+      SimpleLiteral literal = new SimpleLiteral();
+      literal.getContent().add(subject);
+      literals.add(objectFactory.createSubject(literal));
+    }
     String title = metadata.getTitle();
     if (title != null) {
       SimpleLiteral literal = new SimpleLiteral();
       literal.getContent().add(title);
       literals.add(objectFactory.createTitle(literal));
-    }    
-//    Date valid = metadata.getValid();
-//    if (valid != null) {
-//      SimpleLiteral literal = new SimpleLiteral();
-//      literal.getContent().add(valid.toString());
-//      literals.add(objectFactory.createValid(literal));
-//    } 
-//    SimpleLiteral contributor = new SimpleLiteral();
-//    contributor.getContent().add("RepositoryCompressor");
-//    literals.add(objectFactory.createContributor(contributor));
+    }
+    // Date valid = metadata.getValid();
+    // if (valid != null) {
+    // SimpleLiteral literal = new SimpleLiteral();
+    // literal.getContent().add(valid.toString());
+    // literals.add(objectFactory.createValid(literal));
+    // }
+    // SimpleLiteral contributor = new SimpleLiteral();
+    // contributor.getContent().add("RepositoryCompressor");
+    // literals.add(objectFactory.createContributor(contributor));
     return container;
   }
 
@@ -94,9 +108,8 @@ public final class OrchestraAPItoDOM {
           break;
         case "date":
           try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
-            sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-            metadata.setDate(sdf.parse(value));
+            metadata.setDate(
+                dateFormat.parse(value).toInstant().atZone(ZoneId.of("UTC")).toLocalDate());
           } catch (ParseException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -108,11 +121,37 @@ public final class OrchestraAPItoDOM {
         case "publisher":
           metadata.setPublisher(value);
           break;
+        case "subject":
+          metadata.setSubject(value);
+          break;
         case "title":
           metadata.setTitle(value);
           break;
       }
     });
     return metadata;
+  }
+
+  public static FieldType FieldToDOM(Field field) {
+    FieldType fieldType = new FieldType();
+    fieldType.setId(BigInteger.valueOf(field.getOid().getId()));
+    fieldType.setName(field.getOid().getName());
+    fieldType.setAbbrName(field.getOid().getAbbrName());
+    // fieldType.setType(field.getType());
+    return fieldType;
+  }
+
+  public static io.fixprotocol._2016.fixrepository.Repository RepositoryToDOM(io.fixprotocol.orchestra.model.Repository repository) {
+    Repository repositoryDOM = new Repository();
+    repositoryDOM.setName(repository.getName());
+    repositoryDOM.setVersion(repository.getVersion());
+    repositoryDOM.setHasComponents(repository.getHasComponents());
+    repositoryDOM.setNamespace(repository.getNamespace());
+    repositoryDOM.setGuid(repository.getOid());
+    repositoryDOM.setSpecUrl(repository.getSpecURL());
+    if (repository.getMetadata() != null) {
+      repositoryDOM.setMetadata(MetadataToDOM(repository.getMetadata()));
+    }
+    return repositoryDOM;
   }
 }

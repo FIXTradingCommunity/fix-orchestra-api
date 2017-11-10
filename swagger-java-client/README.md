@@ -26,9 +26,9 @@ Add this dependency to your project's POM:
 
 ```xml
 <dependency>
-    <groupId>io.swagger</groupId>
+    <groupId>io.fixprotocol.orchestra.api</groupId>
     <artifactId>swagger-java-client</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.0-RC3-SNAPSHOT</version>
     <scope>compile</scope>
 </dependency>
 ```
@@ -38,7 +38,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "io.swagger:swagger-java-client:1.0.0"
+compile "io.fixprotocol.orchestra.api:swagger-java-client:1.0.0-RC3-SNAPSHOT"
 ```
 
 ### Others
@@ -49,7 +49,7 @@ At first generate the JAR by executing:
 
 Then manually install the following JARs:
 
-* target/swagger-java-client-1.0.0.jar
+* target/swagger-java-client-1.0.0-RC3-SNAPSHOT.jar
 * target/lib/*.jar
 
 ## Getting Started
@@ -58,10 +58,10 @@ Please follow the [installation](#installation) instruction and execute the foll
 
 ```java
 
-import io.swagger.client.*;
-import io.swagger.client.auth.*;
-import io.swagger.client.model.*;
-import io.swagger.client.api.RepositoryApi;
+import io.fixprotocol.orchestra.client.*;
+import io.fixprotocol.orchestra.client.auth.*;
+import io.fixprotocol.orchestra.client.model.*;
+import io.fixprotocol.orchestra.client.api.RepositoryApi;
 
 import java.io.File;
 import java.util.*;
@@ -71,11 +71,12 @@ public class RepositoryApiExample {
     public static void main(String[] args) {
         
         RepositoryApi apiInstance = new RepositoryApi();
-        String fileid = "fileid_example"; // String | ID of Orchestra repository file
+        String reposName = "reposName_example"; // String | name of Orchestra repository
+        String version = "version_example"; // String | version of Orchestra repository
         Integer codesetid = 56; // Integer | ID of CodeSet
         Code code = new Code(); // Code | Code to add
         try {
-            apiInstance.addCode(fileid, codesetid, code);
+            apiInstance.addCode(reposName, version, codesetid, code);
         } catch (ApiException e) {
             System.err.println("Exception when calling RepositoryApi#addCode");
             e.printStackTrace();
@@ -91,41 +92,41 @@ All URIs are relative to *https://virtserver.swaggerhub.com/FIXTradingCommunity/
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*RepositoryApi* | [**addCode**](docs/RepositoryApi.md#addCode) | **POST** /repositories/{fileid}/codesets/{codesetid}/codes | adds a Code to CodeSet
-*RepositoryApi* | [**addCodeSet**](docs/RepositoryApi.md#addCodeSet) | **POST** /repositories/{fileid}/codesets | adds a CodeSet
-*RepositoryApi* | [**addComponent**](docs/RepositoryApi.md#addComponent) | **POST** /repositories/{fileid}/components | adds a component
-*RepositoryApi* | [**addDatatype**](docs/RepositoryApi.md#addDatatype) | **POST** /repositories/{fileid}/datatypes | adds a datatype
-*RepositoryApi* | [**addField**](docs/RepositoryApi.md#addField) | **POST** /repositories/{fileid}/fields | adds a field
-*RepositoryApi* | [**addMessage**](docs/RepositoryApi.md#addMessage) | **POST** /repositories/{fileid}/messages | adds a message scenario
-*RepositoryApi* | [**addRepository**](docs/RepositoryApi.md#addRepository) | **POST** /repositories | adds an Orchestra repository file
-*RepositoryApi* | [**deleteCode**](docs/RepositoryApi.md#deleteCode) | **DELETE** /repositories/{fileid}/codesets/{codesetid}/codes/{id} | deletes a single Code based on the ID supplied
-*RepositoryApi* | [**deleteCodeSet**](docs/RepositoryApi.md#deleteCodeSet) | **DELETE** /repositories/{fileid}/codesets/{id} | deletes a single CodeSet based on the ID supplied
-*RepositoryApi* | [**deleteComponent**](docs/RepositoryApi.md#deleteComponent) | **DELETE** /repositories/{fileid}/components/{id} | deletes a single component based on the ID supplied
-*RepositoryApi* | [**deleteDatatype**](docs/RepositoryApi.md#deleteDatatype) | **DELETE** /repositories/{fileid}/datatypes/{name} | deletes a single datatype based on the name supplied
-*RepositoryApi* | [**deleteField**](docs/RepositoryApi.md#deleteField) | **DELETE** /repositories/{fileid}/fields/{id} | deletes a single field based on the ID supplied
-*RepositoryApi* | [**deleteMessage**](docs/RepositoryApi.md#deleteMessage) | **DELETE** /repositories/{fileid}/messages/{id} | deletes a single message scenario based on the ID supplied
-*RepositoryApi* | [**deleteRepository**](docs/RepositoryApi.md#deleteRepository) | **DELETE** /repositories/{fileid} | deletes a single Orchestra repository file based on the ID supplied
-*RepositoryApi* | [**findCodeById**](docs/RepositoryApi.md#findCodeById) | **GET** /repositories/{fileid}/codesets/{codesetid}/codes/{id} | Returns a single Code, if found
-*RepositoryApi* | [**findCodeSetById**](docs/RepositoryApi.md#findCodeSetById) | **GET** /repositories/{fileid}/codesets/{id} | Returns a single CodeSet, if found
-*RepositoryApi* | [**findComponentById**](docs/RepositoryApi.md#findComponentById) | **GET** /repositories/{fileid}/components/{id} | Returns a single component, if found
-*RepositoryApi* | [**findDatatypeByName**](docs/RepositoryApi.md#findDatatypeByName) | **GET** /repositories/{fileid}/datatypes/{name} | Returns a single datatype, if found
-*RepositoryApi* | [**findFieldById**](docs/RepositoryApi.md#findFieldById) | **GET** /repositories/{fileid}/fields/{id} | Returns a single field, if found
-*RepositoryApi* | [**findMessageById**](docs/RepositoryApi.md#findMessageById) | **GET** /repositories/{fileid}/messages/{id} | Returns a single message scenario, if found
-*RepositoryApi* | [**findRepositoryById**](docs/RepositoryApi.md#findRepositoryById) | **GET** /repositories/{fileid} | Returns a single Orchestra repository file metadata, if found
-*RepositoryApi* | [**searchCodeSets**](docs/RepositoryApi.md#searchCodeSets) | **GET** /repositories/{fileid}/codesets | searches CodeSets
-*RepositoryApi* | [**searchCodes**](docs/RepositoryApi.md#searchCodes) | **GET** /repositories/{fileid}/codesets/{codesetid}/codes | searches Codes within a CodeSet
-*RepositoryApi* | [**searchComponents**](docs/RepositoryApi.md#searchComponents) | **GET** /repositories/{fileid}/components | searches components
-*RepositoryApi* | [**searchDatatypes**](docs/RepositoryApi.md#searchDatatypes) | **GET** /repositories/{fileid}/datatypes | searches datatypes
-*RepositoryApi* | [**searchFields**](docs/RepositoryApi.md#searchFields) | **GET** /repositories/{fileid}/fields | searches fields
-*RepositoryApi* | [**searchMessages**](docs/RepositoryApi.md#searchMessages) | **GET** /repositories/{fileid}/messages | searches messages
-*RepositoryApi* | [**searchRepositories**](docs/RepositoryApi.md#searchRepositories) | **GET** /repositories | searches Orchestra repository files
-*RepositoryApi* | [**updateCodeById**](docs/RepositoryApi.md#updateCodeById) | **PUT** /repositories/{fileid}/codesets/{codesetid}/codes/{id} | Updates a single Code, if found (idempotent)
-*RepositoryApi* | [**updateCodeSetById**](docs/RepositoryApi.md#updateCodeSetById) | **PUT** /repositories/{fileid}/codesets/{id} | Updates a single CodeSet, if found (idempotent)
-*RepositoryApi* | [**updateComponentById**](docs/RepositoryApi.md#updateComponentById) | **PUT** /repositories/{fileid}/components/{id} | Updates a single component, if found (idempotent)
-*RepositoryApi* | [**updateDatatypeByName**](docs/RepositoryApi.md#updateDatatypeByName) | **PUT** /repositories/{fileid}/datatypes/{name} | Updates a single datatype, if found (idempotent)
-*RepositoryApi* | [**updateFieldById**](docs/RepositoryApi.md#updateFieldById) | **PUT** /repositories/{fileid}/fields/{id} | Updates a single field, if found (idempotent)
-*RepositoryApi* | [**updateMessageById**](docs/RepositoryApi.md#updateMessageById) | **PUT** /repositories/{fileid}/messages/{id} | Updates a single message scenario, if found (idempotent)
-*RepositoryApi* | [**updateRepositoryById**](docs/RepositoryApi.md#updateRepositoryById) | **PUT** /repositories/{fileid} | Updates an Orchestra repository file, if found (idempotent)
+*RepositoryApi* | [**addCode**](docs/RepositoryApi.md#addCode) | **POST** /repositories/{repos-name}/{version}/codesets/{codesetid}/codes | adds a Code to CodeSet
+*RepositoryApi* | [**addCodeSet**](docs/RepositoryApi.md#addCodeSet) | **POST** /repositories/{repos-name}/{version}/codesets | adds a CodeSet
+*RepositoryApi* | [**addComponent**](docs/RepositoryApi.md#addComponent) | **POST** /repositories/{repos-name}/{version}/components | adds a component
+*RepositoryApi* | [**addDatatype**](docs/RepositoryApi.md#addDatatype) | **POST** /repositories/{repos-name}/{version}/datatypes | adds a datatype
+*RepositoryApi* | [**addField**](docs/RepositoryApi.md#addField) | **POST** /repositories/{repos-name}/{version}/fields | adds a field
+*RepositoryApi* | [**addMessage**](docs/RepositoryApi.md#addMessage) | **POST** /repositories/{repos-name}/{version}/messages | adds a message scenario
+*RepositoryApi* | [**addRepository**](docs/RepositoryApi.md#addRepository) | **POST** /repositories | adds an Orchestra repository
+*RepositoryApi* | [**deleteCode**](docs/RepositoryApi.md#deleteCode) | **DELETE** /repositories/{repos-name}/{version}/codesets/{codesetid}/codes/{id} | deletes a single Code based on the ID supplied
+*RepositoryApi* | [**deleteCodeSet**](docs/RepositoryApi.md#deleteCodeSet) | **DELETE** /repositories/{repos-name}/{version}/codesets/{id} | deletes a single CodeSet based on the ID supplied
+*RepositoryApi* | [**deleteComponent**](docs/RepositoryApi.md#deleteComponent) | **DELETE** /repositories/{repos-name}/{version}/components/{id} | deletes a single component based on the ID supplied
+*RepositoryApi* | [**deleteDatatype**](docs/RepositoryApi.md#deleteDatatype) | **DELETE** /repositories/{repos-name}/{version}/datatypes/{name} | deletes a single datatype based on the name supplied
+*RepositoryApi* | [**deleteField**](docs/RepositoryApi.md#deleteField) | **DELETE** /repositories/{repos-name}/{version}/fields/{id} | deletes a single field based on the ID supplied
+*RepositoryApi* | [**deleteMessage**](docs/RepositoryApi.md#deleteMessage) | **DELETE** /repositories/{repos-name}/{version}/messages/{id} | deletes a single message scenario based on the ID supplied
+*RepositoryApi* | [**deleteRepository**](docs/RepositoryApi.md#deleteRepository) | **DELETE** /repositories/{repos-name}/{version} | deletes a single Orchestra repository  based on the ID supplied
+*RepositoryApi* | [**findCodeById**](docs/RepositoryApi.md#findCodeById) | **GET** /repositories/{repos-name}/{version}/codesets/{codesetid}/codes/{id} | Returns a single Code, if found
+*RepositoryApi* | [**findCodeSetById**](docs/RepositoryApi.md#findCodeSetById) | **GET** /repositories/{repos-name}/{version}/codesets/{id} | Returns a single CodeSet, if found
+*RepositoryApi* | [**findComponentById**](docs/RepositoryApi.md#findComponentById) | **GET** /repositories/{repos-name}/{version}/components/{id} | Returns a single component, if found
+*RepositoryApi* | [**findDatatypeByName**](docs/RepositoryApi.md#findDatatypeByName) | **GET** /repositories/{repos-name}/{version}/datatypes/{name} | Returns a single datatype, if found
+*RepositoryApi* | [**findFieldById**](docs/RepositoryApi.md#findFieldById) | **GET** /repositories/{repos-name}/{version}/fields/{id} | Returns a single field, if found
+*RepositoryApi* | [**findMessageById**](docs/RepositoryApi.md#findMessageById) | **GET** /repositories/{repos-name}/{version}/messages/{id} | Returns a single message scenario, if found
+*RepositoryApi* | [**findRepositoryById**](docs/RepositoryApi.md#findRepositoryById) | **GET** /repositories/{repos-name}/{version} | Returns a single Orchestra repository metadata, if found
+*RepositoryApi* | [**searchCodeSets**](docs/RepositoryApi.md#searchCodeSets) | **GET** /repositories/{repos-name}/{version}/codesets | searches CodeSets
+*RepositoryApi* | [**searchCodes**](docs/RepositoryApi.md#searchCodes) | **GET** /repositories/{repos-name}/{version}/codesets/{codesetid}/codes | searches Codes within a CodeSet
+*RepositoryApi* | [**searchComponents**](docs/RepositoryApi.md#searchComponents) | **GET** /repositories/{repos-name}/{version}/components | searches components
+*RepositoryApi* | [**searchDatatypes**](docs/RepositoryApi.md#searchDatatypes) | **GET** /repositories/{repos-name}/{version}/datatypes | searches datatypes
+*RepositoryApi* | [**searchFields**](docs/RepositoryApi.md#searchFields) | **GET** /repositories/{repos-name}/{version}/fields | searches fields
+*RepositoryApi* | [**searchMessages**](docs/RepositoryApi.md#searchMessages) | **GET** /repositories/{repos-name}/{version}/messages | searches messages
+*RepositoryApi* | [**searchRepositories**](docs/RepositoryApi.md#searchRepositories) | **GET** /repositories | searches Orchestra repositories
+*RepositoryApi* | [**updateCodeById**](docs/RepositoryApi.md#updateCodeById) | **PUT** /repositories/{repos-name}/{version}/codesets/{codesetid}/codes/{id} | Updates a single Code, if found (idempotent)
+*RepositoryApi* | [**updateCodeSetById**](docs/RepositoryApi.md#updateCodeSetById) | **PUT** /repositories/{repos-name}/{version}/codesets/{id} | Updates a single CodeSet, if found (idempotent)
+*RepositoryApi* | [**updateComponentById**](docs/RepositoryApi.md#updateComponentById) | **PUT** /repositories/{repos-name}/{version}/components/{id} | Updates a single component, if found (idempotent)
+*RepositoryApi* | [**updateDatatypeByName**](docs/RepositoryApi.md#updateDatatypeByName) | **PUT** /repositories/{repos-name}/{version}/datatypes/{name} | Updates a single datatype, if found (idempotent)
+*RepositoryApi* | [**updateFieldById**](docs/RepositoryApi.md#updateFieldById) | **PUT** /repositories/{repos-name}/{version}/fields/{id} | Updates a single field, if found (idempotent)
+*RepositoryApi* | [**updateMessageById**](docs/RepositoryApi.md#updateMessageById) | **PUT** /repositories/{repos-name}/{version}/messages/{id} | Updates a single message scenario, if found (idempotent)
+*RepositoryApi* | [**updateRepositoryById**](docs/RepositoryApi.md#updateRepositoryById) | **PUT** /repositories/{repos-name}/{version} | Updates an Orchestra repository, if found (idempotent)
 
 
 ## Documentation for Models
@@ -150,6 +151,7 @@ Class | Method | HTTP request | Description
  - [MessageElements](docs/MessageElements.md)
  - [Metadata](docs/Metadata.md)
  - [ObjectId](docs/ObjectId.md)
+ - [Repository](docs/Repository.md)
  - [Response](docs/Response.md)
 
 

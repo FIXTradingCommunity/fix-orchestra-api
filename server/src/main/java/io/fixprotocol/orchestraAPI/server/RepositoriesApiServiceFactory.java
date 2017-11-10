@@ -1,7 +1,8 @@
 package io.fixprotocol.orchestraAPI.server;
 
+import io.fixprotocol.orchestra.api.RepositoriesApiService;
 import io.fixprotocol.orchestraAPI.store.RepositoryStoreFactory;
-import io.swagger.api.RepositoriesApiService;
+
 
 public class RepositoriesApiServiceFactory {
   private final static RepositoryStoreFactory storeFactory = new RepositoryStoreFactory();

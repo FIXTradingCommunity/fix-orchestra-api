@@ -3,18 +3,22 @@ package io.fixprotocol.orchestraAPI.store.dom;
 import static org.junit.Assert.*;
 
 import java.util.List;
+import java.util.Random;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import io.fixprotocol.orchestra.model.Metadata;
+import io.fixprotocol.orchestra.model.Repository;
 import io.fixprotocol.orchestraAPI.store.DuplicateKeyException;
 import io.fixprotocol.orchestraAPI.store.RepositoryStoreException;
 import io.fixprotocol.orchestraAPI.store.ResourceNotFoundException;
-import io.swagger.model.Metadata;
+
 
 public class RepositoryDOMStoreTest {
 
   private RepositoryDOMStore store;
+  private final Random random = new Random();
   
   @Before
   public void setup() {
@@ -23,66 +27,112 @@ public class RepositoryDOMStoreTest {
 
   @Test
   public void addRepository() throws RepositoryStoreException {
+    Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
     Metadata metadata = new Metadata();
-    metadata.setTitle("My repository 1");
-    Metadata metadata2 = store.addRepository(metadata, null);
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+
+    Metadata metadata2 = store.createRepository(repository, null, null);
     assertEquals(metadata.getTitle(), metadata2.getTitle());
     assertNotNull(metadata2.getIdentifier());
 
-    store.deleteRepository(metadata2.getIdentifier());
+    store.deleteRepository(repository.getName(), identifier);
   }
 
   @Test
-  public void cloneRepository() throws RepositoryStoreException {
+  public void updateRepositoryMetadata() throws RepositoryStoreException {
+    Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
     Metadata metadata = new Metadata();
-    metadata.setTitle("My repository 1");
-    Metadata metadata2 = store.addRepository(metadata, null);
-    String id2 = metadata2.getIdentifier();
-    Metadata metadata3 = new Metadata();
-    metadata3.setTitle("My repository 2");
-    Metadata metadata4 = store.addRepository(metadata3, id2);
-    assertNotNull(metadata3);
-    assertNotEquals(id2, metadata4.getIdentifier());
-
-    List<Metadata> list = store.getRepositories(null);
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    
+    store.createRepository(repository, null, null);
+    metadata.setSubject("My subject 2");
+    store.updateRepositoryMetadata("test1", identifier, repository);
+    
+    Metadata metadata2 = store.getRepositoryMetadata("test1", identifier);
+    assertEquals(metadata.getSubject(), metadata2.getSubject());
+    
+    store.deleteRepository("test1", identifier);
+  }
+  @Test
+  public void cloneRepository() throws RepositoryStoreException {
+    Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);  
+    store.createRepository(repository, null, null);
+    
+    Repository repository2 = new Repository();
+    repository2.setName("test1");
+    final String identifier2 = Integer.toString(random.nextInt());
+    repository2.setVersion(identifier2);
+    store.createRepository(repository2, "test1", identifier);
+    Metadata metadata2 = store.getRepositoryMetadata("test1", identifier2);
+    assertEquals("A test repository", metadata.getDescription());
+    
+    List<Metadata> list = store.getRepositoriesMetadata(null);
     assertEquals(2, list.size());
 
-    store.deleteRepository(metadata2.getIdentifier());
-    store.deleteRepository(metadata4.getIdentifier());
+    store.deleteRepository("test1", identifier);
+    store.deleteRepository("test1", identifier2);
 
-    list = store.getRepositories(null);
+    list = store.getRepositoriesMetadata(null);
     assertEquals(0, list.size());
   }
 
   @Test(expected = DuplicateKeyException.class)
   public void duplicateRepository() throws RepositoryStoreException {
+    Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
     Metadata metadata = new Metadata();
-    metadata.setTitle("My repository 1");
-    Metadata metadata2 = store.addRepository(metadata, null);
-    Metadata metadata3 = new Metadata();
-    metadata3.identifier(metadata2.getIdentifier());
-    store.addRepository(metadata3, null);
-
-    store.deleteRepository(metadata2.getIdentifier());
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    store.createRepository(repository, null, null);
+    
+    store.createRepository(repository, null, null);
   }
 
   @Test
   public void getRepository() throws RepositoryStoreException {
+    Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
     Metadata metadata = new Metadata();
-    metadata.setTitle("My repository 1");
-    Metadata metadata2 = store.addRepository(metadata, null);
-    assertEquals(metadata.getTitle(), metadata2.getTitle());
-    assertNotNull(metadata2.getIdentifier());
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    Metadata metadata2 = store.createRepository(repository, null, null);
 
-    Metadata metadata3 = store.getRepository(metadata2.getIdentifier());
-    assertEquals(metadata2.getIdentifier(), metadata3.getIdentifier());
+    Metadata metadata3 = store.getRepositoryMetadata("test1", identifier);
+    assertEquals("A test repository", metadata3.getDescription());
   }
 
   @Test(expected = ResourceNotFoundException.class)
   public void toCloneNotFound() throws RepositoryStoreException {
-    Metadata metadata = new Metadata();
-    metadata.setTitle("My repository 1");
-    store.addRepository(metadata, "foobar");
+    Repository repository = new Repository();
+    store.createRepository(repository, "foo", "1");
   }
 
 }

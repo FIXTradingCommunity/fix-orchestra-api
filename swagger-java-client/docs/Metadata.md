@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**identifier** | **String** | unique ID of an Orchestra file | 
+**identifier** | **String** | unique ID of an Orchestra repository | 
 **contributor** | **String** |  |  [optional]
 **coverage** | **String** | a FIX category or guideline |  [optional]
 **creator** | **String** |  |  [optional]

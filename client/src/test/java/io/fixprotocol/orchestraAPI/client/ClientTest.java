@@ -12,10 +12,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import io.swagger.client.ApiClient;
-import io.swagger.client.ApiException;
-import io.swagger.client.api.RepositoryApi;
-import io.swagger.client.model.Metadata;
+import io.fixprotocol.orchestra.client.ApiClient;
+import io.fixprotocol.orchestra.client.ApiException;
+import io.fixprotocol.orchestra.client.api.RepositoryApi;
+import io.fixprotocol.orchestra.client.model.Metadata;
+import io.fixprotocol.orchestra.client.model.Repository;
+
 
 /**
  * @author Don Mendelson
@@ -108,29 +110,21 @@ public class ClientTest {
     fail("Not yet implemented");
   }
 
-  /**
-   * Test method for {@link io.fixprotocol.orchestraAPI.client.Client#addRepository(io.swagger.client.model.Metadata)}.
-   * @throws ApiException 
-   */
+
   @Test
-  public void testAddRepositoryMetadata() throws ApiException {
-    Metadata repository = new Metadata();
-    repository.description("A test repository");
+  public void testAddRepository() throws ApiException {
+    Repository repository = new Repository();
+    repository.setName("test1");
     final String identifier = Integer.toString(random.nextInt());
-    repository.identifier(identifier);
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
     client.addRepository(repository);
     
-    client.deleteRepository(identifier);
-  }
-
-  /**
-   * Test method for {@link io.fixprotocol.orchestraAPI.client.Client#addRepository(io.swagger.client.model.Metadata, java.lang.String)}.
-   * @throws ApiException 
-   */
-  @Test
-  public void testAddRepositoryMetadataString() throws ApiException {
-    Metadata metadata = new Metadata();
-    client.addRepository(metadata );
+    client.deleteRepository("test1", identifier);
   }
 
   /**
@@ -187,16 +181,21 @@ public class ClientTest {
    */
   @Test
   public void testDeleteRepository() throws ApiException {
-    Metadata repository = new Metadata();
-    repository.description("A test repository");
+    Repository repository = new Repository();
+    repository.setName("test1");
     final String identifier = Integer.toString(random.nextInt());
-    repository.identifier(identifier);
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
     client.addRepository(repository);
     
-    client.deleteRepository(identifier);
+    client.deleteRepository("test1", identifier);
     
     try {
-      client.findRepositoryById(identifier);
+      client.findRepositoryById("test1", identifier);
       fail("deletion failed");
     } catch (ApiException e) {
       assertEquals(404, e.getCode());
@@ -257,16 +256,20 @@ public class ClientTest {
    */
   @Test
   public void testFindRepositoryById() throws ApiException {
-    Metadata repository = new Metadata();
-    repository.description("A test repository");
+    Repository repository = new Repository();
+    repository.setName("test1");
     final String identifier = Integer.toString(random.nextInt());
-    repository.identifier(identifier);
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
     client.addRepository(repository);
+
+    client.findRepositoryById("test1", identifier);  
     
-    Metadata repository2 = client.findRepositoryById(identifier);
-    assertEquals(identifier, repository2.getIdentifier());
-    
-    client.deleteRepository(identifier);
+    client.deleteRepository("test1", identifier);
   }
 
   /**
@@ -323,7 +326,7 @@ public class ClientTest {
    */
   @Test
   public void testSearchRepositories() throws ApiException {
-    List<Metadata> metadataList = client.searchRepositories(null, null, null);
+    List<Repository> metadataList = client.searchRepositories(null, null, null);
     assertNotNull(metadataList);
   }
 
@@ -377,10 +380,25 @@ public class ClientTest {
 
   /**
    * Test method for {@link io.fixprotocol.orchestraAPI.client.Client#updateRepositoryById(java.lang.String, io.swagger.client.model.Metadata)}.
+   * @throws ApiException 
    */
   @Test
-  public void testUpdateRepositoryById() {
-    fail("Not yet implemented");
+  public void testUpdateRepositoryById() throws ApiException {
+    Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    metadata.setSubject("My subject");
+    client.updateRepositoryById("test1", identifier, repository);
+    
+    client.deleteRepository("test1", identifier);
   }
 
 }
