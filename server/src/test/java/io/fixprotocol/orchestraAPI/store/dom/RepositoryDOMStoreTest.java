@@ -8,7 +8,9 @@ import java.util.Random;
 import org.junit.Before;
 import org.junit.Test;
 
+import io.fixprotocol.orchestra.model.Field;
 import io.fixprotocol.orchestra.model.Metadata;
+import io.fixprotocol.orchestra.model.ObjectId;
 import io.fixprotocol.orchestra.model.Repository;
 import io.fixprotocol.orchestraAPI.store.DuplicateKeyException;
 import io.fixprotocol.orchestraAPI.store.RepositoryStoreException;
@@ -40,6 +42,50 @@ public class RepositoryDOMStoreTest {
     Metadata metadata2 = store.createRepository(repository, null, null);
     assertEquals(metadata.getTitle(), metadata2.getTitle());
     assertNotNull(metadata2.getIdentifier());
+
+    store.deleteRepository(repository.getName(), identifier);
+  }
+  
+  @Test
+  public void addFindField() throws RepositoryStoreException {
+    Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    
+    Metadata metadata2 = store.createRepository(repository, null, null);
+    
+    Field field = new Field();
+    ObjectId oid = new ObjectId();
+    oid.setName("Account");
+    oid.setId(1);
+    field.setOid(oid); 
+    store.createField("test1", identifier, field);
+    
+    Field field2 = store.getFieldById("test1", identifier, 1);
+    assertEquals("Account", field2.getOid().getName());
+    
+    field.setDatatype("UTCDateOnly");
+    store.updateField("test1", identifier, 1, field);
+    field2 = store.getFieldById("test1", identifier, 1);
+    assertEquals("Account", field2.getOid().getName());
+    assertEquals("UTCDateOnly", field2.getDatatype());
+    
+    store.deleteField("test1", identifier, 1);
+    
+    try {
+      store.getFieldById("test1", identifier, 1);
+      fail("ResourceNotFoundException expected");
+    } catch (ResourceNotFoundException e) {
+      
+    } catch (Exception e) {
+      fail("Wrong exception; ResourceNotFoundException expected");
+    }
 
     store.deleteRepository(repository.getName(), identifier);
   }

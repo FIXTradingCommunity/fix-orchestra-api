@@ -7,6 +7,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import io.fixprotocol._2016.fixrepository.FieldType;
+import io.fixprotocol._2016.fixrepository.Fields;
 import io.fixprotocol._2016.fixrepository.Repository;
 
 import io.fixprotocol.orchestra.model.Field;
@@ -26,14 +28,11 @@ import io.fixprotocol.orchestraAPI.store.ResourceNotFoundException;
 public class RepositoryDOMStore implements RepositoryStore {
   
   private class RepositoryKey {
-    @Override
-    public int hashCode() {
-      final int prime = 31;
-      int result = 1;
-      result = prime * result + getOuterType().hashCode();
-      result = prime * result + ((reposName == null) ? 0 : reposName.hashCode());
-      result = prime * result + ((version == null) ? 0 : version.hashCode());
-      return result;
+    String reposName;
+    String version;
+    public RepositoryKey(String reposName, String version) {
+      this.reposName = reposName;
+      this.version = version;
     }
     @Override
     public boolean equals(Object obj) {
@@ -65,13 +64,16 @@ public class RepositoryDOMStore implements RepositoryStore {
         return false;
       }
       return true;
+    } 
+    @Override
+    public int hashCode() {
+      final int prime = 31;
+      int result = 1;
+      result = prime * result + getOuterType().hashCode();
+      result = prime * result + ((reposName == null) ? 0 : reposName.hashCode());
+      result = prime * result + ((version == null) ? 0 : version.hashCode());
+      return result;
     }
-    public RepositoryKey(String reposName, String version) {
-      this.reposName = reposName;
-      this.version = version;
-    }
-    String reposName; 
-    String version;
     private RepositoryDOMStore getOuterType() {
       return RepositoryDOMStore.this;
     }
@@ -88,7 +90,12 @@ public class RepositoryDOMStore implements RepositoryStore {
       throw new ResourceNotFoundException(
           String.format("Repository with name=%s version=%s not found", reposName, version));
     }
-    repository.getFields().getField().add(OrchestraAPItoDOM.FieldToDOM(field));
+    Fields fields = repository.getFields();
+    if (fields == null) {
+      fields = new Fields();
+      repository.setFields(fields);
+    }
+    fields.getField().add(OrchestraAPItoDOM.FieldToDOM(field));
   }
 
   @Override
@@ -123,6 +130,31 @@ public class RepositoryDOMStore implements RepositoryStore {
   }
 
   @Override
+  public void deleteField(String reposName, String version, Integer id)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(id, "Field ID missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+
+    final Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }  
+  
+    for (FieldType field : repository.getFields().getField()) {
+      if (id == field.getId().intValue()) {
+        repository.getFields().getField().remove(field);
+        return;
+      }
+    }
+    
+    throw new ResourceNotFoundException(
+        String.format("Field with ID=%d not found", id));
+  }
+
+  @Override
   public void deleteRepository(String reposName, String version) throws RepositoryStoreException {
     Objects.requireNonNull(reposName, "Repository name missing");
     Objects.requireNonNull(version, "Repository version missing");
@@ -132,6 +164,28 @@ public class RepositoryDOMStore implements RepositoryStore {
       throw new ResourceNotFoundException(
           String.format("Repository with name=%s version=%s not found", reposName, version));
     }
+  }
+
+  @Override
+  public Field getFieldById(String reposName, String version, Integer id) throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(id, "Field ID missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+    Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+    for (FieldType field : repository.getFields().getField()) {
+      if (id == field.getId().intValue()) {
+        return OrchestraAPItoDOM.DOMToField(field);
+      }
+    }
+    
+    throw new ResourceNotFoundException(
+        String.format("Field with ID=%d not found", id));
+
   }
 
   @Override
@@ -177,4 +231,50 @@ public class RepositoryDOMStore implements RepositoryStore {
     }
   }
 
+  @Override
+  public List<Field> getFields(String reposName, String version, Predicate<Field> search) throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+    Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+    Predicate<Field> predicate = search != null ? search : new Predicate<Field>() {
+
+      @Override
+      public boolean test(Field t) {
+        return true;
+      }
+
+    };
+    return repository.getFields().getField().stream().map(f -> OrchestraAPItoDOM.DOMToField(f))
+        .filter(predicate).collect(Collectors.toList());
+  }
+
+  @Override
+  public void updateField(String reposName, String version, Integer id, Field field) throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(id, "Field ID missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+
+    final Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }  
+  
+    for (int i=0; i < repository.getFields().getField().size(); i++) {
+      FieldType fieldType = repository.getFields().getField().get(i);
+      if (id == fieldType.getId().intValue()) {
+        repository.getFields().getField().set(i, OrchestraAPItoDOM.FieldToDOM(field));
+        return;
+      }
+    }
+    
+    throw new ResourceNotFoundException(
+        String.format("Field with ID=%d not found", id));
+  }
 }

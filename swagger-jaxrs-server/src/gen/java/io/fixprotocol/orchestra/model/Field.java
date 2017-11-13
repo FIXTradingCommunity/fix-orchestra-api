@@ -26,16 +26,34 @@
 package io.fixprotocol.orchestra.model;
 
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import io.fixprotocol.orchestra.model.Annotation;
 import io.fixprotocol.orchestra.model.EntityAttributes;
 import io.fixprotocol.orchestra.model.MessageElement;
 import io.fixprotocol.orchestra.model.ObjectId;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Field
+ * 
+ * Manual update: An error in code generation did not generate type attribute
  */
 @javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-10T17:21:41.794Z")
 public class Field extends MessageElement  {
+  
+  @JsonProperty("datatype")
+  private String datatype = null;
+
+  @ApiModelProperty(value = "")
+  public String getDatatype() {
+    return datatype;
+  }
+
+  public void setDatatype(String datatype) {
+    this.datatype = datatype;
+  }
 
   @Override
   public boolean equals(java.lang.Object o) {

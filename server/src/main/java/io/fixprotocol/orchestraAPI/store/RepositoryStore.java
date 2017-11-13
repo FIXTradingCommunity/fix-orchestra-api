@@ -33,7 +33,18 @@ public interface RepositoryStore {
    * @throws DuplicateKeyException if the repository already exists
    * @throws RepositoryStoreException if the store operation fails
    */
-  Metadata createRepository(Repository repository, String nameToClone, String versionToClone) throws RepositoryStoreException;
+  Metadata createRepository(Repository repository, String nameToClone, String versionToClone)
+      throws RepositoryStoreException;
+
+  /**
+   * Deletes one Field if it exists
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @throws ResourceNotFoundException if the repository or field to delete does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  void deleteField(String reposName, String version, Integer id) throws RepositoryStoreException;
 
   /**
    * Deletes one repository if it exists
@@ -44,6 +55,31 @@ public interface RepositoryStore {
    * @throws RepositoryStoreException if the store operation fails
    */
   void deleteRepository(String reposName, String version) throws RepositoryStoreException;
+
+  /**
+   * Retrieves a Field by its ID
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param id field identifier
+   * @return the field
+   * @throws ResourceNotFoundException if the repository or field does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  Field getFieldById(String reposName, String version, Integer id) throws RepositoryStoreException;
+
+  /**
+   * Retrieves all fields in a repository
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param predicate filter for fields to return
+   * @return a list of fields
+   * @throws ResourceNotFoundException if the repository does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  List<Field> getFields(String reposName, String version, Predicate<Field> predicate)
+      throws RepositoryStoreException;
 
   /**
    * Retrieves the metadata of all repositories
@@ -66,6 +102,18 @@ public interface RepositoryStore {
    * @throws RepositoryStoreException if the store operation fails
    */
   Metadata getRepositoryMetadata(String reposName, String version) throws RepositoryStoreException;
+
+  /**
+   * Update an existing field
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param id ID of the field to update
+   * @param field new value of the field
+   * @throws ResourceNotFoundException if the repository or field to update does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  void updateField(String reposName, String version, Integer id, Field field) throws RepositoryStoreException;
 
   /**
    * Update the metadata of an existing repository

@@ -18,11 +18,74 @@ import io.fixprotocol._2016.fixrepository.Repository;
 import io.fixprotocol.orchestra.api.RFC3339DateFormat;
 import io.fixprotocol.orchestra.model.Field;
 import io.fixprotocol.orchestra.model.Metadata;
+import io.fixprotocol.orchestra.model.ObjectId;
 
 
 public final class OrchestraAPItoDOM {
 
   private final static RFC3339DateFormat dateFormat = new RFC3339DateFormat();
+
+  public static Field DOMToField(FieldType fieldType) {
+    Field field = new Field();
+    ObjectId oid = new ObjectId();
+    field.setOid(oid);
+    oid.setName(fieldType.getName());
+    oid.setAbbrName(fieldType.getAbbrName());
+    oid.setId(fieldType.getId().intValue());
+    field.setDatatype(fieldType.getType());
+    return field;
+  }
+
+  public static Metadata DOMToMetadata(ElementOrRefinementContainer element) {
+    Metadata metadata = new Metadata();
+    List<JAXBElement<SimpleLiteral>> literals = element.getAny();
+    literals.forEach(l -> {
+      String name = l.getName().getLocalPart();
+      String value = l.getValue().getContent().get(0);
+      switch (name) {
+        case "coverage":
+          metadata.setCoverage(value);
+          break;
+        case "creator":
+          metadata.setCreator(value);
+          break;
+        case "description":
+          metadata.setDescription(value);
+          break;
+        case "date":
+          try {
+            metadata.setDate(
+                dateFormat.parse(value).toInstant().atZone(ZoneId.of("UTC")).toLocalDate());
+          } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+          }
+          break;
+        case "identifier":
+          metadata.setIdentifier(value);
+          break;
+        case "publisher":
+          metadata.setPublisher(value);
+          break;
+        case "subject":
+          metadata.setSubject(value);
+          break;
+        case "title":
+          metadata.setTitle(value);
+          break;
+      }
+    });
+    return metadata;
+  }
+
+  public static FieldType FieldToDOM(Field field) {
+    FieldType fieldType = new FieldType();
+    fieldType.setId(BigInteger.valueOf(field.getOid().getId()));
+    fieldType.setName(field.getOid().getName());
+    fieldType.setAbbrName(field.getOid().getAbbrName());
+    fieldType.setType(field.getDatatype());
+    return fieldType;
+  }
 
   public static ElementOrRefinementContainer MetadataToDOM(Metadata metadata) {
     ElementOrRefinementContainer container = new ElementOrRefinementContainer();
@@ -90,58 +153,8 @@ public final class OrchestraAPItoDOM {
     return container;
   }
 
-  public static Metadata DOMToMetadata(ElementOrRefinementContainer element) {
-    Metadata metadata = new Metadata();
-    List<JAXBElement<SimpleLiteral>> literals = element.getAny();
-    literals.forEach(l -> {
-      String name = l.getName().getLocalPart();
-      String value = l.getValue().getContent().get(0);
-      switch (name) {
-        case "coverage":
-          metadata.setCoverage(value);
-          break;
-        case "creator":
-          metadata.setCreator(value);
-          break;
-        case "description":
-          metadata.setDescription(value);
-          break;
-        case "date":
-          try {
-            metadata.setDate(
-                dateFormat.parse(value).toInstant().atZone(ZoneId.of("UTC")).toLocalDate());
-          } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-          }
-          break;
-        case "identifier":
-          metadata.setIdentifier(value);
-          break;
-        case "publisher":
-          metadata.setPublisher(value);
-          break;
-        case "subject":
-          metadata.setSubject(value);
-          break;
-        case "title":
-          metadata.setTitle(value);
-          break;
-      }
-    });
-    return metadata;
-  }
-
-  public static FieldType FieldToDOM(Field field) {
-    FieldType fieldType = new FieldType();
-    fieldType.setId(BigInteger.valueOf(field.getOid().getId()));
-    fieldType.setName(field.getOid().getName());
-    fieldType.setAbbrName(field.getOid().getAbbrName());
-    // fieldType.setType(field.getType());
-    return fieldType;
-  }
-
-  public static io.fixprotocol._2016.fixrepository.Repository RepositoryToDOM(io.fixprotocol.orchestra.model.Repository repository) {
+  public static io.fixprotocol._2016.fixrepository.Repository RepositoryToDOM(
+      io.fixprotocol.orchestra.model.Repository repository) {
     Repository repositoryDOM = new Repository();
     repositoryDOM.setName(repository.getName());
     repositoryDOM.setVersion(repository.getVersion());

@@ -15,7 +15,9 @@ import org.junit.Test;
 import io.fixprotocol.orchestra.client.ApiClient;
 import io.fixprotocol.orchestra.client.ApiException;
 import io.fixprotocol.orchestra.client.api.RepositoryApi;
+import io.fixprotocol.orchestra.client.model.Field;
 import io.fixprotocol.orchestra.client.model.Metadata;
+import io.fixprotocol.orchestra.client.model.ObjectId;
 import io.fixprotocol.orchestra.client.model.Repository;
 
 
@@ -88,10 +90,33 @@ public class ClientTest {
 
   /**
    * Test method for {@link io.fixprotocol.orchestraAPI.client.Client#addField(java.lang.String, io.swagger.client.model.Field)}.
+   * @throws ApiException 
    */
   @Test
-  public void testAddField() {
-    fail("Not yet implemented");
+  public void testAddField() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    final Field field = new Field();
+    final ObjectId oid = new ObjectId();
+    oid.setName("Account");
+    oid.setAbbrName("Acct");
+    oid.setId(1);
+    field.setOid(oid);
+    client.addField("test1", identifier, field );
+    
+    Field field2 = client.findFieldById("test1", identifier, 1);
+    assertNotNull(field2);
+    
+    client.deleteRepository("test1", identifier);
   }
 
   /**
@@ -161,10 +186,42 @@ public class ClientTest {
 
   /**
    * Test method for {@link io.fixprotocol.orchestraAPI.client.Client#deleteField(java.lang.String, java.lang.Integer)}.
+   * @throws ApiException 
    */
   @Test
-  public void testDeleteField() {
-    fail("Not yet implemented");
+  public void testDeleteField() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    final Field field = new Field();
+    final ObjectId oid = new ObjectId();
+    oid.setName("Account");
+    oid.setAbbrName("Acct");
+    oid.setId(1);
+    field.setOid(oid);
+    client.addField("test1", identifier, field );
+    
+    Field field2 = client.findFieldById("test1", identifier, 1);
+    assertNotNull(field2);
+    
+    client.deleteField("test1", identifier, 1);
+    
+    client.deleteRepository("test1", identifier);
+
+    try {
+      client.findFieldById("test1", identifier, 1);
+      fail("deletion failed");
+    } catch (ApiException e) {
+      assertEquals(404, e.getCode());
+    }
   }
 
   /**
@@ -236,10 +293,34 @@ public class ClientTest {
 
   /**
    * Test method for {@link io.fixprotocol.orchestraAPI.client.Client#findFieldById(java.lang.String, java.lang.Integer)}.
+   * @throws ApiException 
    */
   @Test
-  public void testFindFieldById() {
-    fail("Not yet implemented");
+  public void testFindFieldById() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    final Field field = new Field();
+    final ObjectId oid = new ObjectId();
+    oid.setName("Account");
+    oid.setAbbrName("Acct");
+    oid.setId(1);
+    field.setOid(oid);
+    client.addField("test1", identifier, field );
+    
+    Field field2 = client.findFieldById("test1", identifier, 1);
+    assertEquals("Account", field2.getOid().getName());
+    assertEquals("Acct", field2.getOid().getAbbrName());
+    
+    client.deleteRepository("test1", identifier);
   }
 
   /**
@@ -306,10 +387,41 @@ public class ClientTest {
 
   /**
    * Test method for {@link io.fixprotocol.orchestraAPI.client.Client#searchFields(java.lang.String, java.lang.String, java.lang.Integer, java.lang.Integer)}.
+   * @throws ApiException 
    */
   @Test
-  public void testSearchFields() {
-    fail("Not yet implemented");
+  public void testSearchFields() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    final Field field = new Field();
+    final ObjectId oid = new ObjectId();
+    oid.setName("Account");
+    oid.setAbbrName("Acct");
+    oid.setId(1);
+    field.setOid(oid);
+    client.addField("test1", identifier, field );
+    
+    final Field field2 = new Field();
+    final ObjectId oid2 = new ObjectId();
+    oid2.setName("OrderID");
+    oid2.setAbbrName("OrdID");
+    oid2.setId(37);
+    field2.setOid(oid);
+    client.addField("test1", identifier, field2);
+    
+    List<Field> fields = client.searchFields("test1", identifier, null, null, null);
+    assertEquals(2, fields.size());
+    
+    client.deleteRepository("test1", identifier);
   }
 
   /**

@@ -28,7 +28,7 @@ public class Client {
     this.apiInstance = apiInstance;
     JSON json = apiInstance.getApiClient().getJSON();
     ObjectMapper mapper = json.getContext(null);
-    // allows deserialization of ArrayList with a single element
+    // allows deserialization of ArrayList with a single element as an array (why isn't this the default?)
     mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
   }
 
