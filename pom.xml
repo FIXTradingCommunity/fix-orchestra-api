@@ -161,5 +161,7 @@
 	<modules>
 		<module>server</module>		
 		<module>client</module>
+		<module>swagger-java-client</module>
+		<module>swagger-jaxrs-server</module>
 	</modules>
 </project>

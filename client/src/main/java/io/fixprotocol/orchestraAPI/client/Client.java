@@ -2,7 +2,11 @@ package io.fixprotocol.orchestraAPI.client;
 
 import java.util.List;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import io.fixprotocol.orchestra.client.ApiException;
+import io.fixprotocol.orchestra.client.JSON;
 import io.fixprotocol.orchestra.client.api.RepositoryApi;
 import io.fixprotocol.orchestra.client.model.Code;
 import io.fixprotocol.orchestra.client.model.CodeSet;
@@ -22,6 +26,10 @@ public class Client {
   
   public Client(RepositoryApi apiInstance) {
     this.apiInstance = apiInstance;
+    JSON json = apiInstance.getApiClient().getJSON();
+    ObjectMapper mapper = json.getContext(null);
+    // allows deserialization of ArrayList with a single element
+    mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
   }
 
   /**
