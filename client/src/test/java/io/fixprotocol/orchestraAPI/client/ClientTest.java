@@ -15,6 +15,7 @@ import org.junit.Test;
 import io.fixprotocol.orchestra.client.ApiClient;
 import io.fixprotocol.orchestra.client.ApiException;
 import io.fixprotocol.orchestra.client.api.RepositoryApi;
+import io.fixprotocol.orchestra.client.model.Datatype;
 import io.fixprotocol.orchestra.client.model.Field;
 import io.fixprotocol.orchestra.client.model.Metadata;
 import io.fixprotocol.orchestra.client.model.ObjectId;
@@ -38,6 +39,7 @@ public class ClientTest {
     final RepositoryApi apiInstance = new RepositoryApi();
     final ApiClient apiClient = new ApiClient();
     apiClient.setBasePath("http://localhost:8080/FIXTradingCommunity/orchestra-api/1.0.0");
+    //apiClient.setDebugging(true);
     apiInstance.setApiClient(apiClient );
     client = new Client(apiInstance);
   }
@@ -82,10 +84,30 @@ public class ClientTest {
 
   /**
    * Test method for {@link io.fixprotocol.orchestraAPI.client.Client#addDatatype(java.lang.String, io.swagger.client.model.Datatype)}.
+   * @throws ApiException 
    */
   @Test
-  public void testAddDatatype() {
-    fail("Not yet implemented");
+  public void testAddDatatype() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    Datatype datatype = new Datatype();
+    datatype.setName("UTCDateOnly");
+    client.addDatatype("test1", identifier, datatype);
+    
+    Datatype datatype2 = client.findDatatypeByName("test1", identifier, "UTCDateOnly");
+    assertNotNull(datatype2);
+    assertEquals("UTCDateOnly", datatype2.getName());
+    
+    client.deleteRepository("test1", identifier);
   }
 
   /**
@@ -106,6 +128,7 @@ public class ClientTest {
     client.addRepository(repository);
     
     final Field field = new Field();
+    field.setElementType("Field");
     final ObjectId oid = new ObjectId();
     oid.setName("Account");
     oid.setAbbrName("Acct");
@@ -115,6 +138,7 @@ public class ClientTest {
     
     Field field2 = client.findFieldById("test1", identifier, 1);
     assertNotNull(field2);
+    assertEquals(field.getOid().getName(), field2.getOid().getName());
     
     client.deleteRepository("test1", identifier);
   }
@@ -178,10 +202,42 @@ public class ClientTest {
 
   /**
    * Test method for {@link io.fixprotocol.orchestraAPI.client.Client#deleteDatatype(java.lang.String, java.lang.String)}.
+   * @throws ApiException 
    */
   @Test
-  public void testDeleteDatatype() {
-    fail("Not yet implemented");
+  public void testDeleteDatatype() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    Datatype datatype = new Datatype();
+    datatype.setName("UTCDateOnly");
+    client.addDatatype("test1", identifier, datatype);
+    
+    Datatype datatype2 = new Datatype();
+    datatype2.setName("Price");
+    client.addDatatype("test1", identifier, datatype2);
+    
+    List<Datatype> datatypes = client.searchDatatypes("test1", identifier, null, null, null);
+    assertEquals(2, datatypes.size());
+        
+    client.deleteDatatype("test1", identifier, "UTCDateOnly");
+    
+    try {
+      client.findDatatypeByName("test1", identifier, "UTCDateOnly");
+      fail("deletion failed");
+    } catch (ApiException e) {
+      assertEquals(404, e.getCode());
+    }
+    
+    client.deleteRepository("test1", identifier);
   }
 
   /**
@@ -202,6 +258,7 @@ public class ClientTest {
     client.addRepository(repository);
     
     final Field field = new Field();
+    field.setElementType("Field");
     final ObjectId oid = new ObjectId();
     oid.setName("Account");
     oid.setAbbrName("Acct");
@@ -210,18 +267,19 @@ public class ClientTest {
     client.addField("test1", identifier, field );
     
     Field field2 = client.findFieldById("test1", identifier, 1);
+    field2.setElementType("Field");
     assertNotNull(field2);
     
     client.deleteField("test1", identifier, 1);
     
-    client.deleteRepository("test1", identifier);
-
     try {
       client.findFieldById("test1", identifier, 1);
       fail("deletion failed");
     } catch (ApiException e) {
       assertEquals(404, e.getCode());
     }
+    
+    client.deleteRepository("test1", identifier);
   }
 
   /**
@@ -285,10 +343,30 @@ public class ClientTest {
 
   /**
    * Test method for {@link io.fixprotocol.orchestraAPI.client.Client#findDatatypeByName(java.lang.String, java.lang.String)}.
+   * @throws ApiException 
    */
   @Test
-  public void testFindDatatypeByName() {
-    fail("Not yet implemented");
+  public void testFindDatatypeByName() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    Datatype datatype = new Datatype();
+    datatype.setName("UTCDateOnly");
+    client.addDatatype("test1", identifier, datatype);
+    
+    Datatype datatype2 = client.findDatatypeByName("test1", identifier, "UTCDateOnly");
+    assertNotNull(datatype2);
+    assertEquals("UTCDateOnly", datatype2.getName());
+    
+    client.deleteRepository("test1", identifier);
   }
 
   /**
@@ -309,6 +387,7 @@ public class ClientTest {
     client.addRepository(repository);
     
     final Field field = new Field();
+    field.setElementType("Field");
     final ObjectId oid = new ObjectId();
     oid.setName("Account");
     oid.setAbbrName("Acct");
@@ -317,6 +396,7 @@ public class ClientTest {
     client.addField("test1", identifier, field );
     
     Field field2 = client.findFieldById("test1", identifier, 1);
+    assertNotNull(field2);
     assertEquals("Account", field2.getOid().getName());
     assertEquals("Acct", field2.getOid().getAbbrName());
     
@@ -379,10 +459,33 @@ public class ClientTest {
 
   /**
    * Test method for {@link io.fixprotocol.orchestraAPI.client.Client#searchDatatypes(java.lang.String, java.lang.String, java.lang.Integer, java.lang.Integer)}.
+   * @throws ApiException 
    */
   @Test
-  public void testSearchDatatypes() {
-    fail("Not yet implemented");
+  public void testSearchDatatypes() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    Datatype datatype = new Datatype();
+    datatype.setName("UTCDateOnly");
+    client.addDatatype("test1", identifier, datatype);
+    
+    Datatype datatype2 = new Datatype();
+    datatype2.setName("Price");
+    client.addDatatype("test1", identifier, datatype2);
+    
+    List<Datatype> datatypes = client.searchDatatypes("test1", identifier, null, null, null);
+    assertEquals(2, datatypes.size());
+    
+    client.deleteRepository("test1", identifier);
   }
 
   /**
@@ -403,6 +506,7 @@ public class ClientTest {
     client.addRepository(repository);
     
     final Field field = new Field();
+    field.setElementType("Field");
     final ObjectId oid = new ObjectId();
     oid.setName("Account");
     oid.setAbbrName("Acct");
@@ -411,11 +515,12 @@ public class ClientTest {
     client.addField("test1", identifier, field );
     
     final Field field2 = new Field();
+    field2.setElementType("Field");
     final ObjectId oid2 = new ObjectId();
     oid2.setName("OrderID");
     oid2.setAbbrName("OrdID");
     oid2.setId(37);
-    field2.setOid(oid);
+    field2.setOid(oid2);
     client.addField("test1", identifier, field2);
     
     List<Field> fields = client.searchFields("test1", identifier, null, null, null);
@@ -468,18 +573,76 @@ public class ClientTest {
 
   /**
    * Test method for {@link io.fixprotocol.orchestraAPI.client.Client#updateDatatypeByName(java.lang.String, java.lang.String, io.swagger.client.model.Datatype)}.
+   * @throws ApiException 
    */
   @Test
-  public void testUpdateDatatypeByName() {
-    fail("Not yet implemented");
+  public void testUpdateDatatypeByName() throws ApiException {
+    Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    Datatype datatype = new Datatype();
+    datatype.setName("UTCDateOnly");
+    client.addDatatype("test1", identifier, datatype);
+    
+    Datatype datatype2 = new Datatype();
+    datatype2.setName("Price");
+    client.addDatatype("test1", identifier, datatype2);
+    
+    List<Datatype> datatypes = client.searchDatatypes("test1", identifier, null, null, null);
+    assertEquals(2, datatypes.size());
+    
+    datatype2.setBaseType("float");
+    client.updateDatatypeByName("test1", identifier, "Price", datatype2);
+    
+    Datatype datatype3 = client.findDatatypeByName("test1", identifier, "Price");
+    assertEquals("float", datatype3.getBaseType());
+    
+    client.deleteRepository("test1", identifier);
   }
 
   /**
    * Test method for {@link io.fixprotocol.orchestraAPI.client.Client#updateFieldById(java.lang.String, java.lang.Integer, io.swagger.client.model.Field)}.
+   * @throws ApiException 
    */
   @Test
-  public void testUpdateFieldById() {
-    fail("Not yet implemented");
+  public void testUpdateFieldById() throws ApiException {
+    Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    final Field field = new Field();
+    field.setElementType("Field");
+    final ObjectId oid = new ObjectId();
+    oid.setName("Account");
+    oid.setAbbrName("Acct");
+    oid.setId(1);
+    field.setOid(oid);
+    client.addField("test1", identifier, field);
+    
+    field.setCategory("MarketData");
+    client.updateFieldById("test1", identifier, 1, field);
+    
+    Field field2 = client.findFieldById("test1", identifier, 1);
+    field2.setElementType("Field");
+    assertNotNull(field2);
+    assertEquals("MarketData", field2.getCategory());
+    
+    client.deleteRepository("test1", identifier);
   }
 
   /**

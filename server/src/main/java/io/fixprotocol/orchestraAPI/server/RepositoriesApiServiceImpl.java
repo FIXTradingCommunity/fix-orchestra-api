@@ -55,8 +55,17 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   @Override
   public Response addDatatype(String reposName, String version, Datatype datatype,
       SecurityContext securityContext) throws NotFoundException {
-    // do some magic!
-    return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+    try {
+      repositoryStore.createDatatype(reposName, version, datatype);
+      return Response.created(UriBuilder.fromPath("repositories").path(reposName).path(version)
+          .path("datatypes").path(datatype.getName()).build()).build();
+    } catch (DuplicateKeyException e) {
+      return Response.noContent().status(Status.CONFLICT).build();
+    } catch (ResourceNotFoundException e) {
+      return Response.noContent().status(Status.NOT_FOUND).build();
+    } catch (RepositoryStoreException e) {
+      return Response.serverError().build();
+    }
   }
 
   @Override
@@ -122,8 +131,14 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   @Override
   public Response deleteDatatype(String reposName, String version, String name,
       SecurityContext securityContext) throws NotFoundException {
-    // do some magic!
-    return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+    try {
+      repositoryStore.deleteDatatype(reposName, version, name);
+      return Response.noContent().build();
+    } catch (ResourceNotFoundException e) {
+      return Response.noContent().status(Status.NOT_FOUND).build();
+    } catch (RepositoryStoreException e) {
+      return Response.serverError().build();
+    }
   }
 
   @Override
@@ -183,8 +198,14 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   @Override
   public Response findDatatypeByName(String reposName, String version, String name,
       SecurityContext securityContext) throws NotFoundException {
-    // do some magic!
-    return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+    try {
+      Datatype datatype = repositoryStore.getDatatype(reposName, version, name);
+      return Response.ok().entity(datatype).build();
+    } catch (ResourceNotFoundException e) {
+      return Response.noContent().status(Status.NOT_FOUND).build();
+    } catch (RepositoryStoreException e) {
+      return Response.serverError().build();
+    }  
   }
 
   @Override
@@ -245,8 +266,15 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   @Override
   public Response searchDatatypes(String reposName, String version, String searchString,
       Integer skip, Integer limit, SecurityContext securityContext) throws NotFoundException {
-    // do some magic!
-    return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+    try {
+      // todo: translate search string to a Predicate
+      List<Datatype> filtered = repositoryStore.getDatatypes(reposName, version, null);
+      List<Datatype> range =
+          filtered.subList(skip != null ? skip : 0, limit != null ? limit : filtered.size());
+      return Response.ok().entity(range).build();
+    } catch (RepositoryStoreException e) {
+      return Response.serverError().build();
+    }
   }
 
   @Override
@@ -308,8 +336,14 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   @Override
   public Response updateDatatypeByName(String reposName, String version, String name,
       Datatype datatype, SecurityContext securityContext) throws NotFoundException {
-    // do some magic!
-    return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+    try {
+      repositoryStore.updateDatatype(reposName, version, name, datatype);
+      return Response.ok().build();
+    } catch (ResourceNotFoundException e) {
+      return Response.noContent().status(Status.NOT_FOUND).build();
+    } catch (RepositoryStoreException e) {
+      return Response.serverError().build();
+    }      // do some magic!
   }
 
   @Override
@@ -322,7 +356,8 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
       return Response.serverError().build();
-    }  }
+    }  
+    }
 
   @Override
   public Response updateMessageById(String reposName, String version, Integer id, Message message,

@@ -1,33 +1,28 @@
 package io.fixprotocol.orchestraAPI.server;
 
-import io.fixprotocol.orchestra.model.*;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+
+import io.fixprotocol.orchestra.api.NotFoundException;
 import io.fixprotocol.orchestra.api.RepositoriesApiService;
-import io.fixprotocol.orchestra.api.factories.RepositoriesApiServiceFactory;
-
-import io.swagger.annotations.ApiParam;
-import io.swagger.jaxrs.*;
-
 import io.fixprotocol.orchestra.model.Code;
 import io.fixprotocol.orchestra.model.CodeSet;
 import io.fixprotocol.orchestra.model.Component;
 import io.fixprotocol.orchestra.model.Datatype;
-import io.fixprotocol.orchestra.model.ErrorModel;
 import io.fixprotocol.orchestra.model.Field;
 import io.fixprotocol.orchestra.model.Message;
 import io.fixprotocol.orchestra.model.Repository;
-
-import java.util.List;
-import io.fixprotocol.orchestra.api.NotFoundException;
-
-import java.io.InputStream;
-
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
-import org.glassfish.jersey.media.multipart.FormDataParam;
-
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.SecurityContext;
-import javax.ws.rs.*;
+import io.swagger.annotations.ApiParam;
 
 @Path("/repositories")
 

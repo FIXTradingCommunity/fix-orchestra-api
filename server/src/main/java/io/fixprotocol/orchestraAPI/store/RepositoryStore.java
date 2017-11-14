@@ -3,6 +3,7 @@ package io.fixprotocol.orchestraAPI.store;
 import java.util.List;
 import java.util.function.Predicate;
 
+import io.fixprotocol.orchestra.model.Datatype;
 import io.fixprotocol.orchestra.model.Field;
 import io.fixprotocol.orchestra.model.Metadata;
 import io.fixprotocol.orchestra.model.Repository;
@@ -10,6 +11,18 @@ import io.fixprotocol.orchestra.model.Repository;
 
 
 public interface RepositoryStore {
+
+  /**
+   * Creates a new datatype in a repository
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param datatype to add to the repository
+   * @throws ResourceNotFoundException if the repository to update does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  void createDatatype(String reposName, String version, Datatype datatype)
+      throws RepositoryStoreException;
 
   /**
    * Creates a new field in a repository
@@ -37,10 +50,23 @@ public interface RepositoryStore {
       throws RepositoryStoreException;
 
   /**
+   * Deletes one datatype if it exists
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param name datatype name
+   * @throws ResourceNotFoundException if the repository or field to delete does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  void deleteDatatype(String reposName, String version, String name)
+      throws RepositoryStoreException;
+
+  /**
    * Deletes one Field if it exists
    * 
    * @param reposName name of Orchestra repository (required)
    * @param version version of Orchestra repository (required)
+   * @param id field identifier
    * @throws ResourceNotFoundException if the repository or field to delete does not exist
    * @throws RepositoryStoreException if the store operation fails
    */
@@ -55,6 +81,31 @@ public interface RepositoryStore {
    * @throws RepositoryStoreException if the store operation fails
    */
   void deleteRepository(String reposName, String version) throws RepositoryStoreException;
+
+  /**
+   * Retrieves a datatype by name
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param name datatype identifier
+   * @return the datatype
+   * @throws ResourceNotFoundException if the repository or datatype does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  Datatype getDatatype(String reposName, String version, String name) throws RepositoryStoreException;
+
+  /**
+   * Retrieves all datatypes in a repository
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param predicate filter for datatypes to return
+   * @return a list of datatypes
+   * @throws ResourceNotFoundException if the repository does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  List<Datatype> getDatatypes(String reposName, String version, Predicate<Datatype> predicate)
+      throws RepositoryStoreException;
 
   /**
    * Retrieves a Field by its ID
@@ -104,6 +155,19 @@ public interface RepositoryStore {
   Metadata getRepositoryMetadata(String reposName, String version) throws RepositoryStoreException;
 
   /**
+   * Update an existing datatype
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param name ID of the datatype to update
+   * @param datatype new value of the datatype
+   * @throws ResourceNotFoundException if the repository or datatype to update does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  void updateDatatype(String reposName, String version, String name, Datatype datatype)
+      throws RepositoryStoreException;
+
+  /**
    * Update an existing field
    * 
    * @param reposName name of Orchestra repository (required)
@@ -113,7 +177,8 @@ public interface RepositoryStore {
    * @throws ResourceNotFoundException if the repository or field to update does not exist
    * @throws RepositoryStoreException if the store operation fails
    */
-  void updateField(String reposName, String version, Integer id, Field field) throws RepositoryStoreException;
+  void updateField(String reposName, String version, Integer id, Field field)
+      throws RepositoryStoreException;
 
   /**
    * Update the metadata of an existing repository

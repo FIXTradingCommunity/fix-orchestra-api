@@ -25,13 +25,32 @@ public final class OrchestraAPItoDOM {
 
   private final static RFC3339DateFormat dateFormat = new RFC3339DateFormat();
 
+  public static io.fixprotocol._2016.fixrepository.Datatype DatatypeToDOM(
+      io.fixprotocol.orchestra.model.Datatype datatype) {
+    io.fixprotocol._2016.fixrepository.Datatype datatypeDOM =
+        new io.fixprotocol._2016.fixrepository.Datatype();
+    datatypeDOM.setName(datatype.getName());
+    datatypeDOM.setBaseType(datatype.getBaseType());
+    return datatypeDOM;
+  }
+
+  public static io.fixprotocol.orchestra.model.Datatype DOMToDatatype(
+      io.fixprotocol._2016.fixrepository.Datatype datatypeDOM) {
+    io.fixprotocol.orchestra.model.Datatype datatype =
+        new io.fixprotocol.orchestra.model.Datatype();
+    datatype.setName(datatypeDOM.getName());
+    datatype.setBaseType(datatypeDOM.getBaseType());
+    return datatype;
+  }
+
   public static Field DOMToField(FieldType fieldType) {
     Field field = new Field();
+    field.setElementType("Field");
     ObjectId oid = new ObjectId();
-    field.setOid(oid);
     oid.setName(fieldType.getName());
     oid.setAbbrName(fieldType.getAbbrName());
     oid.setId(fieldType.getId().intValue());
+    field.setOid(oid);
     field.setDatatype(fieldType.getType());
     return field;
   }

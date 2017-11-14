@@ -53,6 +53,18 @@
 						<port>8080</port>
 						<idleTimeout>60000</idleTimeout>
 					</httpConnector>
+					<systemProperties>
+						<!-- makes jetty log the exception if it fails to initialize slf4j -->
+						<systemProperty>
+							<name>org.eclipse.jetty.util.log.IGNORED</name>
+							<value>true</value>
+						</systemProperty>
+						<!-- Location of logback config -->
+						<systemProperty>
+							<name>logback.configurationFile</name>
+							<value>${project.basedir}/src/main/resources/logback.xml</value>
+						</systemProperty>
+					</systemProperties>
 				</configuration>
 				<executions>
 					<execution>
