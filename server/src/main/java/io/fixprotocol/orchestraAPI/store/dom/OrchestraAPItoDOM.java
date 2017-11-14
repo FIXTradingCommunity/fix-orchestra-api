@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.xml.bind.JAXBElement;
 
@@ -13,9 +14,13 @@ import org.purl.dc.elements._1.ObjectFactory;
 import org.purl.dc.elements._1.SimpleLiteral;
 import org.purl.dc.terms.ElementOrRefinementContainer;
 
+import io.fixprotocol._2016.fixrepository.CodeSetType;
+import io.fixprotocol._2016.fixrepository.CodeType;
 import io.fixprotocol._2016.fixrepository.FieldType;
 import io.fixprotocol._2016.fixrepository.Repository;
 import io.fixprotocol.orchestra.api.RFC3339DateFormat;
+import io.fixprotocol.orchestra.model.Code;
+import io.fixprotocol.orchestra.model.CodeSet;
 import io.fixprotocol.orchestra.model.Field;
 import io.fixprotocol.orchestra.model.Metadata;
 import io.fixprotocol.orchestra.model.ObjectId;
@@ -25,6 +30,29 @@ public final class OrchestraAPItoDOM {
 
   private final static RFC3339DateFormat dateFormat = new RFC3339DateFormat();
 
+  public static CodeSetType CodeSetToDOM(CodeSet codeSet) {
+    CodeSetType codeSetType = new CodeSetType();
+    codeSetType.setAbbrName(codeSet.getOid().getAbbrName());
+    codeSetType.setId(BigInteger.valueOf(codeSet.getOid().getId()));
+    codeSetType.setName(codeSet.getOid().getName());
+    codeSetType.setOid(codeSet.getOid().getOid());
+    codeSetType.setSpecUrl(codeSet.getSpecURL());
+    codeSetType.setType(codeSet.getType());
+    codeSetType.getCode()
+        .addAll(codeSet.getCodes().stream().map(c -> CodeToDOM(c)).collect(Collectors.toList()));
+    return codeSetType;
+  }
+
+  public static CodeType CodeToDOM(Code code) {
+    CodeType codeType = new CodeType();
+    codeType.setAbbrName(code.getOid().getAbbrName());
+    codeType.setId(BigInteger.valueOf(code.getOid().getId()));
+    codeType.setName(code.getOid().getName());
+    codeType.setOid(code.getOid().getOid());
+    codeType.setValue(code.getValue());
+    return codeType;
+  }
+
   public static io.fixprotocol._2016.fixrepository.Datatype DatatypeToDOM(
       io.fixprotocol.orchestra.model.Datatype datatype) {
     io.fixprotocol._2016.fixrepository.Datatype datatypeDOM =
@@ -32,6 +60,33 @@ public final class OrchestraAPItoDOM {
     datatypeDOM.setName(datatype.getName());
     datatypeDOM.setBaseType(datatype.getBaseType());
     return datatypeDOM;
+  }
+
+  public static Code DOMToCode(CodeType codeType) {
+    Code code = new Code();
+    ObjectId oid = new ObjectId();
+    oid.setAbbrName(codeType.getAbbrName());
+    oid.setId(codeType.getId().intValue());
+    oid.setName(codeType.getName());
+    oid.setOid(codeType.getOid());
+    code.setOid(oid);
+    code.setValue(codeType.getValue());
+    return code;
+  }
+
+  public static CodeSet DOMToCodeSet(CodeSetType codeSetType) {
+    CodeSet codeSet = new CodeSet();
+    ObjectId oid = new ObjectId();
+    oid.setAbbrName(codeSetType.getAbbrName());
+    oid.setId(codeSetType.getId().intValue());
+    oid.setName(codeSetType.getName());
+    oid.setOid(codeSetType.getOid());
+    codeSet.setOid(oid);
+    codeSet.setSpecURL(codeSetType.getSpecUrl());
+    codeSet.setType(codeSetType.getType());
+    codeSet.codes(
+        codeSetType.getCode().stream().map(ct -> DOMToCode(ct)).collect(Collectors.toList()));
+    return codeSet;
   }
 
   public static io.fixprotocol.orchestra.model.Datatype DOMToDatatype(
@@ -52,6 +107,7 @@ public final class OrchestraAPItoDOM {
     oid.setId(fieldType.getId().intValue());
     field.setOid(oid);
     field.setDatatype(fieldType.getType());
+    field.setCategory(fieldType.getBaseCategory());
     return field;
   }
 
@@ -103,6 +159,7 @@ public final class OrchestraAPItoDOM {
     fieldType.setName(field.getOid().getName());
     fieldType.setAbbrName(field.getOid().getAbbrName());
     fieldType.setType(field.getDatatype());
+    fieldType.setBaseCategory(field.getCategory());
     return fieldType;
   }
 

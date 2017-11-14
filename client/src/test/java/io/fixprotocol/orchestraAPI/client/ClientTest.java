@@ -15,6 +15,8 @@ import org.junit.Test;
 import io.fixprotocol.orchestra.client.ApiClient;
 import io.fixprotocol.orchestra.client.ApiException;
 import io.fixprotocol.orchestra.client.api.RepositoryApi;
+import io.fixprotocol.orchestra.client.model.Code;
+import io.fixprotocol.orchestra.client.model.CodeSet;
 import io.fixprotocol.orchestra.client.model.Datatype;
 import io.fixprotocol.orchestra.client.model.Field;
 import io.fixprotocol.orchestra.client.model.Metadata;
@@ -52,18 +54,75 @@ public class ClientTest {
 
   /**
    * Test method for {@link io.fixprotocol.orchestraAPI.client.Client#addCode(java.lang.String, java.lang.Integer, io.swagger.client.model.Code)}.
+   * @throws ApiException 
    */
   @Test
-  public void testAddCode() {
-    fail("Not yet implemented");
+  public void testAddCode() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    CodeSet codeSet = new CodeSet();
+    ObjectId oid = new ObjectId();
+    oid.setId(4);
+    oid.setName("AdvSideCodeSet");
+    codeSet.setOid(oid);
+    codeSet.setType("char");
+    client.addCodeSet("test1", identifier, codeSet);
+    
+    Code code = new Code();
+    ObjectId codeOid = new ObjectId();
+    codeOid.setId(4001);
+    codeOid.setName("Buy");
+    code.setOid(codeOid);
+    code.setValue("B");
+    client.addCode("test1", identifier, 4, code );
+    
+    CodeSet codeSet2 = client.findCodeSetById("test1", identifier, 4);
+    assertNotNull(codeSet2);
+    
+    Code code2 = client.findCodeById("test1", identifier, 4, 4001);
+    assertNotNull(code2);
+    
+    client.deleteRepository("test1", identifier);
   }
 
   /**
    * Test method for {@link io.fixprotocol.orchestraAPI.client.Client#addCodeSet(java.lang.String, io.swagger.client.model.CodeSet)}.
+   * @throws ApiException 
    */
   @Test
-  public void testAddCodeSet() {
-    fail("Not yet implemented");
+  public void testAddCodeSet() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    CodeSet codeSet = new CodeSet();
+    ObjectId oid = new ObjectId();
+    oid.setId(4);
+    oid.setName("AdvSideCodeSet");
+    codeSet.setOid(oid);
+    codeSet.setType("char");
+    client.addCodeSet("test1", identifier, codeSet);
+    
+    CodeSet codeSet2 = client.findCodeSetById("test1", identifier, 4);
+    assertNotNull(codeSet2);
+    
+    client.deleteRepository("test1", identifier);
   }
 
   /**
@@ -178,18 +237,93 @@ public class ClientTest {
 
   /**
    * Test method for {@link io.fixprotocol.orchestraAPI.client.Client#deleteCode(java.lang.String, java.lang.Integer, java.lang.Integer)}.
+   * @throws ApiException 
    */
   @Test
-  public void testDeleteCode() {
-    fail("Not yet implemented");
+  public void testDeleteCode() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    CodeSet codeSet = new CodeSet();
+    ObjectId oid = new ObjectId();
+    oid.setId(4);
+    oid.setName("AdvSideCodeSet");
+    codeSet.setOid(oid);
+    codeSet.setType("char");
+    client.addCodeSet("test1", identifier, codeSet);
+    
+    Code code = new Code();
+    ObjectId codeOid = new ObjectId();
+    codeOid.setId(4001);
+    codeOid.setName("Buy");
+    code.setOid(codeOid);
+    code.setValue("B");
+    client.addCode("test1", identifier, 4, code );
+    
+    CodeSet codeSet2 = client.findCodeSetById("test1", identifier, 4);
+    assertNotNull(codeSet2);
+    
+    Code code2 = client.findCodeById("test1", identifier, 4, 4001);
+    assertNotNull(code2);
+    
+    client.deleteCode("test1", identifier, 4, 4001);
+    try {
+      client.findCodeById("test1", identifier, 4, 4001);
+      fail("deletion failed");
+    } catch (ApiException e) {
+      assertEquals(404, e.getCode());
+    }
+    
+    
+    client.deleteRepository("test1", identifier);
   }
 
   /**
    * Test method for {@link io.fixprotocol.orchestraAPI.client.Client#deleteCodeSet(java.lang.String, java.lang.Integer)}.
+   * @throws ApiException 
    */
   @Test
-  public void testDeleteCodeSet() {
-    fail("Not yet implemented");
+  public void testDeleteCodeSet() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    CodeSet codeSet = new CodeSet();
+    ObjectId oid = new ObjectId();
+    oid.setId(4);
+    oid.setName("AdvSideCodeSet");
+    codeSet.setOid(oid);
+    codeSet.setType("char");
+    client.addCodeSet("test1", identifier, codeSet);
+    
+    CodeSet codeSet2 = client.findCodeSetById("test1", identifier, 4);
+    assertNotNull(codeSet2);
+    
+    client.deleteCodeSet("test1", identifier, 4);
+    
+    try {
+      client.findCodeSetById("test1", identifier, 4);
+      fail("deletion failed");
+    } catch (ApiException e) {
+      assertEquals(404, e.getCode());
+    }
+    
+    client.deleteRepository("test1", identifier);
   }
 
   /**
@@ -319,18 +453,81 @@ public class ClientTest {
 
   /**
    * Test method for {@link io.fixprotocol.orchestraAPI.client.Client#findCodeById(java.lang.String, java.lang.Integer, java.lang.Integer)}.
+   * @throws ApiException 
    */
   @Test
-  public void testFindCodeById() {
-    fail("Not yet implemented");
+  public void testFindCodeById() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    CodeSet codeSet = new CodeSet();
+    ObjectId oid = new ObjectId();
+    oid.setId(4);
+    oid.setName("AdvSideCodeSet");
+    codeSet.setOid(oid);
+    codeSet.setType("char");
+    client.addCodeSet("test1", identifier, codeSet);
+    
+    Code code = new Code();
+    ObjectId codeOid = new ObjectId();
+    codeOid.setId(4001);
+    codeOid.setName("Buy");
+    code.setOid(codeOid);
+    code.setValue("B");
+    client.addCode("test1", identifier, 4, code );
+    
+    CodeSet codeSet2 = client.findCodeSetById("test1", identifier, 4);
+    assertNotNull(codeSet2);
+    
+    Code code2 = client.findCodeById("test1", identifier, 4, 4001);
+    assertNotNull(code2);
+    assertEquals(code.getOid().getName(), code2.getOid().getName());
+    assertEquals(code.getOid().getId(), code2.getOid().getId());
+    assertEquals(code.getValue(), code2.getValue());
+    
+    client.deleteRepository("test1", identifier);
   }
 
   /**
    * Test method for {@link io.fixprotocol.orchestraAPI.client.Client#findCodeSetById(java.lang.String, java.lang.Integer)}.
+   * @throws ApiException 
    */
   @Test
-  public void testFindCodeSetById() {
-    fail("Not yet implemented");
+  public void testFindCodeSetById() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    CodeSet codeSet = new CodeSet();
+    ObjectId oid = new ObjectId();
+    oid.setId(4);
+    oid.setName("AdvSideCodeSet");
+    codeSet.setOid(oid);
+    codeSet.setType("char");
+    client.addCodeSet("test1", identifier, codeSet);
+    
+    CodeSet codeSet2 = client.findCodeSetById("test1", identifier, 4);
+    assertNotNull(codeSet2);
+    assertEquals(codeSet.getOid().getName(), codeSet2.getOid().getName());
+    assertEquals(codeSet.getOid().getId(), codeSet2.getOid().getId());
+    assertEquals(codeSet.getType(), codeSet2.getType());
+    client.deleteRepository("test1", identifier);
+
   }
 
   /**
@@ -435,18 +632,88 @@ public class ClientTest {
 
   /**
    * Test method for {@link io.fixprotocol.orchestraAPI.client.Client#searchCodeSets(java.lang.String, java.lang.String, java.lang.Integer, java.lang.Integer)}.
+   * @throws ApiException 
    */
   @Test
-  public void testSearchCodeSets() {
-    fail("Not yet implemented");
+  public void testSearchCodeSets() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    CodeSet codeSet = new CodeSet();
+    ObjectId oid = new ObjectId();
+    oid.setId(4);
+    oid.setName("AdvSideCodeSet");
+    codeSet.setOid(oid);
+    codeSet.setType("char");
+    client.addCodeSet("test1", identifier, codeSet);
+    
+    CodeSet codeSet2 = new CodeSet();
+    ObjectId oid2 = new ObjectId();
+    oid2.setId(5);
+    oid2.setName("AdvTransTypeCodeSet");
+    codeSet2.setOid(oid2);
+    codeSet2.setType("String");
+    client.addCodeSet("test1", identifier, codeSet2);
+    
+    List<CodeSet> codeSets = client.searchCodeSets("test1", identifier, null, null, null);
+    assertEquals(2, codeSets.size());
+
+    client.deleteRepository("test1", identifier);
   }
 
   /**
    * Test method for {@link io.fixprotocol.orchestraAPI.client.Client#searchCodes(java.lang.String, java.lang.Integer, java.lang.String, java.lang.Integer, java.lang.Integer)}.
+   * @throws ApiException 
    */
   @Test
-  public void testSearchCodes() {
-    fail("Not yet implemented");
+  public void testSearchCodes() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    CodeSet codeSet = new CodeSet();
+    ObjectId oid = new ObjectId();
+    oid.setId(4);
+    oid.setName("AdvSideCodeSet");
+    codeSet.setOid(oid);
+    codeSet.setType("char");
+    client.addCodeSet("test1", identifier, codeSet);
+    
+    Code code = new Code();
+    ObjectId codeOid = new ObjectId();
+    codeOid.setId(4001);
+    codeOid.setName("Buy");
+    code.setOid(codeOid);
+    code.setValue("B");
+    client.addCode("test1", identifier, 4, code );
+    
+    Code code2 = new Code();
+    ObjectId codeOid2 = new ObjectId();
+    codeOid2.setId(4002);
+    codeOid2.setName("Sell");
+    code2.setOid(codeOid2);
+    code2.setValue("S");
+    client.addCode("test1", identifier, 4, code2 );
+   
+    List<Code> codes = client.searchCodes("test1", identifier, 4, null, null, null);
+    assertEquals(2, codes.size());
+    
+    client.deleteRepository("test1", identifier);
   }
 
   /**
@@ -549,18 +816,90 @@ public class ClientTest {
 
   /**
    * Test method for {@link io.fixprotocol.orchestraAPI.client.Client#updateCodeById(java.lang.String, java.lang.Integer, java.lang.Integer, io.swagger.client.model.Code)}.
+   * @throws ApiException 
    */
   @Test
-  public void testUpdateCodeById() {
-    fail("Not yet implemented");
+  public void testUpdateCodeById() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    CodeSet codeSet = new CodeSet();
+    ObjectId oid = new ObjectId();
+    oid.setId(4);
+    oid.setName("AdvSideCodeSet");
+    codeSet.setOid(oid);
+    codeSet.setType("char");
+    client.addCodeSet("test1", identifier, codeSet);
+    
+    Code code = new Code();
+    ObjectId codeOid = new ObjectId();
+    codeOid.setId(4001);
+    codeOid.setName("Buy");
+    code.setOid(codeOid);
+    code.setValue("B");
+    client.addCode("test1", identifier, 4, code );
+    
+    CodeSet codeSet2 = client.findCodeSetById("test1", identifier, 4);
+    assertNotNull(codeSet2);
+    
+    Code code2 = client.findCodeById("test1", identifier, 4, 4001);
+    assertNotNull(code2);
+    code2.setValue("X");  
+    
+    client.updateCodeById("test1", identifier, 4, 4001, code2);
+    
+    Code code3 = client.findCodeById("test1", identifier, 4, 4001);
+    assertNotNull(code3);
+    assertEquals("X", code3.getValue());
+    
+    client.deleteRepository("test1", identifier);
+ 
   }
 
   /**
    * Test method for {@link io.fixprotocol.orchestraAPI.client.Client#updateCodeSetById(java.lang.String, java.lang.Integer, io.swagger.client.model.CodeSet)}.
+   * @throws ApiException 
    */
   @Test
-  public void testUpdateCodeSetById() {
-    fail("Not yet implemented");
+  public void testUpdateCodeSetById() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    CodeSet codeSet = new CodeSet();
+    ObjectId oid = new ObjectId();
+    oid.setId(4);
+    oid.setName("AdvSideCodeSet");
+    codeSet.setOid(oid);
+    codeSet.setType("char");
+    client.addCodeSet("test1", identifier, codeSet);
+    
+    CodeSet codeSet2 = client.findCodeSetById("test1", identifier, 4);
+    assertNotNull(codeSet2);
+    codeSet2.setType("String");
+    
+    client.updateCodeSetById("test1", identifier, 4, codeSet2);
+    
+    CodeSet codeSet3 = client.findCodeSetById("test1", identifier, 4);
+    assertNotNull(codeSet3);
+    assertEquals("String", codeSet3.getType());
+    
+    client.deleteRepository("test1", identifier);
   }
 
   /**

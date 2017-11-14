@@ -1,5 +1,6 @@
 package io.fixprotocol.orchestraAPI.store.dom;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -7,10 +8,15 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import io.fixprotocol._2016.fixrepository.CodeSetType;
+import io.fixprotocol._2016.fixrepository.CodeSets;
+import io.fixprotocol._2016.fixrepository.CodeType;
 import io.fixprotocol._2016.fixrepository.Datatypes;
 import io.fixprotocol._2016.fixrepository.FieldType;
 import io.fixprotocol._2016.fixrepository.Fields;
 import io.fixprotocol._2016.fixrepository.Repository;
+import io.fixprotocol.orchestra.model.Code;
+import io.fixprotocol.orchestra.model.CodeSet;
 import io.fixprotocol.orchestra.model.Datatype;
 import io.fixprotocol.orchestra.model.Field;
 import io.fixprotocol.orchestra.model.Metadata;
@@ -87,6 +93,30 @@ public class RepositoryDOMStore implements RepositoryStore {
   private final Map<RepositoryKey, Repository> repositories = new ConcurrentHashMap<>();
 
   @Override
+  public void createCodeSet(String reposName, String version, CodeSet codeSet)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(codeSet, "CodeSet missing");
+    Repository repository = repositories.get(new RepositoryKey(reposName, version));
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+
+    List<CodeSetType> codeSets = getCodeSets(repository);
+
+    for (int i = 0; i < codeSets.size(); i++) {
+      CodeSetType fieldType = codeSets.get(i);
+      if (codeSet.getOid().getId() == fieldType.getId().intValue()) {
+        throw new DuplicateKeyException(
+            String.format("Duplicate field with ID=%d", codeSet.getOid().getId()));
+      }
+    }
+    codeSets.add(OrchestraAPItoDOM.CodeSetToDOM(codeSet));
+  }
+
+  @Override
   public void createDatatype(String reposName, String version, Datatype datatype)
       throws RepositoryStoreException {
     Objects.requireNonNull(reposName, "Repository name missing");
@@ -98,12 +128,11 @@ public class RepositoryDOMStore implements RepositoryStore {
           String.format("Repository with name=%s version=%s not found", reposName, version));
     }
     List<io.fixprotocol._2016.fixrepository.Datatype> datatypes = getDatatypeList(repository);
-    
+
     for (int i = 0; i < datatypes.size(); i++) {
       io.fixprotocol._2016.fixrepository.Datatype datatypeDOM = datatypes.get(i);
       if (datatype.getName().equals(datatypeDOM.getName())) {
-        throw new DuplicateKeyException(
-            String.format("Duplicate datatype %s", datatype.getName()));
+        throw new DuplicateKeyException(String.format("Duplicate datatype %s", datatype.getName()));
       }
     }
     datatypes.add(OrchestraAPItoDOM.DatatypeToDOM(datatype));
@@ -163,6 +192,31 @@ public class RepositoryDOMStore implements RepositoryStore {
     repositories.putIfAbsent(key, repositoryToAdd);
     final Repository repository2 = repositories.get(key);
     return OrchestraAPItoDOM.DOMToMetadata(repository2.getMetadata());
+  }
+
+  @Override
+  public void deleteCodeSet(String reposName, String version, Integer id)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(id, "CodeSet ID missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+
+    final Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+
+    List<CodeSetType> codeSets = getCodeSets(repository);
+    for (CodeSetType codeSet : codeSets) {
+      if (id == codeSet.getId().intValue()) {
+        codeSets.remove(codeSet);
+        return;
+      }
+    }
+
+    throw new ResourceNotFoundException(String.format("CodeSet with ID=%d not found", id));
   }
 
   @Override
@@ -226,6 +280,55 @@ public class RepositoryDOMStore implements RepositoryStore {
       throw new ResourceNotFoundException(
           String.format("Repository with name=%s version=%s not found", reposName, version));
     }
+  }
+
+  @Override
+  public CodeSet getCodeSetById(String reposName, String version, Integer id)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(id, "CodeSet ID missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+    Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+    List<CodeSetType> codeSets = getCodeSets(repository);
+
+    for (CodeSetType codeSet : codeSets) {
+      if (id == codeSet.getId().intValue()) {
+        return OrchestraAPItoDOM.DOMToCodeSet(codeSet);
+      }
+    }
+
+    throw new ResourceNotFoundException(String.format("CodeSet with ID=%d not found", id));
+  }
+
+  @Override
+  public List<CodeSet> getCodeSets(String reposName, String version, Predicate<CodeSet> search)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+    Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+    Predicate<CodeSet> predicate = search != null ? search : new Predicate<CodeSet>() {
+
+      @Override
+      public boolean test(CodeSet t) {
+        return true;
+      }
+
+    };
+    List<CodeSetType> codeSets = getCodeSets(repository);
+
+    return codeSets.stream().map(cs -> OrchestraAPItoDOM.DOMToCodeSet(cs)).filter(predicate)
+        .collect(Collectors.toList());
+
   }
 
   @Override
@@ -358,6 +461,33 @@ public class RepositoryDOMStore implements RepositoryStore {
   }
 
   @Override
+  public void updateCodeSet(String reposName, String version, Integer id, CodeSet codeSet)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(id, "CodeSet ID missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+
+    final Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+
+    List<CodeSetType> codeSets = getCodeSets(repository);
+
+    for (int i = 0; i < codeSets.size(); i++) {
+      CodeSetType codeSetType = codeSets.get(i);
+      if (id == codeSetType.getId().intValue()) {
+        codeSets.set(i, OrchestraAPItoDOM.CodeSetToDOM(codeSet));
+        return;
+      }
+    }
+
+    throw new ResourceNotFoundException(String.format("CodeSet with ID=%d not found", id));
+  }
+
+  @Override
   public void updateDatatype(String reposName, String version, String name, Datatype datatype)
       throws RepositoryStoreException {
     Objects.requireNonNull(reposName, "Repository name missing");
@@ -426,6 +556,15 @@ public class RepositoryDOMStore implements RepositoryStore {
     }
   }
 
+  private List<CodeSetType> getCodeSets(Repository repository) {
+    CodeSets codeSets = repository.getCodeSets();
+    if (codeSets == null) {
+      codeSets = new CodeSets();
+      repository.setCodeSets(codeSets);
+    }
+    return codeSets.getCodeSet();
+  }
+
   private List<io.fixprotocol._2016.fixrepository.Datatype> getDatatypeList(Repository repository) {
     Datatypes datatypes = repository.getDatatypes();
     if (datatypes == null) {
@@ -442,6 +581,166 @@ public class RepositoryDOMStore implements RepositoryStore {
       repository.setFields(fields);
     }
     return fields.getField();
+  }
+
+  @Override
+  public void createCode(String reposName, String version, Integer codesetid, Code code)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(codesetid, "CodeSet ID missing");
+    Objects.requireNonNull(code, "Code missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+    Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+    List<CodeSetType> codeSets = getCodeSets(repository);
+
+    for (CodeSetType codeSet : codeSets) {
+      if (codesetid == codeSet.getId().intValue()) {
+        List<CodeType> codes = codeSet.getCode();
+        for (CodeType codeType : codes) {
+          if (codeType.getId().intValue() == code.getOid().getId()) {
+            throw new DuplicateKeyException(
+                String.format("Duplicate code with ID=%d", code.getOid().getId()));
+          }
+        }
+        codes.add(OrchestraAPItoDOM.CodeToDOM(code));
+        return;
+      }
+    }
+
+    throw new ResourceNotFoundException(String.format("CodeSet with ID=%d not found", codesetid));
+  }
+
+  @Override
+  public void deleteCode(String reposName, String version, Integer codesetid, Integer id)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(codesetid, "CodeSet ID missing");
+    Objects.requireNonNull(id, "Code ID missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+
+    final Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+
+    List<CodeSetType> codeSets = getCodeSets(repository);
+    for (CodeSetType codeSet : codeSets) {
+      if (codesetid == codeSet.getId().intValue()) {
+        List<CodeType> codes = codeSet.getCode();
+        for (CodeType codeType : codes) {
+          if (codeType.getId().intValue() == id) {
+            codes.remove(codeType);
+            return;
+          }
+        }
+        throw new ResourceNotFoundException(String.format("Code with ID=%d not found", id));
+      }
+    }
+
+    throw new ResourceNotFoundException(String.format("CodeSet with ID=%d not found", codesetid));
+  }
+
+  @Override
+  public Code getCodeById(String reposName, String version, Integer codesetid, Integer id)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(codesetid, "CodeSet ID missing");
+    Objects.requireNonNull(id, "Code ID missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+
+    final Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+
+    List<CodeSetType> codeSets = getCodeSets(repository);
+    for (CodeSetType codeSet : codeSets) {
+      if (codesetid == codeSet.getId().intValue()) {
+        List<CodeType> codes = codeSet.getCode();
+        for (CodeType codeType : codes) {
+          if (codeType.getId().intValue() == id) {
+            return OrchestraAPItoDOM.DOMToCode(codeType);
+          }
+        }
+        throw new ResourceNotFoundException(String.format("Code with ID=%d not found", id));
+      }
+    }
+
+    throw new ResourceNotFoundException(String.format("CodeSet with ID=%d not found", codesetid));
+  }
+
+  @Override
+  public List<Code> getCodes(String reposName, String version, Integer codesetid,
+      Predicate<Code> search) throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(codesetid, "CodeSet ID missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+
+    final Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+
+    Predicate<Code> predicate = search != null ? search : new Predicate<Code>() {
+
+      @Override
+      public boolean test(Code t) {
+        return true;
+      }
+
+    };
+
+    List<CodeSetType> codeSets = getCodeSets(repository);
+    for (CodeSetType codeSet : codeSets) {
+      if (codesetid == codeSet.getId().intValue()) {
+        List<CodeType> codes = codeSet.getCode();
+        return codes.stream().map(c -> OrchestraAPItoDOM.DOMToCode(c)).filter(predicate)
+            .collect(Collectors.toList());
+      }
+    }
+
+    throw new ResourceNotFoundException(String.format("CodeSet with ID=%d not found", codesetid));
+  }
+
+  @Override
+  public void updateCode(String reposName, String version, Integer codesetid, Integer id, Code code)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(id, "CodeSet ID missing");
+    Objects.requireNonNull(code, "Code missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+    Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+    List<CodeSetType> codeSets = getCodeSets(repository);
+    for (CodeSetType codeSet : codeSets) {
+      if (codesetid == codeSet.getId().intValue()) {
+        List<CodeType> codes = codeSet.getCode();
+        for (int i = 0; i < codes.size(); i++) {
+          if (codes.get(i).getId().intValue() == id) {
+            codes.set(i, OrchestraAPItoDOM.CodeToDOM(code));
+            return;
+          }
+        }
+        throw new ResourceNotFoundException(String.format("Code with ID=%d not found", id));
+      }
+    }
+
+    throw new ResourceNotFoundException(String.format("CodeSet with ID=%d not found", id));
   }
 
 }

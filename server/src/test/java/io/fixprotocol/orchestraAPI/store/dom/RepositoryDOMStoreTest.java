@@ -8,6 +8,8 @@ import java.util.Random;
 import org.junit.Before;
 import org.junit.Test;
 
+import io.fixprotocol.orchestra.model.Code;
+import io.fixprotocol.orchestra.model.CodeSet;
 import io.fixprotocol.orchestra.model.Field;
 import io.fixprotocol.orchestra.model.Metadata;
 import io.fixprotocol.orchestra.model.ObjectId;
@@ -47,6 +49,45 @@ public class RepositoryDOMStoreTest {
   }
   
   @Test
+  public void addFindCode() throws RepositoryStoreException {
+    Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    store.createRepository(repository, null, null);
+    
+    CodeSet codeSet = new CodeSet();
+    ObjectId oid = new ObjectId();
+    oid.setId(4);
+    oid.setName("AdvSideCodeSet");
+    codeSet.setOid(oid);
+    codeSet.setType("char");
+    store.createCodeSet("test1", identifier, codeSet);
+    
+    Code code = new Code();
+    ObjectId codeOid = new ObjectId();
+    codeOid.setId(4001);
+    codeOid.setName("Buy");
+    code.setOid(codeOid);
+    code.setValue("B");
+    store.createCode("test1", identifier, 4, code );
+    
+    CodeSet codeSet2 = store.getCodeSetById("test1", identifier, 4);
+    assertNotNull(codeSet2);
+    assertEquals("AdvSideCodeSet", codeSet2.getOid().getName());
+    
+    Code code2 = store.getCodeById("test1", identifier, 4, 4001);
+    assertNotNull(code2);
+    assertEquals("Buy", code2.getOid().getName());
+  }
+  
+  
+  @Test
   public void addFindField() throws RepositoryStoreException {
     Repository repository = new Repository();
     repository.setName("test1");
@@ -71,10 +112,13 @@ public class RepositoryDOMStoreTest {
     assertEquals("Account", field2.getOid().getName());
     
     field.setDatatype("UTCDateOnly");
+    field.setCategory("MarketData");
     store.updateField("test1", identifier, 1, field);
+    
     field2 = store.getFieldById("test1", identifier, 1);
     assertEquals("Account", field2.getOid().getName());
     assertEquals("UTCDateOnly", field2.getDatatype());
+    assertEquals("MarketData", field2.getCategory());
     
     store.deleteField("test1", identifier, 1);
     
