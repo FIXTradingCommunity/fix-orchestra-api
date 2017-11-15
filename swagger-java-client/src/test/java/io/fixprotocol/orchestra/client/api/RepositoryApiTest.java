@@ -7,6 +7,7 @@ import io.fixprotocol.orchestra.client.model.Component;
 import io.fixprotocol.orchestra.client.model.Datatype;
 import io.fixprotocol.orchestra.client.model.ErrorModel;
 import io.fixprotocol.orchestra.client.model.Field;
+import java.io.File;
 import io.fixprotocol.orchestra.client.model.Message;
 import io.fixprotocol.orchestra.client.model.Repository;
 import org.junit.Test;
@@ -275,6 +276,23 @@ public class RepositoryApiTest {
         String reposName = null;
         String version = null;
         // api.deleteRepository(reposName, version);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * Retreives a single Orchestra repository file, if found
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void downloadRepositoryByIdTest() throws ApiException {
+        String reposName = null;
+        String version = null;
+        // File response = api.downloadRepositoryById(reposName, version);
 
         // TODO: test validations
     }

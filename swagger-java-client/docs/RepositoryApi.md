@@ -18,6 +18,7 @@ Method | HTTP request | Description
 [**deleteField**](RepositoryApi.md#deleteField) | **DELETE** /repositories/{repos-name}/{version}/fields/{id} | deletes a single field based on the ID supplied
 [**deleteMessage**](RepositoryApi.md#deleteMessage) | **DELETE** /repositories/{repos-name}/{version}/messages/{id} | deletes a single message scenario based on the ID supplied
 [**deleteRepository**](RepositoryApi.md#deleteRepository) | **DELETE** /repositories/{repos-name}/{version} | deletes a single Orchestra repository  based on the ID supplied
+[**downloadRepositoryById**](RepositoryApi.md#downloadRepositoryById) | **GET** /repositories/{repos-name}/{version}/file | Retreives a single Orchestra repository file, if found
 [**findCodeById**](RepositoryApi.md#findCodeById) | **GET** /repositories/{repos-name}/{version}/codesets/{codesetid}/codes/{id} | Returns a single Code, if found
 [**findCodeSetById**](RepositoryApi.md#findCodeSetById) | **GET** /repositories/{repos-name}/{version}/codesets/{id} | Returns a single CodeSet, if found
 [**findComponentById**](RepositoryApi.md#findComponentById) | **GET** /repositories/{repos-name}/{version}/components/{id} | Returns a single component, if found
@@ -704,6 +705,51 @@ No authorization required
 
  - **Content-Type**: Not defined
  - **Accept**: Not defined
+
+<a name="downloadRepositoryById"></a>
+# **downloadRepositoryById**
+> File downloadRepositoryById(reposName, version)
+
+Retreives a single Orchestra repository file, if found
+
+### Example
+```java
+// Import classes:
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+
+
+RepositoryApi apiInstance = new RepositoryApi();
+String reposName = "reposName_example"; // String | name of Orchestra repository to fetch
+String version = "version_example"; // String | version of Orchestra repository to fetch
+try {
+    File result = apiInstance.downloadRepositoryById(reposName, version);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling RepositoryApi#downloadRepositoryById");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **reposName** | **String**| name of Orchestra repository to fetch |
+ **version** | **String**| version of Orchestra repository to fetch |
+
+### Return type
+
+[**File**](File.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/xml
 
 <a name="findCodeById"></a>
 # **findCodeById**

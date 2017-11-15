@@ -1,5 +1,6 @@
 package io.fixprotocol.orchestraAPI.store;
 
+import java.io.File;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -62,8 +63,7 @@ public interface RepositoryStore {
   void createField(String reposName, String version, Field field) throws RepositoryStoreException;
 
   /**
-   * Creates a new repository if it does not already exist. The key field is
-   * {@link Metadata#identifier(String)}
+   * Creates a new repository if it does not already exist. 
    * 
    * @param metadata describes the repository to be created
    * @param toClone identifier of repository to clone (optional)
@@ -74,6 +74,15 @@ public interface RepositoryStore {
    */
   Metadata createRepository(Repository repository, String nameToClone, String versionToClone)
       throws RepositoryStoreException;
+
+  /**
+   * Creates a new repository if it does not already exist. 
+   * 
+   * @param file contains a repository
+   * @throws DuplicateKeyException if the repository already exists
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  void createRepositoryFromFile(File file) throws RepositoryStoreException;
 
   /**
    * Deletes one Code if it exists
@@ -244,6 +253,16 @@ public interface RepositoryStore {
    */
   List<Metadata> getRepositoriesMetadata(Predicate<Metadata> search)
       throws RepositoryStoreException;
+
+  /**
+   * Serialize a repository to a file
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @return a repository file
+   * @throws ResourceNotFoundException if the repository does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  File getRepositoryFile(String reposName, String version) throws RepositoryStoreException;
 
   /**
    * Retrieves the metadata of a repository, if it exists

@@ -1,5 +1,7 @@
 package io.fixprotocol.orchestraAPI.server;
 
+import java.io.File;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -28,7 +30,7 @@ import io.swagger.annotations.ApiParam;
 
 
 @io.swagger.annotations.Api(description = "the repositories API")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-10T17:21:41.794Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-15T16:00:39.798Z")
 public class RepositoriesApi  {
    private final RepositoriesApiService delegate = RepositoriesApiServiceFactory.getRepositoriesApi();
 
@@ -272,6 +274,21 @@ public class RepositoriesApi  {
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.deleteRepository(reposName,version,securityContext);
+    }
+    @GET
+    @Path("/{repos-name}/{version}/file")
+    
+    @Produces({ "application/xml" })
+    @io.swagger.annotations.ApiOperation(value = "Retreives a single Orchestra repository file, if found", notes = "", response = File.class, tags={ "repository", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "repository file", response = File.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 200, message = "unexpected error", response = File.class) })
+    public Response downloadRepositoryById(@ApiParam(value = "name of Orchestra repository to fetch",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository to fetch",required=true) @PathParam("version") String version
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.downloadRepositoryById(reposName,version,securityContext);
     }
     @GET
     @Path("/{repos-name}/{version}/codesets/{codesetid}/codes/{id}")

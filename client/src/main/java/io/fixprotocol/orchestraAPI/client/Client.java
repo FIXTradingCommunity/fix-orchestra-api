@@ -1,5 +1,6 @@
 package io.fixprotocol.orchestraAPI.client;
 
+import java.io.File;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -23,31 +24,35 @@ public class Client {
   public Client() {
     apiInstance = new RepositoryApi();
   }
-  
+
   public Client(RepositoryApi apiInstance) {
     this.apiInstance = apiInstance;
     JSON json = apiInstance.getApiClient().getJSON();
     ObjectMapper mapper = json.getContext(null);
-    // allows deserialization of ArrayList with a single element as an array (why isn't this the default?)
+    // allows deserialization of ArrayList with a single element as an array (why isn't this the
+    // default?)
     mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
   }
 
   /**
    * Adds a Code to a CodeSet
    * 
-   * @param fileid Orchestra repository file identifier
+   * @param reposName name of Orchestra repository
+   * @param version version of Orchestra repository
    * @param codesetid CodeSet ID
    * @param code Code to add
    * @throws ApiException if the API call fails
    */
-  public void addCode(String reposName, String version, Integer codesetid, Code code) throws ApiException {
+  public void addCode(String reposName, String version, Integer codesetid, Code code)
+      throws ApiException {
     apiInstance.addCode(reposName, version, codesetid, code);
   }
 
   /**
    * Adds a CodeSet
    * 
-   * @param fileid Orchestra repository file identifier
+   * @param reposName name of Orchestra repository
+   * @param version version of Orchestra repository
    * @param codeSet to add
    * @throws ApiException if the API call fails
    */
@@ -58,30 +63,35 @@ public class Client {
   /**
    * Adds a Component
    * 
-   * @param fileid Orchestra repository file identifier
+   * @param reposName name of Orchestra repository
+   * @param version version of Orchestra repository
    * @param component to add
    * @throws ApiException if the API call fails
    */
-  public void addComponent(String reposName, String version, Component component) throws ApiException {
+  public void addComponent(String reposName, String version, Component component)
+      throws ApiException {
     apiInstance.addComponent(reposName, version, component, null);
   }
 
   /**
    * Clones a Component
    * 
-   * @param fileid Orchestra repository file identifier
+   * @param reposName name of Orchestra repository
+   * @param version version of Orchestra repository
    * @param component to add
    * @param toClone ID of component to clone
    * @throws ApiException if the API call fails
    */
-  public void addComponent(String reposName, String version, Component component, Integer toClone) throws ApiException {
+  public void addComponent(String reposName, String version, Component component, Integer toClone)
+      throws ApiException {
     apiInstance.addComponent(reposName, version, component, toClone);
   }
-  
+
   /**
    * Adds a Datatype
    * 
-   * @param fileid Orchestra repository file identifier
+   * @param reposName name of Orchestra repository
+   * @param version version of Orchestra repository
    * @param datatype to add
    * @throws ApiException if the API call fails
    */
@@ -92,7 +102,8 @@ public class Client {
   /**
    * Adds a Field
    * 
-   * @param fileid Orchestra repository file identifier
+   * @param reposName name of Orchestra repository
+   * @param version version of Orchestra repository
    * @param field to add
    * @throws ApiException if the API call fails
    */
@@ -103,23 +114,26 @@ public class Client {
   /**
    * Adds a message scenario
    * 
-   * @param fileid Orchestra repository file identifier
+   * @param reposName name of Orchestra repository
+   * @param version version of Orchestra repository
    * @param message to add
    * @throws ApiException if the API call fails
    */
   public void addMessage(String reposName, String version, Message message) throws ApiException {
     apiInstance.addMessage(reposName, version, message, null);
   }
-  
+
   /**
    * Clones a message scenario
    * 
-   * @param fileid Orchestra repository file identifier
+   * @param reposName name of Orchestra repository
+   * @param version version of Orchestra repository
    * @param message to add
    * @param toClone ID of message to clone
    * @throws ApiException if the API call fails
    */
-  public void addMessage(String reposName, String version, Message message, Integer toClone) throws ApiException {
+  public void addMessage(String reposName, String version, Message message, Integer toClone)
+      throws ApiException {
     apiInstance.addMessage(reposName, version, message, toClone);
   }
 
@@ -132,7 +146,7 @@ public class Client {
   public void addRepository(Repository repository) throws ApiException {
     apiInstance.addRepository(repository, null, null);
   }
-  
+
   /**
    * Clones an Orchestra repository file
    * 
@@ -141,48 +155,56 @@ public class Client {
    * @param versionToClone version of repository to clone
    * @throws ApiException if the API call fails
    */
-  public void addRepository(Repository repository, String nameToClone, String versionToClone) throws ApiException {
+  public void addRepository(Repository repository, String nameToClone, String versionToClone)
+      throws ApiException {
     apiInstance.addRepository(repository, nameToClone, versionToClone);
   }
 
   /**
    * Deletes a single Code based on the ID supplied
    * 
-   * @param fileid Orchestra repository file identifier
+   * @param reposName name of Orchestra repository
+   * @param version version of Orchestra repository
    * @param codesetid CodeSet identifier
    * @param codeid Code identifier
    * @throws ApiException if the API call fails
    */
-  public void deleteCode(String reposName, String version, Integer codesetid, Integer codeid) throws ApiException {
+  public void deleteCode(String reposName, String version, Integer codesetid, Integer codeid)
+      throws ApiException {
     apiInstance.deleteCode(reposName, version, codesetid, codeid);
   }
 
   /**
    * Deletes a single CodeSet based on the ID supplied
    * 
-   * @param fileid Orchestra repository file identifier
+   * @param reposName name of Orchestra repository
+   * @param version version of Orchestra repository
    * @param codesetid CodeSet identifier
    * @throws ApiException if the API call fails
    */
-  public void deleteCodeSet(String reposName, String version, Integer codesetid) throws ApiException {
+  public void deleteCodeSet(String reposName, String version, Integer codesetid)
+      throws ApiException {
     apiInstance.deleteCodeSet(reposName, version, codesetid);
   }
 
   /**
    * Deletes a single Component based on the ID supplied
    * 
-   * @param fileid Orchestra repository file identifier
+   * @param reposName name of Orchestra repository
+   * @param version version of Orchestra repository
    * @param componentid Component identifier
    * @throws ApiException if the API call fails
    */
-  public void deleteComponent(String reposName, String version, Integer componentid) throws ApiException {
+  public void deleteComponent(String reposName, String version, Integer componentid)
+      throws ApiException {
     apiInstance.deleteComponent(reposName, version, componentid);
   }
 
   /**
    * Deletes a single Datatype based on the name supplied
    * 
-   * @param fileid Orchestra repository file identifier
+   * @param reposName name of Orchestra repository
+   * @param version version of Orchestra repository
    * @param name name of a Datatype to delete
    * @throws ApiException if the API call fails
    */
@@ -193,7 +215,8 @@ public class Client {
   /**
    * Deletes a single Field based on the ID supplied
    * 
-   * @param fileid Orchestra repository file identifier
+   * @param reposName name of Orchestra repository
+   * @param version version of Orchestra repository
    * @param fieldid Field identifier
    * @throws ApiException if the API call fails
    */
@@ -204,22 +227,37 @@ public class Client {
   /**
    * Deletes a single message scenario based on the ID supplied
    * 
-   * @param fileid Orchestra repository file identifier
+   * @param reposName name of Orchestra repository
+   * @param version version of Orchestra repository
    * @param messageid Message identifier
    * @throws ApiException if the API call fails
    */
-  public void deleteMessage(String reposName, String version, Integer messageid) throws ApiException {
+  public void deleteMessage(String reposName, String version, Integer messageid)
+      throws ApiException {
     apiInstance.deleteMessage(reposName, version, messageid);
   }
 
   /**
    * Deletes a single Orchestra repository file based on the ID supplied
    * 
-   * @param fileid Orchestra repository file identifier
+   * @param reposName name of Orchestra repository
+   * @param version version of Orchestra repository
    * @throws ApiException if the API call fails
    */
   public void deleteRepository(String reposName, String version) throws ApiException {
     apiInstance.deleteRepository(reposName, version);
+  }
+
+  /**
+   * Downloads a repository file
+   * 
+   * @param reposName name of Orchestra repository
+   * @param version version of Orchestra repository
+   * @return file holding serialized repository
+   * @throws ApiException if the API call fails
+   */
+  public File downloadRepository(String reposName, String version) throws ApiException {
+    return apiInstance.downloadRepositoryById(reposName, version);
   }
 
   /**
@@ -232,7 +270,8 @@ public class Client {
    * @return a Code
    * @throws ApiException if the API call fails or the Code is not found
    */
-  public Code findCodeById(String reposName, String version, Integer codesetid, Integer codeid) throws ApiException {
+  public Code findCodeById(String reposName, String version, Integer codesetid, Integer codeid)
+      throws ApiException {
     return apiInstance.findCodeById(reposName, version, codesetid, codeid);
   }
 
@@ -245,7 +284,8 @@ public class Client {
    * @return a CodeSet
    * @throws ApiException if the API call fails or the CodeSet is not found
    */
-  public CodeSet findCodeSetById(String reposName, String version, Integer codesetid) throws ApiException {
+  public CodeSet findCodeSetById(String reposName, String version, Integer codesetid)
+      throws ApiException {
     return apiInstance.findCodeSetById(reposName, version, codesetid);
   }
 
@@ -258,7 +298,8 @@ public class Client {
    * @return a Component
    * @throws ApiException if the API call fails or the CodeSet is not found
    */
-  public Component findComponentById(String reposName, String version, Integer componentid) throws ApiException {
+  public Component findComponentById(String reposName, String version, Integer componentid)
+      throws ApiException {
     return apiInstance.findComponentById(reposName, version, componentid);
   }
 
@@ -271,7 +312,8 @@ public class Client {
    * @return a Datatype
    * @throws ApiException if the API call fails or the Datatype is not found
    */
-  public Datatype findDatatypeByName(String reposName, String version, String name) throws ApiException {
+  public Datatype findDatatypeByName(String reposName, String version, String name)
+      throws ApiException {
     return apiInstance.findDatatypeByName(reposName, version, name);
   }
 
@@ -284,7 +326,8 @@ public class Client {
    * @return a Field
    * @throws ApiException if the API call fails or the Field is not found
    */
-  public Field findFieldById(String reposName, String version, Integer fieldid) throws ApiException {
+  public Field findFieldById(String reposName, String version, Integer fieldid)
+      throws ApiException {
     return apiInstance.findFieldById(reposName, version, fieldid);
   }
 
@@ -297,7 +340,8 @@ public class Client {
    * @return a Message
    * @throws ApiException if the API call fails or the Message is not found
    */
-  public Message findMessageById(String reposName, String version, Integer messageid) throws ApiException {
+  public Message findMessageById(String reposName, String version, Integer messageid)
+      throws ApiException {
     return apiInstance.findMessageById(reposName, version, messageid);
   }
 
@@ -314,24 +358,6 @@ public class Client {
   }
 
   /**
-   * searches CodeSets
-   *
-   * By passing in the appropriate options, you can search for CodeSets
-   * 
-   * @param reposName name of Orchestra repository file (required)
-   * @param version version of Orchestra repository file (required)
-   * @param searchString pass an optional search string for looking up CodeSets (optional)
-   * @param skip number of records to skip for pagination (optional)
-   * @param limit maximum number of records to return (optional)
-   * @return List&lt;CodeSet&gt;
-   * @throws ApiException if the API call fails
-   */
-  public List<CodeSet> searchCodeSets(String reposName, String version, String searchString, Integer skip,
-      Integer limit) throws ApiException {
-    return apiInstance.searchCodeSets(reposName, version, searchString, skip, limit);
-  }
-
-  /**
    * searches Codes within a CodeSet
    *
    * By passing in the appropriate options, you can search for Codes
@@ -345,9 +371,27 @@ public class Client {
    * @return List&lt;Code&gt;
    * @throws ApiException if the API call fails
    */
-  public List<Code> searchCodes(String reposName, String version, Integer codesetid, String searchString, Integer skip,
-      Integer limit) throws ApiException {
+  public List<Code> searchCodes(String reposName, String version, Integer codesetid,
+      String searchString, Integer skip, Integer limit) throws ApiException {
     return apiInstance.searchCodes(reposName, version, codesetid, searchString, skip, limit);
+  }
+
+  /**
+   * searches CodeSets
+   *
+   * By passing in the appropriate options, you can search for CodeSets
+   * 
+   * @param reposName name of Orchestra repository file (required)
+   * @param version version of Orchestra repository file (required)
+   * @param searchString pass an optional search string for looking up CodeSets (optional)
+   * @param skip number of records to skip for pagination (optional)
+   * @param limit maximum number of records to return (optional)
+   * @return List&lt;CodeSet&gt;
+   * @throws ApiException if the API call fails
+   */
+  public List<CodeSet> searchCodeSets(String reposName, String version, String searchString,
+      Integer skip, Integer limit) throws ApiException {
+    return apiInstance.searchCodeSets(reposName, version, searchString, skip, limit);
   }
 
   /**
@@ -363,8 +407,8 @@ public class Client {
    * @return List&lt;Component&gt;
    * @throws ApiException if the API call fails
    */
-  public List<Component> searchComponents(String reposName, String version, String searchString, Integer skip,
-      Integer limit) throws ApiException {
+  public List<Component> searchComponents(String reposName, String version, String searchString,
+      Integer skip, Integer limit) throws ApiException {
     return apiInstance.searchComponents(reposName, version, searchString, skip, limit);
   }
 
@@ -381,8 +425,8 @@ public class Client {
    * @return List&lt;Datatype&gt;
    * @throws ApiException if the API call fails
    */
-  public List<Datatype> searchDatatypes(String reposName, String version, String searchString, Integer skip,
-      Integer limit) throws ApiException {
+  public List<Datatype> searchDatatypes(String reposName, String version, String searchString,
+      Integer skip, Integer limit) throws ApiException {
     return apiInstance.searchDatatypes(reposName, version, searchString, skip, limit);
   }
 
@@ -399,8 +443,8 @@ public class Client {
    * @return List&lt;Field&gt;
    * @throws ApiException if the API call fails
    */
-  public List<Field> searchFields(String reposName, String version, String searchString, Integer skip, Integer limit)
-      throws ApiException {
+  public List<Field> searchFields(String reposName, String version, String searchString,
+      Integer skip, Integer limit) throws ApiException {
     return apiInstance.searchFields(reposName, version, searchString, skip, limit);
   }
 
@@ -417,8 +461,8 @@ public class Client {
    * @return List&lt;Message&gt;
    * @throws ApiException if the API call fails
    */
-  public List<Message> searchMessages(String reposName, String version, String searchString, Integer skip,
-      Integer limit) throws ApiException {
+  public List<Message> searchMessages(String reposName, String version, String searchString,
+      Integer skip, Integer limit) throws ApiException {
     return apiInstance.searchMessages(reposName, version, searchString, skip, limit);
   }
 
@@ -442,48 +486,52 @@ public class Client {
   /**
    * Updates a single Code, if found (idempotent)
    * 
-   * @param fileid Orchestra repository file identifier
+   * @param reposName name of Orchestra repository
+   * @param version version of Orchestra repository
    * @param codesetid CodeSet ID
    * @param codeid Code ID
    * @param code Code to update
    * @throws ApiException if the API call fails or the Code is not found
    */
-  public void updateCodeById(String reposName, String version, Integer codesetid, Integer codeid, Code code)
-      throws ApiException {
+  public void updateCodeById(String reposName, String version, Integer codesetid, Integer codeid,
+      Code code) throws ApiException {
     apiInstance.updateCodeById(reposName, version, codesetid, codeid, code);
   }
 
   /**
    * Updates a single CodeSet, if found (idempotent)
    * 
-   * @param fileid Orchestra repository file identifier
+   * @param reposName name of Orchestra repository
+   * @param version version of Orchestra repository
    * @param codesetid CodeSet ID
    * @param codeSet to update
    * @throws ApiException if the API call fails or the CodeSet is not found
    */
-  public void updateCodeSetById(String reposName, String version, Integer codesetid, CodeSet codeSet)
-      throws ApiException {
+  public void updateCodeSetById(String reposName, String version, Integer codesetid,
+      CodeSet codeSet) throws ApiException {
     apiInstance.updateCodeSetById(reposName, version, codesetid, codeSet);
   }
 
   /**
    * Updates a single Component, if found (idempotent)
    * 
-   * @param fileid Orchestra repository file identifier
+   * @param reposName name of Orchestra repository
+   * @param version version of Orchestra repository
    * @param componentid Component ID
    * @param component to update
    * @throws ApiException if the API call fails or the Component is not found
    */
 
-  public void updateComponentById(String reposName, String version, Integer componentid, Component component)
-      throws ApiException {
+  public void updateComponentById(String reposName, String version, Integer componentid,
+      Component component) throws ApiException {
     apiInstance.updateComponentById(reposName, version, componentid, component);
   }
 
   /**
    * Updates a single Datatype, if found (idempotent)
    * 
-   * @param fileid Orchestra repository file identifier
+   * @param reposName name of Orchestra repository
+   * @param version version of Orchestra repository
    * @param name Datatype name
    * @param datatype to update
    * @throws ApiException if API call fails or the Datatype is not found
@@ -496,35 +544,41 @@ public class Client {
   /**
    * Updates a single Field, if found (idempotent)
    * 
-   * @param fileid Orchestra repository file identifier
+   * @param reposName name of Orchestra repository
+   * @param version version of Orchestra repository
    * @param fieldid Field id
    * @param field to update
    * @throws ApiException if the API call fails or the Field is not found
    */
-  public void updateFieldById(String reposName, String version, Integer fieldid, Field field) throws ApiException {
+  public void updateFieldById(String reposName, String version, Integer fieldid, Field field)
+      throws ApiException {
     apiInstance.updateFieldById(reposName, version, fieldid, field);
   }
 
   /**
    * Updates a single message scenario, if found (idempotent)
    * 
-   * @param fileid Orchestra repository file identifier
+   * @param reposName name of Orchestra repository
+   * @param version version of Orchestra repository
    * @param messageid Message ID
    * @param message to update
    * @throws ApiException if the API call fails or the Message is not found
    */
-  public void updateMessageById(String reposName, String version, Integer messageid, Message message) throws ApiException {
+  public void updateMessageById(String reposName, String version, Integer messageid,
+      Message message) throws ApiException {
     apiInstance.updateMessageById(reposName, version, messageid, message);
   }
 
   /**
    * Updates Metadata of an Orchestra repository file, if found (idempotent)
    * 
-   * @param fileid Orchestra repository file identifier
+   * @param reposName name of Orchestra repository
+   * @param version version of Orchestra repository
    * @param repository to update
    * @throws ApiException if the API call fails or the Metadata is not found
    */
-  public void updateRepositoryById(String reposName, String version, Repository repository) throws ApiException {
+  public void updateRepositoryById(String reposName, String version, Repository repository)
+      throws ApiException {
     apiInstance.updateRepositoryById(reposName, version, repository);
   }
 

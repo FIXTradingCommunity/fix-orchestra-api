@@ -1,9 +1,13 @@
 package io.fixprotocol.orchestraAPI.server;
 
+import java.io.File;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriBuilder;
 
@@ -26,9 +30,11 @@ import io.fixprotocol.orchestraAPI.store.ResourceNotFoundException;
 
 public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   private final RepositoryStore repositoryStore;
+  private final Logger logger;
 
   public RepositoriesApiServiceImpl(RepositoryStore repositoryStore) {
     this.repositoryStore = repositoryStore;
+    logger = Logger.getLogger(getClass().getName());
   }
 
   @Override
@@ -37,15 +43,17 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     try {
       repositoryStore.createCode(reposName, version, codesetid, code);
       return Response.created(UriBuilder.fromPath("repositories").path(reposName).path(version)
-          .path("codesets").path(codesetid.toString()).path("codes").path(code.getOid().getId().toString()).build()).build();
+          .path("codesets").path(codesetid.toString()).path("codes")
+          .path(code.getOid().getId().toString()).build()).build();
     } catch (DuplicateKeyException e) {
       return Response.noContent().status(Status.CONFLICT).build();
     } catch (ResourceNotFoundException e) {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
-    }
+  }
 
   @Override
   public Response addCodeSet(String reposName, String version, CodeSet codeSet,
@@ -59,6 +67,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (ResourceNotFoundException e) {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
   }
@@ -82,6 +91,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (ResourceNotFoundException e) {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
   }
@@ -98,6 +108,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (ResourceNotFoundException e) {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
   }
@@ -121,6 +132,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (ResourceNotFoundException e) {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
   }
@@ -134,8 +146,10 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (ResourceNotFoundException e) {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
-    }  }
+    }
+  }
 
   @Override
   public Response deleteCodeSet(String reposName, String version, Integer id,
@@ -146,6 +160,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (ResourceNotFoundException e) {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
   }
@@ -166,6 +181,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (ResourceNotFoundException e) {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
   }
@@ -179,6 +195,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (ResourceNotFoundException e) {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
   }
@@ -199,7 +216,32 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (ResourceNotFoundException e) {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
+    }
+  }
+
+  @Override
+  public Response downloadRepositoryById(String reposName, String version, SecurityContext arg2)
+      throws NotFoundException {
+    File file = null;
+    try {
+      file = repositoryStore.getRepositoryFile(reposName, version);
+      logger.log(Level.INFO, "Repository file {0}", file);
+      Response response = Response.ok().entity(file).build();
+      response.getHeaders().add("Content-Disposition",
+          String.format("attachment; filename=%s_%s.xml", reposName, version));
+      return response;
+    } catch (ResourceNotFoundException e) {
+      return Response.noContent().status(Status.NOT_FOUND).build();
+    } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
+      return Response.serverError().build();
+    } finally {
+      if (file != null) {
+        // processing seems to be async, so can't delete immediately
+        file.deleteOnExit();
+      }
     }
   }
 
@@ -212,8 +254,10 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (ResourceNotFoundException e) {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
-    }  }
+    }
+  }
 
   @Override
   public Response findCodeSetById(String reposName, String version, Integer id,
@@ -224,6 +268,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (ResourceNotFoundException e) {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
   }
@@ -257,6 +302,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (ResourceNotFoundException e) {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
   }
@@ -277,6 +323,23 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (ResourceNotFoundException e) {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
+      return Response.serverError().build();
+    }
+  }
+
+  @Override
+  public Response searchCodes(String reposName, String version, Integer codesetid,
+      String searchString, Integer skip, Integer limit, SecurityContext securityContext)
+      throws NotFoundException {
+    try {
+      // todo: translate search string to a Predicate
+      List<Code> filtered = repositoryStore.getCodes(reposName, version, codesetid, null);
+      List<Code> range =
+          filtered.subList(skip != null ? skip : 0, limit != null ? limit : filtered.size());
+      return Response.ok().entity(range).build();
+    } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
   }
@@ -294,20 +357,6 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
       return Response.serverError().build();
     }
   }
-
-  @Override
-  public Response searchCodes(String reposName, String version, Integer codesetid,
-      String searchString, Integer skip, Integer limit, SecurityContext securityContext)
-      throws NotFoundException {
-    try {
-      // todo: translate search string to a Predicate
-      List<Code> filtered = repositoryStore.getCodes(reposName, version, codesetid, null);
-      List<Code> range =
-          filtered.subList(skip != null ? skip : 0, limit != null ? limit : filtered.size());
-      return Response.ok().entity(range).build();
-    } catch (RepositoryStoreException e) {
-      return Response.serverError().build();
-    }  }
 
   @Override
   public Response searchComponents(String reposName, String version, String searchString,
@@ -375,7 +424,8 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
       return Response.serverError().build();
-    }  }
+    }
+  }
 
   @Override
   public Response updateCodeSetById(String reposName, String version, Integer id, CodeSet codeSet,

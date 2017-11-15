@@ -11,6 +11,7 @@ import io.fixprotocol.orchestra.model.Component;
 import io.fixprotocol.orchestra.model.Datatype;
 import io.fixprotocol.orchestra.model.ErrorModel;
 import io.fixprotocol.orchestra.model.Field;
+import java.io.File;
 import io.fixprotocol.orchestra.model.Message;
 import io.fixprotocol.orchestra.model.Repository;
 
@@ -22,7 +23,7 @@ import java.io.InputStream;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-10T17:21:41.794Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-15T16:00:39.798Z")
 public abstract class RepositoriesApiService {
     public abstract Response addCode(String reposName,String version,Integer codesetid,Code code,SecurityContext securityContext) throws NotFoundException;
     public abstract Response addCodeSet(String reposName,String version,CodeSet codeSet,SecurityContext securityContext) throws NotFoundException;
@@ -38,6 +39,7 @@ public abstract class RepositoriesApiService {
     public abstract Response deleteField(String reposName,String version,Integer id,SecurityContext securityContext) throws NotFoundException;
     public abstract Response deleteMessage(String reposName,String version,Integer id,SecurityContext securityContext) throws NotFoundException;
     public abstract Response deleteRepository(String reposName,String version,SecurityContext securityContext) throws NotFoundException;
+    public abstract Response downloadRepositoryById(String reposName,String version,SecurityContext securityContext) throws NotFoundException;
     public abstract Response findCodeById(String reposName,String version,Integer codesetid,Integer id,SecurityContext securityContext) throws NotFoundException;
     public abstract Response findCodeSetById(String reposName,String version,Integer id,SecurityContext securityContext) throws NotFoundException;
     public abstract Response findComponentById(String reposName,String version,Integer id,SecurityContext securityContext) throws NotFoundException;

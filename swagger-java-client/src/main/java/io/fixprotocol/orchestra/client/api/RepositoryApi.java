@@ -13,6 +13,7 @@ import io.fixprotocol.orchestra.client.model.Component;
 import io.fixprotocol.orchestra.client.model.Datatype;
 import io.fixprotocol.orchestra.client.model.ErrorModel;
 import io.fixprotocol.orchestra.client.model.Field;
+import java.io.File;
 import io.fixprotocol.orchestra.client.model.Message;
 import io.fixprotocol.orchestra.client.model.Repository;
 
@@ -21,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-10T17:10:04.535Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-15T16:04:56.053Z")
 public class RepositoryApi {
   private ApiClient apiClient;
 
@@ -775,6 +776,55 @@ public class RepositoryApi {
 
     apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
   }
+  /**
+   * Retreives a single Orchestra repository file, if found
+   * 
+   * @param reposName name of Orchestra repository to fetch (required)
+   * @param version version of Orchestra repository to fetch (required)
+   * @return File
+   * @throws ApiException if fails to make API call
+   */
+  public File downloadRepositoryById(String reposName, String version) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'reposName' is set
+    if (reposName == null) {
+      throw new ApiException(400, "Missing the required parameter 'reposName' when calling downloadRepositoryById");
+    }
+    
+    // verify the required parameter 'version' is set
+    if (version == null) {
+      throw new ApiException(400, "Missing the required parameter 'version' when calling downloadRepositoryById");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/repositories/{repos-name}/{version}/file".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
+      .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    
+    
+    final String[] localVarAccepts = {
+      "application/xml"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+    GenericType<File> localVarReturnType = new GenericType<File>() {};
+    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
   /**
    * Returns a single Code, if found
    * 

@@ -175,6 +175,34 @@ paths:
           description: "repository deleted"
         404:
           description: "repository not found"
+  /repositories/{repos-name}/{version}/file:
+    get:
+      tags:
+      - "repository"
+      summary: "Retreives a single Orchestra repository file, if found"
+      operationId: "downloadRepositoryById"
+      produces:
+      - "application/xml"
+      parameters:
+      - name: "repos-name"
+        in: "path"
+        description: "name of Orchestra repository to fetch"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version of Orchestra repository to fetch"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "repository file"
+          schema:
+            type: "file"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
   /repositories/{repos-name}/{version}/codesets/{codesetid}/codes:
     get:
       tags:

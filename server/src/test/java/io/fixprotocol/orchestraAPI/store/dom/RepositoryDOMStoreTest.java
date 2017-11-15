@@ -1,12 +1,23 @@
 package io.fixprotocol.orchestraAPI.store.dom;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
+import javax.xml.XMLConstants;
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
+import javax.xml.validation.Validator;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.xml.sax.SAXException;
 
 import io.fixprotocol.orchestra.model.Code;
 import io.fixprotocol.orchestra.model.CodeSet;
@@ -23,7 +34,8 @@ public class RepositoryDOMStoreTest {
 
   private RepositoryDOMStore store;
   private final Random random = new Random();
-  
+  public static boolean shouldValidate = false;
+
   @Before
   public void setup() {
     store = new RepositoryDOMStore();
@@ -47,7 +59,7 @@ public class RepositoryDOMStoreTest {
 
     store.deleteRepository(repository.getName(), identifier);
   }
-  
+
   @Test
   public void addFindCode() throws RepositoryStoreException {
     Repository repository = new Repository();
@@ -60,7 +72,7 @@ public class RepositoryDOMStoreTest {
     metadata.identifier(identifier);
     repository.setMetadata(metadata);
     store.createRepository(repository, null, null);
-    
+
     CodeSet codeSet = new CodeSet();
     ObjectId oid = new ObjectId();
     oid.setId(4);
@@ -68,25 +80,25 @@ public class RepositoryDOMStoreTest {
     codeSet.setOid(oid);
     codeSet.setType("char");
     store.createCodeSet("test1", identifier, codeSet);
-    
+
     Code code = new Code();
     ObjectId codeOid = new ObjectId();
     codeOid.setId(4001);
     codeOid.setName("Buy");
     code.setOid(codeOid);
     code.setValue("B");
-    store.createCode("test1", identifier, 4, code );
-    
+    store.createCode("test1", identifier, 4, code);
+
     CodeSet codeSet2 = store.getCodeSetById("test1", identifier, 4);
     assertNotNull(codeSet2);
     assertEquals("AdvSideCodeSet", codeSet2.getOid().getName());
-    
+
     Code code2 = store.getCodeById("test1", identifier, 4, 4001);
     assertNotNull(code2);
     assertEquals("Buy", code2.getOid().getName());
   }
-  
-  
+
+
   @Test
   public void addFindField() throws RepositoryStoreException {
     Repository repository = new Repository();
@@ -98,35 +110,35 @@ public class RepositoryDOMStoreTest {
     metadata.description("A test repository");
     metadata.identifier(identifier);
     repository.setMetadata(metadata);
-    
+
     Metadata metadata2 = store.createRepository(repository, null, null);
-    
+
     Field field = new Field();
     ObjectId oid = new ObjectId();
     oid.setName("Account");
     oid.setId(1);
-    field.setOid(oid); 
+    field.setOid(oid);
     store.createField("test1", identifier, field);
-    
+
     Field field2 = store.getFieldById("test1", identifier, 1);
     assertEquals("Account", field2.getOid().getName());
-    
+
     field.setDatatype("UTCDateOnly");
     field.setCategory("MarketData");
     store.updateField("test1", identifier, 1, field);
-    
+
     field2 = store.getFieldById("test1", identifier, 1);
     assertEquals("Account", field2.getOid().getName());
     assertEquals("UTCDateOnly", field2.getDatatype());
     assertEquals("MarketData", field2.getCategory());
-    
+
     store.deleteField("test1", identifier, 1);
-    
+
     try {
       store.getFieldById("test1", identifier, 1);
       fail("ResourceNotFoundException expected");
     } catch (ResourceNotFoundException e) {
-      
+
     } catch (Exception e) {
       fail("Wrong exception; ResourceNotFoundException expected");
     }
@@ -145,16 +157,17 @@ public class RepositoryDOMStoreTest {
     metadata.description("A test repository");
     metadata.identifier(identifier);
     repository.setMetadata(metadata);
-    
+
     store.createRepository(repository, null, null);
     metadata.setSubject("My subject 2");
     store.updateRepositoryMetadata("test1", identifier, repository);
-    
+
     Metadata metadata2 = store.getRepositoryMetadata("test1", identifier);
     assertEquals(metadata.getSubject(), metadata2.getSubject());
-    
+
     store.deleteRepository("test1", identifier);
   }
+
   @Test
   public void cloneRepository() throws RepositoryStoreException {
     Repository repository = new Repository();
@@ -165,9 +178,9 @@ public class RepositoryDOMStoreTest {
     Metadata metadata = new Metadata();
     metadata.description("A test repository");
     metadata.identifier(identifier);
-    repository.setMetadata(metadata);  
+    repository.setMetadata(metadata);
     store.createRepository(repository, null, null);
-    
+
     Repository repository2 = new Repository();
     repository2.setName("test1");
     final String identifier2 = Integer.toString(random.nextInt());
@@ -175,7 +188,7 @@ public class RepositoryDOMStoreTest {
     store.createRepository(repository2, "test1", identifier);
     Metadata metadata2 = store.getRepositoryMetadata("test1", identifier2);
     assertEquals("A test repository", metadata.getDescription());
-    
+
     List<Metadata> list = store.getRepositoriesMetadata(null);
     assertEquals(2, list.size());
 
@@ -198,7 +211,7 @@ public class RepositoryDOMStoreTest {
     metadata.identifier(identifier);
     repository.setMetadata(metadata);
     store.createRepository(repository, null, null);
-    
+
     store.createRepository(repository, null, null);
   }
 
@@ -225,4 +238,64 @@ public class RepositoryDOMStoreTest {
     store.createRepository(repository, "foo", "1");
   }
 
+  @Test
+  public void downloadRepository() throws RepositoryStoreException, SAXException, IOException {
+    Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+
+    Metadata metadata2 = store.createRepository(repository, null, null);
+
+    Field field = new Field();
+    ObjectId oid = new ObjectId();
+    oid.setName("Account");
+    oid.setId(1);
+    field.setOid(oid);
+    store.createField("test1", identifier, field);
+
+    Field field2 = store.getFieldById("test1", identifier, 1);
+    assertEquals("Account", field2.getOid().getName());
+
+    field.setDatatype("UTCDateOnly");
+    field.setCategory("MarketData");
+    store.updateField("test1", identifier, 1, field);
+
+    File file = null;
+    try {
+      file = store.getRepositoryFile("test1", identifier);
+      assertNotNull(file);
+      //file.deleteOnExit();
+  
+      if (shouldValidate ) {
+        validateXML(file);
+      }
+      
+      try {
+        store.createRepositoryFromFile(file);
+        fail("Expected DuplicateKeyException");
+      } catch (DuplicateKeyException e) {
+        
+      }
+    } finally {
+      if (file != null) {
+        file.delete();
+      }
+    }
+
+    store.deleteRepository(repository.getName(), identifier);
+  }
+
+  private void validateXML(File xmlFile) throws SAXException, IOException {
+    File schemaFile = new File("xsd/FixRepository2016.xsd");
+    SchemaFactory schemaFactory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+    Schema schema = schemaFactory.newSchema(schemaFile);
+    Validator validator = schema.newValidator();
+    validator.validate(new StreamSource(xmlFile));
+  }
 }
