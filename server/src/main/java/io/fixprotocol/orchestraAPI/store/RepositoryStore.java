@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 
 import io.fixprotocol.orchestra.model.Code;
 import io.fixprotocol.orchestra.model.CodeSet;
+import io.fixprotocol.orchestra.model.Component;
 import io.fixprotocol.orchestra.model.Datatype;
 import io.fixprotocol.orchestra.model.Field;
 import io.fixprotocol.orchestra.model.Metadata;
@@ -25,7 +26,8 @@ public interface RepositoryStore {
    * @throws ResourceNotFoundException if the repository to update does not exist
    * @throws RepositoryStoreException if the store operation fails
    */
-  void createCode(String reposName, String version, Integer codesetid, Code code) throws RepositoryStoreException;
+  void createCode(String reposName, String version, Integer codesetid, Code code)
+      throws RepositoryStoreException;
 
   /**
    * Creates a new CodeSet in a repository
@@ -37,6 +39,19 @@ public interface RepositoryStore {
    * @throws RepositoryStoreException if the store operation fails
    */
   void createCodeSet(String reposName, String version, CodeSet codeSet)
+      throws RepositoryStoreException;
+
+  /**
+   * Creates a new Component in a repository
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param component to add to the repository
+   * @param toClone identifier of Component to clone (optional)
+   * @throws ResourceNotFoundException if the repository to update does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  void createComponent(String reposName, String version, Component component, Integer toClone)
       throws RepositoryStoreException;
 
   /**
@@ -63,7 +78,7 @@ public interface RepositoryStore {
   void createField(String reposName, String version, Field field) throws RepositoryStoreException;
 
   /**
-   * Creates a new repository if it does not already exist. 
+   * Creates a new repository if it does not already exist.
    * 
    * @param metadata describes the repository to be created
    * @param toClone identifier of repository to clone (optional)
@@ -76,7 +91,7 @@ public interface RepositoryStore {
       throws RepositoryStoreException;
 
   /**
-   * Creates a new repository if it does not already exist. 
+   * Creates a new repository if it does not already exist.
    * 
    * @param file contains a repository
    * @throws DuplicateKeyException if the repository already exists
@@ -94,7 +109,8 @@ public interface RepositoryStore {
    * @throws ResourceNotFoundException if the repository or code to delete does not exist
    * @throws RepositoryStoreException if the store operation fails
    */
-  void deleteCode(String reposName, String version, Integer codesetid, Integer id) throws RepositoryStoreException;
+  void deleteCode(String reposName, String version, Integer codesetid, Integer id)
+      throws RepositoryStoreException;
 
   /**
    * Deletes one CodeSet if it exists
@@ -106,6 +122,18 @@ public interface RepositoryStore {
    * @throws RepositoryStoreException if the store operation fails
    */
   void deleteCodeSet(String reposName, String version, Integer id) throws RepositoryStoreException;
+
+  /**
+   * Deletes one Component if it exists
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param id Component identifier
+   * @throws ResourceNotFoundException if the repository or field to delete does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  void deleteComponent(String reposName, String version, Integer id)
+      throws RepositoryStoreException;
 
   /**
    * Deletes one datatype if it exists
@@ -151,7 +179,8 @@ public interface RepositoryStore {
    * @throws ResourceNotFoundException if the repository or Code does not exist
    * @throws RepositoryStoreException if the store operation fails
    */
-  Code getCodeById(String reposName, String version, Integer codesetid, Integer id) throws RepositoryStoreException;
+  Code getCodeById(String reposName, String version, Integer codesetid, Integer id)
+      throws RepositoryStoreException;
 
   /**
    * Retrieves all codes in a CodeSet
@@ -164,7 +193,8 @@ public interface RepositoryStore {
    * @throws ResourceNotFoundException if the repository does not exist
    * @throws RepositoryStoreException if the store operation fails
    */
-  List<Code> getCodes(String reposName, String version, Integer codesetid, Predicate<Code> predicate) throws RepositoryStoreException;
+  List<Code> getCodes(String reposName, String version, Integer codesetid,
+      Predicate<Code> predicate) throws RepositoryStoreException;
 
   /**
    * Retrieves a CodeSet by its ID
@@ -190,6 +220,32 @@ public interface RepositoryStore {
    * @throws RepositoryStoreException if the store operation fails
    */
   List<CodeSet> getCodeSets(String reposName, String version, Predicate<CodeSet> predicate)
+      throws RepositoryStoreException;
+
+  /**
+   * Retrieves a Component by its ID
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param id Component identifier
+   * @return the Component
+   * @throws ResourceNotFoundException if the repository or Component does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  Component getComponentById(String reposName, String version, Integer id)
+      throws RepositoryStoreException;
+
+  /**
+   * Retrieves all components in a repository
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param predicate filter for components to return
+   * @return a list of components
+   * @throws ResourceNotFoundException if the repository does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  List<Component> getComponents(String reposName, String version, Predicate<Component> predicate)
       throws RepositoryStoreException;
 
   /**
@@ -256,6 +312,7 @@ public interface RepositoryStore {
 
   /**
    * Serialize a repository to a file
+   * 
    * @param reposName name of Orchestra repository (required)
    * @param version version of Orchestra repository (required)
    * @return a repository file
@@ -280,12 +337,13 @@ public interface RepositoryStore {
    * 
    * @param reposName name of Orchestra repository (required)
    * @param version version of Orchestra repository (required)
-   * @param codesetid ID of the CodeSet 
+   * @param codesetid ID of the CodeSet
    * @param code new value of the Code
    * @throws ResourceNotFoundException if the repository or CodeSet to update does not exist
    * @throws RepositoryStoreException if the store operation fails
    */
-  void updateCode(String reposName, String version, Integer codesetid, Integer id, Code code) throws RepositoryStoreException;
+  void updateCode(String reposName, String version, Integer codesetid, Integer id, Code code)
+      throws RepositoryStoreException;
 
   /**
    * Update an existing CodeSet
@@ -298,6 +356,19 @@ public interface RepositoryStore {
    * @throws RepositoryStoreException if the store operation fails
    */
   void updateCodeSet(String reposName, String version, Integer id, CodeSet codeSet)
+      throws RepositoryStoreException;
+
+  /**
+   * Update an existing Component
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param id ID of the Component to update
+   * @param component new value of the Component
+   * @throws ResourceNotFoundException if the repository or Component to update does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  void updateComponent(String reposName, String version, Integer id, Component component)
       throws RepositoryStoreException;
 
   /**

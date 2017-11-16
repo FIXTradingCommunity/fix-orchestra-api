@@ -13,17 +13,19 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.transform.Result;
 
 import io.fixprotocol._2016.fixrepository.CodeSetType;
 import io.fixprotocol._2016.fixrepository.CodeSets;
 import io.fixprotocol._2016.fixrepository.CodeType;
+import io.fixprotocol._2016.fixrepository.ComponentType;
+import io.fixprotocol._2016.fixrepository.Components;
 import io.fixprotocol._2016.fixrepository.Datatypes;
 import io.fixprotocol._2016.fixrepository.FieldType;
 import io.fixprotocol._2016.fixrepository.Fields;
 import io.fixprotocol._2016.fixrepository.Repository;
 import io.fixprotocol.orchestra.model.Code;
 import io.fixprotocol.orchestra.model.CodeSet;
+import io.fixprotocol.orchestra.model.Component;
 import io.fixprotocol.orchestra.model.Datatype;
 import io.fixprotocol.orchestra.model.Field;
 import io.fixprotocol.orchestra.model.Metadata;
@@ -156,6 +158,29 @@ public class RepositoryDOMStore implements RepositoryStore {
   }
 
   @Override
+  public void createComponent(String reposName, String version, Component component,
+      Integer toClone) throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(component, "Component missing");
+    Repository repository = repositories.get(new RepositoryKey(reposName, version));
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+    List<ComponentType> components = getComponentList(repository);
+
+    for (int i = 0; i < components.size(); i++) {
+      ComponentType componentType = components.get(i);
+      if (component.getOid().getId() == componentType.getId().intValue()) {
+        throw new DuplicateKeyException(
+            String.format("Duplicate component with ID=%d", component.getOid().getId()));
+      }
+    }
+    components.add(OrchestraAPItoDOM.ComponentToDOM(component));
+  }
+
+  @Override
   public void createDatatype(String reposName, String version, Datatype datatype)
       throws RepositoryStoreException {
     Objects.requireNonNull(reposName, "Repository name missing");
@@ -236,7 +261,7 @@ public class RepositoryDOMStore implements RepositoryStore {
   @Override
   public void createRepositoryFromFile(File file) throws RepositoryStoreException {
     try {
-      Objects.requireNonNull(file, "File is missing");
+      Objects.requireNonNull(file, "File missing");
       Repository repository = unMarshal(file);
       final RepositoryKey key = new RepositoryKey(repository.getName(), repository.getVersion());
       Repository exists = repositories.get(key);
@@ -306,6 +331,31 @@ public class RepositoryDOMStore implements RepositoryStore {
     }
 
     throw new ResourceNotFoundException(String.format("CodeSet with ID=%d not found", id));
+  }
+
+  @Override
+  public void deleteComponent(String reposName, String version, Integer id)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(id, "Component ID missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+
+    final Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+
+    List<ComponentType> components = getComponentList(repository);
+    for (ComponentType component : components) {
+      if (id == component.getId().intValue()) {
+        components.remove(component);
+        return;
+      }
+    }
+
+    throw new ResourceNotFoundException(String.format("Component with ID=%d not found", id));
   }
 
   @Override
@@ -483,7 +533,54 @@ public class RepositoryDOMStore implements RepositoryStore {
 
     return codeSets.stream().map(cs -> OrchestraAPItoDOM.DOMToCodeSet(cs)).filter(predicate)
         .collect(Collectors.toList());
+  }
 
+  @Override
+  public Component getComponentById(String reposName, String version, Integer id)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(id, "Component ID missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+    Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+    List<ComponentType> components = getComponentList(repository);
+
+    for (ComponentType component : components) {
+      if (id == component.getId().intValue()) {
+        return OrchestraAPItoDOM.DOMToComponent(component);
+      }
+    }
+
+    throw new ResourceNotFoundException(String.format("Component with ID=%d not found", id));
+  }
+
+  @Override
+  public List<Component> getComponents(String reposName, String version,
+      Predicate<Component> search) throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+    Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+    Predicate<Component> predicate = search != null ? search : new Predicate<Component>() {
+
+      @Override
+      public boolean test(Component t) {
+        return true;
+      }
+
+    };
+    List<ComponentType> components = getComponentList(repository);
+
+    return components.stream().map(c -> OrchestraAPItoDOM.DOMToComponent(c)).filter(predicate)
+        .collect(Collectors.toList());
   }
 
   @Override
@@ -691,6 +788,33 @@ public class RepositoryDOMStore implements RepositoryStore {
   }
 
   @Override
+  public void updateComponent(String reposName, String version, Integer id, Component component)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(id, "Component ID missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+
+    final Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+
+    List<ComponentType> components = getComponentList(repository);
+
+    for (int i = 0; i < components.size(); i++) {
+      ComponentType componentType = components.get(i);
+      if (id == componentType.getId().intValue()) {
+        components.set(i, OrchestraAPItoDOM.ComponentToDOM(component));
+        return;
+      }
+    }
+
+    throw new ResourceNotFoundException(String.format("Component with ID=%d not found", id));
+  }
+
+  @Override
   public void updateDatatype(String reposName, String version, String name, Datatype datatype)
       throws RepositoryStoreException {
     Objects.requireNonNull(reposName, "Repository name missing");
@@ -775,6 +899,15 @@ public class RepositoryDOMStore implements RepositoryStore {
       repository.setDatatypes(datatypes);
     }
     return datatypes.getDatatype();
+  }
+
+  private List<ComponentType> getComponentList(Repository repository) {
+    Components components = repository.getComponents();
+    if (components == null) {
+      components = new Components();
+      repository.setComponents(components);
+    }
+    return components.getComponentOrGroup();
   }
 
   private List<FieldType> getFieldList(Repository repository) {

@@ -19,8 +19,13 @@ import io.fixprotocol.orchestra.client.ApiException;
 import io.fixprotocol.orchestra.client.api.RepositoryApi;
 import io.fixprotocol.orchestra.client.model.Code;
 import io.fixprotocol.orchestra.client.model.CodeSet;
+import io.fixprotocol.orchestra.client.model.Component;
 import io.fixprotocol.orchestra.client.model.Datatype;
 import io.fixprotocol.orchestra.client.model.Field;
+import io.fixprotocol.orchestra.client.model.FieldRef;
+import io.fixprotocol.orchestra.client.model.Group;
+import io.fixprotocol.orchestra.client.model.GroupRef;
+import io.fixprotocol.orchestra.client.model.MessageElements;
 import io.fixprotocol.orchestra.client.model.Metadata;
 import io.fixprotocol.orchestra.client.model.ObjectId;
 import io.fixprotocol.orchestra.client.model.Repository;
@@ -134,10 +139,50 @@ public class ClientTest {
   /**
    * Test method for
    * {@link io.fixprotocol.orchestraAPI.client.Client#addComponent(java.lang.String, io.swagger.client.model.Component)}.
+   * @throws ApiException 
    */
   @Test
-  public void testAddComponentStringComponent() {
-    fail("Not yet implemented");
+  public void testAddComponentStringComponent() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Component component =  new Component();
+    component.setElementType("Component");
+    ObjectId oid = new ObjectId();
+    oid.setAbbrName("Instrmt");
+    oid.setId(1003);
+    oid.setName("Instrument");
+    component.setCategory("Common");
+    component.setOid(oid );
+    MessageElements elements = new MessageElements();
+    FieldRef fieldRef = new FieldRef();
+    fieldRef.setElementType("FieldRef");
+    ObjectId fieldOid = new ObjectId();
+    fieldOid.setName("SecurityID");
+    fieldOid.setId(48);
+    fieldRef.setOid(fieldOid );
+    elements.add(fieldRef);
+    GroupRef groupRef = new GroupRef();
+    groupRef.setElementType("GroupRef");
+    ObjectId groupOid =  new ObjectId();
+    groupOid.setId(2226);
+    groupOid.setName("SecondaryAssetGrp");
+    groupRef.setOid(groupOid );
+    component.setElements(elements);
+    client.addComponent("test1", identifier, component);
+
+    Component component2 = client.findComponentById("test1", identifier, 1003);
+    assertNotNull(component2);
+
+    client.deleteRepository("test1", identifier);
   }
 
   /**
@@ -347,10 +392,59 @@ public class ClientTest {
   /**
    * Test method for
    * {@link io.fixprotocol.orchestraAPI.client.Client#deleteComponent(java.lang.String, java.lang.Integer)}.
+   * @throws ApiException 
    */
   @Test
-  public void testDeleteComponent() {
-    fail("Not yet implemented");
+  public void testDeleteComponent() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Component component =  new Component();
+    component.setElementType("Component");
+    ObjectId oid = new ObjectId();
+    oid.setAbbrName("Instrmt");
+    oid.setId(1003);
+    oid.setName("Instrument");
+    component.setCategory("Common");
+    component.setOid(oid );
+    MessageElements elements = new MessageElements();
+    FieldRef fieldRef = new FieldRef();
+    fieldRef.setElementType("FieldRef");
+    ObjectId fieldOid = new ObjectId();
+    fieldOid.setName("SecurityID");
+    fieldOid.setId(48);
+    fieldRef.setOid(fieldOid );
+    elements.add(fieldRef);
+    GroupRef groupRef = new GroupRef();
+    groupRef.setElementType("GroupRef");
+    ObjectId groupOid =  new ObjectId();
+    groupOid.setId(2226);
+    groupOid.setName("SecondaryAssetGrp");
+    groupRef.setOid(groupOid );
+    component.setElements(elements);
+    client.addComponent("test1", identifier, component);
+
+    Component component2 = client.findComponentById("test1", identifier, 1003);
+    assertNotNull(component2);
+    
+    client.deleteComponent("test1", identifier, 1003);
+
+    try {
+      client.findComponentById("test1", identifier, 1003);
+      fail("deletion failed");
+    } catch (ApiException e) {
+      assertEquals(404, e.getCode());
+    }
+
+    client.deleteRepository("test1", identifier);
   }
 
   /**
@@ -593,16 +687,61 @@ public class ClientTest {
     assertEquals(codeSet.getOid().getId(), codeSet2.getOid().getId());
     assertEquals(codeSet.getType(), codeSet2.getType());
     client.deleteRepository("test1", identifier);
-
   }
 
   /**
    * Test method for
    * {@link io.fixprotocol.orchestraAPI.client.Client#findComponentById(java.lang.String, java.lang.Integer)}.
+   * @throws ApiException 
    */
   @Test
-  public void testFindComponentById() {
-    fail("Not yet implemented");
+  public void testFindComponentById() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Component component =  new Component();
+    component.setElementType("Component");
+    ObjectId oid = new ObjectId();
+    oid.setAbbrName("Instrmt");
+    oid.setId(1003);
+    oid.setName("Instrument");
+    component.setCategory("Common");
+    component.setOid(oid );
+    MessageElements elements = new MessageElements();
+    FieldRef fieldRef = new FieldRef();
+    fieldRef.setElementType("FieldRef");
+    ObjectId fieldOid = new ObjectId();
+    fieldOid.setName("SecurityID");
+    fieldOid.setId(48);
+    fieldRef.setOid(fieldOid );
+    elements.add(fieldRef);
+    GroupRef groupRef = new GroupRef();
+    groupRef.setElementType("GroupRef");
+    ObjectId groupOid =  new ObjectId();
+    groupOid.setId(2226);
+    groupOid.setName("SecondaryAssetGrp");
+    groupRef.setOid(groupOid );
+    component.setElements(elements);
+    client.addComponent("test1", identifier, component);
+
+    Component component2 = client.findComponentById("test1", identifier, 1003);
+    assertNotNull(component2);
+    assertEquals(1003, component2.getOid().getId().intValue());
+    assertEquals("Instrument", component2.getOid().getName());
+    MessageElements elements2 = component2.getElements();
+    assertEquals(2, elements2.size());
+    assertEquals(1, elements.stream().filter(e -> e instanceof FieldRef).count());
+    assertEquals(1, elements.stream().filter(e -> e instanceof GroupRef).count());
+
+    client.deleteRepository("test1", identifier);
   }
 
   /**
@@ -797,10 +936,63 @@ public class ClientTest {
   /**
    * Test method for
    * {@link io.fixprotocol.orchestraAPI.client.Client#searchComponents(java.lang.String, java.lang.String, java.lang.Integer, java.lang.Integer)}.
+   * @throws ApiException 
    */
+  @Ignore // Component/group polymorphism is not working to add a Group
   @Test
-  public void testSearchComponents() {
-    fail("Not yet implemented");
+  public void testSearchComponents() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Component component =  new Component();
+    component.setElementType("Component");
+    ObjectId oid = new ObjectId();
+    oid.setAbbrName("Instrmt");
+    oid.setId(1003);
+    oid.setName("Instrument");
+    component.setCategory("Common");
+    component.setOid(oid );
+    MessageElements elements = new MessageElements();
+    FieldRef fieldRef = new FieldRef();
+    fieldRef.setElementType("FieldRef");
+    ObjectId fieldOid = new ObjectId();
+    fieldOid.setName("SecurityID");
+    fieldOid.setId(48);
+    fieldRef.setOid(fieldOid );
+    elements.add(fieldRef);
+    GroupRef groupRef = new GroupRef();
+    groupRef.setElementType("GroupRef");
+    ObjectId groupRefOid =  new ObjectId();
+    groupRefOid.setId(2226);
+    groupRefOid.setName("SecondaryAssetGrp");
+    groupRef.setOid(groupRefOid );
+    component.setElements(elements);
+    client.addComponent("test1", identifier, component);
+    
+    Group group = new Group();
+    group.setElementType("Group");
+    ObjectId groupOid = new ObjectId();
+    groupOid.setId(1007);
+    groupOid.setName("LegStipulations");
+    group.setOid(groupOid);
+    group.setNumInGroupId(683);
+    group.setNumInGroupName("NoLegStipulations");
+    client.addComponent("test1", identifier, group);
+
+    List<Component> components = client.searchComponents("test1", identifier, null, null, null);
+    assertEquals(2, components.size());
+    assertEquals(1, components.stream().filter(e -> e instanceof Component).count());
+    assertEquals(1, components.stream().filter(e -> e instanceof Group).count());
+
+    client.deleteRepository("test1", identifier);
   }
 
   /**
@@ -995,10 +1187,58 @@ public class ClientTest {
   /**
    * Test method for
    * {@link io.fixprotocol.orchestraAPI.client.Client#updateComponentById(java.lang.String, java.lang.Integer, io.swagger.client.model.Component)}.
+   * @throws ApiException 
    */
   @Test
-  public void testUpdateComponentById() {
-    fail("Not yet implemented");
+  public void testUpdateComponentById() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Component component =  new Component();
+    component.setElementType("Component");
+    ObjectId oid = new ObjectId();
+    oid.setAbbrName("Instrmt");
+    oid.setId(1003);
+    oid.setName("Instrument");
+    component.setCategory("Common");
+    component.setOid(oid );
+    MessageElements elements = new MessageElements();
+    FieldRef fieldRef = new FieldRef();
+    fieldRef.setElementType("FieldRef");
+    ObjectId fieldOid = new ObjectId();
+    fieldOid.setName("SecurityID");
+    fieldOid.setId(48);
+    fieldRef.setOid(fieldOid );
+    elements.add(fieldRef);
+    GroupRef groupRef = new GroupRef();
+    groupRef.setElementType("GroupRef");
+    ObjectId groupOid =  new ObjectId();
+    groupOid.setId(2226);
+    groupOid.setName("SecondaryAssetGrp");
+    groupRef.setOid(groupOid );
+    component.setElements(elements);
+    client.addComponent("test1", identifier, component);
+
+    Component component2 = client.findComponentById("test1", identifier, 1003);
+    assertNotNull(component2);
+    component.setCategory("Uncommon");
+
+    client.updateComponentById("test1", identifier, 1003, component2);
+    
+    Component component3 = client.findComponentById("test1", identifier, 1003);
+    assertNotNull(component3);
+    assertEquals("Uncommon", component3.getCategory());
+    
+    client.deleteRepository("test1", identifier);
+
   }
 
   /**

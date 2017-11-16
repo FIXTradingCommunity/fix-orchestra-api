@@ -75,8 +75,19 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   @Override
   public Response addComponent(String reposName, String version, Component component,
       Integer toClone, SecurityContext securityContext) throws NotFoundException {
-    // do some magic!
-    return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+    try {
+      repositoryStore.createComponent(reposName, version, component,
+          toClone);
+      return Response.created(UriBuilder.fromPath("repositories").path(reposName)
+          .path(version).path("components").path(component.getOid().getId().toString()).build()).build();
+    } catch (DuplicateKeyException e) {
+      return Response.noContent().status(Status.CONFLICT).build();
+    } catch (ResourceNotFoundException e) {
+      return Response.noContent().status(Status.NOT_FOUND).build();
+    } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
+      return Response.serverError().build();
+    }
   }
 
   @Override
@@ -168,9 +179,16 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   @Override
   public Response deleteComponent(String reposName, String version, Integer id,
       SecurityContext securityContext) throws NotFoundException {
-    // do some magic!
-    return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
-  }
+    try {
+      repositoryStore.deleteComponent(reposName, version, id);
+      return Response.noContent().build();
+    } catch (ResourceNotFoundException e) {
+      return Response.noContent().status(Status.NOT_FOUND).build();
+    } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
+      return Response.serverError().build();
+    }  
+    }
 
   @Override
   public Response deleteDatatype(String reposName, String version, String name,
@@ -276,9 +294,15 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   @Override
   public Response findComponentById(String reposName, String version, Integer id,
       SecurityContext securityContext) throws NotFoundException {
-    // do some magic!
-    return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
-  }
+    try {
+      Component component = repositoryStore.getComponentById(reposName, version, id);
+      return Response.ok().entity(component).build();
+    } catch (ResourceNotFoundException e) {
+      return Response.noContent().status(Status.NOT_FOUND).build();
+    } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
+      return Response.serverError().build();
+    }  }
 
   @Override
   public Response findDatatypeByName(String reposName, String version, String name,
@@ -361,9 +385,17 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   @Override
   public Response searchComponents(String reposName, String version, String searchString,
       Integer skip, Integer limit, SecurityContext securityContext) throws NotFoundException {
-    // do some magic!
-    return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
-  }
+    try {
+      // todo: translate search string to a Predicate
+      List<Component> filtered = repositoryStore.getComponents(reposName, version, null);
+      List<Component> range =
+          filtered.subList(skip != null ? skip : 0, limit != null ? limit : filtered.size());
+      return Response.ok().entity(range).build();
+    } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
+      return Response.serverError().build();
+    }  
+    }
 
   @Override
   public Response searchDatatypes(String reposName, String version, String searchString,
@@ -443,9 +475,14 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   @Override
   public Response updateComponentById(String reposName, String version, Integer id,
       Component component, SecurityContext securityContext) throws NotFoundException {
-    // do some magic!
-    return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
-  }
+    try {
+      repositoryStore.updateComponent(reposName, version, id, component);
+      return Response.ok().build();
+    } catch (ResourceNotFoundException e) {
+      return Response.noContent().status(Status.NOT_FOUND).build();
+    } catch (RepositoryStoreException e) {
+      return Response.serverError().build();
+    }  }
 
   @Override
   public Response updateDatatypeByName(String reposName, String version, String name,
