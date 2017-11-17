@@ -127,9 +127,21 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   @Override
   public Response addMessage(String reposName, String version, Message message, Integer toClone,
       SecurityContext securityContext) throws NotFoundException {
-    // do some magic!
-    return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
-  }
+//    try {
+//      repositoryStore.createMessage(reposName, version, message,
+//          toClone);
+//      return Response.created(UriBuilder.fromPath("repositories").path(reposName)
+//          .path(version).path("messages").path(message.getOid().getId().toString()).build()).build();
+//    } catch (DuplicateKeyException e) {
+//      return Response.noContent().status(Status.CONFLICT).build();
+//    } catch (ResourceNotFoundException e) {
+//      return Response.noContent().status(Status.NOT_FOUND).build();
+//    } catch (RepositoryStoreException e) {
+//      logger.log(Level.WARNING, "Server error", e);
+//      return Response.serverError().build();
+//    }  
+    return null;
+    }
 
   @Override
   public Response addRepository(Repository repository, String nameToClone, String versionToClone,

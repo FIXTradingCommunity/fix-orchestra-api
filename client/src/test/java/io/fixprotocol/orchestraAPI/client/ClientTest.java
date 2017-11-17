@@ -184,6 +184,37 @@ public class ClientTest {
 
     client.deleteRepository("test1", identifier);
   }
+  
+  @Test
+  public void testAddGroup() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Group group = new Group();
+    group.setElementType("Group");
+    ObjectId groupOid = new ObjectId();
+    groupOid.setId(1007);
+    groupOid.setName("LegStipulations");
+    group.setOid(groupOid);
+    group.setNumInGroupId(683);
+    group.setNumInGroupName("NoLegStipulations");
+    MessageElements elements = new MessageElements();
+    group.setElements(elements);
+    client.addComponent("test1", identifier, group);
+
+    Component component2 = client.findComponentById("test1", identifier, 1007);
+    assertNotNull(component2);
+
+    client.deleteRepository("test1", identifier);
+  }
 
   /**
    * Test method for
@@ -730,6 +761,7 @@ public class ClientTest {
     groupOid.setName("SecondaryAssetGrp");
     groupRef.setOid(groupOid );
     component.setElements(elements);
+    elements.add(groupRef);
     client.addComponent("test1", identifier, component);
 
     Component component2 = client.findComponentById("test1", identifier, 1003);
@@ -938,7 +970,6 @@ public class ClientTest {
    * {@link io.fixprotocol.orchestraAPI.client.Client#searchComponents(java.lang.String, java.lang.String, java.lang.Integer, java.lang.Integer)}.
    * @throws ApiException 
    */
-  @Ignore // Component/group polymorphism is not working to add a Group
   @Test
   public void testSearchComponents() throws ApiException {
     final Repository repository = new Repository();
@@ -985,6 +1016,8 @@ public class ClientTest {
     group.setOid(groupOid);
     group.setNumInGroupId(683);
     group.setNumInGroupName("NoLegStipulations");
+    MessageElements groupElements = new MessageElements();
+    group.setElements(groupElements);
     client.addComponent("test1", identifier, group);
 
     List<Component> components = client.searchComponents("test1", identifier, null, null, null);
@@ -1229,7 +1262,7 @@ public class ClientTest {
 
     Component component2 = client.findComponentById("test1", identifier, 1003);
     assertNotNull(component2);
-    component.setCategory("Uncommon");
+    component2.setCategory("Uncommon");
 
     client.updateComponentById("test1", identifier, 1003, component2);
     

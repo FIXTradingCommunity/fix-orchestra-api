@@ -128,7 +128,7 @@ public final class OrchestraAPItoDOM {
     if (componentType instanceof GroupType) {
       GroupType groupType = (GroupType) componentType;
       Group group = new Group();
-      group.setElementType("group");
+      group.setElementType("Group");
       group.setNumInGroupId(groupType.getNumInGroupId().intValue());
       group.setNumInGroupName(groupType.getNumInGroupName());
       final String maxValue = groupType.getImplMaxOccurs();
@@ -143,7 +143,7 @@ public final class OrchestraAPItoDOM {
       return group;
     } else {
       Component component = new Component();
-      component.setElementType("component");
+      component.setElementType("Component");
       populateComponent(componentType, component);
       return component;
     }

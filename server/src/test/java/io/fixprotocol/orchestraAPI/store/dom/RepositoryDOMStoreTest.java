@@ -21,7 +21,12 @@ import org.xml.sax.SAXException;
 
 import io.fixprotocol.orchestra.model.Code;
 import io.fixprotocol.orchestra.model.CodeSet;
+import io.fixprotocol.orchestra.model.Component;
 import io.fixprotocol.orchestra.model.Field;
+import io.fixprotocol.orchestra.model.FieldRef;
+import io.fixprotocol.orchestra.model.GroupRef;
+import io.fixprotocol.orchestra.model.MessageElement;
+import io.fixprotocol.orchestra.model.MessageElements;
 import io.fixprotocol.orchestra.model.Metadata;
 import io.fixprotocol.orchestra.model.ObjectId;
 import io.fixprotocol.orchestra.model.Repository;
@@ -97,6 +102,57 @@ public class RepositoryDOMStoreTest {
     assertNotNull(code2);
     assertEquals("Buy", code2.getOid().getName());
   }
+  
+  @Test
+  public void addFindComponent()  throws RepositoryStoreException {
+    Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    store.createRepository(repository, null, null);
+    
+    Component component =  new Component();
+    component.setElementType("Component");
+    ObjectId oid = new ObjectId();
+    oid.setAbbrName("Instrmt");
+    oid.setId(1003);
+    oid.setName("Instrument");
+    component.setCategory("Common");
+    component.setOid(oid );
+    MessageElements elements = new MessageElements();
+    FieldRef fieldRef = new FieldRef();
+    fieldRef.setElementType("FieldRef");
+    ObjectId fieldOid = new ObjectId();
+    fieldOid.setName("SecurityID");
+    fieldOid.setId(48);
+    fieldRef.setOid(fieldOid );
+    elements.add(fieldRef);
+    GroupRef groupRef = new GroupRef();
+    groupRef.setElementType("GroupRef");
+    ObjectId groupOid =  new ObjectId();
+    groupOid.setId(2226);
+    groupOid.setName("SecondaryAssetGrp");
+    groupRef.setOid(groupOid );
+    component.setElements(elements);
+    elements.add(groupRef);
+    store.createComponent("test1", identifier, component, null);
+    
+    Component component2 = store.getComponentById("test1", identifier, 1003);
+    assertNotNull(component2);
+    assertEquals(1003, component2.getOid().getId().intValue());
+    assertEquals("Instrument", component2.getOid().getName());
+    MessageElements elements2 = component2.getElements();
+    assertEquals(2, elements2.size());
+    assertEquals(1, elements.stream().filter(e -> e instanceof FieldRef).count());
+    assertEquals(1, elements.stream().filter(e -> e instanceof GroupRef).count());
+    
+    store.deleteRepository(repository.getName(), identifier);
+  };
 
 
   @Test
