@@ -28,8 +28,9 @@ package io.fixprotocol.orchestra.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.fixprotocol.orchestra.model.MessageElements;
+import io.fixprotocol.orchestra.model.ObjectId;
 import io.fixprotocol.orchestra.model.Response;
+import io.fixprotocol.orchestra.model.Structure;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
@@ -38,8 +39,11 @@ import java.util.List;
 /**
  * Message
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-15T16:00:39.798Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-17T18:44:51.083Z")
 public class Message   {
+  @JsonProperty("oid")
+  private ObjectId oid = null;
+
   @JsonProperty("scenario")
   private String scenario = "base";
 
@@ -50,10 +54,28 @@ public class Message   {
   private String msgType = null;
 
   @JsonProperty("structure")
-  private MessageElements structure = null;
+  private Structure structure = null;
 
   @JsonProperty("responses")
   private List<Response> responses = new ArrayList<Response>();
+
+  public Message oid(ObjectId oid) {
+    this.oid = oid;
+    return this;
+  }
+
+   /**
+   * Get oid
+   * @return oid
+  **/
+  @ApiModelProperty(required = true, value = "")
+  public ObjectId getOid() {
+    return oid;
+  }
+
+  public void setOid(ObjectId oid) {
+    this.oid = oid;
+  }
 
   public Message scenario(String scenario) {
     this.scenario = scenario;
@@ -109,7 +131,7 @@ public class Message   {
     this.msgType = msgType;
   }
 
-  public Message structure(MessageElements structure) {
+  public Message structure(Structure structure) {
     this.structure = structure;
     return this;
   }
@@ -119,11 +141,11 @@ public class Message   {
    * @return structure
   **/
   @ApiModelProperty(value = "")
-  public MessageElements getStructure() {
+  public Structure getStructure() {
     return structure;
   }
 
-  public void setStructure(MessageElements structure) {
+  public void setStructure(Structure structure) {
     this.structure = structure;
   }
 
@@ -160,7 +182,8 @@ public class Message   {
       return false;
     }
     Message message = (Message) o;
-    return Objects.equals(this.scenario, message.scenario) &&
+    return Objects.equals(this.oid, message.oid) &&
+        Objects.equals(this.scenario, message.scenario) &&
         Objects.equals(this.flow, message.flow) &&
         Objects.equals(this.msgType, message.msgType) &&
         Objects.equals(this.structure, message.structure) &&
@@ -169,7 +192,7 @@ public class Message   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(scenario, flow, msgType, structure, responses);
+    return Objects.hash(oid, scenario, flow, msgType, structure, responses);
   }
 
 
@@ -178,6 +201,7 @@ public class Message   {
     StringBuilder sb = new StringBuilder();
     sb.append("class Message {\n");
     
+    sb.append("    oid: ").append(toIndentedString(oid)).append("\n");
     sb.append("    scenario: ").append(toIndentedString(scenario)).append("\n");
     sb.append("    flow: ").append(toIndentedString(flow)).append("\n");
     sb.append("    msgType: ").append(toIndentedString(msgType)).append("\n");

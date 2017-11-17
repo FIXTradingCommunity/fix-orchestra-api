@@ -6,35 +6,35 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.fixprotocol.orchestra.client.model.Annotation;
 import io.fixprotocol.orchestra.client.model.EntityAttributes;
 import io.fixprotocol.orchestra.client.model.MessageElement;
-import io.fixprotocol.orchestra.client.model.MessageElements;
 import io.fixprotocol.orchestra.client.model.ObjectId;
+import io.fixprotocol.orchestra.client.model.Structure;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Component
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-15T16:04:56.053Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-17T18:45:34.064Z")
 public class Component extends MessageElement {
-  @JsonProperty("elements")
-  private MessageElements elements = null;
+  @JsonProperty("structure")
+  private Structure structure = null;
 
-  public Component elements(MessageElements elements) {
-    this.elements = elements;
+  public Component structure(Structure structure) {
+    this.structure = structure;
     return this;
   }
 
    /**
-   * Get elements
-   * @return elements
+   * Get structure
+   * @return structure
   **/
-  @ApiModelProperty(value = "")
-  public MessageElements getElements() {
-    return elements;
+  @ApiModelProperty(required = true, value = "")
+  public Structure getStructure() {
+    return structure;
   }
 
-  public void setElements(MessageElements elements) {
-    this.elements = elements;
+  public void setStructure(Structure structure) {
+    this.structure = structure;
   }
 
 
@@ -47,13 +47,13 @@ public class Component extends MessageElement {
       return false;
     }
     Component component = (Component) o;
-    return Objects.equals(this.elements, component.elements) &&
+    return Objects.equals(this.structure, component.structure) &&
         super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(elements, super.hashCode());
+    return Objects.hash(structure, super.hashCode());
   }
 
 
@@ -62,7 +62,7 @@ public class Component extends MessageElement {
     StringBuilder sb = new StringBuilder();
     sb.append("class Component {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-    sb.append("    elements: ").append(toIndentedString(elements)).append("\n");
+    sb.append("    structure: ").append(toIndentedString(structure)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -97,6 +97,7 @@ Class | Method | HTTP request | Description
 *RepositoryApi* | [**addComponent**](docs/RepositoryApi.md#addComponent) | **POST** /repositories/{repos-name}/{version}/components | adds a component
 *RepositoryApi* | [**addDatatype**](docs/RepositoryApi.md#addDatatype) | **POST** /repositories/{repos-name}/{version}/datatypes | adds a datatype
 *RepositoryApi* | [**addField**](docs/RepositoryApi.md#addField) | **POST** /repositories/{repos-name}/{version}/fields | adds a field
+*RepositoryApi* | [**addGroup**](docs/RepositoryApi.md#addGroup) | **POST** /repositories/{repos-name}/{version}/groups | adds a repeating group
 *RepositoryApi* | [**addMessage**](docs/RepositoryApi.md#addMessage) | **POST** /repositories/{repos-name}/{version}/messages | adds a message scenario
 *RepositoryApi* | [**addRepository**](docs/RepositoryApi.md#addRepository) | **POST** /repositories | adds an Orchestra repository
 *RepositoryApi* | [**deleteCode**](docs/RepositoryApi.md#deleteCode) | **DELETE** /repositories/{repos-name}/{version}/codesets/{codesetid}/codes/{id} | deletes a single Code based on the ID supplied
@@ -119,6 +120,7 @@ Class | Method | HTTP request | Description
 *RepositoryApi* | [**searchComponents**](docs/RepositoryApi.md#searchComponents) | **GET** /repositories/{repos-name}/{version}/components | searches components
 *RepositoryApi* | [**searchDatatypes**](docs/RepositoryApi.md#searchDatatypes) | **GET** /repositories/{repos-name}/{version}/datatypes | searches datatypes
 *RepositoryApi* | [**searchFields**](docs/RepositoryApi.md#searchFields) | **GET** /repositories/{repos-name}/{version}/fields | searches fields
+*RepositoryApi* | [**searchGroups**](docs/RepositoryApi.md#searchGroups) | **GET** /repositories/{repos-name}/{version}/groups | searches groups
 *RepositoryApi* | [**searchMessages**](docs/RepositoryApi.md#searchMessages) | **GET** /repositories/{repos-name}/{version}/messages | searches messages
 *RepositoryApi* | [**searchRepositories**](docs/RepositoryApi.md#searchRepositories) | **GET** /repositories | searches Orchestra repositories
 *RepositoryApi* | [**updateCodeById**](docs/RepositoryApi.md#updateCodeById) | **PUT** /repositories/{repos-name}/{version}/codesets/{codesetid}/codes/{id} | Updates a single Code, if found (idempotent)
@@ -146,14 +148,15 @@ Class | Method | HTTP request | Description
  - [Field](docs/Field.md)
  - [FieldRef](docs/FieldRef.md)
  - [Group](docs/Group.md)
+ - [GroupProperties](docs/GroupProperties.md)
  - [GroupRef](docs/GroupRef.md)
  - [Message](docs/Message.md)
  - [MessageElement](docs/MessageElement.md)
- - [MessageElements](docs/MessageElements.md)
  - [Metadata](docs/Metadata.md)
  - [ObjectId](docs/ObjectId.md)
  - [Repository](docs/Repository.md)
  - [Response](docs/Response.md)
+ - [Structure](docs/Structure.md)
 
 
 ## Documentation for Authorization

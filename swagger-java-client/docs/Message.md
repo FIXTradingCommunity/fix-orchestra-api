@@ -4,10 +4,11 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**oid** | [**ObjectId**](ObjectId.md) |  | 
 **scenario** | **String** | Use case of a message type |  [optional]
 **flow** | **String** | A stream of messages between actors |  [optional]
 **msgType** | **String** |  |  [optional]
-**structure** | [**MessageElements**](MessageElements.md) |  |  [optional]
+**structure** | [**Structure**](Structure.md) |  |  [optional]
 **responses** | [**List&lt;Response&gt;**](Response.md) |  |  [optional]
 
 

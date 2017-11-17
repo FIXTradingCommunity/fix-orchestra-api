@@ -26,26 +26,41 @@
 package io.fixprotocol.orchestra.model;
 
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import io.fixprotocol.orchestra.model.Annotation;
 import io.fixprotocol.orchestra.model.EntityAttributes;
 import io.fixprotocol.orchestra.model.MessageElement;
 import io.fixprotocol.orchestra.model.ObjectId;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Field
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-15T16:00:39.798Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-17T18:44:51.083Z")
 public class Field extends MessageElement  {
+  @JsonProperty("type")
+  private String type = null;
 
-  private String datatype = null;
-
-  public String getDatatype() {
-    return datatype;
+  public Field type(String type) {
+    this.type = type;
+    return this;
   }
 
-  public void setDatatype(String datatype) {
-    this.datatype = datatype;
+   /**
+   * Get type
+   * @return type
+  **/
+  @ApiModelProperty(required = true, value = "")
+  public String getType() {
+    return type;
   }
+
+  public void setType(String type) {
+    this.type = type;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -55,12 +70,14 @@ public class Field extends MessageElement  {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    return true;
+    Field field = (Field) o;
+    return Objects.equals(this.type, field.type) &&
+        super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(super.hashCode());
+    return Objects.hash(type, super.hashCode());
   }
 
 
@@ -69,6 +86,7 @@ public class Field extends MessageElement  {
     StringBuilder sb = new StringBuilder();
     sb.append("class Field {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
+    sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("}");
     return sb.toString();
   }

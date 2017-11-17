@@ -4,7 +4,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**elements** | [**MessageElements**](MessageElements.md) |  |  [optional]
+**structure** | [**Structure**](Structure.md) |  | 
 
 
 

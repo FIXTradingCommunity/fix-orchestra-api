@@ -14,6 +14,7 @@ import io.fixprotocol.orchestra.client.model.CodeSet;
 import io.fixprotocol.orchestra.client.model.Component;
 import io.fixprotocol.orchestra.client.model.Datatype;
 import io.fixprotocol.orchestra.client.model.Field;
+import io.fixprotocol.orchestra.client.model.Group;
 import io.fixprotocol.orchestra.client.model.Message;
 import io.fixprotocol.orchestra.client.model.Repository;
 
@@ -111,6 +112,31 @@ public class Client {
     apiInstance.addField(reposName, version, field);
   }
 
+  /**
+   * Add a Group
+   * 
+   * @param reposName name of Orchestra repository
+   * @param version version of Orchestra repository
+   * @param group to add
+   * @throws ApiException if the API call fails
+   */
+  public void addGroup(String reposName, String version, Group group) throws ApiException {
+    apiInstance.addGroup(reposName, version, group, null);
+  }
+
+  /**
+   * Clones a Group
+   * 
+   * @param reposName name of Orchestra repository
+   * @param version version of Orchestra repository
+   * @param group to add
+   * @param toClone ID of group to clone
+   * @throws ApiException if the API call fails
+   */
+  public void addGroup(String reposName, String version, Group group, Integer toClone) throws ApiException {
+    apiInstance.addGroup(reposName, version, group, toClone);
+  }
+  
   /**
    * Adds a message scenario
    * 
@@ -446,6 +472,24 @@ public class Client {
   public List<Field> searchFields(String reposName, String version, String searchString,
       Integer skip, Integer limit) throws ApiException {
     return apiInstance.searchFields(reposName, version, searchString, skip, limit);
+  }
+
+  /**
+   * searches groups
+   *
+   * By passing in the appropriate options, you can search for groups
+   * 
+   * @param reposName name of Orchestra repository file (required)
+   * @param version version of Orchestra repository file (required)
+   * @param searchString pass an optional search string for looking up groups (optional)
+   * @param skip number of records to skip for pagination (optional)
+   * @param limit maximum number of records to return (optional)
+   * @return List&lt;Component&gt;
+   * @throws ApiException if the API call fails
+   */
+  public List<Group> searchGroups(String reposName, String version, String searchString,
+      Integer skip, Integer limit) throws ApiException {
+    return apiInstance.searchGroups(reposName, version, searchString, skip, limit);
   }
 
   /**

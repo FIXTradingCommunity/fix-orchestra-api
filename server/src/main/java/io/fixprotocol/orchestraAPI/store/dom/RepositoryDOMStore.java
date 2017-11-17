@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -22,12 +23,14 @@ import io.fixprotocol._2016.fixrepository.Components;
 import io.fixprotocol._2016.fixrepository.Datatypes;
 import io.fixprotocol._2016.fixrepository.FieldType;
 import io.fixprotocol._2016.fixrepository.Fields;
+import io.fixprotocol._2016.fixrepository.GroupType;
 import io.fixprotocol._2016.fixrepository.Repository;
 import io.fixprotocol.orchestra.model.Code;
 import io.fixprotocol.orchestra.model.CodeSet;
 import io.fixprotocol.orchestra.model.Component;
 import io.fixprotocol.orchestra.model.Datatype;
 import io.fixprotocol.orchestra.model.Field;
+import io.fixprotocol.orchestra.model.Group;
 import io.fixprotocol.orchestra.model.Metadata;
 import io.fixprotocol.orchestraAPI.store.DuplicateKeyException;
 import io.fixprotocol.orchestraAPI.store.RepositoryStore;
@@ -579,7 +582,8 @@ public class RepositoryDOMStore implements RepositoryStore {
     };
     List<ComponentType> components = getComponentList(repository);
 
-    return components.stream().map(c -> OrchestraAPItoDOM.DOMToComponent(c)).filter(predicate)
+    // ComponentType only, not subclass
+    return components.stream().filter(c -> c.getClass().equals(ComponentType.class) ).map(c -> OrchestraAPItoDOM.DOMToComponent(c)).filter(predicate)
         .collect(Collectors.toList());
   }
 
@@ -931,6 +935,33 @@ public class RepositoryDOMStore implements RepositoryStore {
     JAXBContext jaxbContext = JAXBContext.newInstance(Repository.class);
     Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
     return (Repository) unmarshaller.unmarshal(file);
+  }
+
+  @Override
+  public List<Group> getGroups(String reposName, String version, Predicate<Group> search)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+    Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+    Predicate<Group> predicate = search != null ? search : new Predicate<Group>() {
+
+      @Override
+      public boolean test(Group t) {
+        return true;
+      }
+
+    };
+    List<ComponentType> components = getComponentList(repository);
+
+    Function<ComponentType, GroupType> subclass = c -> (GroupType) c;
+
+    return components.stream().filter(c -> c instanceof GroupType).map(c -> subclass.apply(c))
+        .map(g -> OrchestraAPItoDOM.DOMToGroup(g)).filter(predicate).collect(Collectors.toList());
   }
 
 }

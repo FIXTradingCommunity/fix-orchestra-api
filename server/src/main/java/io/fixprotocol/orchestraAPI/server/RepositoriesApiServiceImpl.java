@@ -19,6 +19,7 @@ import io.fixprotocol.orchestra.model.CodeSet;
 import io.fixprotocol.orchestra.model.Component;
 import io.fixprotocol.orchestra.model.Datatype;
 import io.fixprotocol.orchestra.model.Field;
+import io.fixprotocol.orchestra.model.Group;
 import io.fixprotocol.orchestra.model.Message;
 import io.fixprotocol.orchestra.model.Metadata;
 import io.fixprotocol.orchestra.model.Repository;
@@ -29,8 +30,8 @@ import io.fixprotocol.orchestraAPI.store.ResourceNotFoundException;
 
 
 public class RepositoriesApiServiceImpl extends RepositoriesApiService {
-  private final RepositoryStore repositoryStore;
   private final Logger logger;
+  private final RepositoryStore repositoryStore;
 
   public RepositoriesApiServiceImpl(RepositoryStore repositoryStore) {
     this.repositoryStore = repositoryStore;
@@ -114,6 +115,24 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
       repositoryStore.createField(reposName, version, field);
       return Response.created(UriBuilder.fromPath("repositories").path(reposName).path(version)
           .path("fields").path(Integer.toString(field.getOid().getId())).build()).build();
+    } catch (DuplicateKeyException e) {
+      return Response.noContent().status(Status.CONFLICT).build();
+    } catch (ResourceNotFoundException e) {
+      return Response.noContent().status(Status.NOT_FOUND).build();
+    } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
+      return Response.serverError().build();
+    }
+  }
+
+  @Override
+  public Response addGroup(String reposName, String version, Group group, Integer toClone, SecurityContext arg4)
+      throws NotFoundException {
+    try {
+      repositoryStore.createComponent(reposName, version, group,
+          toClone);
+      return Response.created(UriBuilder.fromPath("repositories").path(reposName)
+          .path(version).path("components").path(group.getOid().getId().toString()).build()).build();
     } catch (DuplicateKeyException e) {
       return Response.noContent().status(Status.CONFLICT).build();
     } catch (ResourceNotFoundException e) {
@@ -408,6 +427,22 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
       return Response.serverError().build();
     }  
     }
+  
+  @Override
+  public Response searchGroups(String reposName, String version, String searchString, Integer skip,
+      Integer limit, SecurityContext securityContext) throws NotFoundException {
+    try {
+      // todo: translate search string to a Predicate
+      List<Group> filtered = repositoryStore.getGroups(reposName, version, null);
+      List<Group> range =
+          filtered.subList(skip != null ? skip : 0, limit != null ? limit : filtered.size());
+      return Response.ok().entity(range).build();
+    } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
+      return Response.serverError().build();
+    }
+  }
+
 
   @Override
   public Response searchDatatypes(String reposName, String version, String searchString,

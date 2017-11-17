@@ -24,11 +24,12 @@ import io.fixprotocol.orchestra.client.model.Datatype;
 import io.fixprotocol.orchestra.client.model.Field;
 import io.fixprotocol.orchestra.client.model.FieldRef;
 import io.fixprotocol.orchestra.client.model.Group;
+import io.fixprotocol.orchestra.client.model.GroupProperties;
 import io.fixprotocol.orchestra.client.model.GroupRef;
-import io.fixprotocol.orchestra.client.model.MessageElements;
 import io.fixprotocol.orchestra.client.model.Metadata;
 import io.fixprotocol.orchestra.client.model.ObjectId;
 import io.fixprotocol.orchestra.client.model.Repository;
+import io.fixprotocol.orchestra.client.model.Structure;
 
 
 /**
@@ -155,28 +156,26 @@ public class ClientTest {
     client.addRepository(repository);
 
     Component component =  new Component();
-    component.setElementType("Component");
     ObjectId oid = new ObjectId();
     oid.setAbbrName("Instrmt");
     oid.setId(1003);
     oid.setName("Instrument");
     component.setCategory("Common");
     component.setOid(oid );
-    MessageElements elements = new MessageElements();
+    Structure structure = new Structure();
+    component.setStructure(structure);
     FieldRef fieldRef = new FieldRef();
-    fieldRef.setElementType("FieldRef");
     ObjectId fieldOid = new ObjectId();
     fieldOid.setName("SecurityID");
     fieldOid.setId(48);
     fieldRef.setOid(fieldOid );
-    elements.add(fieldRef);
+    structure.addFieldsItem(fieldRef);
     GroupRef groupRef = new GroupRef();
-    groupRef.setElementType("GroupRef");
     ObjectId groupOid =  new ObjectId();
     groupOid.setId(2226);
     groupOid.setName("SecondaryAssetGrp");
     groupRef.setOid(groupOid );
-    component.setElements(elements);
+    structure.addGroupsItem(groupRef);
     client.addComponent("test1", identifier, component);
 
     Component component2 = client.findComponentById("test1", identifier, 1003);
@@ -199,16 +198,17 @@ public class ClientTest {
     client.addRepository(repository);
 
     Group group = new Group();
-    group.setElementType("Group");
     ObjectId groupOid = new ObjectId();
     groupOid.setId(1007);
     groupOid.setName("LegStipulations");
     group.setOid(groupOid);
-    group.setNumInGroupId(683);
-    group.setNumInGroupName("NoLegStipulations");
-    MessageElements elements = new MessageElements();
-    group.setElements(elements);
-    client.addComponent("test1", identifier, group);
+    GroupProperties groupProperties = new GroupProperties();
+    group.setGroupProperties(groupProperties );
+    groupProperties.setNumInGroupId(683);
+    groupProperties.setNumInGroupName("NoLegStipulations");
+    Structure structure = new Structure();
+    group.setStructure(structure );
+    client.addGroup("test1", identifier, group);
 
     Component component2 = client.findComponentById("test1", identifier, 1007);
     assertNotNull(component2);
@@ -275,7 +275,6 @@ public class ClientTest {
     client.addRepository(repository);
 
     final Field field = new Field();
-    field.setElementType("Field");
     final ObjectId oid = new ObjectId();
     oid.setName("Account");
     oid.setAbbrName("Acct");
@@ -439,28 +438,26 @@ public class ClientTest {
     client.addRepository(repository);
 
     Component component =  new Component();
-    component.setElementType("Component");
     ObjectId oid = new ObjectId();
     oid.setAbbrName("Instrmt");
     oid.setId(1003);
     oid.setName("Instrument");
     component.setCategory("Common");
     component.setOid(oid );
-    MessageElements elements = new MessageElements();
+    Structure structure = new Structure();
+    component.setStructure(structure);
     FieldRef fieldRef = new FieldRef();
-    fieldRef.setElementType("FieldRef");
     ObjectId fieldOid = new ObjectId();
     fieldOid.setName("SecurityID");
     fieldOid.setId(48);
     fieldRef.setOid(fieldOid );
-    elements.add(fieldRef);
+    structure.addFieldsItem(fieldRef);
     GroupRef groupRef = new GroupRef();
-    groupRef.setElementType("GroupRef");
     ObjectId groupOid =  new ObjectId();
     groupOid.setId(2226);
     groupOid.setName("SecondaryAssetGrp");
     groupRef.setOid(groupOid );
-    component.setElements(elements);
+    structure.addGroupsItem(groupRef);
     client.addComponent("test1", identifier, component);
 
     Component component2 = client.findComponentById("test1", identifier, 1003);
@@ -540,7 +537,6 @@ public class ClientTest {
     client.addRepository(repository);
 
     final Field field = new Field();
-    field.setElementType("Field");
     final ObjectId oid = new ObjectId();
     oid.setName("Account");
     oid.setAbbrName("Acct");
@@ -549,7 +545,6 @@ public class ClientTest {
     client.addField("test1", identifier, field);
 
     Field field2 = client.findFieldById("test1", identifier, 1);
-    field2.setElementType("Field");
     assertNotNull(field2);
 
     client.deleteField("test1", identifier, 1);
@@ -739,39 +734,35 @@ public class ClientTest {
     client.addRepository(repository);
 
     Component component =  new Component();
-    component.setElementType("Component");
     ObjectId oid = new ObjectId();
     oid.setAbbrName("Instrmt");
     oid.setId(1003);
     oid.setName("Instrument");
     component.setCategory("Common");
     component.setOid(oid );
-    MessageElements elements = new MessageElements();
+    Structure structure = new Structure();
+    component.setStructure(structure);
     FieldRef fieldRef = new FieldRef();
-    fieldRef.setElementType("FieldRef");
     ObjectId fieldOid = new ObjectId();
     fieldOid.setName("SecurityID");
     fieldOid.setId(48);
     fieldRef.setOid(fieldOid );
-    elements.add(fieldRef);
+    structure.addFieldsItem(fieldRef);
     GroupRef groupRef = new GroupRef();
-    groupRef.setElementType("GroupRef");
     ObjectId groupOid =  new ObjectId();
     groupOid.setId(2226);
     groupOid.setName("SecondaryAssetGrp");
     groupRef.setOid(groupOid );
-    component.setElements(elements);
-    elements.add(groupRef);
+    structure.addGroupsItem(groupRef);
     client.addComponent("test1", identifier, component);
 
     Component component2 = client.findComponentById("test1", identifier, 1003);
     assertNotNull(component2);
     assertEquals(1003, component2.getOid().getId().intValue());
     assertEquals("Instrument", component2.getOid().getName());
-    MessageElements elements2 = component2.getElements();
-    assertEquals(2, elements2.size());
-    assertEquals(1, elements.stream().filter(e -> e instanceof FieldRef).count());
-    assertEquals(1, elements.stream().filter(e -> e instanceof GroupRef).count());
+    Structure structure2 = component2.getStructure();
+    assertEquals(1, structure2.getFields().size());
+    assertEquals(1, structure2.getGroups().size());
 
     client.deleteRepository("test1", identifier);
   }
@@ -826,7 +817,6 @@ public class ClientTest {
     client.addRepository(repository);
 
     final Field field = new Field();
-    field.setElementType("Field");
     final ObjectId oid = new ObjectId();
     oid.setName("Account");
     oid.setAbbrName("Acct");
@@ -984,46 +974,100 @@ public class ClientTest {
     client.addRepository(repository);
 
     Component component =  new Component();
-    component.setElementType("Component");
     ObjectId oid = new ObjectId();
     oid.setAbbrName("Instrmt");
     oid.setId(1003);
     oid.setName("Instrument");
     component.setCategory("Common");
     component.setOid(oid );
-    MessageElements elements = new MessageElements();
+    Structure structure = new Structure();
+    component.setStructure(structure);
     FieldRef fieldRef = new FieldRef();
-    fieldRef.setElementType("FieldRef");
     ObjectId fieldOid = new ObjectId();
     fieldOid.setName("SecurityID");
     fieldOid.setId(48);
     fieldRef.setOid(fieldOid );
-    elements.add(fieldRef);
+    structure.addFieldsItem(fieldRef);
     GroupRef groupRef = new GroupRef();
-    groupRef.setElementType("GroupRef");
     ObjectId groupRefOid =  new ObjectId();
     groupRefOid.setId(2226);
     groupRefOid.setName("SecondaryAssetGrp");
     groupRef.setOid(groupRefOid );
-    component.setElements(elements);
+    structure.addGroupsItem(groupRef);
     client.addComponent("test1", identifier, component);
     
     Group group = new Group();
-    group.setElementType("Group");
     ObjectId groupOid = new ObjectId();
     groupOid.setId(1007);
     groupOid.setName("LegStipulations");
     group.setOid(groupOid);
-    group.setNumInGroupId(683);
-    group.setNumInGroupName("NoLegStipulations");
-    MessageElements groupElements = new MessageElements();
-    group.setElements(groupElements);
-    client.addComponent("test1", identifier, group);
+    GroupProperties groupProperties = new GroupProperties();
+    group.setGroupProperties(groupProperties );
+    groupProperties.setNumInGroupId(683);
+    groupProperties.setNumInGroupName("NoLegStipulations");
+    Structure groupStruct = new Structure();
+    group.setStructure(groupStruct);
+    client.addGroup("test1", identifier, group);
 
-    List<Component> components = client.searchComponents("test1", identifier, null, null, null);
-    assertEquals(2, components.size());
-    assertEquals(1, components.stream().filter(e -> e instanceof Component).count());
-    assertEquals(1, components.stream().filter(e -> e instanceof Group).count());
+    List<Component> componentList = client.searchComponents("test1", identifier, null, null, null);
+    assertEquals(1, componentList.size());
+
+    client.deleteRepository("test1", identifier);
+  }
+
+  @Test
+  public void testSearchGroups() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Component component =  new Component();
+    ObjectId oid = new ObjectId();
+    oid.setAbbrName("Instrmt");
+    oid.setId(1003);
+    oid.setName("Instrument");
+    component.setCategory("Common");
+    component.setOid(oid );
+    Structure structure = new Structure();
+    component.setStructure(structure );
+    FieldRef fieldRef = new FieldRef();
+    ObjectId fieldOid = new ObjectId();
+    fieldOid.setName("SecurityID");
+    fieldOid.setId(48);
+    fieldRef.setOid(fieldOid );
+    structure.addFieldsItem(fieldRef);
+    GroupRef groupRef = new GroupRef();
+    ObjectId groupRefOid =  new ObjectId();
+    groupRefOid.setId(2226);
+    groupRefOid.setName("SecondaryAssetGrp");
+    groupRef.setOid(groupRefOid );
+    structure.addGroupsItem(groupRef);
+    client.addComponent("test1", identifier, component);
+    
+    Group group = new Group();
+    ObjectId groupOid = new ObjectId();
+    groupOid.setId(1007);
+    groupOid.setName("LegStipulations");
+    group.setOid(groupOid);
+    GroupProperties groupProperties = new GroupProperties();
+    group.setGroupProperties(groupProperties );
+    groupProperties.setNumInGroupId(683);
+    groupProperties.setNumInGroupName("NoLegStipulations");
+    
+    Structure groupStruct = new Structure();
+    group.setStructure(groupStruct);
+
+    client.addGroup("test1", identifier, group);
+
+    List<Group> groupList = client.searchGroups("test1", identifier, null, null, null);
+    assertEquals(1, groupList.size());
 
     client.deleteRepository("test1", identifier);
   }
@@ -1081,7 +1125,6 @@ public class ClientTest {
     client.addRepository(repository);
 
     final Field field = new Field();
-    field.setElementType("Field");
     final ObjectId oid = new ObjectId();
     oid.setName("Account");
     oid.setAbbrName("Acct");
@@ -1090,7 +1133,6 @@ public class ClientTest {
     client.addField("test1", identifier, field);
 
     final Field field2 = new Field();
-    field2.setElementType("Field");
     final ObjectId oid2 = new ObjectId();
     oid2.setName("OrderID");
     oid2.setAbbrName("OrdID");
@@ -1236,28 +1278,26 @@ public class ClientTest {
     client.addRepository(repository);
 
     Component component =  new Component();
-    component.setElementType("Component");
     ObjectId oid = new ObjectId();
     oid.setAbbrName("Instrmt");
     oid.setId(1003);
     oid.setName("Instrument");
     component.setCategory("Common");
     component.setOid(oid );
-    MessageElements elements = new MessageElements();
+    Structure structure = new Structure();
+    component.setStructure(structure );
     FieldRef fieldRef = new FieldRef();
-    fieldRef.setElementType("FieldRef");
     ObjectId fieldOid = new ObjectId();
     fieldOid.setName("SecurityID");
     fieldOid.setId(48);
     fieldRef.setOid(fieldOid );
-    elements.add(fieldRef);
+    structure.addFieldsItem(fieldRef);
     GroupRef groupRef = new GroupRef();
-    groupRef.setElementType("GroupRef");
     ObjectId groupOid =  new ObjectId();
     groupOid.setId(2226);
     groupOid.setName("SecondaryAssetGrp");
     groupRef.setOid(groupOid );
-    component.setElements(elements);
+    structure.addGroupsItem(groupRef);
     client.addComponent("test1", identifier, component);
 
     Component component2 = client.findComponentById("test1", identifier, 1003);
@@ -1333,7 +1373,6 @@ public class ClientTest {
     client.addRepository(repository);
 
     final Field field = new Field();
-    field.setElementType("Field");
     final ObjectId oid = new ObjectId();
     oid.setName("Account");
     oid.setAbbrName("Acct");
@@ -1345,7 +1384,6 @@ public class ClientTest {
     client.updateFieldById("test1", identifier, 1, field);
 
     Field field2 = client.findFieldById("test1", identifier, 1);
-    field2.setElementType("Field");
     assertNotNull(field2);
     assertEquals("MarketData", field2.getCategory());
 

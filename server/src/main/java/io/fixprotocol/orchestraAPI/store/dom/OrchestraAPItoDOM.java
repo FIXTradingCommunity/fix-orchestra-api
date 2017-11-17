@@ -28,14 +28,14 @@ import io.fixprotocol.orchestra.model.Code;
 import io.fixprotocol.orchestra.model.CodeSet;
 import io.fixprotocol.orchestra.model.Component;
 import io.fixprotocol.orchestra.model.ComponentRef;
-import io.fixprotocol.orchestra.model.ElementRef;
 import io.fixprotocol.orchestra.model.Field;
 import io.fixprotocol.orchestra.model.FieldRef;
 import io.fixprotocol.orchestra.model.Group;
+import io.fixprotocol.orchestra.model.GroupProperties;
 import io.fixprotocol.orchestra.model.GroupRef;
-import io.fixprotocol.orchestra.model.MessageElements;
 import io.fixprotocol.orchestra.model.Metadata;
 import io.fixprotocol.orchestra.model.ObjectId;
+import io.fixprotocol.orchestra.model.Structure;
 
 
 public final class OrchestraAPItoDOM {
@@ -66,16 +66,17 @@ public final class OrchestraAPItoDOM {
   }
 
   public static ComponentType ComponentToDOM(Component component) {
-    if (component.getElementType().equals("group")) {
+    if (component instanceof Group) {
       GroupType groupType = new GroupType();
       Group group = (Group) component;
-      groupType.setNumInGroupId(BigInteger.valueOf(group.getNumInGroupId()));
-      groupType.setNumInGroupName(group.getNumInGroupName());
-      final Integer maxValue = group.getImplMaxOccurs();
+      GroupProperties groupProperties = group.getGroupProperties();
+      groupType.setNumInGroupId(BigInteger.valueOf(groupProperties.getNumInGroupId()));
+      groupType.setNumInGroupName(groupProperties.getNumInGroupName());
+      final Integer maxValue = groupProperties.getImplMaxOccurs();
       if (maxValue != null) {
         groupType.setImplMaxOccurs(maxValue.toString());
       }
-      final Integer minValue = group.getImplMinOccurs();
+      final Integer minValue = groupProperties.getImplMinOccurs();
       if (minValue != null) {
         groupType.setImplMinOccurs(BigInteger.valueOf(minValue));
       }
@@ -125,28 +126,9 @@ public final class OrchestraAPItoDOM {
   }
 
   public static Component DOMToComponent(ComponentType componentType) {
-    if (componentType instanceof GroupType) {
-      GroupType groupType = (GroupType) componentType;
-      Group group = new Group();
-      group.setElementType("Group");
-      group.setNumInGroupId(groupType.getNumInGroupId().intValue());
-      group.setNumInGroupName(groupType.getNumInGroupName());
-      final String maxValue = groupType.getImplMaxOccurs();
-      if (!maxValue.equals("unbounded")) {
-        group.setImplMaxOccurs(Integer.parseInt(maxValue));
-      }
-      final int minValue = groupType.getImplMinOccurs().intValue();
-      if (minValue > 0) {
-        group.setImplMinOccurs(minValue);
-      }
-      populateComponent(componentType, group);
-      return group;
-    } else {
-      Component component = new Component();
-      component.setElementType("Component");
-      populateComponent(componentType, component);
-      return component;
-    }
+    Component component = new Component();
+    populateComponent(componentType, component);
+    return component;
   }
 
   public static io.fixprotocol.orchestra.model.Datatype DOMToDatatype(
@@ -160,15 +142,35 @@ public final class OrchestraAPItoDOM {
 
   public static Field DOMToField(FieldType fieldType) {
     Field field = new Field();
-    field.setElementType("Field");
     ObjectId oid = new ObjectId();
     oid.setName(fieldType.getName());
     oid.setAbbrName(fieldType.getAbbrName());
     oid.setId(fieldType.getId().intValue());
     field.setOid(oid);
-    field.setDatatype(fieldType.getType());
+    field.setType(fieldType.getType());
     field.setCategory(fieldType.getBaseCategory());
     return field;
+  }
+
+  public static Group DOMToGroup(GroupType groupType) {
+    Group group = new Group();
+    GroupProperties groupProperties = new GroupProperties();
+    group.setGroupProperties(groupProperties);
+    groupProperties.setNumInGroupId(groupType.getNumInGroupId().intValue());
+    groupProperties.setNumInGroupName(groupType.getNumInGroupName());
+    final String maxValue = groupType.getImplMaxOccurs();
+    if (!"unbounded".equals(maxValue)) {
+      groupProperties.setImplMaxOccurs(Integer.parseInt(maxValue));
+    }
+    final BigInteger implMinOccurs = groupType.getImplMinOccurs();
+    if (implMinOccurs != null) {
+      final int minValue = implMinOccurs.intValue();
+      if (minValue > 0) {
+        groupProperties.setImplMinOccurs(minValue);
+      }
+    }
+    populateComponent(groupType, group);
+    return group;
   }
 
   public static Metadata DOMToMetadata(ElementOrRefinementContainer element) {
@@ -218,7 +220,7 @@ public final class OrchestraAPItoDOM {
     fieldType.setId(BigInteger.valueOf(field.getOid().getId()));
     fieldType.setName(field.getOid().getName());
     fieldType.setAbbrName(field.getOid().getAbbrName());
-    fieldType.setType(field.getDatatype());
+    fieldType.setType(field.getType());
     fieldType.setBaseCategory(field.getCategory());
     return fieldType;
   }
@@ -313,43 +315,40 @@ public final class OrchestraAPItoDOM {
     component.setOid(oid);
     component.setCategory(componentType.getCategory());
 
-    MessageElements messageElements = new MessageElements();
-    component.setElements(messageElements);
+    Structure structure = new Structure();
+    component.setStructure(structure);
     List<Object> elements = componentType.getComponentRefOrGroupRefOrFieldRef();
     for (Object element : elements) {
       if (element instanceof FieldRefType) {
         FieldRefType fieldRefType = (FieldRefType) element;
         FieldRef fieldRef = new FieldRef();
-        fieldRef.elementType("fieldRef");
         ObjectId fieldOid = new ObjectId();
         fieldOid.setAbbrName(fieldRefType.getAbbrName());
         fieldOid.setId(fieldRefType.getId().intValue());
         fieldOid.setName(fieldRefType.getName());
         fieldOid.setOid(fieldRefType.getOid());
         fieldRef.setOid(fieldOid);
-        messageElements.add(fieldRef);
+        structure.addFieldsItem(fieldRef);
       } else if (element instanceof GroupRefType) {
         GroupRefType groupRefType = (GroupRefType) element;
         GroupRef groupRef = new GroupRef();
-        groupRef.elementType("groupRef");
         ObjectId groupOid = new ObjectId();
         groupOid.setAbbrName(groupRefType.getAbbrName());
         groupOid.setId(groupRefType.getId().intValue());
         groupOid.setName(groupRefType.getName());
         groupOid.setOid(groupRefType.getOid());
         groupRef.setOid(groupOid);
-        messageElements.add(groupRef);
+        structure.addGroupsItem(groupRef);
       } else if (element instanceof ComponentRefType) {
         ComponentRefType componentRefType = (ComponentRefType) element;
         ComponentRef componentRef = new ComponentRef();
-        componentRef.elementType("componentRef");
         ObjectId componentOid = new ObjectId();
         componentOid.setAbbrName(componentRefType.getAbbrName());
         componentOid.setId(componentRefType.getId().intValue());
         componentOid.setName(componentRefType.getName());
         componentOid.setOid(componentRefType.getOid());
         componentRef.setOid(componentOid);
-        messageElements.add(componentRef);
+        structure.addComponentsItem(componentRef);
       }
     }
   }
@@ -362,35 +361,31 @@ public final class OrchestraAPItoDOM {
     componentType.setCategory(component.getCategory());
 
     List<Object> elements = componentType.getComponentRefOrGroupRefOrFieldRef();
-    MessageElements messageElements = component.getElements();
-    for (ElementRef elementRef : messageElements) {
-      if (elementRef instanceof FieldRef) {
-        FieldRef fieldRef = (FieldRef) elementRef;
-        FieldRefType fieldRefType = new FieldRefType();
-        fieldRefType.setAbbrName(fieldRef.getOid().getAbbrName());
-        fieldRefType.setId(BigInteger.valueOf(fieldRef.getOid().getId()));
-        fieldRefType.setName(fieldRef.getOid().getName());
-        fieldRefType.setOid(fieldRef.getOid().getOid());
-        elements.add(fieldRefType);
-      } else if (elementRef instanceof GroupRef) {
-        GroupRef groupRef = (GroupRef) elementRef;
-        GroupRefType groupRefType = new GroupRefType();
-        groupRefType.setAbbrName(groupRef.getOid().getAbbrName());
-        groupRefType.setId(BigInteger.valueOf(groupRef.getOid().getId()));
-        groupRefType.setName(groupRef.getOid().getName());
-        groupRefType.setOid(groupRef.getOid().getOid());
-        elements.add(groupRefType);
-      } else if (elementRef instanceof ComponentRef) {
-        ComponentRef componentRef = (ComponentRef) elementRef;
-        ComponentRefType componentRefType = new ComponentRefType();
-        componentRefType.setAbbrName(componentRef.getOid().getAbbrName());
-        componentRefType.setId(BigInteger.valueOf(componentRef.getOid().getId()));
-        componentRefType.setName(componentRef.getOid().getName());
-        componentRefType.setOid(componentRef.getOid().getOid());
-        elements.add(componentRefType);
-      }
+    Structure structure = component.getStructure();
+    for (FieldRef fieldRef : structure.getFields()) {
+      FieldRefType fieldRefType = new FieldRefType();
+      fieldRefType.setAbbrName(fieldRef.getOid().getAbbrName());
+      fieldRefType.setId(BigInteger.valueOf(fieldRef.getOid().getId()));
+      fieldRefType.setName(fieldRef.getOid().getName());
+      fieldRefType.setOid(fieldRef.getOid().getOid());
+      elements.add(fieldRefType);
     }
-
+    for (GroupRef groupRef : structure.getGroups()) {
+      GroupRefType groupRefType = new GroupRefType();
+      groupRefType.setAbbrName(groupRef.getOid().getAbbrName());
+      groupRefType.setId(BigInteger.valueOf(groupRef.getOid().getId()));
+      groupRefType.setName(groupRef.getOid().getName());
+      groupRefType.setOid(groupRef.getOid().getOid());
+      elements.add(groupRefType);
+    }
+    for (ComponentRef componentRef : structure.getComponents()) {
+      ComponentRefType componentRefType = new ComponentRefType();
+      componentRefType.setAbbrName(componentRef.getOid().getAbbrName());
+      componentRefType.setId(BigInteger.valueOf(componentRef.getOid().getId()));
+      componentRefType.setName(componentRef.getOid().getName());
+      componentRefType.setOid(componentRef.getOid().getOid());
+      elements.add(componentRefType);
+    }
   }
 
 }

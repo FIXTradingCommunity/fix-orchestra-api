@@ -14,6 +14,7 @@ import io.fixprotocol.orchestra.client.model.Datatype;
 import io.fixprotocol.orchestra.client.model.ErrorModel;
 import io.fixprotocol.orchestra.client.model.Field;
 import java.io.File;
+import io.fixprotocol.orchestra.client.model.Group;
 import io.fixprotocol.orchestra.client.model.Message;
 import io.fixprotocol.orchestra.client.model.Repository;
 
@@ -22,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-15T16:04:56.053Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-17T18:45:34.064Z")
 public class RepositoryApi {
   private ApiClient apiClient;
 
@@ -184,7 +185,7 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json"
+      
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
@@ -283,6 +284,57 @@ public class RepositoryApi {
     
     final String[] localVarAccepts = {
       "application/json"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+
+    apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+  }
+  /**
+   * adds a repeating group
+   * Adds a group
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param group Group to add (optional)
+   * @param toClone ID of group to clone (optional)
+   * @throws ApiException if fails to make API call
+   */
+  public void addGroup(String reposName, String version, Group group, Integer toClone) throws ApiException {
+    Object localVarPostBody = group;
+    
+    // verify the required parameter 'reposName' is set
+    if (reposName == null) {
+      throw new ApiException(400, "Missing the required parameter 'reposName' when calling addGroup");
+    }
+    
+    // verify the required parameter 'version' is set
+    if (version == null) {
+      throw new ApiException(400, "Missing the required parameter 'version' when calling addGroup");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/repositories/{repos-name}/{version}/groups".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
+      .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    localVarQueryParams.addAll(apiClient.parameterToPairs("", "toClone", toClone));
+
+    
+    
+    final String[] localVarAccepts = {
+      
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
@@ -1500,6 +1552,61 @@ public class RepositoryApi {
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
   /**
+   * searches groups
+   * By passing in the appropriate options, you can search for groups 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param searchString pass an optional search string for looking up groups (optional)
+   * @param skip number of records to skip for pagination (optional)
+   * @param limit maximum number of records to return (optional)
+   * @return List<Group>
+   * @throws ApiException if fails to make API call
+   */
+  public List<Group> searchGroups(String reposName, String version, String searchString, Integer skip, Integer limit) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'reposName' is set
+    if (reposName == null) {
+      throw new ApiException(400, "Missing the required parameter 'reposName' when calling searchGroups");
+    }
+    
+    // verify the required parameter 'version' is set
+    if (version == null) {
+      throw new ApiException(400, "Missing the required parameter 'version' when calling searchGroups");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/repositories/{repos-name}/{version}/groups".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
+      .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    localVarQueryParams.addAll(apiClient.parameterToPairs("", "searchString", searchString));
+    localVarQueryParams.addAll(apiClient.parameterToPairs("", "skip", skip));
+    localVarQueryParams.addAll(apiClient.parameterToPairs("", "limit", limit));
+
+    
+    
+    final String[] localVarAccepts = {
+      "application/json"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+    GenericType<List<Group>> localVarReturnType = new GenericType<List<Group>>() {};
+    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+  /**
    * searches messages
    * By passing in the appropriate options, you can search for messages 
    * @param reposName name of Orchestra repository (required)
@@ -1557,7 +1664,7 @@ public class RepositoryApi {
   /**
    * searches Orchestra repositories
    * By passing in the appropriate options, you can search for Orchestra repositories
-   * @param searchString pass an optional search string for looking up components (optional)
+   * @param searchString pass an optional search string for looking up repositories (optional)
    * @param skip number of records to skip for pagination (optional)
    * @param limit maximum number of records to return (optional)
    * @return List<Repository>

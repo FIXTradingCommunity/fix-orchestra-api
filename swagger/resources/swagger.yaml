@@ -29,7 +29,7 @@ paths:
       parameters:
       - name: "searchString"
         in: "query"
-        description: "pass an optional search string for looking up components"
+        description: "pass an optional search string for looking up repositories"
         required: false
         type: "string"
       - name: "skip"
@@ -662,8 +662,6 @@ paths:
       operationId: "addComponent"
       consumes:
       - "application/json"
-      produces:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -684,6 +682,98 @@ paths:
       - name: "toClone"
         in: "query"
         description: "ID of component to clone"
+        required: false
+        type: "integer"
+        format: "int32"
+      responses:
+        201:
+          description: "item created"
+          headers:
+            Location:
+              type: "string"
+              format: "uri"
+              description: "URL of created resource"
+        400:
+          description: "invalid input, object invalid"
+        409:
+          description: "an existing item already exists"
+  /repositories/{repos-name}/{version}/groups:
+    get:
+      tags:
+      - "repository"
+      summary: "searches groups"
+      description: "By passing in the appropriate options, you can search for groups "
+      operationId: "searchGroups"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "repos-name"
+        in: "path"
+        description: "name of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "searchString"
+        in: "query"
+        description: "pass an optional search string for looking up groups"
+        required: false
+        type: "string"
+      - name: "skip"
+        in: "query"
+        description: "number of records to skip for pagination"
+        required: false
+        type: "integer"
+        minimum: 0
+        format: "int32"
+      - name: "limit"
+        in: "query"
+        description: "maximum number of records to return"
+        required: false
+        type: "integer"
+        maximum: 50.0
+        minimum: 0
+        format: "int32"
+      responses:
+        200:
+          description: "search results matching criteria"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Group"
+        400:
+          description: "bad input parameter"
+    post:
+      tags:
+      - "repository"
+      summary: "adds a repeating group"
+      description: "Adds a group"
+      operationId: "addGroup"
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "repos-name"
+        in: "path"
+        description: "name of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version of Orchestra repository"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "group"
+        description: "Group to add"
+        required: false
+        schema:
+          $ref: "#/definitions/Group"
+      - name: "toClone"
+        in: "query"
+        description: "ID of group to clone"
         required: false
         type: "integer"
         format: "int32"
@@ -1430,9 +1520,11 @@ definitions:
     allOf:
     - $ref: "#/definitions/MessageElement"
     - type: "object"
+      required:
+      - "structure"
       properties:
-        elements:
-          $ref: "#/definitions/MessageElements"
+        structure:
+          $ref: "#/definitions/Structure"
   ComponentRef:
     allOf:
     - $ref: "#/definitions/ElementRef"
@@ -1517,7 +1609,12 @@ definitions:
   Field:
     allOf:
     - $ref: "#/definitions/MessageElement"
-    - {}
+    - type: "object"
+      required:
+      - "type"
+      properties:
+        type:
+          type: "string"
   FieldRef:
     allOf:
     - $ref: "#/definitions/ElementRef"
@@ -1525,12 +1622,8 @@ definitions:
   ElementRef:
     type: "object"
     required:
-    - "elementType"
     - "oid"
-    discriminator: "elementType"
     properties:
-      elementType:
-        type: "string"
       oid:
         $ref: "#/definitions/ObjectId"
       annotation:
@@ -1544,24 +1637,35 @@ definitions:
     - $ref: "#/definitions/Component"
     - type: "object"
       required:
-      - "numInGroupId"
-      - "numInGroupName"
+      - "groupProperties"
       properties:
-        numInGroupId:
-          type: "integer"
-        numInGroupName:
-          type: "string"
-        implMinOccurs:
-          type: "integer"
-        implMaxOccurs:
-          type: "integer"
+        groupProperties:
+          $ref: "#/definitions/GroupProperties"
+  GroupProperties:
+    type: "object"
+    required:
+    - "numInGroupId"
+    - "numInGroupName"
+    properties:
+      numInGroupId:
+        type: "integer"
+      numInGroupName:
+        type: "string"
+      implMinOccurs:
+        type: "integer"
+      implMaxOccurs:
+        type: "integer"
   GroupRef:
     allOf:
     - $ref: "#/definitions/ElementRef"
     - {}
   Message:
     type: "object"
+    required:
+    - "oid"
     properties:
+      oid:
+        $ref: "#/definitions/ObjectId"
       scenario:
         type: "string"
         description: "Use case of a message type"
@@ -1575,7 +1679,7 @@ definitions:
         type: "string"
         maxLength: 2
       structure:
-        $ref: "#/definitions/MessageElements"
+        $ref: "#/definitions/Structure"
       responses:
         type: "array"
         items:
@@ -1583,12 +1687,8 @@ definitions:
   MessageElement:
     type: "object"
     required:
-    - "elementType"
     - "oid"
-    discriminator: "elementType"
     properties:
-      elementType:
-        type: "string"
       oid:
         $ref: "#/definitions/ObjectId"
       annotation:
@@ -1597,10 +1697,6 @@ definitions:
         $ref: "#/definitions/EntityAttributes"
       category:
         type: "string"
-  MessageElements:
-    type: "array"
-    items:
-      $ref: "#/definitions/ElementRef"
   Metadata:
     type: "object"
     required:
@@ -1700,3 +1796,17 @@ definitions:
         $ref: "#/definitions/Metadata"
   Response:
     type: "object"
+  Structure:
+    properties:
+      fields:
+        type: "array"
+        items:
+          $ref: "#/definitions/FieldRef"
+      components:
+        type: "array"
+        items:
+          $ref: "#/definitions/ComponentRef"
+      groups:
+        type: "array"
+        items:
+          $ref: "#/definitions/GroupRef"

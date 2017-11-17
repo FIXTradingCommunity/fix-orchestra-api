@@ -22,6 +22,7 @@ import io.fixprotocol.orchestra.model.CodeSet;
 import io.fixprotocol.orchestra.model.Component;
 import io.fixprotocol.orchestra.model.Datatype;
 import io.fixprotocol.orchestra.model.Field;
+import io.fixprotocol.orchestra.model.Group;
 import io.fixprotocol.orchestra.model.Message;
 import io.fixprotocol.orchestra.model.Repository;
 import io.swagger.annotations.ApiParam;
@@ -30,7 +31,7 @@ import io.swagger.annotations.ApiParam;
 
 
 @io.swagger.annotations.Api(description = "the repositories API")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-15T16:00:39.798Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-17T18:44:51.083Z")
 public class RepositoriesApi  {
    private final RepositoriesApiService delegate = RepositoriesApiServiceFactory.getRepositoriesApi();
 
@@ -74,7 +75,7 @@ public class RepositoriesApi  {
     @POST
     @Path("/{repos-name}/{version}/components")
     @Consumes({ "application/json" })
-    @Produces({ "application/json" })
+    
     @io.swagger.annotations.ApiOperation(value = "adds a component", notes = "Adds a component", response = void.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 201, message = "item created", response = void.class),
@@ -125,6 +126,25 @@ public class RepositoriesApi  {
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.addField(reposName,version,field,securityContext);
+    }
+    @POST
+    @Path("/{repos-name}/{version}/groups")
+    @Consumes({ "application/json" })
+    
+    @io.swagger.annotations.ApiOperation(value = "adds a repeating group", notes = "Adds a group", response = void.class, tags={ "repository", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 201, message = "item created", response = void.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 400, message = "invalid input, object invalid", response = void.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 409, message = "an existing item already exists", response = void.class) })
+    public Response addGroup(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
+,@ApiParam(value = "Group to add" ) Group group
+,@ApiParam(value = "ID of group to clone") @QueryParam("toClone") Integer toClone
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.addGroup(reposName,version,group,toClone,securityContext);
     }
     @POST
     @Path("/{repos-name}/{version}/messages")
@@ -494,6 +514,24 @@ public class RepositoriesApi  {
         return delegate.searchFields(reposName,version,searchString,skip,limit,securityContext);
     }
     @GET
+    @Path("/{repos-name}/{version}/groups")
+    
+    @Produces({ "application/json" })
+    @io.swagger.annotations.ApiOperation(value = "searches groups", notes = "By passing in the appropriate options, you can search for groups ", response = Group.class, responseContainer = "List", tags={ "repository", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "search results matching criteria", response = Group.class, responseContainer = "List"),
+        
+        @io.swagger.annotations.ApiResponse(code = 400, message = "bad input parameter", response = Group.class, responseContainer = "List") })
+    public Response searchGroups(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
+,@ApiParam(value = "pass an optional search string for looking up groups") @QueryParam("searchString") String searchString
+,@ApiParam(value = "number of records to skip for pagination") @QueryParam("skip") Integer skip
+,@ApiParam(value = "maximum number of records to return") @QueryParam("limit") Integer limit
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.searchGroups(reposName,version,searchString,skip,limit,securityContext);
+    }
+    @GET
     @Path("/{repos-name}/{version}/messages")
     
     @Produces({ "application/json" })
@@ -520,7 +558,7 @@ public class RepositoriesApi  {
         @io.swagger.annotations.ApiResponse(code = 200, message = "search results matching criteria", response = Repository.class, responseContainer = "List"),
         
         @io.swagger.annotations.ApiResponse(code = 400, message = "bad input parameter", response = Repository.class, responseContainer = "List") })
-    public Response searchRepositories(@ApiParam(value = "pass an optional search string for looking up components") @QueryParam("searchString") String searchString
+    public Response searchRepositories(@ApiParam(value = "pass an optional search string for looking up repositories") @QueryParam("searchString") String searchString
 ,@ApiParam(value = "number of records to skip for pagination") @QueryParam("skip") Integer skip
 ,@ApiParam(value = "maximum number of records to return") @QueryParam("limit") Integer limit
 ,@Context SecurityContext securityContext)

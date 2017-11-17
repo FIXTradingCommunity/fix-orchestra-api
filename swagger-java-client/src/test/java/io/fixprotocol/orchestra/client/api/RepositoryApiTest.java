@@ -8,6 +8,7 @@ import io.fixprotocol.orchestra.client.model.Datatype;
 import io.fixprotocol.orchestra.client.model.ErrorModel;
 import io.fixprotocol.orchestra.client.model.Field;
 import java.io.File;
+import io.fixprotocol.orchestra.client.model.Group;
 import io.fixprotocol.orchestra.client.model.Message;
 import io.fixprotocol.orchestra.client.model.Repository;
 import org.junit.Test;
@@ -113,6 +114,25 @@ public class RepositoryApiTest {
         String version = null;
         Field field = null;
         // api.addField(reposName, version, field);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * adds a repeating group
+     *
+     * Adds a group
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void addGroupTest() throws ApiException {
+        String reposName = null;
+        String version = null;
+        Group group = null;
+        Integer toClone = null;
+        // api.addGroup(reposName, version, group, toClone);
 
         // TODO: test validations
     }
@@ -520,6 +540,26 @@ public class RepositoryApiTest {
         Integer skip = null;
         Integer limit = null;
         // List<Field> response = api.searchFields(reposName, version, searchString, skip, limit);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * searches groups
+     *
+     * By passing in the appropriate options, you can search for groups 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void searchGroupsTest() throws ApiException {
+        String reposName = null;
+        String version = null;
+        String searchString = null;
+        Integer skip = null;
+        Integer limit = null;
+        // List<Group> response = api.searchGroups(reposName, version, searchString, skip, limit);
 
         // TODO: test validations
     }

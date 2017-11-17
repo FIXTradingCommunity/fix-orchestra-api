@@ -9,6 +9,7 @@ import io.fixprotocol.orchestra.model.CodeSet;
 import io.fixprotocol.orchestra.model.Component;
 import io.fixprotocol.orchestra.model.Datatype;
 import io.fixprotocol.orchestra.model.Field;
+import io.fixprotocol.orchestra.model.Group;
 import io.fixprotocol.orchestra.model.Metadata;
 import io.fixprotocol.orchestra.model.Repository;
 
@@ -300,6 +301,19 @@ public interface RepositoryStore {
       throws RepositoryStoreException;
 
   /**
+   * Retrieves all groups in a repository
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param predicate filter for groups to return
+   * @return a list of groups
+   * @throws ResourceNotFoundException if the repository does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  List<Group> getGroups(String reposName, String version, Predicate<Group> predicate)
+      throws RepositoryStoreException;
+
+  /**
    * Retrieves the metadata of all repositories
    * 
    * @param search filter for selection of repositories by their Metadata
@@ -408,5 +422,6 @@ public interface RepositoryStore {
    */
   void updateRepositoryMetadata(String reposName, String version, Repository repository)
       throws RepositoryStoreException;
+
 
 }

@@ -6,98 +6,36 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.fixprotocol.orchestra.client.model.Annotation;
 import io.fixprotocol.orchestra.client.model.Component;
 import io.fixprotocol.orchestra.client.model.EntityAttributes;
-import io.fixprotocol.orchestra.client.model.MessageElements;
+import io.fixprotocol.orchestra.client.model.GroupProperties;
 import io.fixprotocol.orchestra.client.model.ObjectId;
+import io.fixprotocol.orchestra.client.model.Structure;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Group
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-15T16:04:56.053Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-17T18:45:34.064Z")
 public class Group extends Component {
-  @JsonProperty("numInGroupId")
-  private Integer numInGroupId = null;
+  @JsonProperty("groupProperties")
+  private GroupProperties groupProperties = null;
 
-  @JsonProperty("numInGroupName")
-  private String numInGroupName = null;
-
-  @JsonProperty("implMinOccurs")
-  private Integer implMinOccurs = null;
-
-  @JsonProperty("implMaxOccurs")
-  private Integer implMaxOccurs = null;
-
-  public Group numInGroupId(Integer numInGroupId) {
-    this.numInGroupId = numInGroupId;
+  public Group groupProperties(GroupProperties groupProperties) {
+    this.groupProperties = groupProperties;
     return this;
   }
 
    /**
-   * Get numInGroupId
-   * @return numInGroupId
+   * Get groupProperties
+   * @return groupProperties
   **/
   @ApiModelProperty(required = true, value = "")
-  public Integer getNumInGroupId() {
-    return numInGroupId;
+  public GroupProperties getGroupProperties() {
+    return groupProperties;
   }
 
-  public void setNumInGroupId(Integer numInGroupId) {
-    this.numInGroupId = numInGroupId;
-  }
-
-  public Group numInGroupName(String numInGroupName) {
-    this.numInGroupName = numInGroupName;
-    return this;
-  }
-
-   /**
-   * Get numInGroupName
-   * @return numInGroupName
-  **/
-  @ApiModelProperty(required = true, value = "")
-  public String getNumInGroupName() {
-    return numInGroupName;
-  }
-
-  public void setNumInGroupName(String numInGroupName) {
-    this.numInGroupName = numInGroupName;
-  }
-
-  public Group implMinOccurs(Integer implMinOccurs) {
-    this.implMinOccurs = implMinOccurs;
-    return this;
-  }
-
-   /**
-   * Get implMinOccurs
-   * @return implMinOccurs
-  **/
-  @ApiModelProperty(value = "")
-  public Integer getImplMinOccurs() {
-    return implMinOccurs;
-  }
-
-  public void setImplMinOccurs(Integer implMinOccurs) {
-    this.implMinOccurs = implMinOccurs;
-  }
-
-  public Group implMaxOccurs(Integer implMaxOccurs) {
-    this.implMaxOccurs = implMaxOccurs;
-    return this;
-  }
-
-   /**
-   * Get implMaxOccurs
-   * @return implMaxOccurs
-  **/
-  @ApiModelProperty(value = "")
-  public Integer getImplMaxOccurs() {
-    return implMaxOccurs;
-  }
-
-  public void setImplMaxOccurs(Integer implMaxOccurs) {
-    this.implMaxOccurs = implMaxOccurs;
+  public void setGroupProperties(GroupProperties groupProperties) {
+    this.groupProperties = groupProperties;
   }
 
 
@@ -110,16 +48,13 @@ public class Group extends Component {
       return false;
     }
     Group group = (Group) o;
-    return Objects.equals(this.numInGroupId, group.numInGroupId) &&
-        Objects.equals(this.numInGroupName, group.numInGroupName) &&
-        Objects.equals(this.implMinOccurs, group.implMinOccurs) &&
-        Objects.equals(this.implMaxOccurs, group.implMaxOccurs) &&
+    return Objects.equals(this.groupProperties, group.groupProperties) &&
         super.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(numInGroupId, numInGroupName, implMinOccurs, implMaxOccurs, super.hashCode());
+    return Objects.hash(groupProperties, super.hashCode());
   }
 
 
@@ -128,10 +63,7 @@ public class Group extends Component {
     StringBuilder sb = new StringBuilder();
     sb.append("class Group {\n");
     sb.append("    ").append(toIndentedString(super.toString())).append("\n");
-    sb.append("    numInGroupId: ").append(toIndentedString(numInGroupId)).append("\n");
-    sb.append("    numInGroupName: ").append(toIndentedString(numInGroupName)).append("\n");
-    sb.append("    implMinOccurs: ").append(toIndentedString(implMinOccurs)).append("\n");
-    sb.append("    implMaxOccurs: ").append(toIndentedString(implMaxOccurs)).append("\n");
+    sb.append("    groupProperties: ").append(toIndentedString(groupProperties)).append("\n");
     sb.append("}");
     return sb.toString();
   }

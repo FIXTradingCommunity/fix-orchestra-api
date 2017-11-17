@@ -37,11 +37,8 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * MessageElement
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-15T16:00:39.798Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-17T18:44:51.083Z")
 public class MessageElement   {
-  @JsonProperty("elementType")
-  private String elementType = null;
-
   @JsonProperty("oid")
   private ObjectId oid = null;
 
@@ -53,24 +50,6 @@ public class MessageElement   {
 
   @JsonProperty("category")
   private String category = null;
-
-  public MessageElement elementType(String elementType) {
-    this.elementType = elementType;
-    return this;
-  }
-
-   /**
-   * Get elementType
-   * @return elementType
-  **/
-  @ApiModelProperty(required = true, value = "")
-  public String getElementType() {
-    return elementType;
-  }
-
-  public void setElementType(String elementType) {
-    this.elementType = elementType;
-  }
 
   public MessageElement oid(ObjectId oid) {
     this.oid = oid;
@@ -154,8 +133,7 @@ public class MessageElement   {
       return false;
     }
     MessageElement messageElement = (MessageElement) o;
-    return Objects.equals(this.elementType, messageElement.elementType) &&
-        Objects.equals(this.oid, messageElement.oid) &&
+    return Objects.equals(this.oid, messageElement.oid) &&
         Objects.equals(this.annotation, messageElement.annotation) &&
         Objects.equals(this.entityAttributes, messageElement.entityAttributes) &&
         Objects.equals(this.category, messageElement.category);
@@ -163,7 +141,7 @@ public class MessageElement   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(elementType, oid, annotation, entityAttributes, category);
+    return Objects.hash(oid, annotation, entityAttributes, category);
   }
 
 
@@ -172,7 +150,6 @@ public class MessageElement   {
     StringBuilder sb = new StringBuilder();
     sb.append("class MessageElement {\n");
     
-    sb.append("    elementType: ").append(toIndentedString(elementType)).append("\n");
     sb.append("    oid: ").append(toIndentedString(oid)).append("\n");
     sb.append("    annotation: ").append(toIndentedString(annotation)).append("\n");
     sb.append("    entityAttributes: ").append(toIndentedString(entityAttributes)).append("\n");

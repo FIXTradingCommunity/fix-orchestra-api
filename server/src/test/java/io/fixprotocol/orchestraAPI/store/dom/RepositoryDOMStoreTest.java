@@ -25,11 +25,10 @@ import io.fixprotocol.orchestra.model.Component;
 import io.fixprotocol.orchestra.model.Field;
 import io.fixprotocol.orchestra.model.FieldRef;
 import io.fixprotocol.orchestra.model.GroupRef;
-import io.fixprotocol.orchestra.model.MessageElement;
-import io.fixprotocol.orchestra.model.MessageElements;
 import io.fixprotocol.orchestra.model.Metadata;
 import io.fixprotocol.orchestra.model.ObjectId;
 import io.fixprotocol.orchestra.model.Repository;
+import io.fixprotocol.orchestra.model.Structure;
 import io.fixprotocol.orchestraAPI.store.DuplicateKeyException;
 import io.fixprotocol.orchestraAPI.store.RepositoryStoreException;
 import io.fixprotocol.orchestraAPI.store.ResourceNotFoundException;
@@ -117,39 +116,36 @@ public class RepositoryDOMStoreTest {
     store.createRepository(repository, null, null);
     
     Component component =  new Component();
-    component.setElementType("Component");
     ObjectId oid = new ObjectId();
     oid.setAbbrName("Instrmt");
     oid.setId(1003);
     oid.setName("Instrument");
     component.setCategory("Common");
     component.setOid(oid );
-    MessageElements elements = new MessageElements();
+    Structure structure = new Structure();
+    component.structure(structure );
     FieldRef fieldRef = new FieldRef();
-    fieldRef.setElementType("FieldRef");
     ObjectId fieldOid = new ObjectId();
     fieldOid.setName("SecurityID");
     fieldOid.setId(48);
     fieldRef.setOid(fieldOid );
-    elements.add(fieldRef);
+    structure.addFieldsItem(fieldRef);
     GroupRef groupRef = new GroupRef();
-    groupRef.setElementType("GroupRef");
     ObjectId groupOid =  new ObjectId();
     groupOid.setId(2226);
     groupOid.setName("SecondaryAssetGrp");
     groupRef.setOid(groupOid );
-    component.setElements(elements);
-    elements.add(groupRef);
+    structure.addGroupsItem(groupRef);
     store.createComponent("test1", identifier, component, null);
     
     Component component2 = store.getComponentById("test1", identifier, 1003);
     assertNotNull(component2);
     assertEquals(1003, component2.getOid().getId().intValue());
     assertEquals("Instrument", component2.getOid().getName());
-    MessageElements elements2 = component2.getElements();
-    assertEquals(2, elements2.size());
-    assertEquals(1, elements.stream().filter(e -> e instanceof FieldRef).count());
-    assertEquals(1, elements.stream().filter(e -> e instanceof GroupRef).count());
+    Structure structure2 = component2.getStructure();
+    assertEquals(1, structure2.getFields().size());
+    assertEquals(1, structure2.getGroups().size());
+    assertEquals(0, structure2.getComponents().size());
     
     store.deleteRepository(repository.getName(), identifier);
   };
@@ -179,13 +175,13 @@ public class RepositoryDOMStoreTest {
     Field field2 = store.getFieldById("test1", identifier, 1);
     assertEquals("Account", field2.getOid().getName());
 
-    field.setDatatype("UTCDateOnly");
+    field.setType("UTCDateOnly");
     field.setCategory("MarketData");
     store.updateField("test1", identifier, 1, field);
 
     field2 = store.getFieldById("test1", identifier, 1);
     assertEquals("Account", field2.getOid().getName());
-    assertEquals("UTCDateOnly", field2.getDatatype());
+    assertEquals("UTCDateOnly", field2.getType());
     assertEquals("MarketData", field2.getCategory());
 
     store.deleteField("test1", identifier, 1);
@@ -318,7 +314,7 @@ public class RepositoryDOMStoreTest {
     Field field2 = store.getFieldById("test1", identifier, 1);
     assertEquals("Account", field2.getOid().getName());
 
-    field.setDatatype("UTCDateOnly");
+    field.setType("UTCDateOnly");
     field.setCategory("MarketData");
     store.updateField("test1", identifier, 1, field);
 

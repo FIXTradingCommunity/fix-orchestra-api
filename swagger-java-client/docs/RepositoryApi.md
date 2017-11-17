@@ -9,6 +9,7 @@ Method | HTTP request | Description
 [**addComponent**](RepositoryApi.md#addComponent) | **POST** /repositories/{repos-name}/{version}/components | adds a component
 [**addDatatype**](RepositoryApi.md#addDatatype) | **POST** /repositories/{repos-name}/{version}/datatypes | adds a datatype
 [**addField**](RepositoryApi.md#addField) | **POST** /repositories/{repos-name}/{version}/fields | adds a field
+[**addGroup**](RepositoryApi.md#addGroup) | **POST** /repositories/{repos-name}/{version}/groups | adds a repeating group
 [**addMessage**](RepositoryApi.md#addMessage) | **POST** /repositories/{repos-name}/{version}/messages | adds a message scenario
 [**addRepository**](RepositoryApi.md#addRepository) | **POST** /repositories | adds an Orchestra repository
 [**deleteCode**](RepositoryApi.md#deleteCode) | **DELETE** /repositories/{repos-name}/{version}/codesets/{codesetid}/codes/{id} | deletes a single Code based on the ID supplied
@@ -31,6 +32,7 @@ Method | HTTP request | Description
 [**searchComponents**](RepositoryApi.md#searchComponents) | **GET** /repositories/{repos-name}/{version}/components | searches components
 [**searchDatatypes**](RepositoryApi.md#searchDatatypes) | **GET** /repositories/{repos-name}/{version}/datatypes | searches datatypes
 [**searchFields**](RepositoryApi.md#searchFields) | **GET** /repositories/{repos-name}/{version}/fields | searches fields
+[**searchGroups**](RepositoryApi.md#searchGroups) | **GET** /repositories/{repos-name}/{version}/groups | searches groups
 [**searchMessages**](RepositoryApi.md#searchMessages) | **GET** /repositories/{repos-name}/{version}/messages | searches messages
 [**searchRepositories**](RepositoryApi.md#searchRepositories) | **GET** /repositories | searches Orchestra repositories
 [**updateCodeById**](RepositoryApi.md#updateCodeById) | **PUT** /repositories/{repos-name}/{version}/codesets/{codesetid}/codes/{id} | Updates a single Code, if found (idempotent)
@@ -188,7 +190,7 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: Not defined
 
 <a name="addDatatype"></a>
 # **addDatatype**
@@ -285,6 +287,56 @@ No authorization required
 
  - **Content-Type**: application/json
  - **Accept**: application/json
+
+<a name="addGroup"></a>
+# **addGroup**
+> addGroup(reposName, version, group, toClone)
+
+adds a repeating group
+
+Adds a group
+
+### Example
+```java
+// Import classes:
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+
+
+RepositoryApi apiInstance = new RepositoryApi();
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
+Group group = new Group(); // Group | Group to add
+Integer toClone = 56; // Integer | ID of group to clone
+try {
+    apiInstance.addGroup(reposName, version, group, toClone);
+} catch (ApiException e) {
+    System.err.println("Exception when calling RepositoryApi#addGroup");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
+ **group** | [**Group**](Group.md)| Group to add | [optional]
+ **toClone** | **Integer**| ID of group to clone | [optional]
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: Not defined
 
 <a name="addMessage"></a>
 # **addMessage**
@@ -1347,6 +1399,59 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+<a name="searchGroups"></a>
+# **searchGroups**
+> List&lt;Group&gt; searchGroups(reposName, version, searchString, skip, limit)
+
+searches groups
+
+By passing in the appropriate options, you can search for groups 
+
+### Example
+```java
+// Import classes:
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+
+
+RepositoryApi apiInstance = new RepositoryApi();
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
+String searchString = "searchString_example"; // String | pass an optional search string for looking up groups
+Integer skip = 56; // Integer | number of records to skip for pagination
+Integer limit = 56; // Integer | maximum number of records to return
+try {
+    List<Group> result = apiInstance.searchGroups(reposName, version, searchString, skip, limit);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling RepositoryApi#searchGroups");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
+ **searchString** | **String**| pass an optional search string for looking up groups | [optional]
+ **skip** | **Integer**| number of records to skip for pagination | [optional]
+ **limit** | **Integer**| maximum number of records to return | [optional]
+
+### Return type
+
+[**List&lt;Group&gt;**](Group.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
 <a name="searchMessages"></a>
 # **searchMessages**
 > List&lt;Message&gt; searchMessages(reposName, version, searchString, skip, limit)
@@ -1416,7 +1521,7 @@ By passing in the appropriate options, you can search for Orchestra repositories
 
 
 RepositoryApi apiInstance = new RepositoryApi();
-String searchString = "searchString_example"; // String | pass an optional search string for looking up components
+String searchString = "searchString_example"; // String | pass an optional search string for looking up repositories
 Integer skip = 56; // Integer | number of records to skip for pagination
 Integer limit = 56; // Integer | maximum number of records to return
 try {
@@ -1432,7 +1537,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **searchString** | **String**| pass an optional search string for looking up components | [optional]
+ **searchString** | **String**| pass an optional search string for looking up repositories | [optional]
  **skip** | **Integer**| number of records to skip for pagination | [optional]
  **limit** | **Integer**| maximum number of records to return | [optional]
 
