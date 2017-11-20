@@ -22,6 +22,7 @@ import io.fixprotocol._2016.fixrepository.FieldRefType;
 import io.fixprotocol._2016.fixrepository.FieldType;
 import io.fixprotocol._2016.fixrepository.GroupRefType;
 import io.fixprotocol._2016.fixrepository.GroupType;
+import io.fixprotocol._2016.fixrepository.MessageType;
 import io.fixprotocol._2016.fixrepository.Repository;
 import io.fixprotocol.orchestra.api.RFC3339DateFormat;
 import io.fixprotocol.orchestra.model.Code;
@@ -33,6 +34,7 @@ import io.fixprotocol.orchestra.model.FieldRef;
 import io.fixprotocol.orchestra.model.Group;
 import io.fixprotocol.orchestra.model.GroupProperties;
 import io.fixprotocol.orchestra.model.GroupRef;
+import io.fixprotocol.orchestra.model.Message;
 import io.fixprotocol.orchestra.model.Metadata;
 import io.fixprotocol.orchestra.model.ObjectId;
 import io.fixprotocol.orchestra.model.Structure;
@@ -318,6 +320,10 @@ public final class OrchestraAPItoDOM {
     Structure structure = new Structure();
     component.setStructure(structure);
     List<Object> elements = componentType.getComponentRefOrGroupRefOrFieldRef();
+    populateStructure(elements, structure);
+  }
+
+  private static void populateStructure(List<Object> elements, Structure structure) {
     for (Object element : elements) {
       if (element instanceof FieldRefType) {
         FieldRefType fieldRefType = (FieldRefType) element;
@@ -362,6 +368,10 @@ public final class OrchestraAPItoDOM {
 
     List<Object> elements = componentType.getComponentRefOrGroupRefOrFieldRef();
     Structure structure = component.getStructure();
+    populateStructureDOM(structure, elements);
+  }
+
+  private static void populateStructureDOM(Structure structure, List<Object> elements) {
     for (FieldRef fieldRef : structure.getFields()) {
       FieldRefType fieldRefType = new FieldRefType();
       fieldRefType.setAbbrName(fieldRef.getOid().getAbbrName());
@@ -386,6 +396,43 @@ public final class OrchestraAPItoDOM {
       componentRefType.setOid(componentRef.getOid().getOid());
       elements.add(componentRefType);
     }
+  }
+
+  public static MessageType MessageToDOM(Message message) {
+    MessageType messageType = new MessageType();
+    messageType.setAbbrName(message.getOid().getAbbrName());
+    messageType.setId(BigInteger.valueOf(message.getOid().getId()));
+    messageType.setName(message.getOid().getName());
+    messageType.setOid(message.getOid().getOid());
+    //messageType.setCategory(message.getCategory());
+    //messageType.setExtends(value);
+    messageType.setFlow(message.getFlow());
+    messageType.setMsgType(message.getMsgType());
+    messageType.setScenario(message.getScenario());
+    messageType.setStructure(new MessageType.Structure());
+    List<Object> elements = messageType.getStructure().getComponentOrComponentRefOrGroup();
+    Structure structure = message.getStructure();
+    populateStructureDOM(structure, elements);
+    return messageType;
+  }
+
+  public static Message DOMToMessage(MessageType messageType) {
+    Message message = new Message();
+    ObjectId oid = new ObjectId();
+    oid.setAbbrName(messageType.getAbbrName());
+    oid.setId(messageType.getId().intValue());
+    oid.setName(messageType.getName());
+    oid.setOid(messageType.getOid());
+    message.setOid(oid );
+    message.setFlow(messageType.getFlow());
+    message.setMsgType(messageType.getMsgType());
+    message.setScenario(messageType.getScenario());
+    Structure structure = new Structure();
+    message.setStructure(structure );
+    List<Object> elements = messageType.getStructure().getComponentOrComponentRefOrGroup();
+    populateStructure(elements, structure);
+
+    return message;
   }
 
 }

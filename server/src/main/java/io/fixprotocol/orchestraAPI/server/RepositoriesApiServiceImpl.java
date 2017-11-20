@@ -7,11 +7,9 @@ import java.util.logging.Logger;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-
 import javax.ws.rs.core.SecurityContext;
 import javax.ws.rs.core.UriBuilder;
 
-import io.fixprotocol.orchestra.api.ApiResponseMessage;
 import io.fixprotocol.orchestra.api.NotFoundException;
 import io.fixprotocol.orchestra.api.RepositoriesApiService;
 import io.fixprotocol.orchestra.model.Code;
@@ -77,10 +75,9 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   public Response addComponent(String reposName, String version, Component component,
       Integer toClone, SecurityContext securityContext) throws NotFoundException {
     try {
-      repositoryStore.createComponent(reposName, version, component,
-          toClone);
-      return Response.created(UriBuilder.fromPath("repositories").path(reposName)
-          .path(version).path("components").path(component.getOid().getId().toString()).build()).build();
+      repositoryStore.createComponent(reposName, version, component, toClone);
+      return Response.created(UriBuilder.fromPath("repositories").path(reposName).path(version)
+          .path("components").path(component.getOid().getId().toString()).build()).build();
     } catch (DuplicateKeyException e) {
       return Response.noContent().status(Status.CONFLICT).build();
     } catch (ResourceNotFoundException e) {
@@ -126,13 +123,12 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   }
 
   @Override
-  public Response addGroup(String reposName, String version, Group group, Integer toClone, SecurityContext arg4)
-      throws NotFoundException {
+  public Response addGroup(String reposName, String version, Group group, Integer toClone,
+      SecurityContext arg4) throws NotFoundException {
     try {
-      repositoryStore.createComponent(reposName, version, group,
-          toClone);
-      return Response.created(UriBuilder.fromPath("repositories").path(reposName)
-          .path(version).path("components").path(group.getOid().getId().toString()).build()).build();
+      repositoryStore.createComponent(reposName, version, group, toClone);
+      return Response.created(UriBuilder.fromPath("repositories").path(reposName).path(version)
+          .path("components").path(group.getOid().getId().toString()).build()).build();
     } catch (DuplicateKeyException e) {
       return Response.noContent().status(Status.CONFLICT).build();
     } catch (ResourceNotFoundException e) {
@@ -146,21 +142,19 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   @Override
   public Response addMessage(String reposName, String version, Message message, Integer toClone,
       SecurityContext securityContext) throws NotFoundException {
-//    try {
-//      repositoryStore.createMessage(reposName, version, message,
-//          toClone);
-//      return Response.created(UriBuilder.fromPath("repositories").path(reposName)
-//          .path(version).path("messages").path(message.getOid().getId().toString()).build()).build();
-//    } catch (DuplicateKeyException e) {
-//      return Response.noContent().status(Status.CONFLICT).build();
-//    } catch (ResourceNotFoundException e) {
-//      return Response.noContent().status(Status.NOT_FOUND).build();
-//    } catch (RepositoryStoreException e) {
-//      logger.log(Level.WARNING, "Server error", e);
-//      return Response.serverError().build();
-//    }  
-    return null;
+    try {
+      repositoryStore.createMessage(reposName, version, message, toClone);
+      return Response.created(UriBuilder.fromPath("repositories").path(reposName).path(version)
+          .path("messages").path(message.getOid().getId().toString()).build()).build();
+    } catch (DuplicateKeyException e) {
+      return Response.noContent().status(Status.CONFLICT).build();
+    } catch (ResourceNotFoundException e) {
+      return Response.noContent().status(Status.NOT_FOUND).build();
+    } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
+      return Response.serverError().build();
     }
+  }
 
   @Override
   public Response addRepository(Repository repository, String nameToClone, String versionToClone,
@@ -218,8 +212,8 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (RepositoryStoreException e) {
       logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
-    }  
     }
+  }
 
   @Override
   public Response deleteDatatype(String reposName, String version, String name,
@@ -252,8 +246,15 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   @Override
   public Response deleteMessage(String reposName, String version, Integer id,
       SecurityContext securityContext) throws NotFoundException {
-    // do some magic!
-    return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+    try {
+      repositoryStore.deleteMessage(reposName, version, id);
+      return Response.noContent().build();
+    } catch (ResourceNotFoundException e) {
+      return Response.noContent().status(Status.NOT_FOUND).build();
+    } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
+      return Response.serverError().build();
+    }
   }
 
   @Override
@@ -333,7 +334,8 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (RepositoryStoreException e) {
       logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
-    }  }
+    }
+  }
 
   @Override
   public Response findDatatypeByName(String reposName, String version, String name,
@@ -365,8 +367,15 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   @Override
   public Response findMessageById(String reposName, String version, Integer id,
       SecurityContext securityContext) throws NotFoundException {
-    // do some magic!
-    return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+    try {
+      Message messsage = repositoryStore.getMessageById(reposName, version, id);
+      return Response.ok().entity(messsage).build();
+    } catch (ResourceNotFoundException e) {
+      return Response.noContent().status(Status.NOT_FOUND).build();
+    } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
+      return Response.serverError().build();
+    }
   }
 
   @Override
@@ -425,24 +434,8 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (RepositoryStoreException e) {
       logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
-    }  
-    }
-  
-  @Override
-  public Response searchGroups(String reposName, String version, String searchString, Integer skip,
-      Integer limit, SecurityContext securityContext) throws NotFoundException {
-    try {
-      // todo: translate search string to a Predicate
-      List<Group> filtered = repositoryStore.getGroups(reposName, version, null);
-      List<Group> range =
-          filtered.subList(skip != null ? skip : 0, limit != null ? limit : filtered.size());
-      return Response.ok().entity(range).build();
-    } catch (RepositoryStoreException e) {
-      logger.log(Level.WARNING, "Server error", e);
-      return Response.serverError().build();
     }
   }
-
 
   @Override
   public Response searchDatatypes(String reposName, String version, String searchString,
@@ -457,6 +450,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
       return Response.serverError().build();
     }
   }
+
 
   @Override
   public Response searchFields(String reposName, String version, String searchString, Integer skip,
@@ -473,10 +467,33 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   }
 
   @Override
+  public Response searchGroups(String reposName, String version, String searchString, Integer skip,
+      Integer limit, SecurityContext securityContext) throws NotFoundException {
+    try {
+      // todo: translate search string to a Predicate
+      List<Group> filtered = repositoryStore.getGroups(reposName, version, null);
+      List<Group> range =
+          filtered.subList(skip != null ? skip : 0, limit != null ? limit : filtered.size());
+      return Response.ok().entity(range).build();
+    } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
+      return Response.serverError().build();
+    }
+  }
+
+  @Override
   public Response searchMessages(String reposName, String version, String searchString,
       Integer skip, Integer limit, SecurityContext securityContext) throws NotFoundException {
-    // do some magic!
-    return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+    try {
+      // todo: translate search string to a Predicate
+      List<Message> filtered = repositoryStore.getMessages(reposName, version, null);
+      List<Message> range =
+          filtered.subList(skip != null ? skip : 0, limit != null ? limit : filtered.size());
+      return Response.ok().entity(range).build();
+    } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
+      return Response.serverError().build();
+    }
   }
 
   @Override
@@ -529,7 +546,8 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
       return Response.serverError().build();
-    }  }
+    }
+  }
 
   @Override
   public Response updateDatatypeByName(String reposName, String version, String name,
@@ -560,8 +578,14 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   @Override
   public Response updateMessageById(String reposName, String version, Integer id, Message message,
       SecurityContext securityContext) throws NotFoundException {
-    // do some magic!
-    return Response.ok().entity(new ApiResponseMessage(ApiResponseMessage.OK, "magic!")).build();
+    try {
+      repositoryStore.updateMessage(reposName, version, id, message);
+      return Response.ok().build();
+    } catch (ResourceNotFoundException e) {
+      return Response.noContent().status(Status.NOT_FOUND).build();
+    } catch (RepositoryStoreException e) {
+      return Response.serverError().build();
+    }
   }
 
   @Override

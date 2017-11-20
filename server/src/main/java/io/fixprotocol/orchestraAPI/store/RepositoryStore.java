@@ -10,6 +10,7 @@ import io.fixprotocol.orchestra.model.Component;
 import io.fixprotocol.orchestra.model.Datatype;
 import io.fixprotocol.orchestra.model.Field;
 import io.fixprotocol.orchestra.model.Group;
+import io.fixprotocol.orchestra.model.Message;
 import io.fixprotocol.orchestra.model.Metadata;
 import io.fixprotocol.orchestra.model.Repository;
 
@@ -77,6 +78,19 @@ public interface RepositoryStore {
    * @throws RepositoryStoreException if the store operation fails
    */
   void createField(String reposName, String version, Field field) throws RepositoryStoreException;
+
+  /**
+   * Creates a new Message in a repository
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param message to add to the repository
+   * @param toClone identifier of Message to clone (optional)
+   * @throws ResourceNotFoundException if the repository to update does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  void createMessage(String reposName, String version, Message message, Integer toClone)
+      throws RepositoryStoreException;
 
   /**
    * Creates a new repository if it does not already exist.
@@ -158,6 +172,17 @@ public interface RepositoryStore {
    * @throws RepositoryStoreException if the store operation fails
    */
   void deleteField(String reposName, String version, Integer id) throws RepositoryStoreException;
+
+  /**
+   * Deletes one Message if it exists
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param id message identifier
+   * @throws ResourceNotFoundException if the repository or message to delete does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  void deleteMessage(String reposName, String version, Integer id) throws RepositoryStoreException;
 
   /**
    * Deletes one repository if it exists
@@ -314,6 +339,32 @@ public interface RepositoryStore {
       throws RepositoryStoreException;
 
   /**
+   * Retrieves a Message by its ID
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param id message identifier
+   * @return the message
+   * @throws ResourceNotFoundException if the repository or message does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  Message getMessageById(String reposName, String version, Integer id)
+      throws RepositoryStoreException;
+
+  /**
+   * Retrieves all messages in a repository
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param predicate filter for messages to return
+   * @return a list of messages
+   * @throws ResourceNotFoundException if the repository does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  List<Message> getMessages(String reposName, String version, Predicate<Message> predicate)
+      throws RepositoryStoreException;
+
+  /**
    * Retrieves the metadata of all repositories
    * 
    * @param search filter for selection of repositories by their Metadata
@@ -409,6 +460,19 @@ public interface RepositoryStore {
    * @throws RepositoryStoreException if the store operation fails
    */
   void updateField(String reposName, String version, Integer id, Field field)
+      throws RepositoryStoreException;
+
+  /**
+   * Update an existing Message
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param id ID of the message to update
+   * @param field new value of the Message
+   * @throws ResourceNotFoundException if the repository or message to update does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  void updateMessage(String reposName, String version, Integer id, Message message)
       throws RepositoryStoreException;
 
   /**

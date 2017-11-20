@@ -22,9 +22,11 @@ import org.xml.sax.SAXException;
 import io.fixprotocol.orchestra.model.Code;
 import io.fixprotocol.orchestra.model.CodeSet;
 import io.fixprotocol.orchestra.model.Component;
+import io.fixprotocol.orchestra.model.ComponentRef;
 import io.fixprotocol.orchestra.model.Field;
 import io.fixprotocol.orchestra.model.FieldRef;
 import io.fixprotocol.orchestra.model.GroupRef;
+import io.fixprotocol.orchestra.model.Message;
 import io.fixprotocol.orchestra.model.Metadata;
 import io.fixprotocol.orchestra.model.ObjectId;
 import io.fixprotocol.orchestra.model.Repository;
@@ -146,6 +148,55 @@ public class RepositoryDOMStoreTest {
     assertEquals(1, structure2.getFields().size());
     assertEquals(1, structure2.getGroups().size());
     assertEquals(0, structure2.getComponents().size());
+    
+    store.deleteRepository(repository.getName(), identifier);
+  };
+
+  @Test
+  public void addFindMessage() throws RepositoryStoreException {
+    Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    store.createRepository(repository, null, null);
+
+    Message message = new Message();
+    ObjectId oid = new ObjectId();
+    oid.setAbbrName("IOI");
+    oid.setId(7);
+    oid.setName("IOI");
+    message.setOid(oid);
+    message.setMsgType("6");
+    message.setScenario("base");
+    Structure structure = new Structure();
+    message.setStructure(structure);
+    ComponentRef componentsItem = new ComponentRef();
+    ObjectId componentOid = new ObjectId();
+    componentOid.setId(1057);
+    componentOid.setName("ApplicationSequenceControl");
+    componentsItem.setOid(componentOid );
+    structure.addComponentsItem(componentsItem);
+    FieldRef fieldsItem = new FieldRef();
+    ObjectId fieldOid = new ObjectId();
+    fieldOid.setId(23);
+    fieldOid.setName("IOIID");
+    fieldsItem.setOid(fieldOid);
+    structure.addFieldsItem(fieldsItem );
+    store.createMessage("test1", identifier, message, null);
+    
+    Message message2 = store.getMessageById("test1", identifier, 7);
+    assertEquals("IOI" , message2.getOid().getName());
+    assertEquals("base" , message2.getScenario());
+    Structure structure2 = message2.getStructure();
+    List<ComponentRef> components = structure2.getComponents();
+    assertEquals(1, components.size());
+    List<FieldRef> fields = structure2.getFields();
+    assertEquals(1, fields.size());
     
     store.deleteRepository(repository.getName(), identifier);
   };

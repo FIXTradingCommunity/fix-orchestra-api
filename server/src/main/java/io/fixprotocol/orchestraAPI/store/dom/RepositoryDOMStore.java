@@ -24,6 +24,8 @@ import io.fixprotocol._2016.fixrepository.Datatypes;
 import io.fixprotocol._2016.fixrepository.FieldType;
 import io.fixprotocol._2016.fixrepository.Fields;
 import io.fixprotocol._2016.fixrepository.GroupType;
+import io.fixprotocol._2016.fixrepository.MessageType;
+import io.fixprotocol._2016.fixrepository.Messages;
 import io.fixprotocol._2016.fixrepository.Repository;
 import io.fixprotocol.orchestra.model.Code;
 import io.fixprotocol.orchestra.model.CodeSet;
@@ -31,6 +33,7 @@ import io.fixprotocol.orchestra.model.Component;
 import io.fixprotocol.orchestra.model.Datatype;
 import io.fixprotocol.orchestra.model.Field;
 import io.fixprotocol.orchestra.model.Group;
+import io.fixprotocol.orchestra.model.Message;
 import io.fixprotocol.orchestra.model.Metadata;
 import io.fixprotocol.orchestraAPI.store.DuplicateKeyException;
 import io.fixprotocol.orchestraAPI.store.RepositoryStore;
@@ -229,6 +232,29 @@ public class RepositoryDOMStore implements RepositoryStore {
   }
 
   @Override
+  public void createMessage(String reposName, String version, Message message, Integer toClone)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(message, "Message missing");
+    Repository repository = repositories.get(new RepositoryKey(reposName, version));
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+    List<MessageType> messages = getMessageList(repository);
+
+    for (int i = 0; i < messages.size(); i++) {
+      MessageType messageType = messages.get(i);
+      if (message.getOid().getId() == messageType.getId().intValue()) {
+        throw new DuplicateKeyException(
+            String.format("Duplicate message with ID=%d", message.getOid().getId()));
+      }
+    }
+    messages.add(OrchestraAPItoDOM.MessageToDOM(message));  
+    }
+
+  @Override
   public Metadata createRepository(io.fixprotocol.orchestra.model.Repository repository,
       String nameToClone, String versionToClone) throws RepositoryStoreException {
     Objects.requireNonNull(repository, "Repository missing");
@@ -411,6 +437,31 @@ public class RepositoryDOMStore implements RepositoryStore {
 
     throw new ResourceNotFoundException(String.format("Field with ID=%d not found", id));
   }
+
+  @Override
+  public void deleteMessage(String reposName, String version, Integer id)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(id, "Message ID missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+
+    final Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+
+    List<MessageType> messages = getMessageList(repository);
+    for (MessageType message : messages) {
+      if (id == message.getId().intValue()) {
+        messages.remove(message);
+        return;
+      }
+    }
+
+    throw new ResourceNotFoundException(String.format("Message with ID=%d not found", id));  
+    }
 
   @Override
   public void deleteRepository(String reposName, String version) throws RepositoryStoreException {
@@ -688,6 +739,81 @@ public class RepositoryDOMStore implements RepositoryStore {
   }
 
   @Override
+  public List<Group> getGroups(String reposName, String version, Predicate<Group> search)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+    Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+    Predicate<Group> predicate = search != null ? search : new Predicate<Group>() {
+
+      @Override
+      public boolean test(Group t) {
+        return true;
+      }
+
+    };
+    List<ComponentType> components = getComponentList(repository);
+
+    Function<ComponentType, GroupType> subclass = c -> (GroupType) c;
+
+    return components.stream().filter(c -> c instanceof GroupType).map(c -> subclass.apply(c))
+        .map(g -> OrchestraAPItoDOM.DOMToGroup(g)).filter(predicate).collect(Collectors.toList());
+  }
+
+  @Override
+  public Message getMessageById(String reposName, String version, Integer id)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(id, "Message ID missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+    Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+    List<MessageType> messages = getMessageList(repository);
+
+    for (MessageType message : messages) {
+      if (id == message.getId().intValue()) {
+        return OrchestraAPItoDOM.DOMToMessage(message);
+      }
+    }
+
+    throw new ResourceNotFoundException(String.format("Message with ID=%d not found", id));
+  }
+
+  @Override
+  public List<Message> getMessages(String reposName, String version, Predicate<Message> search)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+    Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+    Predicate<Message> predicate = search != null ? search : new Predicate<Message>() {
+
+      @Override
+      public boolean test(Message t) {
+        return true;
+      }
+
+    };
+    List<MessageType> messages = getMessageList(repository);
+
+    return messages.stream().map(m -> OrchestraAPItoDOM.DOMToMessage(m)).filter(predicate)
+        .collect(Collectors.toList());
+  }
+
+  @Override
   public List<Metadata> getRepositoriesMetadata(Predicate<Metadata> search) {
     Predicate<Metadata> predicate = search != null ? search : new Predicate<Metadata>() {
 
@@ -844,7 +970,7 @@ public class RepositoryDOMStore implements RepositoryStore {
 
     throw new ResourceNotFoundException(String.format("Datatype %s not found", name));
   }
-
+  
   @Override
   public void updateField(String reposName, String version, Integer id, Field field)
       throws RepositoryStoreException {
@@ -873,6 +999,33 @@ public class RepositoryDOMStore implements RepositoryStore {
   }
 
   @Override
+  public void updateMessage(String reposName, String version, Integer id, Message message)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(id, "Message ID missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+
+    final Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+
+    List<MessageType> messages = getMessageList(repository);
+
+    for (int i = 0; i < messages.size(); i++) {
+      MessageType messageType = messages.get(i);
+      if (id == messageType.getId().intValue()) {
+        messages.set(i, OrchestraAPItoDOM.MessageToDOM(message));
+        return;
+      }
+    }
+
+    throw new ResourceNotFoundException(String.format("Component with ID=%d not found", id));
+  }
+
+  @Override
   public void updateRepositoryMetadata(String reposName, String version,
       io.fixprotocol.orchestra.model.Repository repository) throws RepositoryStoreException {
     Objects.requireNonNull(reposName, "Repository name missing");
@@ -896,15 +1049,6 @@ public class RepositoryDOMStore implements RepositoryStore {
     return codeSets.getCodeSet();
   }
 
-  private List<io.fixprotocol._2016.fixrepository.Datatype> getDatatypeList(Repository repository) {
-    Datatypes datatypes = repository.getDatatypes();
-    if (datatypes == null) {
-      datatypes = new Datatypes();
-      repository.setDatatypes(datatypes);
-    }
-    return datatypes.getDatatype();
-  }
-
   private List<ComponentType> getComponentList(Repository repository) {
     Components components = repository.getComponents();
     if (components == null) {
@@ -914,6 +1058,15 @@ public class RepositoryDOMStore implements RepositoryStore {
     return components.getComponentOrGroup();
   }
 
+  private List<io.fixprotocol._2016.fixrepository.Datatype> getDatatypeList(Repository repository) {
+    Datatypes datatypes = repository.getDatatypes();
+    if (datatypes == null) {
+      datatypes = new Datatypes();
+      repository.setDatatypes(datatypes);
+    }
+    return datatypes.getDatatype();
+  }
+
   private List<FieldType> getFieldList(Repository repository) {
     Fields fields = repository.getFields();
     if (fields == null) {
@@ -921,6 +1074,15 @@ public class RepositoryDOMStore implements RepositoryStore {
       repository.setFields(fields);
     }
     return fields.getField();
+  }
+
+  private List<MessageType> getMessageList(Repository repository) {
+    Messages messages = repository.getMessages();
+    if (messages == null) {
+      messages = new Messages();
+      repository.setMessages(messages);
+    }
+    return messages.getMessage();
   }
 
   private File marshal(Repository repository) throws JAXBException, IOException {
@@ -935,33 +1097,6 @@ public class RepositoryDOMStore implements RepositoryStore {
     JAXBContext jaxbContext = JAXBContext.newInstance(Repository.class);
     Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
     return (Repository) unmarshaller.unmarshal(file);
-  }
-
-  @Override
-  public List<Group> getGroups(String reposName, String version, Predicate<Group> search)
-      throws RepositoryStoreException {
-    Objects.requireNonNull(reposName, "Repository name missing");
-    Objects.requireNonNull(version, "Repository version missing");
-    final RepositoryKey key = new RepositoryKey(reposName, version);
-    Repository repository = repositories.get(key);
-    if (repository == null) {
-      throw new ResourceNotFoundException(
-          String.format("Repository with name=%s version=%s not found", reposName, version));
-    }
-    Predicate<Group> predicate = search != null ? search : new Predicate<Group>() {
-
-      @Override
-      public boolean test(Group t) {
-        return true;
-      }
-
-    };
-    List<ComponentType> components = getComponentList(repository);
-
-    Function<ComponentType, GroupType> subclass = c -> (GroupType) c;
-
-    return components.stream().filter(c -> c instanceof GroupType).map(c -> subclass.apply(c))
-        .map(g -> OrchestraAPItoDOM.DOMToGroup(g)).filter(predicate).collect(Collectors.toList());
   }
 
 }

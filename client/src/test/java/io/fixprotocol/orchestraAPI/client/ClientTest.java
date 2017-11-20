@@ -30,6 +30,8 @@ import io.fixprotocol.orchestra.client.model.Metadata;
 import io.fixprotocol.orchestra.client.model.ObjectId;
 import io.fixprotocol.orchestra.client.model.Repository;
 import io.fixprotocol.orchestra.client.model.Structure;
+import io.fixprotocol.orchestra.client.model.ComponentRef;
+import io.fixprotocol.orchestra.client.model.Message;
 
 
 /**
@@ -292,10 +294,49 @@ public class ClientTest {
   /**
    * Test method for
    * {@link io.fixprotocol.orchestraAPI.client.Client#addMessage(java.lang.String, io.swagger.client.model.Message)}.
+   * @throws ApiException 
    */
   @Test
-  public void testAddMessageStringMessage() {
-    fail("Not yet implemented");
+  public void testAddMessageStringMessage() throws ApiException {
+    Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Message message = new Message();
+    ObjectId oid = new ObjectId();
+    oid.setAbbrName("IOI");
+    oid.setId(7);
+    oid.setName("IOI");
+    message.setOid(oid);
+    message.setMsgType("6");
+    message.setScenario("base");
+    Structure structure = new Structure();
+    message.setStructure(structure);
+    ComponentRef componentsItem = new ComponentRef();
+    ObjectId componentOid = new ObjectId();
+    componentOid.setId(1057);
+    componentOid.setName("ApplicationSequenceControl");
+    componentsItem.setOid(componentOid );
+    structure.addComponentsItem(componentsItem);
+    FieldRef fieldsItem = new FieldRef();
+    ObjectId fieldOid = new ObjectId();
+    fieldOid.setId(23);
+    fieldOid.setName("IOIID");
+    fieldsItem.setOid(fieldOid);
+    structure.addFieldsItem(fieldsItem );
+    client.addMessage("test1", identifier, message);
+    
+    Message message2 = client.findMessageById("test1", identifier, 7);
+    assertNotNull(message2);
+    
+    client.deleteRepository(repository.getName(), identifier);
   }
 
   /**
@@ -562,10 +603,57 @@ public class ClientTest {
   /**
    * Test method for
    * {@link io.fixprotocol.orchestraAPI.client.Client#deleteMessage(java.lang.String, java.lang.Integer)}.
+   * @throws ApiException 
    */
   @Test
-  public void testDeleteMessage() {
-    fail("Not yet implemented");
+  public void testDeleteMessage() throws ApiException {
+    Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Message message = new Message();
+    ObjectId oid = new ObjectId();
+    oid.setAbbrName("IOI");
+    oid.setId(7);
+    oid.setName("IOI");
+    message.setOid(oid);
+    message.setMsgType("6");
+    message.setScenario("base");
+    Structure structure = new Structure();
+    message.setStructure(structure);
+    ComponentRef componentsItem = new ComponentRef();
+    ObjectId componentOid = new ObjectId();
+    componentOid.setId(1057);
+    componentOid.setName("ApplicationSequenceControl");
+    componentsItem.setOid(componentOid );
+    structure.addComponentsItem(componentsItem);
+    FieldRef fieldsItem = new FieldRef();
+    ObjectId fieldOid = new ObjectId();
+    fieldOid.setId(23);
+    fieldOid.setName("IOIID");
+    fieldsItem.setOid(fieldOid);
+    structure.addFieldsItem(fieldsItem );
+    client.addMessage("test1", identifier, message);
+    
+    Message message2 = client.findMessageById("test1", identifier, 7);
+    assertNotNull(message2);
+    client.deleteMessage("test1", identifier, 7);
+
+    try {
+      client.findMessageById("test1", identifier, 7);
+      fail("deletion failed");
+    } catch (ApiException e) {
+      assertEquals(404, e.getCode());
+    }
+    
+    client.deleteRepository(repository.getName(), identifier);
   }
 
   /**
@@ -835,10 +923,56 @@ public class ClientTest {
   /**
    * Test method for
    * {@link io.fixprotocol.orchestraAPI.client.Client#findMessageById(java.lang.String, java.lang.Integer)}.
+   * @throws ApiException 
    */
   @Test
-  public void testFindMessageById() {
-    fail("Not yet implemented");
+  public void testFindMessageById() throws ApiException {
+    Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Message message = new Message();
+    ObjectId oid = new ObjectId();
+    oid.setAbbrName("IOI");
+    oid.setId(7);
+    oid.setName("IOI");
+    message.setOid(oid);
+    message.setMsgType("6");
+    message.setScenario("base");
+    Structure structure = new Structure();
+    message.setStructure(structure);
+    ComponentRef componentsItem = new ComponentRef();
+    ObjectId componentOid = new ObjectId();
+    componentOid.setId(1057);
+    componentOid.setName("ApplicationSequenceControl");
+    componentsItem.setOid(componentOid );
+    structure.addComponentsItem(componentsItem);
+    FieldRef fieldsItem = new FieldRef();
+    ObjectId fieldOid = new ObjectId();
+    fieldOid.setId(23);
+    fieldOid.setName("IOIID");
+    fieldsItem.setOid(fieldOid);
+    structure.addFieldsItem(fieldsItem );
+    client.addMessage("test1", identifier, message);
+    
+    Message message2 = client.findMessageById("test1", identifier, 7);
+    assertEquals("IOI" , message2.getOid().getName());
+    assertEquals("base" , message2.getScenario());
+    Structure structure2 = message2.getStructure();
+    List<ComponentRef> components = structure2.getComponents();
+    assertEquals(1, components.size());
+    List<FieldRef> fields = structure2.getFields();
+    assertEquals(1, fields.size());
+    
+    client.deleteRepository(repository.getName(), identifier);
+
   }
 
   /**
@@ -1149,10 +1283,67 @@ public class ClientTest {
   /**
    * Test method for
    * {@link io.fixprotocol.orchestraAPI.client.Client#searchMessages(java.lang.String, java.lang.String, java.lang.Integer, java.lang.Integer)}.
+   * @throws ApiException 
    */
   @Test
-  public void testSearchMessages() {
-    fail("Not yet implemented");
+  public void testSearchMessages() throws ApiException {
+    Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Message message = new Message();
+    ObjectId oid = new ObjectId();
+    oid.setAbbrName("IOI");
+    oid.setId(7);
+    oid.setName("IOI");
+    message.setOid(oid);
+    message.setMsgType("6");
+    message.setScenario("base");
+    Structure structure = new Structure();
+    message.setStructure(structure);
+    ComponentRef componentsItem = new ComponentRef();
+    ObjectId componentOid = new ObjectId();
+    componentOid.setId(1057);
+    componentOid.setName("ApplicationSequenceControl");
+    componentsItem.setOid(componentOid );
+    structure.addComponentsItem(componentsItem);
+    FieldRef fieldsItem = new FieldRef();
+    ObjectId fieldOid = new ObjectId();
+    fieldOid.setId(23);
+    fieldOid.setName("IOIID");
+    fieldsItem.setOid(fieldOid);
+    structure.addFieldsItem(fieldsItem );
+    client.addMessage("test1", identifier, message);
+    
+    Message message2 = new Message();
+    ObjectId oid2 = new ObjectId();
+    oid2.setAbbrName("Adv");
+    oid2.setId(8);
+    oid2.setName("Advertisement");
+    message2.setOid(oid2);
+    message2.setMsgType("7");
+    message2.setScenario("base");
+    Structure structure2 = new Structure();
+    message2.setStructure(structure2);
+    FieldRef fieldsItem2 = new FieldRef();
+    ObjectId fieldOid2 = new ObjectId();
+    fieldOid2.setId(2);
+    fieldOid2.setName("AdvId");
+    fieldsItem2.setOid(fieldOid2);
+    structure.addFieldsItem(fieldsItem2);
+    client.addMessage("test1", identifier, message2);
+    
+    List<Message> messages = client.searchMessages("test1", identifier, null, null, null);
+    assertEquals(2, messages.size());
+    
+    client.deleteRepository(repository.getName(), identifier);
   }
 
   /**
@@ -1393,10 +1584,55 @@ public class ClientTest {
   /**
    * Test method for
    * {@link io.fixprotocol.orchestraAPI.client.Client#updateMessageById(java.lang.String, java.lang.Integer, io.swagger.client.model.Message)}.
+   * @throws ApiException 
    */
   @Test
-  public void testUpdateMessageById() {
-    fail("Not yet implemented");
+  public void testUpdateMessageById() throws ApiException {
+    Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Message message = new Message();
+    ObjectId oid = new ObjectId();
+    oid.setAbbrName("IOI");
+    oid.setId(7);
+    oid.setName("IOI");
+    message.setOid(oid);
+    message.setMsgType("6");
+    message.setScenario("base");
+    Structure structure = new Structure();
+    message.setStructure(structure);
+    ComponentRef componentsItem = new ComponentRef();
+    ObjectId componentOid = new ObjectId();
+    componentOid.setId(1057);
+    componentOid.setName("ApplicationSequenceControl");
+    componentsItem.setOid(componentOid );
+    structure.addComponentsItem(componentsItem);
+    FieldRef fieldsItem = new FieldRef();
+    ObjectId fieldOid = new ObjectId();
+    fieldOid.setId(23);
+    fieldOid.setName("IOIID");
+    fieldsItem.setOid(fieldOid);
+    structure.addFieldsItem(fieldsItem );
+    client.addMessage("test1", identifier, message);
+    
+    Message message2 = client.findMessageById("test1", identifier, 7);
+    assertNotNull(message2);
+    message2.setFlow("Upstream");
+    
+    client.updateMessageById("test1", identifier, 7, message2);
+    Message message3 = client.findMessageById("test1", identifier, 7);
+    assertNotNull(message3);
+    assertEquals("Upstream", message3.getFlow());
+    
+    client.deleteRepository(repository.getName(), identifier);
   }
 
   /**
