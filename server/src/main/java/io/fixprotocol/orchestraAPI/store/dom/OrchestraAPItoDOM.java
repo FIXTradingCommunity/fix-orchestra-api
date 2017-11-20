@@ -53,7 +53,7 @@ public final class OrchestraAPItoDOM {
     codeSetType.setSpecUrl(codeSet.getSpecURL());
     codeSetType.setType(codeSet.getType());
     codeSetType.getCode()
-        .addAll(codeSet.getCodes().stream().map(c -> CodeToDOM(c)).collect(Collectors.toList()));
+        .addAll(codeSet.getCodes().stream().map(OrchestraAPItoDOM::CodeToDOM).collect(Collectors.toList()));
     return codeSetType;
   }
 
@@ -123,7 +123,7 @@ public final class OrchestraAPItoDOM {
     codeSet.setSpecURL(codeSetType.getSpecUrl());
     codeSet.setType(codeSetType.getType());
     codeSet.codes(
-        codeSetType.getCode().stream().map(ct -> DOMToCode(ct)).collect(Collectors.toList()));
+        codeSetType.getCode().stream().map(OrchestraAPItoDOM::DOMToCode).collect(Collectors.toList()));
     return codeSet;
   }
 

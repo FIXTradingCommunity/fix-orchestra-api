@@ -201,6 +201,67 @@ public class RepositoryDOMStoreTest {
     store.deleteRepository(repository.getName(), identifier);
   };
 
+  @Test
+  public void cloneMessage() throws RepositoryStoreException {
+    Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    store.createRepository(repository, null, null);
+
+    Message message = new Message();
+    ObjectId oid = new ObjectId();
+    oid.setAbbrName("IOI");
+    oid.setId(7);
+    oid.setName("IOI");
+    message.setOid(oid);
+    message.setMsgType("6");
+    message.setScenario("base");
+    Structure structure = new Structure();
+    message.setStructure(structure);
+    ComponentRef componentsItem = new ComponentRef();
+    ObjectId componentOid = new ObjectId();
+    componentOid.setId(1057);
+    componentOid.setName("ApplicationSequenceControl");
+    componentsItem.setOid(componentOid );
+    structure.addComponentsItem(componentsItem);
+    FieldRef fieldsItem = new FieldRef();
+    ObjectId fieldOid = new ObjectId();
+    fieldOid.setId(23);
+    fieldOid.setName("IOIID");
+    fieldsItem.setOid(fieldOid);
+    structure.addFieldsItem(fieldsItem );
+    store.createMessage("test1", identifier, message, null);
+    
+    Message message2 = store.getMessageById("test1", identifier, 7);
+
+    ObjectId oid2 = new ObjectId();
+    oid2.setAbbrName("CIOI");
+    oid2.setId(9007);
+    oid2.setName("CIOI");
+    message2.setOid(oid2);
+    message2.setScenario("Special");
+    assertEquals(9007, message2.getOid().getId().intValue());
+    store.createMessage("test1", identifier, message2, 7);
+    
+    Message message3 = store.getMessageById("test1", identifier, 9007);
+    
+    assertEquals("CIOI" , message3.getOid().getName());
+    assertEquals("Special" , message3.getScenario());
+    Structure structure3 = message3.getStructure();
+    List<ComponentRef> components = structure3.getComponents();
+    assertEquals(1, components.size());
+    List<FieldRef> fields = structure3.getFields();
+    assertEquals(1, fields.size());
+    
+    store.deleteRepository(repository.getName(), identifier);
+  };
+
 
   @Test
   public void addFindField() throws RepositoryStoreException {

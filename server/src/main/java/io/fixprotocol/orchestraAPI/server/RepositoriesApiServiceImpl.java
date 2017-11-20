@@ -2,6 +2,7 @@ package io.fixprotocol.orchestraAPI.server;
 
 import java.io.File;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -397,8 +398,10 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
       String searchString, Integer skip, Integer limit, SecurityContext securityContext)
       throws NotFoundException {
     try {
-      // todo: translate search string to a Predicate
-      List<Code> filtered = repositoryStore.getCodes(reposName, version, codesetid, null);
+      Predicate<Code> predicate = searchString != null ? code -> searchString.equals(code.getOid().getName())
+          || searchString.equals(code.getOid().getAbbrName()) : t -> true;
+
+      List<Code> filtered = repositoryStore.getCodes(reposName, version, codesetid, predicate);
       List<Code> range =
           filtered.subList(skip != null ? skip : 0, limit != null ? limit : filtered.size());
       return Response.ok().entity(range).build();
@@ -412,8 +415,10 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   public Response searchCodeSets(String reposName, String version, String searchString,
       Integer skip, Integer limit, SecurityContext securityContext) throws NotFoundException {
     try {
-      // todo: translate search string to a Predicate
-      List<CodeSet> filtered = repositoryStore.getCodeSets(reposName, version, null);
+      Predicate<CodeSet> predicate = searchString != null ? cs -> searchString.equals(cs.getOid().getName())
+          || searchString.equals(cs.getOid().getAbbrName()) : t -> true;
+
+      List<CodeSet> filtered = repositoryStore.getCodeSets(reposName, version, predicate);
       List<CodeSet> range =
           filtered.subList(skip != null ? skip : 0, limit != null ? limit : filtered.size());
       return Response.ok().entity(range).build();
@@ -426,8 +431,10 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   public Response searchComponents(String reposName, String version, String searchString,
       Integer skip, Integer limit, SecurityContext securityContext) throws NotFoundException {
     try {
-      // todo: translate search string to a Predicate
-      List<Component> filtered = repositoryStore.getComponents(reposName, version, null);
+      Predicate<Component> predicate = searchString != null ? c -> searchString.equals(c.getOid().getName())
+          || searchString.equals(c.getOid().getAbbrName()) : t -> true;
+
+      List<Component> filtered = repositoryStore.getComponents(reposName, version, predicate);
       List<Component> range =
           filtered.subList(skip != null ? skip : 0, limit != null ? limit : filtered.size());
       return Response.ok().entity(range).build();
@@ -441,8 +448,10 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   public Response searchDatatypes(String reposName, String version, String searchString,
       Integer skip, Integer limit, SecurityContext securityContext) throws NotFoundException {
     try {
-      // todo: translate search string to a Predicate
-      List<Datatype> filtered = repositoryStore.getDatatypes(reposName, version, null);
+      Predicate<Datatype> predicate =
+          searchString != null ? datatype -> searchString.equals(datatype.getName()) : t -> true;
+
+      List<Datatype> filtered = repositoryStore.getDatatypes(reposName, version, predicate);
       List<Datatype> range =
           filtered.subList(skip != null ? skip : 0, limit != null ? limit : filtered.size());
       return Response.ok().entity(range).build();
@@ -456,8 +465,10 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   public Response searchFields(String reposName, String version, String searchString, Integer skip,
       Integer limit, SecurityContext securityContext) throws NotFoundException {
     try {
-      // todo: translate search string to a Predicate
-      List<Field> filtered = repositoryStore.getFields(reposName, version, null);
+      Predicate<Field> predicate = searchString != null ? field -> searchString.equals(field.getOid().getName())
+          || searchString.equals(field.getOid().getAbbrName()) : t -> true;
+          
+      List<Field> filtered = repositoryStore.getFields(reposName, version, predicate);
       List<Field> range =
           filtered.subList(skip != null ? skip : 0, limit != null ? limit : filtered.size());
       return Response.ok().entity(range).build();
@@ -470,8 +481,10 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   public Response searchGroups(String reposName, String version, String searchString, Integer skip,
       Integer limit, SecurityContext securityContext) throws NotFoundException {
     try {
-      // todo: translate search string to a Predicate
-      List<Group> filtered = repositoryStore.getGroups(reposName, version, null);
+      Predicate<Group> predicate = searchString != null ? group -> searchString.equals(group.getOid().getName())
+          || searchString.equals(group.getOid().getAbbrName()) : t -> true;
+
+      List<Group> filtered = repositoryStore.getGroups(reposName, version, predicate);
       List<Group> range =
           filtered.subList(skip != null ? skip : 0, limit != null ? limit : filtered.size());
       return Response.ok().entity(range).build();
@@ -485,8 +498,14 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   public Response searchMessages(String reposName, String version, String searchString,
       Integer skip, Integer limit, SecurityContext securityContext) throws NotFoundException {
     try {
-      // todo: translate search string to a Predicate
-      List<Message> filtered = repositoryStore.getMessages(reposName, version, null);
+      Predicate<Message> predicate =
+          searchString != null
+              ? m -> searchString.equals(m.getOid().getName())
+                  || searchString.equals(m.getOid().getAbbrName())
+                  || searchString.equals(m.getScenario())
+              : t -> true;
+
+      List<Message> filtered = repositoryStore.getMessages(reposName, version, predicate);
       List<Message> range =
           filtered.subList(skip != null ? skip : 0, limit != null ? limit : filtered.size());
       return Response.ok().entity(range).build();

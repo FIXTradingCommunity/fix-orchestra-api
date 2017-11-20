@@ -217,14 +217,112 @@ public class ClientTest {
 
     client.deleteRepository("test1", identifier);
   }
+  
+  @Ignore // need to fix find group
+  @Test
+  public void testCloneGroup() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Group group = new Group();
+    ObjectId groupOid = new ObjectId();
+    groupOid.setId(1007);
+    groupOid.setName("LegStipulations");
+    group.setOid(groupOid);
+    GroupProperties groupProperties = new GroupProperties();
+    group.setGroupProperties(groupProperties );
+    groupProperties.setNumInGroupId(683);
+    groupProperties.setNumInGroupName("NoLegStipulations");
+    Structure structure = new Structure();
+    group.setStructure(structure );
+    client.addGroup("test1", identifier, group);
+
+    Group group2 = (Group) client.findComponentById("test1", identifier, 1007);
+    assertNotNull(group2);
+    ObjectId groupOid2 = new ObjectId();
+    groupOid2.setId(9007);
+    groupOid2.setName("CLegStipulations");
+    group2.setOid(groupOid2);
+    client.addGroup("test1", identifier, group2, 1007);
+    
+    Group group4 = (Group) client.findComponentById("test1", identifier, 9007);
+    assertNotNull(group4);
+    assertEquals(9007, group4.getOid().getId().intValue());
+    assertEquals("CLegStipulations", group4.getOid().getName());
+
+    client.deleteRepository("test1", identifier);
+  }
+
 
   /**
    * Test method for
    * {@link io.fixprotocol.orchestraAPI.client.Client#addComponent(java.lang.String, io.swagger.client.model.Component, java.lang.Integer)}.
+   * @throws ApiException 
    */
   @Test
-  public void testAddComponentStringComponentInteger() {
-    fail("Not yet implemented");
+  public void testAddComponentStringComponentInteger() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Component component =  new Component();
+    ObjectId oid = new ObjectId();
+    oid.setAbbrName("Instrmt");
+    oid.setId(1003);
+    oid.setName("Instrument");
+    component.setCategory("Common");
+    component.setOid(oid );
+    Structure structure = new Structure();
+    component.setStructure(structure);
+    FieldRef fieldRef = new FieldRef();
+    ObjectId fieldOid = new ObjectId();
+    fieldOid.setName("SecurityID");
+    fieldOid.setId(48);
+    fieldRef.setOid(fieldOid );
+    structure.addFieldsItem(fieldRef);
+    GroupRef groupRef = new GroupRef();
+    ObjectId groupOid =  new ObjectId();
+    groupOid.setId(2226);
+    groupOid.setName("SecondaryAssetGrp");
+    groupRef.setOid(groupOid );
+    structure.addGroupsItem(groupRef);
+    client.addComponent("test1", identifier, component);
+
+    Component component2 = client.findComponentById("test1", identifier, 1003);
+    assertNotNull(component2);
+    
+    Component component3 = new Component();
+    ObjectId oid3 = new ObjectId();
+    oid3.setAbbrName("CInstrmt");
+    oid3.setId(9003);
+    oid3.setName("CInstrument");
+    component3.setOid(oid3);
+    client.addComponent("test1", identifier, component3, 1003);
+    
+    Component component4 = client.findComponentById("test1", identifier, 9003);
+    assertNotNull(component4);
+    assertEquals(9003, component4.getOid().getId().intValue());
+    assertEquals("CInstrument", component4.getOid().getName());
+    Structure structure4 = component4.getStructure();
+    assertEquals(1, structure4.getFields().size());
+    assertEquals(1, structure4.getGroups().size());
+
+    client.deleteRepository("test1", identifier);
   }
 
   /**
@@ -342,10 +440,65 @@ public class ClientTest {
   /**
    * Test method for
    * {@link io.fixprotocol.orchestraAPI.client.Client#addMessage(java.lang.String, io.swagger.client.model.Message, java.lang.Integer)}.
+   * @throws ApiException 
    */
   @Test
-  public void testAddMessageStringMessageInteger() {
-    fail("Not yet implemented");
+  public void testAddMessageStringMessageInteger() throws ApiException {
+    Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Message message = new Message();
+    ObjectId oid = new ObjectId();
+    oid.setAbbrName("IOI");
+    oid.setId(7);
+    oid.setName("IOI");
+    message.setOid(oid);
+    message.setMsgType("6");
+    message.setScenario("base");
+    Structure structure = new Structure();
+    message.setStructure(structure);
+    ComponentRef componentsItem = new ComponentRef();
+    ObjectId componentOid = new ObjectId();
+    componentOid.setId(1057);
+    componentOid.setName("ApplicationSequenceControl");
+    componentsItem.setOid(componentOid );
+    structure.addComponentsItem(componentsItem);
+    FieldRef fieldsItem = new FieldRef();
+    ObjectId fieldOid = new ObjectId();
+    fieldOid.setId(23);
+    fieldOid.setName("IOIID");
+    fieldsItem.setOid(fieldOid);
+    structure.addFieldsItem(fieldsItem );
+    client.addMessage("test1", identifier, message);
+    
+    Message message2 = client.findMessageById("test1", identifier, 7);
+    assertNotNull(message2);
+    assertEquals(7, message2.getOid().getId().intValue());
+    
+    ObjectId oid2 = new ObjectId();
+    oid2.setAbbrName("CIOI");
+    oid2.setId(9007);
+    oid2.setName("CIOI");
+    message2.setOid(oid2);
+    message2.setScenario("Special");
+    assertEquals(9007, message2.getOid().getId().intValue());
+    client.addMessage("test1", identifier, message2, 7);
+    
+    Message message4 = client.findMessageById("test1", identifier, 9007);  
+    assertNotNull(message4);
+    assertEquals(9007, message4.getOid().getId().intValue());
+    assertEquals("CIOI", message4.getOid().getName());
+    assertEquals("Special", message4.getScenario());
+    
+    client.deleteRepository(repository.getName(), identifier);
   }
 
   @Test
@@ -1277,6 +1430,9 @@ public class ClientTest {
     List<Field> fields = client.searchFields("test1", identifier, null, null, null);
     assertEquals(2, fields.size());
 
+    List<Field> fields2 = client.searchFields("test1", identifier, "Acct", null, null);
+    assertEquals(1, fields2.size());
+    
     client.deleteRepository("test1", identifier);
   }
 
@@ -1342,6 +1498,9 @@ public class ClientTest {
     
     List<Message> messages = client.searchMessages("test1", identifier, null, null, null);
     assertEquals(2, messages.size());
+    
+    List<Message> messages2 = client.searchMessages("test1", identifier, "Advertisement", null, null);
+    assertEquals(1, messages2.size());
     
     client.deleteRepository(repository.getName(), identifier);
   }

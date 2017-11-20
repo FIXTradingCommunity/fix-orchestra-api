@@ -49,8 +49,9 @@ public interface RepositoryStore {
    * @param reposName name of Orchestra repository (required)
    * @param version version of Orchestra repository (required)
    * @param component to add to the repository
-   * @param toClone identifier of Component to clone (optional)
-   * @throws ResourceNotFoundException if the repository to update does not exist
+   * @param toClone identifier of Component to clone (optional). If the component to clone is found,
+   * its properties are copied except for the key fields provided by {@link Component#getOid()}
+   * @throws ResourceNotFoundException if the repository to update or component to clone does not exist
    * @throws RepositoryStoreException if the store operation fails
    */
   void createComponent(String reposName, String version, Component component, Integer toClone)
@@ -85,7 +86,9 @@ public interface RepositoryStore {
    * @param reposName name of Orchestra repository (required)
    * @param version version of Orchestra repository (required)
    * @param message to add to the repository
-   * @param toClone identifier of Message to clone (optional)
+   * @param toClone identifier of Message to clone (optional). If the message to clone is found,
+   * its properties are copied except for the key fields provided by {@link Message#getOid()} and
+   * {@link Message#getScenario()}.
    * @throws ResourceNotFoundException if the repository to update does not exist
    * @throws RepositoryStoreException if the store operation fails
    */

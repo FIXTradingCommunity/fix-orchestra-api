@@ -2,6 +2,7 @@ package io.fixprotocol.orchestraAPI.store.dom;
 
 import java.io.File;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -50,8 +51,8 @@ import io.fixprotocol.orchestraAPI.store.ResourceNotFoundException;
 public class RepositoryDOMStore implements RepositoryStore {
 
   private class RepositoryKey {
-    String reposName;
-    String version;
+    final String reposName;
+    final String version;
 
     public RepositoryKey(String reposName, String version) {
       this.reposName = reposName;
@@ -183,7 +184,29 @@ public class RepositoryDOMStore implements RepositoryStore {
             String.format("Duplicate component with ID=%d", component.getOid().getId()));
       }
     }
-    components.add(OrchestraAPItoDOM.ComponentToDOM(component));
+    
+    if (toClone != null) {
+      ComponentType componentTypeToClone = null;
+      for (int i = 0; i < components.size(); i++) {
+        ComponentType componentType = components.get(i);
+        if (toClone == componentType.getId().intValue()) {
+          componentTypeToClone = componentType;
+          break;
+        }
+      }
+      if (componentTypeToClone == null) {
+        throw new ResourceNotFoundException(String
+            .format("Component with ID=%d not found", toClone));
+      }
+      ComponentType clone = (ComponentType) componentTypeToClone.clone();
+      clone.setAbbrName(component.getOid().getAbbrName());
+      clone.setId(BigInteger.valueOf(component.getOid().getId()));
+      clone.setName(component.getOid().getName());
+      clone.setOid(component.getOid().getOid());
+      components.add(clone);
+    } else {
+      components.add(OrchestraAPItoDOM.ComponentToDOM(component));
+    }
   }
 
   @Override
@@ -251,8 +274,30 @@ public class RepositoryDOMStore implements RepositoryStore {
             String.format("Duplicate message with ID=%d", message.getOid().getId()));
       }
     }
-    messages.add(OrchestraAPItoDOM.MessageToDOM(message));  
+    if (toClone != null) {
+      MessageType messageTypeToClone = null;
+      for (int i = 0; i < messages.size(); i++) {
+        MessageType messageType = messages.get(i);
+        if (toClone == messageType.getId().intValue()) {
+          messageTypeToClone = messageType;
+          break;
+        }
+      }
+      if (messageTypeToClone == null) {
+        throw new ResourceNotFoundException(String
+            .format("Message with ID=%d not found", toClone));
+      }
+      MessageType clone = (MessageType) messageTypeToClone.clone();
+      clone.setAbbrName(message.getOid().getAbbrName());
+      clone.setId(BigInteger.valueOf(message.getOid().getId()));
+      clone.setName(message.getOid().getName());
+      clone.setOid(message.getOid().getOid());
+      clone.setScenario(message.getScenario());
+      messages.add(clone);
+    } else {
+      messages.add(OrchestraAPItoDOM.MessageToDOM(message));  
     }
+  }
 
   @Override
   public Metadata createRepository(io.fixprotocol.orchestra.model.Repository repository,
@@ -520,20 +565,13 @@ public class RepositoryDOMStore implements RepositoryStore {
           String.format("Repository with name=%s version=%s not found", reposName, version));
     }
 
-    Predicate<Code> predicate = search != null ? search : new Predicate<Code>() {
-
-      @Override
-      public boolean test(Code t) {
-        return true;
-      }
-
-    };
+    Predicate<Code> predicate = search != null ? search : t -> true;
 
     List<CodeSetType> codeSets = getCodeSets(repository);
     for (CodeSetType codeSet : codeSets) {
       if (codesetid == codeSet.getId().intValue()) {
         List<CodeType> codes = codeSet.getCode();
-        return codes.stream().map(c -> OrchestraAPItoDOM.DOMToCode(c)).filter(predicate)
+        return codes.stream().map(OrchestraAPItoDOM::DOMToCode).filter(predicate)
             .collect(Collectors.toList());
       }
     }
@@ -575,17 +613,10 @@ public class RepositoryDOMStore implements RepositoryStore {
       throw new ResourceNotFoundException(
           String.format("Repository with name=%s version=%s not found", reposName, version));
     }
-    Predicate<CodeSet> predicate = search != null ? search : new Predicate<CodeSet>() {
-
-      @Override
-      public boolean test(CodeSet t) {
-        return true;
-      }
-
-    };
+    Predicate<CodeSet> predicate = search != null ? search : t -> true;
     List<CodeSetType> codeSets = getCodeSets(repository);
 
-    return codeSets.stream().map(cs -> OrchestraAPItoDOM.DOMToCodeSet(cs)).filter(predicate)
+    return codeSets.stream().map(OrchestraAPItoDOM::DOMToCodeSet).filter(predicate)
         .collect(Collectors.toList());
   }
 
@@ -623,18 +654,11 @@ public class RepositoryDOMStore implements RepositoryStore {
       throw new ResourceNotFoundException(
           String.format("Repository with name=%s version=%s not found", reposName, version));
     }
-    Predicate<Component> predicate = search != null ? search : new Predicate<Component>() {
-
-      @Override
-      public boolean test(Component t) {
-        return true;
-      }
-
-    };
+    Predicate<Component> predicate = search != null ? search : t -> true;
     List<ComponentType> components = getComponentList(repository);
 
     // ComponentType only, not subclass
-    return components.stream().filter(c -> c.getClass().equals(ComponentType.class) ).map(c -> OrchestraAPItoDOM.DOMToComponent(c)).filter(predicate)
+    return components.stream().filter(c -> c.getClass().equals(ComponentType.class) ).map(OrchestraAPItoDOM::DOMToComponent).filter(predicate)
         .collect(Collectors.toList());
   }
 
@@ -674,18 +698,11 @@ public class RepositoryDOMStore implements RepositoryStore {
       throw new ResourceNotFoundException(
           String.format("Repository with name=%s version=%s not found", reposName, version));
     }
-    Predicate<Datatype> predicate = search != null ? search : new Predicate<Datatype>() {
-
-      @Override
-      public boolean test(Datatype t) {
-        return true;
-      }
-
-    };
+    Predicate<Datatype> predicate = search != null ? search : t -> true;
 
     List<io.fixprotocol._2016.fixrepository.Datatype> datatypes = getDatatypeList(repository);
 
-    return datatypes.stream().map(d -> OrchestraAPItoDOM.DOMToDatatype(d)).filter(predicate)
+    return datatypes.stream().map(OrchestraAPItoDOM::DOMToDatatype).filter(predicate)
         .collect(Collectors.toList());
 
   }
@@ -724,17 +741,10 @@ public class RepositoryDOMStore implements RepositoryStore {
       throw new ResourceNotFoundException(
           String.format("Repository with name=%s version=%s not found", reposName, version));
     }
-    Predicate<Field> predicate = search != null ? search : new Predicate<Field>() {
-
-      @Override
-      public boolean test(Field t) {
-        return true;
-      }
-
-    };
+    Predicate<Field> predicate = search != null ? search : t -> true;
     List<FieldType> fields = getFieldList(repository);
 
-    return fields.stream().map(f -> OrchestraAPItoDOM.DOMToField(f)).filter(predicate)
+    return fields.stream().map(OrchestraAPItoDOM::DOMToField).filter(predicate)
         .collect(Collectors.toList());
   }
 
@@ -749,20 +759,13 @@ public class RepositoryDOMStore implements RepositoryStore {
       throw new ResourceNotFoundException(
           String.format("Repository with name=%s version=%s not found", reposName, version));
     }
-    Predicate<Group> predicate = search != null ? search : new Predicate<Group>() {
-
-      @Override
-      public boolean test(Group t) {
-        return true;
-      }
-
-    };
+    Predicate<Group> predicate = search != null ? search : t -> true;
     List<ComponentType> components = getComponentList(repository);
 
     Function<ComponentType, GroupType> subclass = c -> (GroupType) c;
 
-    return components.stream().filter(c -> c instanceof GroupType).map(c -> subclass.apply(c))
-        .map(g -> OrchestraAPItoDOM.DOMToGroup(g)).filter(predicate).collect(Collectors.toList());
+    return components.stream().filter(c -> c instanceof GroupType).map(subclass::apply)
+        .map(OrchestraAPItoDOM::DOMToGroup).filter(predicate).collect(Collectors.toList());
   }
 
   @Override
@@ -799,30 +802,16 @@ public class RepositoryDOMStore implements RepositoryStore {
       throw new ResourceNotFoundException(
           String.format("Repository with name=%s version=%s not found", reposName, version));
     }
-    Predicate<Message> predicate = search != null ? search : new Predicate<Message>() {
-
-      @Override
-      public boolean test(Message t) {
-        return true;
-      }
-
-    };
+    Predicate<Message> predicate = search != null ? search : t -> true;
     List<MessageType> messages = getMessageList(repository);
 
-    return messages.stream().map(m -> OrchestraAPItoDOM.DOMToMessage(m)).filter(predicate)
+    return messages.stream().map(OrchestraAPItoDOM::DOMToMessage).filter(predicate)
         .collect(Collectors.toList());
   }
 
   @Override
   public List<Metadata> getRepositoriesMetadata(Predicate<Metadata> search) {
-    Predicate<Metadata> predicate = search != null ? search : new Predicate<Metadata>() {
-
-      @Override
-      public boolean test(Metadata t) {
-        return true;
-      }
-
-    };
+    Predicate<Metadata> predicate = search != null ? search : t -> true;
     return repositories.values().stream().map(r -> OrchestraAPItoDOM.DOMToMetadata(r.getMetadata()))
         .filter(predicate).collect(Collectors.toList());
   }
