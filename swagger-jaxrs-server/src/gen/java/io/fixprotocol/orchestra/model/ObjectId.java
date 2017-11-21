@@ -34,7 +34,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * ObjectId
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-17T18:44:51.083Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-20T22:06:14.920Z")
 public class ObjectId   {
   @JsonProperty("name")
   private String name = null;

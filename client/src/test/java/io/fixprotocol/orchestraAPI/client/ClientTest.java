@@ -218,7 +218,6 @@ public class ClientTest {
     client.deleteRepository("test1", identifier);
   }
   
-  @Ignore // need to fix find group
   @Test
   public void testCloneGroup() throws ApiException {
     final Repository repository = new Repository();
@@ -245,7 +244,7 @@ public class ClientTest {
     group.setStructure(structure );
     client.addGroup("test1", identifier, group);
 
-    Group group2 = (Group) client.findComponentById("test1", identifier, 1007);
+    Group group2 = client.findGroupById("test1", identifier, 1007);
     assertNotNull(group2);
     ObjectId groupOid2 = new ObjectId();
     groupOid2.setId(9007);
@@ -253,7 +252,7 @@ public class ClientTest {
     group2.setOid(groupOid2);
     client.addGroup("test1", identifier, group2, 1007);
     
-    Group group4 = (Group) client.findComponentById("test1", identifier, 9007);
+    Group group4 = client.findGroupById("test1", identifier, 9007);
     assertNotNull(group4);
     assertEquals(9007, group4.getOid().getId().intValue());
     assertEquals("CLegStipulations", group4.getOid().getName());
@@ -415,6 +414,7 @@ public class ClientTest {
     message.setOid(oid);
     message.setMsgType("6");
     message.setScenario("base");
+    message.setCategory("Indication");
     Structure structure = new Structure();
     message.setStructure(structure);
     ComponentRef componentsItem = new ComponentRef();
@@ -489,6 +489,7 @@ public class ClientTest {
     oid2.setName("CIOI");
     message2.setOid(oid2);
     message2.setScenario("Special");
+    message2.setExtends("base");
     assertEquals(9007, message2.getOid().getId().intValue());
     client.addMessage("test1", identifier, message2, 7);
     
@@ -497,6 +498,7 @@ public class ClientTest {
     assertEquals(9007, message4.getOid().getId().intValue());
     assertEquals("CIOI", message4.getOid().getName());
     assertEquals("Special", message4.getScenario());
+    assertEquals("base", message4.getExtends());
     
     client.deleteRepository(repository.getName(), identifier);
   }
@@ -838,7 +840,7 @@ public class ClientTest {
     }
   }
 
-  @Ignore // the file is downloaded, but ApiClient is bypassing the code to get filename from Content-Disposition header
+  @Ignore
   @Test
   public void testDownloadRepository() throws ApiException {
     final Repository repository = new Repository();
@@ -1355,6 +1357,12 @@ public class ClientTest {
 
     List<Group> groupList = client.searchGroups("test1", identifier, null, null, null);
     assertEquals(1, groupList.size());
+    
+    List<Group> groupList2 = client.searchGroups("test1", identifier, "LegStipulations", null, null);
+    assertEquals(1, groupList2.size());
+    
+    List<Group> groupList3 = client.searchGroups("test1", identifier, "Foo", null, null);
+    assertEquals(0, groupList3.size());
 
     client.deleteRepository("test1", identifier);
   }

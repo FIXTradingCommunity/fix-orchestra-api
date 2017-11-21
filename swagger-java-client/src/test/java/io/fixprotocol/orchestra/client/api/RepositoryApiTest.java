@@ -266,6 +266,24 @@ public class RepositoryApiTest {
     }
     
     /**
+     * deletes a single group based on the ID supplied
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void deleteGroupTest() throws ApiException {
+        String reposName = null;
+        String version = null;
+        Integer id = null;
+        // api.deleteGroup(reposName, version, id);
+
+        // TODO: test validations
+    }
+    
+    /**
      * deletes a single message scenario based on the ID supplied
      *
      * 
@@ -404,6 +422,24 @@ public class RepositoryApiTest {
         String version = null;
         Integer id = null;
         // Field response = api.findFieldById(reposName, version, id);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * Returns a single group, if found
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void findGroupByIdTest() throws ApiException {
+        String reposName = null;
+        String version = null;
+        Integer id = null;
+        // Group response = api.findGroupById(reposName, version, id);
 
         // TODO: test validations
     }
@@ -694,6 +730,25 @@ public class RepositoryApiTest {
         Integer id = null;
         Field field = null;
         // api.updateFieldById(reposName, version, id, field);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * Updates a single group, if found (idempotent)
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void updateGroupByIdTest() throws ApiException {
+        String reposName = null;
+        String version = null;
+        Integer id = null;
+        Group group = null;
+        // api.updateGroupById(reposName, version, id, group);
 
         // TODO: test validations
     }

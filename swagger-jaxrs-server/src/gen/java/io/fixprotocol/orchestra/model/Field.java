@@ -38,7 +38,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * Field
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-17T18:44:51.083Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-20T22:06:14.920Z")
 public class Field extends MessageElement  {
   @JsonProperty("type")
   private String type = null;

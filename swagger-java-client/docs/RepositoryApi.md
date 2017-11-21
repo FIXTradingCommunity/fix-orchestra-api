@@ -17,6 +17,7 @@ Method | HTTP request | Description
 [**deleteComponent**](RepositoryApi.md#deleteComponent) | **DELETE** /repositories/{repos-name}/{version}/components/{id} | deletes a single component based on the ID supplied
 [**deleteDatatype**](RepositoryApi.md#deleteDatatype) | **DELETE** /repositories/{repos-name}/{version}/datatypes/{name} | deletes a single datatype based on the name supplied
 [**deleteField**](RepositoryApi.md#deleteField) | **DELETE** /repositories/{repos-name}/{version}/fields/{id} | deletes a single field based on the ID supplied
+[**deleteGroup**](RepositoryApi.md#deleteGroup) | **DELETE** /repositories/{repos-name}/{version}/groups/{id} | deletes a single group based on the ID supplied
 [**deleteMessage**](RepositoryApi.md#deleteMessage) | **DELETE** /repositories/{repos-name}/{version}/messages/{id} | deletes a single message scenario based on the ID supplied
 [**deleteRepository**](RepositoryApi.md#deleteRepository) | **DELETE** /repositories/{repos-name}/{version} | deletes a single Orchestra repository  based on the ID supplied
 [**downloadRepositoryById**](RepositoryApi.md#downloadRepositoryById) | **GET** /repositories/{repos-name}/{version}/file | Retreives a single Orchestra repository file, if found
@@ -25,6 +26,7 @@ Method | HTTP request | Description
 [**findComponentById**](RepositoryApi.md#findComponentById) | **GET** /repositories/{repos-name}/{version}/components/{id} | Returns a single component, if found
 [**findDatatypeByName**](RepositoryApi.md#findDatatypeByName) | **GET** /repositories/{repos-name}/{version}/datatypes/{name} | Returns a single datatype, if found
 [**findFieldById**](RepositoryApi.md#findFieldById) | **GET** /repositories/{repos-name}/{version}/fields/{id} | Returns a single field, if found
+[**findGroupById**](RepositoryApi.md#findGroupById) | **GET** /repositories/{repos-name}/{version}/groups/{id} | Returns a single group, if found
 [**findMessageById**](RepositoryApi.md#findMessageById) | **GET** /repositories/{repos-name}/{version}/messages/{id} | Returns a single message scenario, if found
 [**findRepositoryById**](RepositoryApi.md#findRepositoryById) | **GET** /repositories/{repos-name}/{version} | Returns a single Orchestra repository metadata, if found
 [**searchCodeSets**](RepositoryApi.md#searchCodeSets) | **GET** /repositories/{repos-name}/{version}/codesets | searches CodeSets
@@ -40,6 +42,7 @@ Method | HTTP request | Description
 [**updateComponentById**](RepositoryApi.md#updateComponentById) | **PUT** /repositories/{repos-name}/{version}/components/{id} | Updates a single component, if found (idempotent)
 [**updateDatatypeByName**](RepositoryApi.md#updateDatatypeByName) | **PUT** /repositories/{repos-name}/{version}/datatypes/{name} | Updates a single datatype, if found (idempotent)
 [**updateFieldById**](RepositoryApi.md#updateFieldById) | **PUT** /repositories/{repos-name}/{version}/fields/{id} | Updates a single field, if found (idempotent)
+[**updateGroupById**](RepositoryApi.md#updateGroupById) | **PUT** /repositories/{repos-name}/{version}/groups/{id} | Updates a single group, if found (idempotent)
 [**updateMessageById**](RepositoryApi.md#updateMessageById) | **PUT** /repositories/{repos-name}/{version}/messages/{id} | Updates a single message scenario, if found (idempotent)
 [**updateRepositoryById**](RepositoryApi.md#updateRepositoryById) | **PUT** /repositories/{repos-name}/{version} | Updates an Orchestra repository, if found (idempotent)
 
@@ -668,6 +671,52 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: Not defined
 
+<a name="deleteGroup"></a>
+# **deleteGroup**
+> deleteGroup(reposName, version, id)
+
+deletes a single group based on the ID supplied
+
+### Example
+```java
+// Import classes:
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+
+
+RepositoryApi apiInstance = new RepositoryApi();
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
+Integer id = 56; // Integer | ID of group to delete
+try {
+    apiInstance.deleteGroup(reposName, version, id);
+} catch (ApiException e) {
+    System.err.println("Exception when calling RepositoryApi#deleteGroup");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
+ **id** | **Integer**| ID of group to delete |
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
 <a name="deleteMessage"></a>
 # **deleteMessage**
 > deleteMessage(reposName, version, id)
@@ -1030,6 +1079,53 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Field**](Field.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+<a name="findGroupById"></a>
+# **findGroupById**
+> Group findGroupById(reposName, version, id)
+
+Returns a single group, if found
+
+### Example
+```java
+// Import classes:
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+
+
+RepositoryApi apiInstance = new RepositoryApi();
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
+Integer id = 56; // Integer | ID of group to fetch
+try {
+    Group result = apiInstance.findGroupById(reposName, version, id);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling RepositoryApi#findGroupById");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
+ **id** | **Integer**| ID of group to fetch |
+
+### Return type
+
+[**Group**](Group.md)
 
 ### Authorization
 
@@ -1782,6 +1878,54 @@ Name | Type | Description  | Notes
  **version** | **String**| version of Orchestra repository |
  **id** | **Integer**| ID of field to update |
  **field** | [**Field**](Field.md)| field to update |
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: Not defined
+
+<a name="updateGroupById"></a>
+# **updateGroupById**
+> updateGroupById(reposName, version, id, group)
+
+Updates a single group, if found (idempotent)
+
+### Example
+```java
+// Import classes:
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+
+
+RepositoryApi apiInstance = new RepositoryApi();
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
+Integer id = 56; // Integer | ID of group to update
+Group group = new Group(); // Group | group to update
+try {
+    apiInstance.updateGroupById(reposName, version, id, group);
+} catch (ApiException e) {
+    System.err.println("Exception when calling RepositoryApi#updateGroupById");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
+ **id** | **Integer**| ID of group to update |
+ **group** | [**Group**](Group.md)| group to update |
 
 ### Return type
 

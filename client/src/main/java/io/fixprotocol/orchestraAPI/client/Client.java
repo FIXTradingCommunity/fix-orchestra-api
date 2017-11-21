@@ -133,10 +133,11 @@ public class Client {
    * @param toClone ID of group to clone
    * @throws ApiException if the API call fails
    */
-  public void addGroup(String reposName, String version, Group group, Integer toClone) throws ApiException {
+  public void addGroup(String reposName, String version, Group group, Integer toClone)
+      throws ApiException {
     apiInstance.addGroup(reposName, version, group, toClone);
   }
-  
+
   /**
    * Adds a message scenario
    * 
@@ -355,6 +356,19 @@ public class Client {
   public Field findFieldById(String reposName, String version, Integer fieldid)
       throws ApiException {
     return apiInstance.findFieldById(reposName, version, fieldid);
+  }
+
+  /**
+   * Returns a single Group, if found
+   * 
+   * @param reposName name of Orchestra repository file (required)
+   * @param version version of Orchestra repository file (required)
+   * @param id Group identifier
+   * @return a Group
+   * @throws ApiException if the API call fails or the Group is not found
+   */
+  public Group findGroupById(String reposName, String version, Integer id) throws ApiException {
+    return apiInstance.findGroupById(reposName, version, id);
   }
 
   /**
@@ -597,6 +611,20 @@ public class Client {
   public void updateFieldById(String reposName, String version, Integer fieldid, Field field)
       throws ApiException {
     apiInstance.updateFieldById(reposName, version, fieldid, field);
+  }
+
+  /**
+   * Updates a single Group, if found (idempotent)
+   * 
+   * @param reposName name of Orchestra repository
+   * @param version version of Orchestra repository
+   * @param id Group ID
+   * @param group to update
+   * @throws ApiException if the API call fails or the Group is not found
+   */
+  public void updateGroupById(String reposName, String version, Integer id, Group group)
+      throws ApiException {
+    apiInstance.updateGroupById(reposName, version, id, group);
   }
 
   /**

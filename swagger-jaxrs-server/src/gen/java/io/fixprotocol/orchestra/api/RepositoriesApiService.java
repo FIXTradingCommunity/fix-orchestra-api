@@ -24,7 +24,7 @@ import java.io.InputStream;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-17T18:44:51.083Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-20T22:06:14.920Z")
 public abstract class RepositoriesApiService {
     public abstract Response addCode(String reposName,String version,Integer codesetid,Code code,SecurityContext securityContext) throws NotFoundException;
     public abstract Response addCodeSet(String reposName,String version,CodeSet codeSet,SecurityContext securityContext) throws NotFoundException;
@@ -39,6 +39,7 @@ public abstract class RepositoriesApiService {
     public abstract Response deleteComponent(String reposName,String version,Integer id,SecurityContext securityContext) throws NotFoundException;
     public abstract Response deleteDatatype(String reposName,String version,String name,SecurityContext securityContext) throws NotFoundException;
     public abstract Response deleteField(String reposName,String version,Integer id,SecurityContext securityContext) throws NotFoundException;
+    public abstract Response deleteGroup(String reposName,String version,Integer id,SecurityContext securityContext) throws NotFoundException;
     public abstract Response deleteMessage(String reposName,String version,Integer id,SecurityContext securityContext) throws NotFoundException;
     public abstract Response deleteRepository(String reposName,String version,SecurityContext securityContext) throws NotFoundException;
     public abstract Response downloadRepositoryById(String reposName,String version,SecurityContext securityContext) throws NotFoundException;
@@ -47,6 +48,7 @@ public abstract class RepositoriesApiService {
     public abstract Response findComponentById(String reposName,String version,Integer id,SecurityContext securityContext) throws NotFoundException;
     public abstract Response findDatatypeByName(String reposName,String version,String name,SecurityContext securityContext) throws NotFoundException;
     public abstract Response findFieldById(String reposName,String version,Integer id,SecurityContext securityContext) throws NotFoundException;
+    public abstract Response findGroupById(String reposName,String version,Integer id,SecurityContext securityContext) throws NotFoundException;
     public abstract Response findMessageById(String reposName,String version,Integer id,SecurityContext securityContext) throws NotFoundException;
     public abstract Response findRepositoryById(String reposName,String version,SecurityContext securityContext) throws NotFoundException;
     public abstract Response searchCodeSets(String reposName,String version,String searchString,Integer skip,Integer limit,SecurityContext securityContext) throws NotFoundException;
@@ -62,6 +64,7 @@ public abstract class RepositoriesApiService {
     public abstract Response updateComponentById(String reposName,String version,Integer id,Component component,SecurityContext securityContext) throws NotFoundException;
     public abstract Response updateDatatypeByName(String reposName,String version,String name,Datatype datatype,SecurityContext securityContext) throws NotFoundException;
     public abstract Response updateFieldById(String reposName,String version,Integer id,Field field,SecurityContext securityContext) throws NotFoundException;
+    public abstract Response updateGroupById(String reposName,String version,Integer id,Group group,SecurityContext securityContext) throws NotFoundException;
     public abstract Response updateMessageById(String reposName,String version,Integer id,Message message,SecurityContext securityContext) throws NotFoundException;
     public abstract Response updateRepositoryById(String reposName,String version,Repository repository,SecurityContext securityContext) throws NotFoundException;
 }

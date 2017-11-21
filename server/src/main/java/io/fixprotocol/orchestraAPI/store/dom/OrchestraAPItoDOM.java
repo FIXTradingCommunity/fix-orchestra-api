@@ -404,8 +404,8 @@ public final class OrchestraAPItoDOM {
     messageType.setId(BigInteger.valueOf(message.getOid().getId()));
     messageType.setName(message.getOid().getName());
     messageType.setOid(message.getOid().getOid());
-    //messageType.setCategory(message.getCategory());
-    //messageType.setExtends(value);
+    messageType.setCategory(message.getCategory());
+    messageType.setExtends(message.getExtends());
     messageType.setFlow(message.getFlow());
     messageType.setMsgType(message.getMsgType());
     messageType.setScenario(message.getScenario());
@@ -427,6 +427,8 @@ public final class OrchestraAPItoDOM {
     message.setFlow(messageType.getFlow());
     message.setMsgType(messageType.getMsgType());
     message.setScenario(messageType.getScenario());
+    message.setCategory(messageType.getCategory());
+    message.setExtends(messageType.getExtends());
     Structure structure = new Structure();
     message.setStructure(structure );
     List<Object> elements = messageType.getStructure().getComponentOrComponentRefOrGroup();

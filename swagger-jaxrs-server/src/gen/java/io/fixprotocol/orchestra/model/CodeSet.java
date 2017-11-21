@@ -40,7 +40,7 @@ import java.util.List;
 /**
  * CodeSet
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-17T18:44:51.083Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-20T22:06:14.920Z")
 public class CodeSet   {
   @JsonProperty("oid")
   private ObjectId oid = null;

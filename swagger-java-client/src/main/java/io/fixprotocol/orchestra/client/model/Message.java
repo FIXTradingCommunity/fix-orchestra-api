@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Message
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-17T18:45:34.064Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-20T22:08:15.770Z")
 public class Message {
   @JsonProperty("oid")
   private ObjectId oid = null;
@@ -22,11 +22,17 @@ public class Message {
   @JsonProperty("scenario")
   private String scenario = "base";
 
+  @JsonProperty("extends")
+  private String _extends = null;
+
   @JsonProperty("flow")
   private String flow = null;
 
   @JsonProperty("msgType")
   private String msgType = null;
+
+  @JsonProperty("category")
+  private String category = null;
 
   @JsonProperty("structure")
   private Structure structure = null;
@@ -70,6 +76,24 @@ public class Message {
     this.scenario = scenario;
   }
 
+  public Message _extends(String _extends) {
+    this._extends = _extends;
+    return this;
+  }
+
+   /**
+   * Inherits properties from another scenario
+   * @return _extends
+  **/
+  @ApiModelProperty(value = "Inherits properties from another scenario")
+  public String getExtends() {
+    return _extends;
+  }
+
+  public void setExtends(String _extends) {
+    this._extends = _extends;
+  }
+
   public Message flow(String flow) {
     this.flow = flow;
     return this;
@@ -104,6 +128,24 @@ public class Message {
 
   public void setMsgType(String msgType) {
     this.msgType = msgType;
+  }
+
+  public Message category(String category) {
+    this.category = category;
+    return this;
+  }
+
+   /**
+   * Get category
+   * @return category
+  **/
+  @ApiModelProperty(value = "")
+  public String getCategory() {
+    return category;
+  }
+
+  public void setCategory(String category) {
+    this.category = category;
   }
 
   public Message structure(Structure structure) {
@@ -159,15 +201,17 @@ public class Message {
     Message message = (Message) o;
     return Objects.equals(this.oid, message.oid) &&
         Objects.equals(this.scenario, message.scenario) &&
+        Objects.equals(this._extends, message._extends) &&
         Objects.equals(this.flow, message.flow) &&
         Objects.equals(this.msgType, message.msgType) &&
+        Objects.equals(this.category, message.category) &&
         Objects.equals(this.structure, message.structure) &&
         Objects.equals(this.responses, message.responses);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(oid, scenario, flow, msgType, structure, responses);
+    return Objects.hash(oid, scenario, _extends, flow, msgType, category, structure, responses);
   }
 
 
@@ -178,8 +222,10 @@ public class Message {
     
     sb.append("    oid: ").append(toIndentedString(oid)).append("\n");
     sb.append("    scenario: ").append(toIndentedString(scenario)).append("\n");
+    sb.append("    _extends: ").append(toIndentedString(_extends)).append("\n");
     sb.append("    flow: ").append(toIndentedString(flow)).append("\n");
     sb.append("    msgType: ").append(toIndentedString(msgType)).append("\n");
+    sb.append("    category: ").append(toIndentedString(category)).append("\n");
     sb.append("    structure: ").append(toIndentedString(structure)).append("\n");
     sb.append("    responses: ").append(toIndentedString(responses)).append("\n");
     sb.append("}");

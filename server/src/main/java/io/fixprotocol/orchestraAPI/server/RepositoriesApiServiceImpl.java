@@ -245,6 +245,20 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   }
 
   @Override
+  public Response deleteGroup(String reposName, String version, Integer id,
+      SecurityContext securityContext) throws NotFoundException {
+    try {
+      repositoryStore.deleteGroup(reposName, version, id);
+      return Response.noContent().build();
+    } catch (ResourceNotFoundException e) {
+      return Response.noContent().status(Status.NOT_FOUND).build();
+    } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
+      return Response.serverError().build();
+    }
+  }
+
+  @Override
   public Response deleteMessage(String reposName, String version, Integer id,
       SecurityContext securityContext) throws NotFoundException {
     try {
@@ -366,6 +380,20 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   }
 
   @Override
+  public Response findGroupById(String reposName, String version, Integer id,
+      SecurityContext securityContext) throws NotFoundException {
+    try {
+      Group group = repositoryStore.getGroupById(reposName, version, id);
+      return Response.ok().entity(group).build();
+    } catch (ResourceNotFoundException e) {
+      return Response.noContent().status(Status.NOT_FOUND).build();
+    } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
+      return Response.serverError().build();
+    }
+  }
+
+  @Override
   public Response findMessageById(String reposName, String version, Integer id,
       SecurityContext securityContext) throws NotFoundException {
     try {
@@ -398,8 +426,11 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
       String searchString, Integer skip, Integer limit, SecurityContext securityContext)
       throws NotFoundException {
     try {
-      Predicate<Code> predicate = searchString != null ? code -> searchString.equals(code.getOid().getName())
-          || searchString.equals(code.getOid().getAbbrName()) : t -> true;
+      Predicate<Code> predicate =
+          searchString != null
+              ? code -> searchString.equals(code.getOid().getName())
+                  || searchString.equals(code.getOid().getAbbrName())
+              : t -> true;
 
       List<Code> filtered = repositoryStore.getCodes(reposName, version, codesetid, predicate);
       List<Code> range =
@@ -415,8 +446,11 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   public Response searchCodeSets(String reposName, String version, String searchString,
       Integer skip, Integer limit, SecurityContext securityContext) throws NotFoundException {
     try {
-      Predicate<CodeSet> predicate = searchString != null ? cs -> searchString.equals(cs.getOid().getName())
-          || searchString.equals(cs.getOid().getAbbrName()) : t -> true;
+      Predicate<CodeSet> predicate =
+          searchString != null
+              ? cs -> searchString.equals(cs.getOid().getName())
+                  || searchString.equals(cs.getOid().getAbbrName())
+              : t -> true;
 
       List<CodeSet> filtered = repositoryStore.getCodeSets(reposName, version, predicate);
       List<CodeSet> range =
@@ -427,12 +461,16 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     }
   }
 
+
   @Override
   public Response searchComponents(String reposName, String version, String searchString,
       Integer skip, Integer limit, SecurityContext securityContext) throws NotFoundException {
     try {
-      Predicate<Component> predicate = searchString != null ? c -> searchString.equals(c.getOid().getName())
-          || searchString.equals(c.getOid().getAbbrName()) : t -> true;
+      Predicate<Component> predicate =
+          searchString != null
+              ? c -> searchString.equals(c.getOid().getName())
+                  || searchString.equals(c.getOid().getAbbrName())
+              : t -> true;
 
       List<Component> filtered = repositoryStore.getComponents(reposName, version, predicate);
       List<Component> range =
@@ -460,14 +498,16 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     }
   }
 
-
   @Override
   public Response searchFields(String reposName, String version, String searchString, Integer skip,
       Integer limit, SecurityContext securityContext) throws NotFoundException {
     try {
-      Predicate<Field> predicate = searchString != null ? field -> searchString.equals(field.getOid().getName())
-          || searchString.equals(field.getOid().getAbbrName()) : t -> true;
-          
+      Predicate<Field> predicate =
+          searchString != null
+              ? field -> searchString.equals(field.getOid().getName())
+                  || searchString.equals(field.getOid().getAbbrName())
+              : t -> true;
+
       List<Field> filtered = repositoryStore.getFields(reposName, version, predicate);
       List<Field> range =
           filtered.subList(skip != null ? skip : 0, limit != null ? limit : filtered.size());
@@ -481,8 +521,11 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   public Response searchGroups(String reposName, String version, String searchString, Integer skip,
       Integer limit, SecurityContext securityContext) throws NotFoundException {
     try {
-      Predicate<Group> predicate = searchString != null ? group -> searchString.equals(group.getOid().getName())
-          || searchString.equals(group.getOid().getAbbrName()) : t -> true;
+      Predicate<Group> predicate =
+          searchString != null
+              ? group -> searchString.equals(group.getOid().getName())
+                  || searchString.equals(group.getOid().getAbbrName())
+              : t -> true;
 
       List<Group> filtered = repositoryStore.getGroups(reposName, version, predicate);
       List<Group> range =
@@ -586,6 +629,19 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
       SecurityContext securityContext) throws NotFoundException {
     try {
       repositoryStore.updateField(reposName, version, id, field);
+      return Response.ok().build();
+    } catch (ResourceNotFoundException e) {
+      return Response.noContent().status(Status.NOT_FOUND).build();
+    } catch (RepositoryStoreException e) {
+      return Response.serverError().build();
+    }
+  }
+
+  @Override
+  public Response updateGroupById(String reposName, String version, Integer id, Group group,
+      SecurityContext securityContext) throws NotFoundException {
+    try {
+      repositoryStore.updateGroup(reposName, version, id, group);
       return Response.ok().build();
     } catch (ResourceNotFoundException e) {
       return Response.noContent().status(Status.NOT_FOUND).build();

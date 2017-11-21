@@ -184,7 +184,7 @@ public class RepositoryDOMStore implements RepositoryStore {
             String.format("Duplicate component with ID=%d", component.getOid().getId()));
       }
     }
-    
+
     if (toClone != null) {
       ComponentType componentTypeToClone = null;
       for (int i = 0; i < components.size(); i++) {
@@ -195,8 +195,8 @@ public class RepositoryDOMStore implements RepositoryStore {
         }
       }
       if (componentTypeToClone == null) {
-        throw new ResourceNotFoundException(String
-            .format("Component with ID=%d not found", toClone));
+        throw new ResourceNotFoundException(
+            String.format("Component with ID=%d not found", toClone));
       }
       ComponentType clone = (ComponentType) componentTypeToClone.clone();
       clone.setAbbrName(component.getOid().getAbbrName());
@@ -284,8 +284,7 @@ public class RepositoryDOMStore implements RepositoryStore {
         }
       }
       if (messageTypeToClone == null) {
-        throw new ResourceNotFoundException(String
-            .format("Message with ID=%d not found", toClone));
+        throw new ResourceNotFoundException(String.format("Message with ID=%d not found", toClone));
       }
       MessageType clone = (MessageType) messageTypeToClone.clone();
       clone.setAbbrName(message.getOid().getAbbrName());
@@ -293,9 +292,10 @@ public class RepositoryDOMStore implements RepositoryStore {
       clone.setName(message.getOid().getName());
       clone.setOid(message.getOid().getOid());
       clone.setScenario(message.getScenario());
+      clone.setExtends(message.getExtends());
       messages.add(clone);
     } else {
-      messages.add(OrchestraAPItoDOM.MessageToDOM(message));  
+      messages.add(OrchestraAPItoDOM.MessageToDOM(message));
     }
   }
 
@@ -484,6 +484,12 @@ public class RepositoryDOMStore implements RepositoryStore {
   }
 
   @Override
+  public void deleteGroup(String reposName, String version, Integer id)
+      throws RepositoryStoreException {
+    deleteComponent(reposName, version, id);
+  }
+
+  @Override
   public void deleteMessage(String reposName, String version, Integer id)
       throws RepositoryStoreException {
     Objects.requireNonNull(reposName, "Repository name missing");
@@ -505,8 +511,8 @@ public class RepositoryDOMStore implements RepositoryStore {
       }
     }
 
-    throw new ResourceNotFoundException(String.format("Message with ID=%d not found", id));  
-    }
+    throw new ResourceNotFoundException(String.format("Message with ID=%d not found", id));
+  }
 
   @Override
   public void deleteRepository(String reposName, String version) throws RepositoryStoreException {
@@ -658,8 +664,8 @@ public class RepositoryDOMStore implements RepositoryStore {
     List<ComponentType> components = getComponentList(repository);
 
     // ComponentType only, not subclass
-    return components.stream().filter(c -> c.getClass().equals(ComponentType.class) ).map(OrchestraAPItoDOM::DOMToComponent).filter(predicate)
-        .collect(Collectors.toList());
+    return components.stream().filter(c -> c.getClass().equals(ComponentType.class))
+        .map(OrchestraAPItoDOM::DOMToComponent).filter(predicate).collect(Collectors.toList());
   }
 
   @Override
@@ -746,6 +752,31 @@ public class RepositoryDOMStore implements RepositoryStore {
 
     return fields.stream().map(OrchestraAPItoDOM::DOMToField).filter(predicate)
         .collect(Collectors.toList());
+  }
+
+  @Override
+  public Group getGroupById(String reposName, String version, Integer id)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(id, "Component ID missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+    Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+    List<ComponentType> components = getComponentList(repository);
+
+    for (ComponentType component : components) {
+      if (id == component.getId().intValue() && component instanceof GroupType) {
+        GroupType group = (GroupType) component;
+        return OrchestraAPItoDOM.DOMToGroup(group);
+      }
+    }
+
+    throw new ResourceNotFoundException(String.format("Group with ID=%d not found", id));
+
   }
 
   @Override
@@ -959,7 +990,7 @@ public class RepositoryDOMStore implements RepositoryStore {
 
     throw new ResourceNotFoundException(String.format("Datatype %s not found", name));
   }
-  
+
   @Override
   public void updateField(String reposName, String version, Integer id, Field field)
       throws RepositoryStoreException {
@@ -985,6 +1016,31 @@ public class RepositoryDOMStore implements RepositoryStore {
     }
 
     throw new ResourceNotFoundException(String.format("Field with ID=%d not found", id));
+  }
+
+  @Override
+  public void updateGroup(String reposName, String version, Integer id, Group group)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(id, "Group ID missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+    Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+    List<ComponentType> components = getComponentList(repository);
+
+    for (int i = 0; i < components.size(); i++) {
+      ComponentType componentType = components.get(i);
+      if (id == componentType.getId().intValue()) {
+        components.set(i, OrchestraAPItoDOM.ComponentToDOM(group));
+        return;
+      }
+    }
+
+    throw new ResourceNotFoundException(String.format("Group with ID=%d not found", id));
   }
 
   @Override

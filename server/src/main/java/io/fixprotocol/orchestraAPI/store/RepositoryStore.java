@@ -50,8 +50,10 @@ public interface RepositoryStore {
    * @param version version of Orchestra repository (required)
    * @param component to add to the repository
    * @param toClone identifier of Component to clone (optional). If the component to clone is found,
-   * its properties are copied except for the key fields provided by {@link Component#getOid()}
-   * @throws ResourceNotFoundException if the repository to update or component to clone does not exist
+   *        its properties are copied except for the key fields provided by
+   *        {@link Component#getOid()}
+   * @throws ResourceNotFoundException if the repository to update or component to clone does not
+   *         exist
    * @throws RepositoryStoreException if the store operation fails
    */
   void createComponent(String reposName, String version, Component component, Integer toClone)
@@ -86,9 +88,9 @@ public interface RepositoryStore {
    * @param reposName name of Orchestra repository (required)
    * @param version version of Orchestra repository (required)
    * @param message to add to the repository
-   * @param toClone identifier of Message to clone (optional). If the message to clone is found,
-   * its properties are copied except for the key fields provided by {@link Message#getOid()} and
-   * {@link Message#getScenario()}.
+   * @param toClone identifier of Message to clone (optional). If the message to clone is found, its
+   *        properties are copied except for the key fields provided by {@link Message#getOid()} and
+   *        {@link Message#getScenario()}.
    * @throws ResourceNotFoundException if the repository to update does not exist
    * @throws RepositoryStoreException if the store operation fails
    */
@@ -175,6 +177,17 @@ public interface RepositoryStore {
    * @throws RepositoryStoreException if the store operation fails
    */
   void deleteField(String reposName, String version, Integer id) throws RepositoryStoreException;
+
+  /**
+   * Deletes one Group if it exists
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param id group identifier
+   * @throws ResourceNotFoundException if the repository or group to delete does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  void deleteGroup(String reposName, String version, Integer id) throws RepositoryStoreException;
 
   /**
    * Deletes one Message if it exists
@@ -329,6 +342,18 @@ public interface RepositoryStore {
       throws RepositoryStoreException;
 
   /**
+   * Retrieves a Group by its ID
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param id group identifier
+   * @return the group
+   * @throws ResourceNotFoundException if the repository or group does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  Group getGroupById(String reposName, String version, Integer id) throws RepositoryStoreException;
+
+  /**
    * Retrieves all groups in a repository
    * 
    * @param reposName name of Orchestra repository (required)
@@ -463,6 +488,19 @@ public interface RepositoryStore {
    * @throws RepositoryStoreException if the store operation fails
    */
   void updateField(String reposName, String version, Integer id, Field field)
+      throws RepositoryStoreException;
+
+  /**
+   * Update an existing Group
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param id ID of the group to update
+   * @param group new value of the Group
+   * @throws ResourceNotFoundException if the repository or field to update does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  void updateGroup(String reposName, String version, Integer id, Group group)
       throws RepositoryStoreException;
 
   /**

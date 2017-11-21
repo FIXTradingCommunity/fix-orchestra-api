@@ -31,7 +31,7 @@ import io.swagger.annotations.ApiParam;
 
 
 @io.swagger.annotations.Api(description = "the repositories API")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-17T18:44:51.083Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-20T22:06:14.920Z")
 public class RepositoriesApi  {
    private final RepositoriesApiService delegate = RepositoriesApiServiceFactory.getRepositoriesApi();
 
@@ -265,6 +265,22 @@ public class RepositoriesApi  {
         return delegate.deleteField(reposName,version,id,securityContext);
     }
     @DELETE
+    @Path("/{repos-name}/{version}/groups/{id}")
+    
+    
+    @io.swagger.annotations.ApiOperation(value = "deletes a single group based on the ID supplied", notes = "", response = void.class, tags={ "repository", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 204, message = "group deleted", response = void.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 404, message = "group not found", response = void.class) })
+    public Response deleteGroup(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
+,@ApiParam(value = "ID of group to delete",required=true) @PathParam("id") Integer id
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.deleteGroup(reposName,version,id,securityContext);
+    }
+    @DELETE
     @Path("/{repos-name}/{version}/messages/{id}")
     
     
@@ -390,6 +406,22 @@ public class RepositoriesApi  {
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.findFieldById(reposName,version,id,securityContext);
+    }
+    @GET
+    @Path("/{repos-name}/{version}/groups/{id}")
+    
+    @Produces({ "application/json" })
+    @io.swagger.annotations.ApiOperation(value = "Returns a single group, if found", notes = "", response = Group.class, tags={ "repository", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "group response", response = Group.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 200, message = "unexpected error", response = Group.class) })
+    public Response findGroupById(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
+,@ApiParam(value = "ID of group to fetch",required=true) @PathParam("id") Integer id
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.findGroupById(reposName,version,id,securityContext);
     }
     @GET
     @Path("/{repos-name}/{version}/messages/{id}")
@@ -650,6 +682,23 @@ public class RepositoriesApi  {
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.updateFieldById(reposName,version,id,field,securityContext);
+    }
+    @PUT
+    @Path("/{repos-name}/{version}/groups/{id}")
+    @Consumes({ "application/json" })
+    
+    @io.swagger.annotations.ApiOperation(value = "Updates a single group, if found (idempotent)", notes = "", response = void.class, tags={ "repository", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 204, message = "group updated", response = void.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 200, message = "unexpected error", response = void.class) })
+    public Response updateGroupById(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
+,@ApiParam(value = "ID of group to update",required=true) @PathParam("id") Integer id
+,@ApiParam(value = "group to update" ,required=true) Group group
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.updateGroupById(reposName,version,id,group,securityContext);
     }
     @PUT
     @Path("/{repos-name}/{version}/messages/{id}")

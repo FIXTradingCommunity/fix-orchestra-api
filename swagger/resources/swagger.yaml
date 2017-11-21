@@ -697,98 +697,6 @@ paths:
           description: "invalid input, object invalid"
         409:
           description: "an existing item already exists"
-  /repositories/{repos-name}/{version}/groups:
-    get:
-      tags:
-      - "repository"
-      summary: "searches groups"
-      description: "By passing in the appropriate options, you can search for groups "
-      operationId: "searchGroups"
-      produces:
-      - "application/json"
-      parameters:
-      - name: "repos-name"
-        in: "path"
-        description: "name of Orchestra repository"
-        required: true
-        type: "string"
-      - name: "version"
-        in: "path"
-        description: "version of Orchestra repository"
-        required: true
-        type: "string"
-      - name: "searchString"
-        in: "query"
-        description: "pass an optional search string for looking up groups"
-        required: false
-        type: "string"
-      - name: "skip"
-        in: "query"
-        description: "number of records to skip for pagination"
-        required: false
-        type: "integer"
-        minimum: 0
-        format: "int32"
-      - name: "limit"
-        in: "query"
-        description: "maximum number of records to return"
-        required: false
-        type: "integer"
-        maximum: 50.0
-        minimum: 0
-        format: "int32"
-      responses:
-        200:
-          description: "search results matching criteria"
-          schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Group"
-        400:
-          description: "bad input parameter"
-    post:
-      tags:
-      - "repository"
-      summary: "adds a repeating group"
-      description: "Adds a group"
-      operationId: "addGroup"
-      consumes:
-      - "application/json"
-      parameters:
-      - name: "repos-name"
-        in: "path"
-        description: "name of Orchestra repository"
-        required: true
-        type: "string"
-      - name: "version"
-        in: "path"
-        description: "version of Orchestra repository"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "group"
-        description: "Group to add"
-        required: false
-        schema:
-          $ref: "#/definitions/Group"
-      - name: "toClone"
-        in: "query"
-        description: "ID of group to clone"
-        required: false
-        type: "integer"
-        format: "int32"
-      responses:
-        201:
-          description: "item created"
-          headers:
-            Location:
-              type: "string"
-              format: "uri"
-              description: "URL of created resource"
-        400:
-          description: "invalid input, object invalid"
-        409:
-          description: "an existing item already exists"
   /repositories/{repos-name}/{version}/components/{id}:
     get:
       tags:
@@ -1256,6 +1164,196 @@ paths:
           description: "field deleted"
         404:
           description: "field not found"
+  /repositories/{repos-name}/{version}/groups:
+    get:
+      tags:
+      - "repository"
+      summary: "searches groups"
+      description: "By passing in the appropriate options, you can search for groups "
+      operationId: "searchGroups"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "repos-name"
+        in: "path"
+        description: "name of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "searchString"
+        in: "query"
+        description: "pass an optional search string for looking up groups"
+        required: false
+        type: "string"
+      - name: "skip"
+        in: "query"
+        description: "number of records to skip for pagination"
+        required: false
+        type: "integer"
+        minimum: 0
+        format: "int32"
+      - name: "limit"
+        in: "query"
+        description: "maximum number of records to return"
+        required: false
+        type: "integer"
+        maximum: 50.0
+        minimum: 0
+        format: "int32"
+      responses:
+        200:
+          description: "search results matching criteria"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Group"
+        400:
+          description: "bad input parameter"
+    post:
+      tags:
+      - "repository"
+      summary: "adds a repeating group"
+      description: "Adds a group"
+      operationId: "addGroup"
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "repos-name"
+        in: "path"
+        description: "name of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version of Orchestra repository"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "group"
+        description: "Group to add"
+        required: false
+        schema:
+          $ref: "#/definitions/Group"
+      - name: "toClone"
+        in: "query"
+        description: "ID of group to clone"
+        required: false
+        type: "integer"
+        format: "int32"
+      responses:
+        201:
+          description: "item created"
+          headers:
+            Location:
+              type: "string"
+              format: "uri"
+              description: "URL of created resource"
+        400:
+          description: "invalid input, object invalid"
+        409:
+          description: "an existing item already exists"
+  /repositories/{repos-name}/{version}/groups/{id}:
+    get:
+      tags:
+      - "repository"
+      summary: "Returns a single group, if found"
+      operationId: "findGroupById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "repos-name"
+        in: "path"
+        description: "name of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "id"
+        in: "path"
+        description: "ID of group to fetch"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        200:
+          description: "group response"
+          schema:
+            $ref: "#/definitions/Group"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    put:
+      tags:
+      - "repository"
+      summary: "Updates a single group, if found (idempotent)"
+      operationId: "updateGroupById"
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "repos-name"
+        in: "path"
+        description: "name of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "id"
+        in: "path"
+        description: "ID of group to update"
+        required: true
+        type: "integer"
+        format: "int32"
+      - in: "body"
+        name: "group"
+        description: "group to update"
+        required: true
+        schema:
+          $ref: "#/definitions/Group"
+      responses:
+        204:
+          description: "group updated"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    delete:
+      tags:
+      - "repository"
+      summary: "deletes a single group based on the ID supplied"
+      operationId: "deleteGroup"
+      parameters:
+      - name: "repos-name"
+        in: "path"
+        description: "name of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "id"
+        in: "path"
+        description: "ID of group to delete"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        204:
+          description: "group deleted"
+        404:
+          description: "group not found"
   /repositories/{repos-name}/{version}/messages:
     get:
       tags:
@@ -1671,6 +1769,10 @@ definitions:
         description: "Use case of a message type"
         maxLength: 64
         default: "base"
+      extends:
+        type: "string"
+        description: "Inherits properties from another scenario"
+        maxLength: 64
       flow:
         type: "string"
         description: "A stream of messages between actors"
@@ -1678,6 +1780,8 @@ definitions:
       msgType:
         type: "string"
         maxLength: 2
+      category:
+        type: "string"
       structure:
         $ref: "#/definitions/Structure"
       responses:

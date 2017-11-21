@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-17T18:45:34.064Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-20T22:08:15.770Z")
 public class RepositoryApi {
   private ApiClient apiClient;
 
@@ -726,6 +726,61 @@ public class RepositoryApi {
     apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
   }
   /**
+   * deletes a single group based on the ID supplied
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param id ID of group to delete (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void deleteGroup(String reposName, String version, Integer id) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'reposName' is set
+    if (reposName == null) {
+      throw new ApiException(400, "Missing the required parameter 'reposName' when calling deleteGroup");
+    }
+    
+    // verify the required parameter 'version' is set
+    if (version == null) {
+      throw new ApiException(400, "Missing the required parameter 'version' when calling deleteGroup");
+    }
+    
+    // verify the required parameter 'id' is set
+    if (id == null) {
+      throw new ApiException(400, "Missing the required parameter 'id' when calling deleteGroup");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/repositories/{repos-name}/{version}/groups/{id}".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
+      .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
+      .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    
+    
+    final String[] localVarAccepts = {
+      
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+
+    apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+  }
+  /**
    * deletes a single message scenario based on the ID supplied
    * 
    * @param reposName name of Orchestra repository (required)
@@ -1162,6 +1217,62 @@ public class RepositoryApi {
     String[] localVarAuthNames = new String[] {  };
 
     GenericType<Field> localVarReturnType = new GenericType<Field>() {};
+    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+  /**
+   * Returns a single group, if found
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param id ID of group to fetch (required)
+   * @return Group
+   * @throws ApiException if fails to make API call
+   */
+  public Group findGroupById(String reposName, String version, Integer id) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'reposName' is set
+    if (reposName == null) {
+      throw new ApiException(400, "Missing the required parameter 'reposName' when calling findGroupById");
+    }
+    
+    // verify the required parameter 'version' is set
+    if (version == null) {
+      throw new ApiException(400, "Missing the required parameter 'version' when calling findGroupById");
+    }
+    
+    // verify the required parameter 'id' is set
+    if (id == null) {
+      throw new ApiException(400, "Missing the required parameter 'id' when calling findGroupById");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/repositories/{repos-name}/{version}/groups/{id}".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
+      .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
+      .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    
+    
+    final String[] localVarAccepts = {
+      "application/json"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+    GenericType<Group> localVarReturnType = new GenericType<Group>() {};
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
   /**
@@ -1987,6 +2098,67 @@ public class RepositoryApi {
     
     // create path and map variables
     String localVarPath = "/repositories/{repos-name}/{version}/fields/{id}".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
+      .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
+      .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    
+    
+    final String[] localVarAccepts = {
+      
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+
+    apiClient.invokeAPI(localVarPath, "PUT", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+  }
+  /**
+   * Updates a single group, if found (idempotent)
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param id ID of group to update (required)
+   * @param group group to update (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void updateGroupById(String reposName, String version, Integer id, Group group) throws ApiException {
+    Object localVarPostBody = group;
+    
+    // verify the required parameter 'reposName' is set
+    if (reposName == null) {
+      throw new ApiException(400, "Missing the required parameter 'reposName' when calling updateGroupById");
+    }
+    
+    // verify the required parameter 'version' is set
+    if (version == null) {
+      throw new ApiException(400, "Missing the required parameter 'version' when calling updateGroupById");
+    }
+    
+    // verify the required parameter 'id' is set
+    if (id == null) {
+      throw new ApiException(400, "Missing the required parameter 'id' when calling updateGroupById");
+    }
+    
+    // verify the required parameter 'group' is set
+    if (group == null) {
+      throw new ApiException(400, "Missing the required parameter 'group' when calling updateGroupById");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/repositories/{repos-name}/{version}/groups/{id}".replaceAll("\\{format\\}","json")
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
