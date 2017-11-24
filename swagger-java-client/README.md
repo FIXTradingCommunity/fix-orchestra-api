@@ -133,10 +133,21 @@ Class | Method | HTTP request | Description
 *RepositoryApi* | [**updateGroupById**](docs/RepositoryApi.md#updateGroupById) | **PUT** /repositories/{repos-name}/{version}/groups/{id} | Updates a single group, if found (idempotent)
 *RepositoryApi* | [**updateMessageById**](docs/RepositoryApi.md#updateMessageById) | **PUT** /repositories/{repos-name}/{version}/messages/{id} | Updates a single message scenario, if found (idempotent)
 *RepositoryApi* | [**updateRepositoryById**](docs/RepositoryApi.md#updateRepositoryById) | **PUT** /repositories/{repos-name}/{version} | Updates an Orchestra repository, if found (idempotent)
+*WorkflowApi* | [**addActor**](docs/WorkflowApi.md#addActor) | **POST** /repositories/{repos-name}/{version}/actors | adds an Actor
+*WorkflowApi* | [**addFlow**](docs/WorkflowApi.md#addFlow) | **POST** /repositories/{repos-name}/{version}/flows | adds a Flow
+*WorkflowApi* | [**deleteActor**](docs/WorkflowApi.md#deleteActor) | **DELETE** /repositories/{repos-name}/{version}/actors/{name} | deletes a single Actor based on the name supplied
+*WorkflowApi* | [**deleteFlow**](docs/WorkflowApi.md#deleteFlow) | **DELETE** /repositories/{repos-name}/{version}/flows/{name} | deletes a single Flow based on the name supplied
+*WorkflowApi* | [**findActorByName**](docs/WorkflowApi.md#findActorByName) | **GET** /repositories/{repos-name}/{version}/actors/{name} | Returns a single Actor, if found
+*WorkflowApi* | [**findFlowByName**](docs/WorkflowApi.md#findFlowByName) | **GET** /repositories/{repos-name}/{version}/flows/{name} | Returns a single Flow, if found
+*WorkflowApi* | [**searchActors**](docs/WorkflowApi.md#searchActors) | **GET** /repositories/{repos-name}/{version}/actors | searches actors
+*WorkflowApi* | [**searchFlows**](docs/WorkflowApi.md#searchFlows) | **GET** /repositories/{repos-name}/{version}/flows | searches flows
+*WorkflowApi* | [**updateActorByName**](docs/WorkflowApi.md#updateActorByName) | **PUT** /repositories/{repos-name}/{version}/actors/{name} | Updates a single Actor, if found (idempotent)
+*WorkflowApi* | [**updateFlowByName**](docs/WorkflowApi.md#updateFlowByName) | **PUT** /repositories/{repos-name}/{version}/flows/{name} | Updates a single Flow, if found (idempotent)
 
 
 ## Documentation for Models
 
+ - [Actor](docs/Actor.md)
  - [Annotation](docs/Annotation.md)
  - [Appinfo](docs/Appinfo.md)
  - [Code](docs/Code.md)
@@ -150,16 +161,22 @@ Class | Method | HTTP request | Description
  - [ErrorModel](docs/ErrorModel.md)
  - [Field](docs/Field.md)
  - [FieldRef](docs/FieldRef.md)
+ - [Flow](docs/Flow.md)
  - [Group](docs/Group.md)
  - [GroupProperties](docs/GroupProperties.md)
  - [GroupRef](docs/GroupRef.md)
  - [Message](docs/Message.md)
  - [MessageElement](docs/MessageElement.md)
+ - [MessageRef](docs/MessageRef.md)
  - [Metadata](docs/Metadata.md)
  - [ObjectId](docs/ObjectId.md)
  - [Repository](docs/Repository.md)
  - [Response](docs/Response.md)
+ - [State](docs/State.md)
+ - [StateMachine](docs/StateMachine.md)
  - [Structure](docs/Structure.md)
+ - [Transition](docs/Transition.md)
+ - [Trigger](docs/Trigger.md)
 
 
 ## Documentation for Authorization

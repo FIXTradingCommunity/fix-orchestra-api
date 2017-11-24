@@ -16,6 +16,8 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import io.fixprotocol._2016.fixrepository.ActorType;
+import io.fixprotocol._2016.fixrepository.Actors;
 import io.fixprotocol._2016.fixrepository.CodeSetType;
 import io.fixprotocol._2016.fixrepository.CodeSets;
 import io.fixprotocol._2016.fixrepository.CodeType;
@@ -24,15 +26,18 @@ import io.fixprotocol._2016.fixrepository.Components;
 import io.fixprotocol._2016.fixrepository.Datatypes;
 import io.fixprotocol._2016.fixrepository.FieldType;
 import io.fixprotocol._2016.fixrepository.Fields;
+import io.fixprotocol._2016.fixrepository.FlowType;
 import io.fixprotocol._2016.fixrepository.GroupType;
 import io.fixprotocol._2016.fixrepository.MessageType;
 import io.fixprotocol._2016.fixrepository.Messages;
 import io.fixprotocol._2016.fixrepository.Repository;
+import io.fixprotocol.orchestra.model.Actor;
 import io.fixprotocol.orchestra.model.Code;
 import io.fixprotocol.orchestra.model.CodeSet;
 import io.fixprotocol.orchestra.model.Component;
 import io.fixprotocol.orchestra.model.Datatype;
 import io.fixprotocol.orchestra.model.Field;
+import io.fixprotocol.orchestra.model.Flow;
 import io.fixprotocol.orchestra.model.Group;
 import io.fixprotocol.orchestra.model.Message;
 import io.fixprotocol.orchestra.model.Metadata;
@@ -107,6 +112,28 @@ public class RepositoryDOMStore implements RepositoryStore {
   }
 
   private final Map<RepositoryKey, Repository> repositories = new ConcurrentHashMap<>();
+
+  @Override
+  public void createActor(String reposName, String version, Actor actor)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(actor, "Actor missing");
+    Repository repository = repositories.get(new RepositoryKey(reposName, version));
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+    List<ActorType> actors = getActorList(repository);
+
+    for (int i = 0; i < actors.size(); i++) {
+      ActorType actorType = actors.get(i);
+      if (actor.getName().equals(actorType.getName())) {
+        throw new DuplicateKeyException(String.format("Duplicate actor %s", actor.getName()));
+      }
+    }
+    repository.getActors().getActorOrFlow().add(OrchestraAPItoDOM.ActorToDOM(actor));
+  }
 
   @Override
   public void createCode(String reposName, String version, Integer codesetid, Code code)
@@ -255,6 +282,28 @@ public class RepositoryDOMStore implements RepositoryStore {
   }
 
   @Override
+  public void createFlow(String reposName, String version, Flow flow)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(flow, "Flow missing");
+    Repository repository = repositories.get(new RepositoryKey(reposName, version));
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+    List<FlowType> flows = getFlowList(repository);
+
+    for (int i = 0; i < flows.size(); i++) {
+      FlowType flowType = flows.get(i);
+      if (flow.getName().equals(flowType.getName())) {
+        throw new DuplicateKeyException(String.format("Duplicate actor %s", flow.getName()));
+      }
+    }
+    repository.getActors().getActorOrFlow().add(OrchestraAPItoDOM.FlowToDOM(flow));
+  }
+
+  @Override
   public void createMessage(String reposName, String version, Message message, Integer toClone)
       throws RepositoryStoreException {
     Objects.requireNonNull(reposName, "Repository name missing");
@@ -348,6 +397,39 @@ public class RepositoryDOMStore implements RepositoryStore {
     } catch (JAXBException e) {
       throw new RepositoryStoreException("Unable to read or parse repository file", e);
     }
+  }
+
+  @Override
+  public void deleteActor(String reposName, String version, String name)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(name, "Actor name missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+
+    final Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+
+    Actors actors = repository.getActors();
+    if (actors == null) {
+      throw new ResourceNotFoundException(String.format("Actor %s not found", name));
+    }
+
+    List<Object> actorsOrFlows = actors.getActorOrFlow();
+    for (Object obj : actorsOrFlows) {
+      if (obj instanceof ActorType) {
+        ActorType actorType = (ActorType) obj;
+        if (actorType.getName().equals(name)) {
+          actorsOrFlows.remove(obj);
+          return;
+        }
+      }
+    }
+
+    throw new ResourceNotFoundException(String.format("Actor %s not found", name));
   }
 
   @Override
@@ -484,6 +566,39 @@ public class RepositoryDOMStore implements RepositoryStore {
   }
 
   @Override
+  public void deleteFlow(String reposName, String version, String name)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(name, "Flow name missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+
+    final Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+
+    Actors actors = repository.getActors();
+    if (actors == null) {
+      throw new ResourceNotFoundException(String.format("Flow %s not found", name));
+    }
+
+    List<Object> actorsOrFlows = actors.getActorOrFlow();
+    for (Object obj : actorsOrFlows) {
+      if (obj instanceof FlowType) {
+        FlowType flowType = (FlowType) obj;
+        if (flowType.getName().equals(name)) {
+          actorsOrFlows.remove(obj);
+          return;
+        }
+      }
+    }
+
+    throw new ResourceNotFoundException(String.format("Flow %s not found", name));
+  }
+
+  @Override
   public void deleteGroup(String reposName, String version, Integer id)
       throws RepositoryStoreException {
     deleteComponent(reposName, version, id);
@@ -524,6 +639,50 @@ public class RepositoryDOMStore implements RepositoryStore {
       throw new ResourceNotFoundException(
           String.format("Repository with name=%s version=%s not found", reposName, version));
     }
+  }
+
+  @Override
+  public Actor getActor(String reposName, String version, String name)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(name, "Actor name missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+
+    final Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+
+    List<ActorType> actors = getActorList(repository);
+
+    for (ActorType actorType : actors) {
+      if (name.equals(actorType.getName())) {
+        return OrchestraAPItoDOM.DOMToActor(actorType);
+      }
+    }
+
+    throw new ResourceNotFoundException(String.format("Actor %s not found", name));
+  }
+
+  @Override
+  public List<Actor> getActors(String reposName, String version, Predicate<Actor> search)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+    Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+    Predicate<Actor> predicate = search != null ? search : t -> true;
+
+    List<ActorType> actors = getActorList(repository);
+
+    return actors.stream().map(OrchestraAPItoDOM::DOMToActor).filter(predicate)
+        .collect(Collectors.toList());
   }
 
   @Override
@@ -710,7 +869,6 @@ public class RepositoryDOMStore implements RepositoryStore {
 
     return datatypes.stream().map(OrchestraAPItoDOM::DOMToDatatype).filter(predicate)
         .collect(Collectors.toList());
-
   }
 
   @Override
@@ -751,6 +909,50 @@ public class RepositoryDOMStore implements RepositoryStore {
     List<FieldType> fields = getFieldList(repository);
 
     return fields.stream().map(OrchestraAPItoDOM::DOMToField).filter(predicate)
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  public Flow getFlow(String reposName, String version, String name)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(name, "Flow name missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+
+    final Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+
+    List<FlowType> flows = getFlowList(repository);
+
+    for (FlowType flowType : flows) {
+      if (name.equals(flowType.getName())) {
+        return OrchestraAPItoDOM.DOMToFlow(flowType);
+      }
+    }
+
+    throw new ResourceNotFoundException(String.format("Actor %s not found", name));
+  }
+
+  @Override
+  public List<Flow> getFlows(String reposName, String version, Predicate<Flow> search)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+    Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+    Predicate<Flow> predicate = search != null ? search : t -> true;
+
+    List<FlowType> flows = getFlowList(repository);
+
+    return flows.stream().map(OrchestraAPItoDOM::DOMToFlow).filter(predicate)
         .collect(Collectors.toList());
   }
 
@@ -881,12 +1083,46 @@ public class RepositoryDOMStore implements RepositoryStore {
   }
 
   @Override
+  public void updateActor(String reposName, String version, String name, Actor actor)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(name, "Actor name missing");
+    Objects.requireNonNull(actor, "Actor value missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+
+    final Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+
+    Actors actors = repository.getActors();
+    if (actors == null) {
+      throw new ResourceNotFoundException(String.format("Actor %s not found", name));
+    }
+
+    List<Object> actorsOrFlows = actors.getActorOrFlow();
+    for (int i = 0; i < actorsOrFlows.size(); i++) {
+      if (actorsOrFlows.get(i) instanceof ActorType) {
+        ActorType actorType = (ActorType) actorsOrFlows.get(i);
+        if (actorType.getName().equals(name)) {
+          actorsOrFlows.set(i, OrchestraAPItoDOM.ActorToDOM(actor));
+          return;
+        }
+      }
+    }
+
+    throw new ResourceNotFoundException(String.format("Actor %s not found", name));
+  }
+
+  @Override
   public void updateCode(String reposName, String version, Integer codesetid, Integer id, Code code)
       throws RepositoryStoreException {
     Objects.requireNonNull(reposName, "Repository name missing");
     Objects.requireNonNull(version, "Repository version missing");
     Objects.requireNonNull(id, "CodeSet ID missing");
-    Objects.requireNonNull(code, "Code missing");
+    Objects.requireNonNull(code, "Code value missing");
     final RepositoryKey key = new RepositoryKey(reposName, version);
     Repository repository = repositories.get(key);
     if (repository == null) {
@@ -916,6 +1152,7 @@ public class RepositoryDOMStore implements RepositoryStore {
     Objects.requireNonNull(reposName, "Repository name missing");
     Objects.requireNonNull(version, "Repository version missing");
     Objects.requireNonNull(id, "CodeSet ID missing");
+    Objects.requireNonNull(codeSet, "CodeSet value missing");
     final RepositoryKey key = new RepositoryKey(reposName, version);
 
     final Repository repository = repositories.get(key);
@@ -943,6 +1180,7 @@ public class RepositoryDOMStore implements RepositoryStore {
     Objects.requireNonNull(reposName, "Repository name missing");
     Objects.requireNonNull(version, "Repository version missing");
     Objects.requireNonNull(id, "Component ID missing");
+    Objects.requireNonNull(component, "Component value missing");
     final RepositoryKey key = new RepositoryKey(reposName, version);
 
     final Repository repository = repositories.get(key);
@@ -970,6 +1208,7 @@ public class RepositoryDOMStore implements RepositoryStore {
     Objects.requireNonNull(reposName, "Repository name missing");
     Objects.requireNonNull(version, "Repository version missing");
     Objects.requireNonNull(name, "Datatype name missing");
+    Objects.requireNonNull(datatype, "Datatype value missing");
     final RepositoryKey key = new RepositoryKey(reposName, version);
 
     final Repository repository = repositories.get(key);
@@ -997,6 +1236,7 @@ public class RepositoryDOMStore implements RepositoryStore {
     Objects.requireNonNull(reposName, "Repository name missing");
     Objects.requireNonNull(version, "Repository version missing");
     Objects.requireNonNull(id, "Field ID missing");
+    Objects.requireNonNull(field, "Field value missing");
     final RepositoryKey key = new RepositoryKey(reposName, version);
 
     final Repository repository = repositories.get(key);
@@ -1019,11 +1259,46 @@ public class RepositoryDOMStore implements RepositoryStore {
   }
 
   @Override
+  public void updateFlow(String reposName, String version, String name, Flow flow)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(name, "Flow name missing");
+    Objects.requireNonNull(flow, "Flow value missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+
+    final Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+
+    Actors actors = repository.getActors();
+    if (actors == null) {
+      throw new ResourceNotFoundException(String.format("Flow %s not found", name));
+    }
+
+    List<Object> actorsOrFlows = actors.getActorOrFlow();
+    for (int i = 0; i < actorsOrFlows.size(); i++) {
+      if (actorsOrFlows.get(i) instanceof FlowType) {
+        FlowType flowType = (FlowType) actorsOrFlows.get(i);
+        if (flowType.getName().equals(name)) {
+          actorsOrFlows.set(i, OrchestraAPItoDOM.FlowToDOM(flow));
+          return;
+        }
+      }
+    }
+
+    throw new ResourceNotFoundException(String.format("Actor %s not found", name));
+  }
+
+  @Override
   public void updateGroup(String reposName, String version, Integer id, Group group)
       throws RepositoryStoreException {
     Objects.requireNonNull(reposName, "Repository name missing");
     Objects.requireNonNull(version, "Repository version missing");
     Objects.requireNonNull(id, "Group ID missing");
+    Objects.requireNonNull(group, "Group value missing");
     final RepositoryKey key = new RepositoryKey(reposName, version);
     Repository repository = repositories.get(key);
     if (repository == null) {
@@ -1049,6 +1324,7 @@ public class RepositoryDOMStore implements RepositoryStore {
     Objects.requireNonNull(reposName, "Repository name missing");
     Objects.requireNonNull(version, "Repository version missing");
     Objects.requireNonNull(id, "Message ID missing");
+    Objects.requireNonNull(message, "Message value missing");
     final RepositoryKey key = new RepositoryKey(reposName, version);
 
     final Repository repository = repositories.get(key);
@@ -1085,6 +1361,17 @@ public class RepositoryDOMStore implements RepositoryStore {
     }
   }
 
+  private List<ActorType> getActorList(Repository repository) {
+    Actors actors = repository.getActors();
+    if (actors == null) {
+      actors = new Actors();
+      repository.setActors(actors);
+    }
+    return actors.getActorOrFlow().stream().filter(o -> o instanceof ActorType)
+        .map(o -> (ActorType) o).collect(Collectors.toList());
+  }
+
+
   private List<CodeSetType> getCodeSets(Repository repository) {
     CodeSets codeSets = repository.getCodeSets();
     if (codeSets == null) {
@@ -1119,6 +1406,16 @@ public class RepositoryDOMStore implements RepositoryStore {
       repository.setFields(fields);
     }
     return fields.getField();
+  }
+
+  private List<FlowType> getFlowList(Repository repository) {
+    Actors actors = repository.getActors();
+    if (actors == null) {
+      actors = new Actors();
+      repository.setActors(actors);
+    }
+    return actors.getActorOrFlow().stream().filter(o -> o instanceof FlowType)
+        .map(o -> (FlowType) o).collect(Collectors.toList());
   }
 
   private List<MessageType> getMessageList(Repository repository) {

@@ -15,7 +15,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * Group
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-20T22:08:15.770Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-21T23:02:09.711Z")
 public class Group extends Component {
   @JsonProperty("groupProperties")
   private GroupProperties groupProperties = null;

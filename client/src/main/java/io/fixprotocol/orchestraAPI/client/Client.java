@@ -6,33 +6,59 @@ import java.util.List;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.fixprotocol.orchestra.client.ApiClient;
 import io.fixprotocol.orchestra.client.ApiException;
 import io.fixprotocol.orchestra.client.JSON;
 import io.fixprotocol.orchestra.client.api.RepositoryApi;
+import io.fixprotocol.orchestra.client.api.WorkflowApi;
+import io.fixprotocol.orchestra.client.model.Actor;
 import io.fixprotocol.orchestra.client.model.Code;
 import io.fixprotocol.orchestra.client.model.CodeSet;
 import io.fixprotocol.orchestra.client.model.Component;
 import io.fixprotocol.orchestra.client.model.Datatype;
 import io.fixprotocol.orchestra.client.model.Field;
+import io.fixprotocol.orchestra.client.model.Flow;
 import io.fixprotocol.orchestra.client.model.Group;
 import io.fixprotocol.orchestra.client.model.Message;
 import io.fixprotocol.orchestra.client.model.Repository;
 
 public class Client {
 
-  private final RepositoryApi apiInstance;
+  private final RepositoryApi repositoryApi = new RepositoryApi();;
+  private final WorkflowApi workflowApi = new WorkflowApi();
 
+  /**
+   * Constructor with defaults
+   */
   public Client() {
-    apiInstance = new RepositoryApi();
+    this(new ApiClient());
   }
 
-  public Client(RepositoryApi apiInstance) {
-    this.apiInstance = apiInstance;
-    JSON json = apiInstance.getApiClient().getJSON();
+  /**
+   * Constructor with supplied HTTP client
+   * 
+   * @param apiClient an HTTP client
+   */
+  public Client(ApiClient apiClient) {
+    JSON json = apiClient.getJSON();
     ObjectMapper mapper = json.getContext(null);
     // allows deserialization of ArrayList with a single element as an array (why isn't this the
     // default?)
     mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+    repositoryApi.setApiClient(apiClient);
+    workflowApi.setApiClient(apiClient);
+  }
+
+  /**
+   * adds an Actor Adds an Actor
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param actor Actor to add (optional)
+   * @throws ApiException if fails to make API call
+   */
+  public void addActor(String reposName, String version, Actor actor) throws ApiException {
+    workflowApi.addActor(reposName, version, actor);
   }
 
   /**
@@ -46,7 +72,7 @@ public class Client {
    */
   public void addCode(String reposName, String version, Integer codesetid, Code code)
       throws ApiException {
-    apiInstance.addCode(reposName, version, codesetid, code);
+    repositoryApi.addCode(reposName, version, codesetid, code);
   }
 
   /**
@@ -58,7 +84,7 @@ public class Client {
    * @throws ApiException if the API call fails
    */
   public void addCodeSet(String reposName, String version, CodeSet codeSet) throws ApiException {
-    apiInstance.addCodeSet(reposName, version, codeSet);
+    repositoryApi.addCodeSet(reposName, version, codeSet);
   }
 
   /**
@@ -71,7 +97,7 @@ public class Client {
    */
   public void addComponent(String reposName, String version, Component component)
       throws ApiException {
-    apiInstance.addComponent(reposName, version, component, null);
+    repositoryApi.addComponent(reposName, version, component, null);
   }
 
   /**
@@ -85,7 +111,7 @@ public class Client {
    */
   public void addComponent(String reposName, String version, Component component, Integer toClone)
       throws ApiException {
-    apiInstance.addComponent(reposName, version, component, toClone);
+    repositoryApi.addComponent(reposName, version, component, toClone);
   }
 
   /**
@@ -97,7 +123,7 @@ public class Client {
    * @throws ApiException if the API call fails
    */
   public void addDatatype(String reposName, String version, Datatype datatype) throws ApiException {
-    apiInstance.addDatatype(reposName, version, datatype);
+    repositoryApi.addDatatype(reposName, version, datatype);
   }
 
   /**
@@ -109,7 +135,19 @@ public class Client {
    * @throws ApiException if the API call fails
    */
   public void addField(String reposName, String version, Field field) throws ApiException {
-    apiInstance.addField(reposName, version, field);
+    repositoryApi.addField(reposName, version, field);
+  }
+
+  /**
+   * adds a Flow Adds a Flow
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param flow Flow to add (optional)
+   * @throws ApiException if fails to make API call
+   */
+  public void addFlow(String reposName, String version, Flow flow) throws ApiException {
+    workflowApi.addFlow(reposName, version, flow);
   }
 
   /**
@@ -121,7 +159,7 @@ public class Client {
    * @throws ApiException if the API call fails
    */
   public void addGroup(String reposName, String version, Group group) throws ApiException {
-    apiInstance.addGroup(reposName, version, group, null);
+    repositoryApi.addGroup(reposName, version, group, null);
   }
 
   /**
@@ -135,7 +173,7 @@ public class Client {
    */
   public void addGroup(String reposName, String version, Group group, Integer toClone)
       throws ApiException {
-    apiInstance.addGroup(reposName, version, group, toClone);
+    repositoryApi.addGroup(reposName, version, group, toClone);
   }
 
   /**
@@ -147,7 +185,7 @@ public class Client {
    * @throws ApiException if the API call fails
    */
   public void addMessage(String reposName, String version, Message message) throws ApiException {
-    apiInstance.addMessage(reposName, version, message, null);
+    repositoryApi.addMessage(reposName, version, message, null);
   }
 
   /**
@@ -161,7 +199,7 @@ public class Client {
    */
   public void addMessage(String reposName, String version, Message message, Integer toClone)
       throws ApiException {
-    apiInstance.addMessage(reposName, version, message, toClone);
+    repositoryApi.addMessage(reposName, version, message, toClone);
   }
 
   /**
@@ -171,7 +209,7 @@ public class Client {
    * @throws ApiException if the API call fails
    */
   public void addRepository(Repository repository) throws ApiException {
-    apiInstance.addRepository(repository, null, null);
+    repositoryApi.addRepository(repository, null, null);
   }
 
   /**
@@ -184,7 +222,19 @@ public class Client {
    */
   public void addRepository(Repository repository, String nameToClone, String versionToClone)
       throws ApiException {
-    apiInstance.addRepository(repository, nameToClone, versionToClone);
+    repositoryApi.addRepository(repository, nameToClone, versionToClone);
+  }
+
+  /**
+   * deletes a single Actor based on the name supplied
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param name name of Actor to delete (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void deleteActor(String reposName, String version, String name) throws ApiException {
+    workflowApi.deleteActor(reposName, version, name);
   }
 
   /**
@@ -198,7 +248,7 @@ public class Client {
    */
   public void deleteCode(String reposName, String version, Integer codesetid, Integer codeid)
       throws ApiException {
-    apiInstance.deleteCode(reposName, version, codesetid, codeid);
+    repositoryApi.deleteCode(reposName, version, codesetid, codeid);
   }
 
   /**
@@ -211,7 +261,7 @@ public class Client {
    */
   public void deleteCodeSet(String reposName, String version, Integer codesetid)
       throws ApiException {
-    apiInstance.deleteCodeSet(reposName, version, codesetid);
+    repositoryApi.deleteCodeSet(reposName, version, codesetid);
   }
 
   /**
@@ -224,7 +274,7 @@ public class Client {
    */
   public void deleteComponent(String reposName, String version, Integer componentid)
       throws ApiException {
-    apiInstance.deleteComponent(reposName, version, componentid);
+    repositoryApi.deleteComponent(reposName, version, componentid);
   }
 
   /**
@@ -236,7 +286,7 @@ public class Client {
    * @throws ApiException if the API call fails
    */
   public void deleteDatatype(String reposName, String version, String name) throws ApiException {
-    apiInstance.deleteDatatype(reposName, version, name);
+    repositoryApi.deleteDatatype(reposName, version, name);
   }
 
   /**
@@ -248,7 +298,19 @@ public class Client {
    * @throws ApiException if the API call fails
    */
   public void deleteField(String reposName, String version, Integer fieldid) throws ApiException {
-    apiInstance.deleteField(reposName, version, fieldid);
+    repositoryApi.deleteField(reposName, version, fieldid);
+  }
+
+  /**
+   * deletes a single Flow based on the name supplied
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param name name of Flow to delete (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void deleteFlow(String reposName, String version, String name) throws ApiException {
+    workflowApi.deleteFlow(reposName, version, name);
   }
 
   /**
@@ -261,7 +323,7 @@ public class Client {
    */
   public void deleteMessage(String reposName, String version, Integer messageid)
       throws ApiException {
-    apiInstance.deleteMessage(reposName, version, messageid);
+    repositoryApi.deleteMessage(reposName, version, messageid);
   }
 
   /**
@@ -272,7 +334,7 @@ public class Client {
    * @throws ApiException if the API call fails
    */
   public void deleteRepository(String reposName, String version) throws ApiException {
-    apiInstance.deleteRepository(reposName, version);
+    repositoryApi.deleteRepository(reposName, version);
   }
 
   /**
@@ -284,7 +346,20 @@ public class Client {
    * @throws ApiException if the API call fails
    */
   public File downloadRepository(String reposName, String version) throws ApiException {
-    return apiInstance.downloadRepositoryById(reposName, version);
+    return repositoryApi.downloadRepositoryById(reposName, version);
+  }
+
+  /**
+   * Returns a single Actor, if found
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param name name of Actor to fetch (required)
+   * @return Actor
+   * @throws ApiException if fails to make API call
+   */
+  public Actor findActorByName(String reposName, String version, String name) throws ApiException {
+    return workflowApi.findActorByName(reposName, version, name);
   }
 
   /**
@@ -299,7 +374,7 @@ public class Client {
    */
   public Code findCodeById(String reposName, String version, Integer codesetid, Integer codeid)
       throws ApiException {
-    return apiInstance.findCodeById(reposName, version, codesetid, codeid);
+    return repositoryApi.findCodeById(reposName, version, codesetid, codeid);
   }
 
   /**
@@ -313,7 +388,7 @@ public class Client {
    */
   public CodeSet findCodeSetById(String reposName, String version, Integer codesetid)
       throws ApiException {
-    return apiInstance.findCodeSetById(reposName, version, codesetid);
+    return repositoryApi.findCodeSetById(reposName, version, codesetid);
   }
 
   /**
@@ -327,7 +402,7 @@ public class Client {
    */
   public Component findComponentById(String reposName, String version, Integer componentid)
       throws ApiException {
-    return apiInstance.findComponentById(reposName, version, componentid);
+    return repositoryApi.findComponentById(reposName, version, componentid);
   }
 
   /**
@@ -341,7 +416,7 @@ public class Client {
    */
   public Datatype findDatatypeByName(String reposName, String version, String name)
       throws ApiException {
-    return apiInstance.findDatatypeByName(reposName, version, name);
+    return repositoryApi.findDatatypeByName(reposName, version, name);
   }
 
   /**
@@ -355,7 +430,20 @@ public class Client {
    */
   public Field findFieldById(String reposName, String version, Integer fieldid)
       throws ApiException {
-    return apiInstance.findFieldById(reposName, version, fieldid);
+    return repositoryApi.findFieldById(reposName, version, fieldid);
+  }
+
+  /**
+   * Returns a single Flow, if found
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param name name of Flow to fetch (required)
+   * @return Flow
+   * @throws ApiException if fails to make API call
+   */
+  public Flow findFlowByName(String reposName, String version, String name) throws ApiException {
+    return workflowApi.findFlowByName(reposName, version, name);
   }
 
   /**
@@ -368,7 +456,7 @@ public class Client {
    * @throws ApiException if the API call fails or the Group is not found
    */
   public Group findGroupById(String reposName, String version, Integer id) throws ApiException {
-    return apiInstance.findGroupById(reposName, version, id);
+    return repositoryApi.findGroupById(reposName, version, id);
   }
 
   /**
@@ -382,7 +470,7 @@ public class Client {
    */
   public Message findMessageById(String reposName, String version, Integer messageid)
       throws ApiException {
-    return apiInstance.findMessageById(reposName, version, messageid);
+    return repositoryApi.findMessageById(reposName, version, messageid);
   }
 
   /**
@@ -394,7 +482,23 @@ public class Client {
    * @throws ApiException if the API call fails or the Metadata is not found
    */
   public Repository findRepositoryById(String reposName, String version) throws ApiException {
-    return apiInstance.findRepositoryById(reposName, version);
+    return repositoryApi.findRepositoryById(reposName, version);
+  }
+
+  /**
+   * searches actors By passing in the appropriate options, you can search for actors
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param searchString pass an optional search string for looking up actors (optional)
+   * @param skip number of records to skip for pagination (optional)
+   * @param limit maximum number of records to return (optional)
+   * @return List<Actor>
+   * @throws ApiException if fails to make API call
+   */
+  public List<Actor> searchActors(String reposName, String version, String searchString,
+      Integer skip, Integer limit) throws ApiException {
+    return workflowApi.searchActors(reposName, version, searchString, skip, limit);
   }
 
   /**
@@ -413,7 +517,7 @@ public class Client {
    */
   public List<Code> searchCodes(String reposName, String version, Integer codesetid,
       String searchString, Integer skip, Integer limit) throws ApiException {
-    return apiInstance.searchCodes(reposName, version, codesetid, searchString, skip, limit);
+    return repositoryApi.searchCodes(reposName, version, codesetid, searchString, skip, limit);
   }
 
   /**
@@ -431,7 +535,7 @@ public class Client {
    */
   public List<CodeSet> searchCodeSets(String reposName, String version, String searchString,
       Integer skip, Integer limit) throws ApiException {
-    return apiInstance.searchCodeSets(reposName, version, searchString, skip, limit);
+    return repositoryApi.searchCodeSets(reposName, version, searchString, skip, limit);
   }
 
   /**
@@ -449,7 +553,7 @@ public class Client {
    */
   public List<Component> searchComponents(String reposName, String version, String searchString,
       Integer skip, Integer limit) throws ApiException {
-    return apiInstance.searchComponents(reposName, version, searchString, skip, limit);
+    return repositoryApi.searchComponents(reposName, version, searchString, skip, limit);
   }
 
   /**
@@ -467,7 +571,7 @@ public class Client {
    */
   public List<Datatype> searchDatatypes(String reposName, String version, String searchString,
       Integer skip, Integer limit) throws ApiException {
-    return apiInstance.searchDatatypes(reposName, version, searchString, skip, limit);
+    return repositoryApi.searchDatatypes(reposName, version, searchString, skip, limit);
   }
 
   /**
@@ -485,7 +589,23 @@ public class Client {
    */
   public List<Field> searchFields(String reposName, String version, String searchString,
       Integer skip, Integer limit) throws ApiException {
-    return apiInstance.searchFields(reposName, version, searchString, skip, limit);
+    return repositoryApi.searchFields(reposName, version, searchString, skip, limit);
+  }
+
+  /**
+   * searches flows By passing in the appropriate options, you can search for flows
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param searchString pass an optional search string for looking up flows (optional)
+   * @param skip number of records to skip for pagination (optional)
+   * @param limit maximum number of records to return (optional)
+   * @return List<Flow>
+   * @throws ApiException if fails to make API call
+   */
+  public List<Flow> searchFlows(String reposName, String version, String searchString, Integer skip,
+      Integer limit) throws ApiException {
+    return workflowApi.searchFlows(reposName, version, searchString, skip, limit);
   }
 
   /**
@@ -503,7 +623,7 @@ public class Client {
    */
   public List<Group> searchGroups(String reposName, String version, String searchString,
       Integer skip, Integer limit) throws ApiException {
-    return apiInstance.searchGroups(reposName, version, searchString, skip, limit);
+    return repositoryApi.searchGroups(reposName, version, searchString, skip, limit);
   }
 
   /**
@@ -521,7 +641,7 @@ public class Client {
    */
   public List<Message> searchMessages(String reposName, String version, String searchString,
       Integer skip, Integer limit) throws ApiException {
-    return apiInstance.searchMessages(reposName, version, searchString, skip, limit);
+    return repositoryApi.searchMessages(reposName, version, searchString, skip, limit);
   }
 
   /**
@@ -538,7 +658,21 @@ public class Client {
 
   public List<Repository> searchRepositories(String searchString, Integer skip, Integer limit)
       throws ApiException {
-    return apiInstance.searchRepositories(searchString, skip, limit);
+    return repositoryApi.searchRepositories(searchString, skip, limit);
+  }
+
+  /**
+   * Updates a single Actor, if found (idempotent)
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param name name of CodeSet to update (required)
+   * @param actor Actor to update (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void updateActorByName(String reposName, String version, String name, Actor actor)
+      throws ApiException {
+    workflowApi.updateActorByName(reposName, version, name, actor);
   }
 
   /**
@@ -553,7 +687,7 @@ public class Client {
    */
   public void updateCodeById(String reposName, String version, Integer codesetid, Integer codeid,
       Code code) throws ApiException {
-    apiInstance.updateCodeById(reposName, version, codesetid, codeid, code);
+    repositoryApi.updateCodeById(reposName, version, codesetid, codeid, code);
   }
 
   /**
@@ -567,7 +701,7 @@ public class Client {
    */
   public void updateCodeSetById(String reposName, String version, Integer codesetid,
       CodeSet codeSet) throws ApiException {
-    apiInstance.updateCodeSetById(reposName, version, codesetid, codeSet);
+    repositoryApi.updateCodeSetById(reposName, version, codesetid, codeSet);
   }
 
   /**
@@ -582,7 +716,7 @@ public class Client {
 
   public void updateComponentById(String reposName, String version, Integer componentid,
       Component component) throws ApiException {
-    apiInstance.updateComponentById(reposName, version, componentid, component);
+    repositoryApi.updateComponentById(reposName, version, componentid, component);
   }
 
   /**
@@ -596,7 +730,7 @@ public class Client {
    */
   public void updateDatatypeByName(String reposName, String version, String name, Datatype datatype)
       throws ApiException {
-    apiInstance.updateDatatypeByName(reposName, version, name, datatype);
+    repositoryApi.updateDatatypeByName(reposName, version, name, datatype);
   }
 
   /**
@@ -610,7 +744,21 @@ public class Client {
    */
   public void updateFieldById(String reposName, String version, Integer fieldid, Field field)
       throws ApiException {
-    apiInstance.updateFieldById(reposName, version, fieldid, field);
+    repositoryApi.updateFieldById(reposName, version, fieldid, field);
+  }
+
+  /**
+   * Updates a single Flow, if found (idempotent)
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param name name of Flow to update (required)
+   * @param flow Flow to update (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void updateFlowByName(String reposName, String version, String name, Flow flow)
+      throws ApiException {
+    workflowApi.updateFlowByName(reposName, version, name, flow);
   }
 
   /**
@@ -624,7 +772,7 @@ public class Client {
    */
   public void updateGroupById(String reposName, String version, Integer id, Group group)
       throws ApiException {
-    apiInstance.updateGroupById(reposName, version, id, group);
+    repositoryApi.updateGroupById(reposName, version, id, group);
   }
 
   /**
@@ -638,7 +786,7 @@ public class Client {
    */
   public void updateMessageById(String reposName, String version, Integer messageid,
       Message message) throws ApiException {
-    apiInstance.updateMessageById(reposName, version, messageid, message);
+    repositoryApi.updateMessageById(reposName, version, messageid, message);
   }
 
   /**
@@ -651,7 +799,6 @@ public class Client {
    */
   public void updateRepositoryById(String reposName, String version, Repository repository)
       throws ApiException {
-    apiInstance.updateRepositoryById(reposName, version, repository);
+    repositoryApi.updateRepositoryById(reposName, version, repository);
   }
-
 }

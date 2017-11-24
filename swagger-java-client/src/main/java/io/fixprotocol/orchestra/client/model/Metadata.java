@@ -11,7 +11,7 @@ import java.time.LocalDate;
  * description of an Orchestra repository, conforms to Dublin Core Terms
  */
 @ApiModel(description = "description of an Orchestra repository, conforms to Dublin Core Terms")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-20T22:08:15.770Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-21T23:02:09.711Z")
 public class Metadata {
   @JsonProperty("identifier")
   private String identifier = null;

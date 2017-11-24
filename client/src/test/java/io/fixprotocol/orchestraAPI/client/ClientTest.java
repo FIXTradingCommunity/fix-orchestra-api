@@ -16,13 +16,14 @@ import org.junit.Test;
 
 import io.fixprotocol.orchestra.client.ApiClient;
 import io.fixprotocol.orchestra.client.ApiException;
-import io.fixprotocol.orchestra.client.api.RepositoryApi;
+import io.fixprotocol.orchestra.client.model.Actor;
 import io.fixprotocol.orchestra.client.model.Code;
 import io.fixprotocol.orchestra.client.model.CodeSet;
 import io.fixprotocol.orchestra.client.model.Component;
 import io.fixprotocol.orchestra.client.model.Datatype;
 import io.fixprotocol.orchestra.client.model.Field;
 import io.fixprotocol.orchestra.client.model.FieldRef;
+import io.fixprotocol.orchestra.client.model.Flow;
 import io.fixprotocol.orchestra.client.model.Group;
 import io.fixprotocol.orchestra.client.model.GroupProperties;
 import io.fixprotocol.orchestra.client.model.GroupRef;
@@ -48,12 +49,10 @@ public class ClientTest {
    */
   @Before
   public void setUp() throws Exception {
-    final RepositoryApi apiInstance = new RepositoryApi();
     final ApiClient apiClient = new ApiClient();
     apiClient.setBasePath("http://localhost:8080/FIXTradingCommunity/orchestra-api/1.0.0");
     // apiClient.setDebugging(true);
-    apiInstance.setApiClient(apiClient);
-    client = new Client(apiInstance);
+    client = new Client(apiClient);
   }
 
   /**
@@ -61,7 +60,287 @@ public class ClientTest {
    */
   @After
   public void tearDown() throws Exception {}
+  
+  @Test
+  public void addActor() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    Actor actor = new Actor();
+    actor.setStructure(new Structure());
+    actor.setName("actor1");
+    client.addActor("test1", identifier, actor);
+    
+    Actor actor2 = client.findActorByName("test1", identifier, "actor1");
+    assertNotNull(actor2);
+    
+    client.deleteRepository("test1", identifier);
+  }
 
+  @Test
+  public void addFlow() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    Flow flow = new Flow();
+    flow.setName("flow1");
+    client.addFlow("test1", identifier, flow);
+    
+    Flow flow2 = client.findFlowByName("test1", identifier, "flow1");
+    assertNotNull(flow2);
+    
+    client.deleteRepository("test1", identifier);
+  }
+
+  @Test
+  public void deleteActor() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    Actor actor = new Actor();
+    actor.setName("actor1");
+    actor.setStructure(new Structure());
+    client.addActor("test1", identifier, actor);
+    
+    Actor actor2 = client.findActorByName("test1", identifier, "actor1");
+    assertNotNull(actor2);
+    
+    client.deleteActor("test1", identifier, "actor1");
+    try {
+      client.findActorByName("test1", identifier, "actor1");
+      fail("deletion failed");
+    } catch (ApiException e) {
+      assertEquals(404, e.getCode());
+    }
+
+    client.deleteRepository("test1", identifier);
+  }
+  
+  @Test
+  public void deleteFlow() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    Flow flow = new Flow();
+    flow.setName("flow1");
+    client.addFlow("test1", identifier, flow);
+    
+    Flow flow2 = client.findFlowByName("test1", identifier, "flow1");
+    assertNotNull(flow2);
+
+    client.deleteFlow("test1", identifier, "flow1");
+    try {
+      client.deleteFlow("test1", identifier, "flow1");
+      fail("deletion failed");
+    } catch (ApiException e) {
+      assertEquals(404, e.getCode());
+    }
+
+    client.deleteRepository("test1", identifier);
+  }
+  
+  @Test
+  public void findActorByName() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    Actor actor = new Actor();
+    actor.setName("actor1");
+    actor.setExtends("actor2");
+    actor.setStructure(new Structure());
+    client.addActor("test1", identifier, actor);
+    
+    Actor actor2 = client.findActorByName("test1", identifier, "actor1");
+    assertNotNull(actor2);
+    assertEquals("actor1", actor2.getName());
+    
+    client.deleteRepository("test1", identifier);
+  }
+  
+  @Test
+  public void findFlowByName() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    Flow flow = new Flow();
+    flow.setName("flow1");
+    flow.setSource("actor1");
+    flow.setDestination("actor2");
+    client.addFlow("test1", identifier, flow);
+    
+    Flow flow2 = client.findFlowByName("test1", identifier, "flow1");
+    assertNotNull(flow2);
+    assertEquals("flow1", flow2.getName());
+    assertEquals("actor1", flow2.getSource());
+    assertEquals("actor2", flow2.getDestination());
+    client.deleteRepository("test1", identifier);
+  }
+  
+  @Test 
+  public void searchActors() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    Actor actor = new Actor();
+    actor.setStructure(new Structure());
+    actor.setName("actor1");
+    client.addActor("test1", identifier, actor);
+
+    List<Actor> actors = client.searchActors("test1", identifier, null, null, null);
+    assertEquals(1, actors.size());
+    
+    client.deleteRepository("test1", identifier);
+  }
+  
+  @Test
+  public void searchFlows()  throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    Flow flow = new Flow();
+    flow.setName("flow1");
+    client.addFlow("test1", identifier, flow);
+    
+    List<Flow> flows = client.searchFlows("test1", identifier, null, null, null);
+    assertEquals(1, flows.size());
+    
+    List<Actor> actors = client.searchActors("test1", identifier, null, null, null);
+    assertEquals(0, actors.size());
+    
+    client.deleteRepository("test1", identifier);
+  }
+  
+  @Test 
+  public void updateActorByName() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    Actor actor = new Actor();
+    actor.setName("actor1");
+    actor.setStructure(new Structure());
+    client.addActor("test1", identifier, actor);
+    
+    Actor actor2 = client.findActorByName("test1", identifier, "actor1");
+    assertNotNull(actor2);
+    actor2.setExtends("actor2");
+
+    client.updateActorByName("test1", identifier, "actor1", actor2);
+    
+    Actor actor3 = client.findActorByName("test1", identifier, "actor1");
+    assertNotNull(actor3);
+    assertEquals("actor1", actor3.getName());
+    assertEquals("actor2", actor3.getExtends());
+   
+    client.deleteRepository("test1", identifier);
+  }
+  
+  @Test
+  public void updateFlowByName() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+    
+    Flow flow = new Flow();
+    flow.setName("flow1");
+    flow.setSource("actor1");
+    flow.setDestination("actor2");
+    client.addFlow("test1", identifier, flow);
+    
+    Flow flow2 = client.findFlowByName("test1", identifier, "flow1");
+    assertNotNull(flow2);
+    flow2.setDestination("actor4");
+    
+    client.updateFlowByName("test1", identifier, "flow1", flow2);
+    
+    Flow flow4 = client.findFlowByName("test1", identifier, "flow1");
+    assertNotNull(flow4);
+    
+    assertEquals("flow1", flow4.getName());
+    assertEquals("actor1", flow4.getSource());
+    assertEquals("actor4", flow4.getDestination());
+    
+    client.deleteRepository("test1", identifier);
+  }
+   
   /**
    * Test method for
    * {@link io.fixprotocol.orchestraAPI.client.Client#addCode(java.lang.String, java.lang.Integer, io.swagger.client.model.Code)}.
@@ -568,7 +847,6 @@ public class ClientTest {
     } catch (ApiException e) {
       assertEquals(404, e.getCode());
     }
-
 
     client.deleteRepository("test1", identifier);
   }

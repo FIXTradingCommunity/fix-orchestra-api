@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
@@ -49,7 +48,7 @@ import io.fixprotocol.orchestra.client.auth.HttpBasicAuth;
 import io.fixprotocol.orchestra.client.auth.ApiKeyAuth;
 import io.fixprotocol.orchestra.client.auth.OAuth;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-20T22:08:15.770Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-21T23:02:09.711Z")
 public class ApiClient {
   private Map<String, String> defaultHeaderMap = new HashMap<String, String>();
   private String basePath = "https://virtserver.swaggerhub.com/FIXTradingCommunity/orchestra-api/1.0.0";
@@ -496,7 +495,7 @@ public class ApiClient {
     if ("byte[]".equals(returnType.toString())) {
       // Handle binary response (byte array).
       return (T) response.readEntity(byte[].class);
-    } else if (returnType.getType().equals(File.class)) {
+    } else if (returnType.equals(File.class)) {
       // Handle file downloading.
       @SuppressWarnings("unchecked")
       T file = (T) downloadFileFromResponse(response);
@@ -520,7 +519,7 @@ public class ApiClient {
   public File downloadFileFromResponse(Response response) throws ApiException {
     try {
       File file = prepareDownloadFile(response);
-      Files.copy(response.readEntity(InputStream.class), file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+      Files.copy(response.readEntity(InputStream.class), file.toPath());
       return file;
     } catch (IOException e) {
       throw new ApiException(e);

@@ -4,11 +4,13 @@ import java.io.File;
 import java.util.List;
 import java.util.function.Predicate;
 
+import io.fixprotocol.orchestra.model.Actor;
 import io.fixprotocol.orchestra.model.Code;
 import io.fixprotocol.orchestra.model.CodeSet;
 import io.fixprotocol.orchestra.model.Component;
 import io.fixprotocol.orchestra.model.Datatype;
 import io.fixprotocol.orchestra.model.Field;
+import io.fixprotocol.orchestra.model.Flow;
 import io.fixprotocol.orchestra.model.Group;
 import io.fixprotocol.orchestra.model.Message;
 import io.fixprotocol.orchestra.model.Metadata;
@@ -17,6 +19,17 @@ import io.fixprotocol.orchestra.model.Repository;
 
 
 public interface RepositoryStore {
+
+  /**
+   * Creates a new Actor in a repository
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param actor to add to the repository
+   * @throws ResourceNotFoundException if the repository to update does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  void createActor(String reposName, String version, Actor actor) throws RepositoryStoreException;
 
   /**
    * Creates a new Code in a repository
@@ -83,6 +96,17 @@ public interface RepositoryStore {
   void createField(String reposName, String version, Field field) throws RepositoryStoreException;
 
   /**
+   * Creates a new Flow in a repository
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param flow to add to the repository
+   * @throws ResourceNotFoundException if the repository to update does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  void createFlow(String reposName, String version, Flow flow) throws RepositoryStoreException;
+
+  /**
    * Creates a new Message in a repository
    * 
    * @param reposName name of Orchestra repository (required)
@@ -118,6 +142,17 @@ public interface RepositoryStore {
    * @throws RepositoryStoreException if the store operation fails
    */
   void createRepositoryFromFile(File file) throws RepositoryStoreException;
+
+  /**
+   * Deletes one Actor if it exists
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param name actor name
+   * @throws ResourceNotFoundException if the repository or actor to delete does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  void deleteActor(String reposName, String version, String name) throws RepositoryStoreException;
 
   /**
    * Deletes one Code if it exists
@@ -179,6 +214,17 @@ public interface RepositoryStore {
   void deleteField(String reposName, String version, Integer id) throws RepositoryStoreException;
 
   /**
+   * Deletes one Flow if it exists
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param name flow name
+   * @throws ResourceNotFoundException if the repository or flow to delete does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  void deleteFlow(String reposName, String version, String name) throws RepositoryStoreException;
+
+  /**
    * Deletes one Group if it exists
    * 
    * @param reposName name of Orchestra repository (required)
@@ -209,6 +255,31 @@ public interface RepositoryStore {
    * @throws RepositoryStoreException if the store operation fails
    */
   void deleteRepository(String reposName, String version) throws RepositoryStoreException;
+
+  /**
+   * Retrieves an Actor by name
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param name actor name
+   * @return the actor
+   * @throws ResourceNotFoundException if the repository or actor does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  Actor getActor(String reposName, String version, String name) throws RepositoryStoreException;
+
+  /**
+   * Retrieves all actors in a repository
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param predicate filter for actors to return
+   * @return a list of actors
+   * @throws ResourceNotFoundException if the repository does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  List<Actor> getActors(String reposName, String version, Predicate<Actor> predicate)
+      throws RepositoryStoreException;
 
   /**
    * Retrieves a Code by its ID
@@ -342,6 +413,31 @@ public interface RepositoryStore {
       throws RepositoryStoreException;
 
   /**
+   * Retrieves a Flow by name
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param name flow name
+   * @return the flow
+   * @throws ResourceNotFoundException if the repository or flow does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  Flow getFlow(String reposName, String version, String name) throws RepositoryStoreException;
+
+  /**
+   * Retrieves all flows in a repository
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param predicate filter for flows to return
+   * @return a list of flows
+   * @throws ResourceNotFoundException if the repository does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  List<Flow> getFlows(String reposName, String version, Predicate<Flow> predicate)
+      throws RepositoryStoreException;
+
+  /**
    * Retrieves a Group by its ID
    * 
    * @param reposName name of Orchestra repository (required)
@@ -426,6 +522,19 @@ public interface RepositoryStore {
   Metadata getRepositoryMetadata(String reposName, String version) throws RepositoryStoreException;
 
   /**
+   * Update an existing Actor
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param name name of actor to update
+   * @param actor new value of the Actor
+   * @throws ResourceNotFoundException if the repository or actor to update does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  void updateActor(String reposName, String version, String name, Actor actor)
+      throws RepositoryStoreException;
+
+  /**
    * Update an existing Code
    * 
    * @param reposName name of Orchestra repository (required)
@@ -489,6 +598,9 @@ public interface RepositoryStore {
    */
   void updateField(String reposName, String version, Integer id, Field field)
       throws RepositoryStoreException;
+
+  void updateFlow(String reposName, String version, String name, Flow flow)
+      throws RepositoryStoreException;;
 
   /**
    * Update an existing Group

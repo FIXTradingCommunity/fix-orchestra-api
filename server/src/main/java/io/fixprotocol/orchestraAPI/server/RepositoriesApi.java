@@ -17,11 +17,13 @@ import javax.ws.rs.core.SecurityContext;
 
 import io.fixprotocol.orchestra.api.NotFoundException;
 import io.fixprotocol.orchestra.api.RepositoriesApiService;
+import io.fixprotocol.orchestra.model.Actor;
 import io.fixprotocol.orchestra.model.Code;
 import io.fixprotocol.orchestra.model.CodeSet;
 import io.fixprotocol.orchestra.model.Component;
 import io.fixprotocol.orchestra.model.Datatype;
 import io.fixprotocol.orchestra.model.Field;
+import io.fixprotocol.orchestra.model.Flow;
 import io.fixprotocol.orchestra.model.Group;
 import io.fixprotocol.orchestra.model.Message;
 import io.fixprotocol.orchestra.model.Repository;
@@ -31,10 +33,28 @@ import io.swagger.annotations.ApiParam;
 
 
 @io.swagger.annotations.Api(description = "the repositories API")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-20T22:06:14.920Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-21T23:01:30.114Z")
 public class RepositoriesApi  {
    private final RepositoriesApiService delegate = RepositoriesApiServiceFactory.getRepositoriesApi();
 
+    @POST
+    @Path("/{repos-name}/{version}/actors")
+    @Consumes({ "application/json" })
+    
+    @io.swagger.annotations.ApiOperation(value = "adds an Actor", notes = "Adds an Actor", response = void.class, tags={ "workflow", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 201, message = "item created", response = void.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 400, message = "invalid input, object invalid", response = void.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 409, message = "an existing item already exists", response = void.class) })
+    public Response addActor(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
+,@ApiParam(value = "Actor to add" ) Actor actor
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.addActor(reposName,version,actor,securityContext);
+    }
     @POST
     @Path("/{repos-name}/{version}/codesets/{codesetid}/codes")
     @Consumes({ "application/json" })
@@ -128,6 +148,24 @@ public class RepositoriesApi  {
         return delegate.addField(reposName,version,field,securityContext);
     }
     @POST
+    @Path("/{repos-name}/{version}/flows")
+    @Consumes({ "application/json" })
+    
+    @io.swagger.annotations.ApiOperation(value = "adds a Flow", notes = "Adds a Flow", response = void.class, tags={ "workflow", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 201, message = "item created", response = void.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 400, message = "invalid input, object invalid", response = void.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 409, message = "an existing item already exists", response = void.class) })
+    public Response addFlow(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
+,@ApiParam(value = "Flow to add" ) Flow flow
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.addFlow(reposName,version,flow,securityContext);
+    }
+    @POST
     @Path("/{repos-name}/{version}/groups")
     @Consumes({ "application/json" })
     
@@ -182,6 +220,22 @@ public class RepositoriesApi  {
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.addRepository(repository,nameToClone,versionToClone,securityContext);
+    }
+    @DELETE
+    @Path("/{repos-name}/{version}/actors/{name}")
+    
+    
+    @io.swagger.annotations.ApiOperation(value = "deletes a single Actor based on the name supplied", notes = "", response = void.class, tags={ "workflow", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 204, message = "Actor deleted", response = void.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 404, message = "Actor not found", response = void.class) })
+    public Response deleteActor(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
+,@ApiParam(value = "name of Actor to delete",required=true) @PathParam("name") String name
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.deleteActor(reposName,version,name,securityContext);
     }
     @DELETE
     @Path("/{repos-name}/{version}/codesets/{codesetid}/codes/{id}")
@@ -265,6 +319,22 @@ public class RepositoriesApi  {
         return delegate.deleteField(reposName,version,id,securityContext);
     }
     @DELETE
+    @Path("/{repos-name}/{version}/flows/{name}")
+    
+    
+    @io.swagger.annotations.ApiOperation(value = "deletes a single Flow based on the name supplied", notes = "", response = void.class, tags={ "workflow", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 204, message = "Flow deleted", response = void.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 404, message = "Flow not found", response = void.class) })
+    public Response deleteFlow(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
+,@ApiParam(value = "name of Flow to delete",required=true) @PathParam("name") String name
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.deleteFlow(reposName,version,name,securityContext);
+    }
+    @DELETE
     @Path("/{repos-name}/{version}/groups/{id}")
     
     
@@ -325,6 +395,22 @@ public class RepositoriesApi  {
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.downloadRepositoryById(reposName,version,securityContext);
+    }
+    @GET
+    @Path("/{repos-name}/{version}/actors/{name}")
+    
+    @Produces({ "application/json" })
+    @io.swagger.annotations.ApiOperation(value = "Returns a single Actor, if found", notes = "", response = Actor.class, tags={ "workflow", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "Actor response", response = Actor.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 200, message = "unexpected error", response = Actor.class) })
+    public Response findActorByName(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
+,@ApiParam(value = "name of Actor to fetch",required=true) @PathParam("name") String name
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.findActorByName(reposName,version,name,securityContext);
     }
     @GET
     @Path("/{repos-name}/{version}/codesets/{codesetid}/codes/{id}")
@@ -408,6 +494,22 @@ public class RepositoriesApi  {
         return delegate.findFieldById(reposName,version,id,securityContext);
     }
     @GET
+    @Path("/{repos-name}/{version}/flows/{name}")
+    
+    @Produces({ "application/json" })
+    @io.swagger.annotations.ApiOperation(value = "Returns a single Flow, if found", notes = "", response = Flow.class, tags={ "workflow", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "Flow response", response = Flow.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 200, message = "unexpected error", response = Flow.class) })
+    public Response findFlowByName(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
+,@ApiParam(value = "name of Flow to fetch",required=true) @PathParam("name") String name
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.findFlowByName(reposName,version,name,securityContext);
+    }
+    @GET
     @Path("/{repos-name}/{version}/groups/{id}")
     
     @Produces({ "application/json" })
@@ -453,6 +555,24 @@ public class RepositoriesApi  {
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.findRepositoryById(reposName,version,securityContext);
+    }
+    @GET
+    @Path("/{repos-name}/{version}/actors")
+    
+    @Produces({ "application/json" })
+    @io.swagger.annotations.ApiOperation(value = "searches actors", notes = "By passing in the appropriate options, you can search for actors ", response = Actor.class, responseContainer = "List", tags={ "workflow", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "search results matching criteria", response = Actor.class, responseContainer = "List"),
+        
+        @io.swagger.annotations.ApiResponse(code = 400, message = "bad input parameter", response = Actor.class, responseContainer = "List") })
+    public Response searchActors(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
+,@ApiParam(value = "pass an optional search string for looking up actors") @QueryParam("searchString") String searchString
+,@ApiParam(value = "number of records to skip for pagination") @QueryParam("skip") Integer skip
+,@ApiParam(value = "maximum number of records to return") @QueryParam("limit") Integer limit
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.searchActors(reposName,version,searchString,skip,limit,securityContext);
     }
     @GET
     @Path("/{repos-name}/{version}/codesets")
@@ -546,6 +666,24 @@ public class RepositoriesApi  {
         return delegate.searchFields(reposName,version,searchString,skip,limit,securityContext);
     }
     @GET
+    @Path("/{repos-name}/{version}/flows")
+    
+    @Produces({ "application/json" })
+    @io.swagger.annotations.ApiOperation(value = "searches flows", notes = "By passing in the appropriate options, you can search for flows ", response = Flow.class, responseContainer = "List", tags={ "workflow", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "search results matching criteria", response = Flow.class, responseContainer = "List"),
+        
+        @io.swagger.annotations.ApiResponse(code = 400, message = "bad input parameter", response = Flow.class, responseContainer = "List") })
+    public Response searchFlows(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
+,@ApiParam(value = "pass an optional search string for looking up flows") @QueryParam("searchString") String searchString
+,@ApiParam(value = "number of records to skip for pagination") @QueryParam("skip") Integer skip
+,@ApiParam(value = "maximum number of records to return") @QueryParam("limit") Integer limit
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.searchFlows(reposName,version,searchString,skip,limit,securityContext);
+    }
+    @GET
     @Path("/{repos-name}/{version}/groups")
     
     @Produces({ "application/json" })
@@ -596,6 +734,23 @@ public class RepositoriesApi  {
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.searchRepositories(searchString,skip,limit,securityContext);
+    }
+    @PUT
+    @Path("/{repos-name}/{version}/actors/{name}")
+    @Consumes({ "application/json" })
+    
+    @io.swagger.annotations.ApiOperation(value = "Updates a single Actor, if found (idempotent)", notes = "", response = void.class, tags={ "workflow", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 204, message = "Actor updated", response = void.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 200, message = "unexpected error", response = void.class) })
+    public Response updateActorByName(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
+,@ApiParam(value = "name of CodeSet to update",required=true) @PathParam("name") String name
+,@ApiParam(value = "Actor to update" ,required=true) Actor actor
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.updateActorByName(reposName,version,name,actor,securityContext);
     }
     @PUT
     @Path("/{repos-name}/{version}/codesets/{codesetid}/codes/{id}")
@@ -682,6 +837,23 @@ public class RepositoriesApi  {
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.updateFieldById(reposName,version,id,field,securityContext);
+    }
+    @PUT
+    @Path("/{repos-name}/{version}/flows/{name}")
+    @Consumes({ "application/json" })
+    
+    @io.swagger.annotations.ApiOperation(value = "Updates a single Flow, if found (idempotent)", notes = "", response = void.class, tags={ "workflow", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 204, message = "Flow updated", response = void.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 200, message = "unexpected error", response = void.class) })
+    public Response updateFlowByName(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
+,@ApiParam(value = "name of Flow to update",required=true) @PathParam("name") String name
+,@ApiParam(value = "Flow to update" ,required=true) Flow actor
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.updateFlowByName(reposName,version,name,actor,securityContext);
     }
     @PUT
     @Path("/{repos-name}/{version}/groups/{id}")

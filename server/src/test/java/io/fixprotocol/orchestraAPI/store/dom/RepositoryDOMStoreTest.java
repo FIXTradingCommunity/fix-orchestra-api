@@ -19,6 +19,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.xml.sax.SAXException;
 
+import io.fixprotocol.orchestra.model.Flow;
+import io.fixprotocol.orchestra.model.Actor;
 import io.fixprotocol.orchestra.model.Code;
 import io.fixprotocol.orchestra.model.CodeSet;
 import io.fixprotocol.orchestra.model.Component;
@@ -262,9 +264,8 @@ public class RepositoryDOMStoreTest {
     store.deleteRepository(repository.getName(), identifier);
   };
 
-
   @Test
-  public void addFindField() throws RepositoryStoreException {
+  public void addFindActor() throws RepositoryStoreException {
     Repository repository = new Repository();
     repository.setName("test1");
     final String identifier = Integer.toString(random.nextInt());
@@ -274,32 +275,74 @@ public class RepositoryDOMStoreTest {
     metadata.description("A test repository");
     metadata.identifier(identifier);
     repository.setMetadata(metadata);
-
     Metadata metadata2 = store.createRepository(repository, null, null);
 
-    Field field = new Field();
-    ObjectId oid = new ObjectId();
-    oid.setName("Account");
-    oid.setId(1);
-    field.setOid(oid);
-    store.createField("test1", identifier, field);
+    Actor actor = new Actor();
+    actor.setName("actor1");
+    actor.setStructure(new Structure());
+    store.createActor("test1", identifier, actor);
 
-    Field field2 = store.getFieldById("test1", identifier, 1);
-    assertEquals("Account", field2.getOid().getName());
+    Actor actor2 = store.getActor("test1", identifier, "actor1");
+    assertEquals("actor1", actor2.getName());
 
-    field.setType("UTCDateOnly");
-    field.setCategory("MarketData");
-    store.updateField("test1", identifier, 1, field);
+    actor2.setExtends("actor2");
 
-    field2 = store.getFieldById("test1", identifier, 1);
-    assertEquals("Account", field2.getOid().getName());
-    assertEquals("UTCDateOnly", field2.getType());
-    assertEquals("MarketData", field2.getCategory());
+    store.updateActor("test1", identifier, "actor1", actor2);
 
-    store.deleteField("test1", identifier, 1);
+    Actor actor3 = store.getActor("test1", identifier, "actor1");
+    assertNotNull(actor3);
+    assertEquals("actor1", actor3.getName());
+    assertEquals("actor2", actor3.getExtends());
+
+    store.deleteActor("test1", identifier, "actor1");
 
     try {
-      store.getFieldById("test1", identifier, 1);
+      store.getActor("test1", identifier, "actor1");
+      fail("ResourceNotFoundException expected");
+    } catch (ResourceNotFoundException e) {
+
+    } catch (Exception e) {
+      fail("Wrong exception; ResourceNotFoundException expected");
+    }
+
+    store.deleteRepository(repository.getName(), identifier);
+  }
+  
+  @Test
+  public void addFindFlow() throws RepositoryStoreException {
+    Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    Metadata metadata2 = store.createRepository(repository, null, null);
+
+    Flow flow = new Flow();
+    flow.setName("flow1");
+    flow.setSource("actor1");
+    flow.setDestination("actor2");
+    store.createFlow("test1", identifier, flow);
+
+    Flow flow2 = store.getFlow("test1", identifier, "flow1");
+    assertEquals("flow1", flow2.getName());
+    
+    flow2.setDestination("actor4");
+
+    store.updateFlow("test1", identifier, "flow1", flow2);
+    
+    Flow flow3 = store.getFlow("test1", identifier, "flow1");
+    assertEquals("flow1", flow3.getName());
+    assertEquals("actor4", flow3.getDestination());
+
+
+    store.deleteFlow("test1", identifier, "flow1");
+
+    try {
+      store.getFlow("test1", identifier, "flow1");
       fail("ResourceNotFoundException expected");
     } catch (ResourceNotFoundException e) {
 

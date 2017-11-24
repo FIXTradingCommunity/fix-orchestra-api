@@ -39,7 +39,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * Component
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-20T22:06:14.920Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-21T23:01:30.114Z")
 public class Component extends MessageElement  {
   @JsonProperty("structure")
   private Structure structure = null;

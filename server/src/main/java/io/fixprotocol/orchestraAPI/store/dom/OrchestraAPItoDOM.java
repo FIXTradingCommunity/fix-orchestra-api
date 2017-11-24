@@ -14,23 +14,27 @@ import org.purl.dc.elements._1.ObjectFactory;
 import org.purl.dc.elements._1.SimpleLiteral;
 import org.purl.dc.terms.ElementOrRefinementContainer;
 
+import io.fixprotocol._2016.fixrepository.ActorType;
 import io.fixprotocol._2016.fixrepository.CodeSetType;
 import io.fixprotocol._2016.fixrepository.CodeType;
 import io.fixprotocol._2016.fixrepository.ComponentRefType;
 import io.fixprotocol._2016.fixrepository.ComponentType;
 import io.fixprotocol._2016.fixrepository.FieldRefType;
 import io.fixprotocol._2016.fixrepository.FieldType;
+import io.fixprotocol._2016.fixrepository.FlowType;
 import io.fixprotocol._2016.fixrepository.GroupRefType;
 import io.fixprotocol._2016.fixrepository.GroupType;
 import io.fixprotocol._2016.fixrepository.MessageType;
 import io.fixprotocol._2016.fixrepository.Repository;
 import io.fixprotocol.orchestra.api.RFC3339DateFormat;
+import io.fixprotocol.orchestra.model.Actor;
 import io.fixprotocol.orchestra.model.Code;
 import io.fixprotocol.orchestra.model.CodeSet;
 import io.fixprotocol.orchestra.model.Component;
 import io.fixprotocol.orchestra.model.ComponentRef;
 import io.fixprotocol.orchestra.model.Field;
 import io.fixprotocol.orchestra.model.FieldRef;
+import io.fixprotocol.orchestra.model.Flow;
 import io.fixprotocol.orchestra.model.Group;
 import io.fixprotocol.orchestra.model.GroupProperties;
 import io.fixprotocol.orchestra.model.GroupRef;
@@ -44,6 +48,17 @@ public final class OrchestraAPItoDOM {
 
   private final static RFC3339DateFormat dateFormat = new RFC3339DateFormat();
 
+  public static ActorType ActorToDOM(Actor actor) {
+    ActorType actorType = new ActorType();
+    actorType.setName(actor.getName());
+    actorType.setExtends(actor.getExtends());
+    Structure structure = actor.getStructure();
+    List<Object> objects = actorType.getFieldOrFieldRefOrComponent();
+    populateStructureDOM(structure, objects);
+    actorType.getAnnotation();
+    return actorType;
+  }
+
   public static CodeSetType CodeSetToDOM(CodeSet codeSet) {
     CodeSetType codeSetType = new CodeSetType();
     codeSetType.setAbbrName(codeSet.getOid().getAbbrName());
@@ -52,8 +67,8 @@ public final class OrchestraAPItoDOM {
     codeSetType.setOid(codeSet.getOid().getOid());
     codeSetType.setSpecUrl(codeSet.getSpecURL());
     codeSetType.setType(codeSet.getType());
-    codeSetType.getCode()
-        .addAll(codeSet.getCodes().stream().map(OrchestraAPItoDOM::CodeToDOM).collect(Collectors.toList()));
+    codeSetType.getCode().addAll(
+        codeSet.getCodes().stream().map(OrchestraAPItoDOM::CodeToDOM).collect(Collectors.toList()));
     return codeSetType;
   }
 
@@ -100,6 +115,17 @@ public final class OrchestraAPItoDOM {
     return datatypeDOM;
   }
 
+  public static Actor DOMToActor(ActorType actorType) {
+    Actor actor = new Actor();
+    actor.setExtends(actorType.getExtends());
+    actor.setName(actorType.getName());
+    Structure structure = new Structure();
+    actor.setStructure(structure);
+    List<Object> objects = actorType.getFieldOrFieldRefOrComponent();
+    populateStructure(objects, structure);
+    return actor;
+  }
+
   public static Code DOMToCode(CodeType codeType) {
     Code code = new Code();
     ObjectId oid = new ObjectId();
@@ -122,8 +148,8 @@ public final class OrchestraAPItoDOM {
     codeSet.setOid(oid);
     codeSet.setSpecURL(codeSetType.getSpecUrl());
     codeSet.setType(codeSetType.getType());
-    codeSet.codes(
-        codeSetType.getCode().stream().map(OrchestraAPItoDOM::DOMToCode).collect(Collectors.toList()));
+    codeSet.codes(codeSetType.getCode().stream().map(OrchestraAPItoDOM::DOMToCode)
+        .collect(Collectors.toList()));
     return codeSet;
   }
 
@@ -154,6 +180,14 @@ public final class OrchestraAPItoDOM {
     return field;
   }
 
+  public static Flow DOMToFlow(FlowType flowType) {
+    Flow flow = new Flow();
+    flow.setDestination(flowType.getDestination());
+    flow.setName(flowType.getName());
+    flow.setSource(flowType.getSource());
+    return flow;
+  }
+
   public static Group DOMToGroup(GroupType groupType) {
     Group group = new Group();
     GroupProperties groupProperties = new GroupProperties();
@@ -173,6 +207,27 @@ public final class OrchestraAPItoDOM {
     }
     populateComponent(groupType, group);
     return group;
+  }
+
+  public static Message DOMToMessage(MessageType messageType) {
+    Message message = new Message();
+    ObjectId oid = new ObjectId();
+    oid.setAbbrName(messageType.getAbbrName());
+    oid.setId(messageType.getId().intValue());
+    oid.setName(messageType.getName());
+    oid.setOid(messageType.getOid());
+    message.setOid(oid);
+    message.setFlow(messageType.getFlow());
+    message.setMsgType(messageType.getMsgType());
+    message.setScenario(messageType.getScenario());
+    message.setCategory(messageType.getCategory());
+    message.setExtends(messageType.getExtends());
+    Structure structure = new Structure();
+    message.setStructure(structure);
+    List<Object> elements = messageType.getStructure().getComponentOrComponentRefOrGroup();
+    populateStructure(elements, structure);
+
+    return message;
   }
 
   public static Metadata DOMToMetadata(ElementOrRefinementContainer element) {
@@ -225,6 +280,32 @@ public final class OrchestraAPItoDOM {
     fieldType.setType(field.getType());
     fieldType.setBaseCategory(field.getCategory());
     return fieldType;
+  }
+
+  public static FlowType FlowToDOM(Flow flow) {
+    FlowType flowType = new FlowType();
+    flowType.setDestination(flow.getDestination());
+    flowType.setName(flow.getName());
+    flowType.setSource(flow.getSource());
+    return flowType;
+  }
+
+  public static MessageType MessageToDOM(Message message) {
+    MessageType messageType = new MessageType();
+    messageType.setAbbrName(message.getOid().getAbbrName());
+    messageType.setId(BigInteger.valueOf(message.getOid().getId()));
+    messageType.setName(message.getOid().getName());
+    messageType.setOid(message.getOid().getOid());
+    messageType.setCategory(message.getCategory());
+    messageType.setExtends(message.getExtends());
+    messageType.setFlow(message.getFlow());
+    messageType.setMsgType(message.getMsgType());
+    messageType.setScenario(message.getScenario());
+    messageType.setStructure(new MessageType.Structure());
+    List<Object> elements = messageType.getStructure().getComponentOrComponentRefOrGroup();
+    Structure structure = message.getStructure();
+    populateStructureDOM(structure, elements);
+    return messageType;
   }
 
   public static ElementOrRefinementContainer MetadataToDOM(Metadata metadata) {
@@ -323,6 +404,18 @@ public final class OrchestraAPItoDOM {
     populateStructure(elements, structure);
   }
 
+  private static void populateComponentType(Component component, ComponentType componentType) {
+    componentType.setAbbrName(component.getOid().getAbbrName());
+    componentType.setId(BigInteger.valueOf(component.getOid().getId()));
+    componentType.setName(component.getOid().getName());
+    componentType.setOid(component.getOid().getOid());
+    componentType.setCategory(component.getCategory());
+
+    List<Object> elements = componentType.getComponentRefOrGroupRefOrFieldRef();
+    Structure structure = component.getStructure();
+    populateStructureDOM(structure, elements);
+  }
+
   private static void populateStructure(List<Object> elements, Structure structure) {
     for (Object element : elements) {
       if (element instanceof FieldRefType) {
@@ -359,18 +452,6 @@ public final class OrchestraAPItoDOM {
     }
   }
 
-  private static void populateComponentType(Component component, ComponentType componentType) {
-    componentType.setAbbrName(component.getOid().getAbbrName());
-    componentType.setId(BigInteger.valueOf(component.getOid().getId()));
-    componentType.setName(component.getOid().getName());
-    componentType.setOid(component.getOid().getOid());
-    componentType.setCategory(component.getCategory());
-
-    List<Object> elements = componentType.getComponentRefOrGroupRefOrFieldRef();
-    Structure structure = component.getStructure();
-    populateStructureDOM(structure, elements);
-  }
-
   private static void populateStructureDOM(Structure structure, List<Object> elements) {
     for (FieldRef fieldRef : structure.getFields()) {
       FieldRefType fieldRefType = new FieldRefType();
@@ -396,45 +477,6 @@ public final class OrchestraAPItoDOM {
       componentRefType.setOid(componentRef.getOid().getOid());
       elements.add(componentRefType);
     }
-  }
-
-  public static MessageType MessageToDOM(Message message) {
-    MessageType messageType = new MessageType();
-    messageType.setAbbrName(message.getOid().getAbbrName());
-    messageType.setId(BigInteger.valueOf(message.getOid().getId()));
-    messageType.setName(message.getOid().getName());
-    messageType.setOid(message.getOid().getOid());
-    messageType.setCategory(message.getCategory());
-    messageType.setExtends(message.getExtends());
-    messageType.setFlow(message.getFlow());
-    messageType.setMsgType(message.getMsgType());
-    messageType.setScenario(message.getScenario());
-    messageType.setStructure(new MessageType.Structure());
-    List<Object> elements = messageType.getStructure().getComponentOrComponentRefOrGroup();
-    Structure structure = message.getStructure();
-    populateStructureDOM(structure, elements);
-    return messageType;
-  }
-
-  public static Message DOMToMessage(MessageType messageType) {
-    Message message = new Message();
-    ObjectId oid = new ObjectId();
-    oid.setAbbrName(messageType.getAbbrName());
-    oid.setId(messageType.getId().intValue());
-    oid.setName(messageType.getName());
-    oid.setOid(messageType.getOid());
-    message.setOid(oid );
-    message.setFlow(messageType.getFlow());
-    message.setMsgType(messageType.getMsgType());
-    message.setScenario(messageType.getScenario());
-    message.setCategory(messageType.getCategory());
-    message.setExtends(messageType.getExtends());
-    Structure structure = new Structure();
-    message.setStructure(structure );
-    List<Object> elements = messageType.getStructure().getComponentOrComponentRefOrGroup();
-    populateStructure(elements, structure);
-
-    return message;
   }
 
 }

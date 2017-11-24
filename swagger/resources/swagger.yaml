@@ -13,6 +13,8 @@ basePath: "/FIXTradingCommunity/orchestra-api/1.0.0"
 tags:
 - name: "repository"
   description: "Message structure operations"
+- name: "workflow"
+  description: "Actors and actions"
 schemes:
 - "https"
 paths:
@@ -203,6 +205,187 @@ paths:
           description: "unexpected error"
           schema:
             $ref: "#/definitions/ErrorModel"
+  /repositories/{repos-name}/{version}/actors:
+    get:
+      tags:
+      - "workflow"
+      summary: "searches actors"
+      description: "By passing in the appropriate options, you can search for actors "
+      operationId: "searchActors"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "repos-name"
+        in: "path"
+        description: "name of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "searchString"
+        in: "query"
+        description: "pass an optional search string for looking up actors"
+        required: false
+        type: "string"
+      - name: "skip"
+        in: "query"
+        description: "number of records to skip for pagination"
+        required: false
+        type: "integer"
+        minimum: 0
+        format: "int32"
+      - name: "limit"
+        in: "query"
+        description: "maximum number of records to return"
+        required: false
+        type: "integer"
+        maximum: 50.0
+        minimum: 0
+        format: "int32"
+      responses:
+        200:
+          description: "search results matching criteria"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Actor"
+        400:
+          description: "bad input parameter"
+    post:
+      tags:
+      - "workflow"
+      summary: "adds an Actor"
+      description: "Adds an Actor"
+      operationId: "addActor"
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "repos-name"
+        in: "path"
+        description: "name of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version of Orchestra repository"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "actor"
+        description: "Actor to add"
+        required: false
+        schema:
+          $ref: "#/definitions/Actor"
+      responses:
+        201:
+          description: "item created"
+          headers:
+            Location:
+              type: "string"
+              format: "uri"
+              description: "URL of created resource"
+        400:
+          description: "invalid input, object invalid"
+        409:
+          description: "an existing item already exists"
+  /repositories/{repos-name}/{version}/actors/{name}:
+    get:
+      tags:
+      - "workflow"
+      summary: "Returns a single Actor, if found"
+      operationId: "findActorByName"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "repos-name"
+        in: "path"
+        description: "name of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "name"
+        in: "path"
+        description: "name of Actor to fetch"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Actor response"
+          schema:
+            $ref: "#/definitions/Actor"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    put:
+      tags:
+      - "workflow"
+      summary: "Updates a single Actor, if found (idempotent)"
+      operationId: "updateActorByName"
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "repos-name"
+        in: "path"
+        description: "name of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "name"
+        in: "path"
+        description: "name of CodeSet to update"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "actor"
+        description: "Actor to update"
+        required: true
+        schema:
+          $ref: "#/definitions/Actor"
+      responses:
+        204:
+          description: "Actor updated"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    delete:
+      tags:
+      - "workflow"
+      summary: "deletes a single Actor based on the name supplied"
+      operationId: "deleteActor"
+      parameters:
+      - name: "repos-name"
+        in: "path"
+        description: "name of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "name"
+        in: "path"
+        description: "name of Actor to delete"
+        required: true
+        type: "string"
+      responses:
+        204:
+          description: "Actor deleted"
+        404:
+          description: "Actor not found"
   /repositories/{repos-name}/{version}/codesets/{codesetid}/codes:
     get:
       tags:
@@ -1164,6 +1347,187 @@ paths:
           description: "field deleted"
         404:
           description: "field not found"
+  /repositories/{repos-name}/{version}/flows:
+    get:
+      tags:
+      - "workflow"
+      summary: "searches flows"
+      description: "By passing in the appropriate options, you can search for flows "
+      operationId: "searchFlows"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "repos-name"
+        in: "path"
+        description: "name of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "searchString"
+        in: "query"
+        description: "pass an optional search string for looking up flows"
+        required: false
+        type: "string"
+      - name: "skip"
+        in: "query"
+        description: "number of records to skip for pagination"
+        required: false
+        type: "integer"
+        minimum: 0
+        format: "int32"
+      - name: "limit"
+        in: "query"
+        description: "maximum number of records to return"
+        required: false
+        type: "integer"
+        maximum: 50.0
+        minimum: 0
+        format: "int32"
+      responses:
+        200:
+          description: "search results matching criteria"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Flow"
+        400:
+          description: "bad input parameter"
+    post:
+      tags:
+      - "workflow"
+      summary: "adds a Flow"
+      description: "Adds a Flow"
+      operationId: "addFlow"
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "repos-name"
+        in: "path"
+        description: "name of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version of Orchestra repository"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "flow"
+        description: "Flow to add"
+        required: false
+        schema:
+          $ref: "#/definitions/Flow"
+      responses:
+        201:
+          description: "item created"
+          headers:
+            Location:
+              type: "string"
+              format: "uri"
+              description: "URL of created resource"
+        400:
+          description: "invalid input, object invalid"
+        409:
+          description: "an existing item already exists"
+  /repositories/{repos-name}/{version}/flows/{name}:
+    get:
+      tags:
+      - "workflow"
+      summary: "Returns a single Flow, if found"
+      operationId: "findFlowByName"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "repos-name"
+        in: "path"
+        description: "name of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "name"
+        in: "path"
+        description: "name of Flow to fetch"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Flow response"
+          schema:
+            $ref: "#/definitions/Flow"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    put:
+      tags:
+      - "workflow"
+      summary: "Updates a single Flow, if found (idempotent)"
+      operationId: "updateFlowByName"
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "repos-name"
+        in: "path"
+        description: "name of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "name"
+        in: "path"
+        description: "name of Flow to update"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "actor"
+        description: "Flow to update"
+        required: true
+        schema:
+          $ref: "#/definitions/Flow"
+      responses:
+        204:
+          description: "Flow updated"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    delete:
+      tags:
+      - "workflow"
+      summary: "deletes a single Flow based on the name supplied"
+      operationId: "deleteFlow"
+      parameters:
+      - name: "repos-name"
+        in: "path"
+        description: "name of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "name"
+        in: "path"
+        description: "name of Flow to delete"
+        required: true
+        type: "string"
+      responses:
+        204:
+          description: "Flow deleted"
+        404:
+          description: "Flow not found"
   /repositories/{repos-name}/{version}/groups:
     get:
       tags:
@@ -1547,6 +1911,25 @@ paths:
         404:
           description: "message not found"
 definitions:
+  Actor:
+    type: "object"
+    required:
+    - "name"
+    properties:
+      name:
+        type: "string"
+        description: "unique name"
+        maxLength: 64
+      extends:
+        type: "string"
+        description: "Inherits properties from another Actor"
+        maxLength: 64
+      structure:
+        description: "State variables"
+        $ref: "#/definitions/Structure"
+      annotation:
+        $ref: "#/definitions/Annotation"
+    description: "Represents a class of participants"
   Annotation:
     type: "object"
     properties:
@@ -1730,6 +2113,28 @@ definitions:
         $ref: "#/definitions/EntityAttributes"
       category:
         type: "string"
+  Flow:
+    type: "object"
+    required:
+    - "destination"
+    - "name"
+    - "source"
+    properties:
+      name:
+        type: "string"
+        description: "unique flow name"
+        maxLength: 64
+      source:
+        type: "string"
+        description: "Name of the actor that originates messages"
+        maxLength: 64
+      destination:
+        type: "string"
+        description: "Name of the actor that receives messages"
+        maxLength: 64
+      annotation:
+        $ref: "#/definitions/Annotation"
+    description: "A stream of messages in one direction"
   Group:
     allOf:
     - $ref: "#/definitions/Component"
@@ -1801,6 +2206,22 @@ definitions:
         $ref: "#/definitions/EntityAttributes"
       category:
         type: "string"
+  MessageRef:
+    type: "object"
+    required:
+    - "name"
+    properties:
+      name:
+        type: "string"
+        maxLength: 64
+      msgType:
+        type: "string"
+        maxLength: 2
+      scenario:
+        type: "string"
+        description: "Use case of a message type"
+        maxLength: 64
+        default: "base"
   Metadata:
     type: "object"
     required:
@@ -1900,6 +2321,79 @@ definitions:
         $ref: "#/definitions/Metadata"
   Response:
     type: "object"
+    properties:
+      name:
+        type: "string"
+        maxLength: 64
+      when:
+        type: "string"
+        description: "conditional expression; if not present, then response is unconditional"
+      messageRef:
+        description: "send a response message"
+        $ref: "#/definitions/MessageRef"
+      assign:
+        type: "string"
+        description: "assignment expression"
+      trigger:
+        $ref: "#/definitions/Trigger"
+      annotation:
+        $ref: "#/definitions/Annotation"
+  StateMachine:
+    type: "object"
+    required:
+    - "name"
+    properties:
+      name:
+        type: "string"
+        maxLength: 64
+      initial:
+        $ref: "#/definitions/State"
+      states:
+        type: "array"
+        items:
+          $ref: "#/definitions/State"
+      annotation:
+        $ref: "#/definitions/Annotation"
+  State:
+    type: "object"
+    required:
+    - "name"
+    properties:
+      name:
+        type: "string"
+        maxLength: 64
+      transition:
+        $ref: "#/definitions/Transition"
+      annotation:
+        $ref: "#/definitions/Annotation"
+  Transition:
+    type: "object"
+    properties:
+      when:
+        type: "string"
+        description: "Optional guard condition"
+      target:
+        type: "string"
+        description: "name of the target state"
+        maxLength: 64
+      annotation:
+        $ref: "#/definitions/Annotation"
+  Trigger:
+    type: "object"
+    required:
+    - "actor"
+    - "name"
+    - "stateMachine"
+    properties:
+      stateMachine:
+        type: "string"
+        description: "name of StateMachine"
+      actor:
+        type: "string"
+        description: "name of the Actor that owns the StateMachine"
+      name:
+        type: "string"
+        description: "name of Transition to invoke"
   Structure:
     properties:
       fields:
