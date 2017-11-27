@@ -17,6 +17,7 @@ import javax.ws.rs.core.SecurityContext;
 
 import io.fixprotocol.orchestra.api.NotFoundException;
 import io.fixprotocol.orchestra.api.RepositoriesApiService;
+
 import io.fixprotocol.orchestra.model.Actor;
 import io.fixprotocol.orchestra.model.Code;
 import io.fixprotocol.orchestra.model.CodeSet;
@@ -27,13 +28,14 @@ import io.fixprotocol.orchestra.model.Flow;
 import io.fixprotocol.orchestra.model.Group;
 import io.fixprotocol.orchestra.model.Message;
 import io.fixprotocol.orchestra.model.Repository;
+
 import io.swagger.annotations.ApiParam;
 
 @Path("/repositories")
 
 
 @io.swagger.annotations.Api(description = "the repositories API")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-21T23:01:30.114Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-24T16:52:01.174Z")
 public class RepositoriesApi  {
    private final RepositoriesApiService delegate = RepositoriesApiServiceFactory.getRepositoriesApi();
 
@@ -204,6 +206,25 @@ public class RepositoriesApi  {
         return delegate.addMessage(reposName,version,message,toClone,securityContext);
     }
     @POST
+    @Path("/{repos-name}/{version}/messages/{id}/responses")
+    @Consumes({ "application/json" })
+    
+    @io.swagger.annotations.ApiOperation(value = "adds a response to a message scenario", notes = "Adds a message scenario response", response = void.class, tags={ "workflow", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 201, message = "item created", response = void.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 400, message = "invalid input, object invalid", response = void.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 409, message = "an existing item already exists", response = void.class) })
+    public Response addMessageResponse(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
+,@ApiParam(value = "ID of message to update",required=true) @PathParam("id") Integer id
+,@ApiParam(value = "message response to add" ) io.fixprotocol.orchestra.model.Response response
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.addMessageResponse(reposName,version,id,response,securityContext);
+    }
+    @POST
     
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
@@ -367,10 +388,27 @@ public class RepositoriesApi  {
         return delegate.deleteMessage(reposName,version,id,securityContext);
     }
     @DELETE
+    @Path("/{repos-name}/{version}/messages/{id}/responses/{name}")
+    
+    
+    @io.swagger.annotations.ApiOperation(value = "deletes a single response to a message scenario based on the ID supplied", notes = "", response = void.class, tags={ "workflow", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 204, message = "message response deleted", response = void.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 404, message = "message not found", response = void.class) })
+    public Response deleteMessageResponse(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
+,@ApiParam(value = "ID of message",required=true) @PathParam("id") Integer id
+,@ApiParam(value = "name of message response to delete",required=true) @PathParam("name") String name
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.deleteMessageResponse(reposName,version,id,name,securityContext);
+    }
+    @DELETE
     @Path("/{repos-name}/{version}")
     
     
-    @io.swagger.annotations.ApiOperation(value = "deletes a single Orchestra repository  based on the ID supplied", notes = "", response = void.class, tags={ "repository", })
+    @io.swagger.annotations.ApiOperation(value = "deletes a single Orchestra repository based on the ID supplied", notes = "", response = void.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 204, message = "repository deleted", response = void.class),
         
@@ -542,6 +580,23 @@ public class RepositoriesApi  {
         return delegate.findMessageById(reposName,version,id,securityContext);
     }
     @GET
+    @Path("/{repos-name}/{version}/messages/{id}/responses/{name}")
+    
+    @Produces({ "application/json" })
+    @io.swagger.annotations.ApiOperation(value = "Returns a single response to a message scenario, if found", notes = "", response = Response.class, tags={ "workflow", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "message response", response = Response.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 200, message = "unexpected error", response = Response.class) })
+    public Response findMessageResponseById(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
+,@ApiParam(value = "ID of message",required=true) @PathParam("id") Integer id
+,@ApiParam(value = "name of message response to fetch",required=true) @PathParam("name") String name
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.findMessageResponseById(reposName,version,id,name,securityContext);
+    }
+    @GET
     @Path("/{repos-name}/{version}")
     
     @Produces({ "application/json" })
@@ -700,6 +755,25 @@ public class RepositoriesApi  {
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.searchGroups(reposName,version,searchString,skip,limit,securityContext);
+    }
+    @GET
+    @Path("/{repos-name}/{version}/messages/{id}/responses")
+    
+    @Produces({ "application/json" })
+    @io.swagger.annotations.ApiOperation(value = "searches message responses", notes = "By passing in the appropriate options, you can search for message responses", response = Response.class, responseContainer = "List", tags={ "workflow", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "search results matching criteria", response = Response.class, responseContainer = "List"),
+        
+        @io.swagger.annotations.ApiResponse(code = 400, message = "bad input parameter", response = Response.class, responseContainer = "List") })
+    public Response searchMessageResponses(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
+,@ApiParam(value = "ID of message to search",required=true) @PathParam("id") Integer id
+,@ApiParam(value = "pass an optional search string for looking up responses") @QueryParam("searchString") String searchString
+,@ApiParam(value = "number of records to skip for pagination") @QueryParam("skip") Integer skip
+,@ApiParam(value = "maximum number of records to return") @QueryParam("limit") Integer limit
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.searchMessageResponses(reposName,version,id,searchString,skip,limit,securityContext);
     }
     @GET
     @Path("/{repos-name}/{version}/messages")
@@ -888,6 +962,24 @@ public class RepositoriesApi  {
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.updateMessageById(reposName,version,id,message,securityContext);
+    }
+    @PUT
+    @Path("/{repos-name}/{version}/messages/{id}/responses/{name}")
+    @Consumes({ "application/json" })
+    
+    @io.swagger.annotations.ApiOperation(value = "Updates a single response to a message scenario, if found (idempotent)", notes = "", response = void.class, tags={ "workflow", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 204, message = "message response updated", response = void.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 200, message = "unexpected error", response = void.class) })
+    public Response updateMessageResponse(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
+,@ApiParam(value = "ID of message",required=true) @PathParam("id") Integer id
+,@ApiParam(value = "name of message response to update",required=true) @PathParam("name") String name
+,@ApiParam(value = "message response to update" ,required=true) io.fixprotocol.orchestra.model.Response response
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.updateMessageResponse(reposName,version,id,name,response,securityContext);
     }
     @PUT
     @Path("/{repos-name}/{version}")

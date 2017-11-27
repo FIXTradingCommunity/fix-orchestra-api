@@ -30,9 +30,11 @@ import io.fixprotocol.orchestra.client.model.GroupRef;
 import io.fixprotocol.orchestra.client.model.Metadata;
 import io.fixprotocol.orchestra.client.model.ObjectId;
 import io.fixprotocol.orchestra.client.model.Repository;
+import io.fixprotocol.orchestra.client.model.Response;
 import io.fixprotocol.orchestra.client.model.Structure;
 import io.fixprotocol.orchestra.client.model.ComponentRef;
 import io.fixprotocol.orchestra.client.model.Message;
+import io.fixprotocol.orchestra.client.model.MessageRef;
 
 
 /**
@@ -53,6 +55,261 @@ public class ClientTest {
     apiClient.setBasePath("http://localhost:8080/FIXTradingCommunity/orchestra-api/1.0.0");
     // apiClient.setDebugging(true);
     client = new Client(apiClient);
+  }
+  
+  @Test
+  public void addMessageResponse() throws ApiException {
+    Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Message message = new Message();
+    ObjectId oid = new ObjectId();
+    oid.setAbbrName("Order");
+    oid.setId(14);
+    oid.setName("NewOrderSingle");
+    message.setOid(oid);
+    message.setMsgType("D");
+    message.setScenario("base");
+    Structure structure = new Structure();
+    message.setStructure(structure);
+    client.addMessage("test1", identifier, message);
+    
+    Response response = new Response();
+    response.setName("trade");
+    MessageRef messageRef = new MessageRef();
+    messageRef.setName("ExecutionReport");
+    messageRef.setMsgType("8");
+    messageRef.setScenario("trade");
+    response.setMessageRef(messageRef );
+    client.addMessageResponse("test1", identifier, 14, response );
+    
+    Message message2 = client.findMessageById("test1", identifier, 14);
+    assertNotNull(message2);
+    
+    Response response2 = client.findMessageResponseById("test1", identifier, 14, "trade");
+    assertNotNull(response2);
+    MessageRef messageRef2 = response2.getMessageRef();
+    assertNotNull(messageRef2);
+    
+    client.deleteRepository(repository.getName(), identifier);
+  }
+  
+  @Test
+  public void deleteMessageResponse() throws ApiException {
+    Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Message message = new Message();
+    ObjectId oid = new ObjectId();
+    oid.setAbbrName("Order");
+    oid.setId(14);
+    oid.setName("NewOrderSingle");
+    message.setOid(oid);
+    message.setMsgType("D");
+    message.setScenario("base");
+    Structure structure = new Structure();
+    message.setStructure(structure);
+    client.addMessage("test1", identifier, message);
+    
+    Response response = new Response();
+    response.setName("trade");
+    MessageRef messageRef = new MessageRef();
+    messageRef.setName("ExecutionReport");
+    messageRef.setMsgType("8");
+    messageRef.setScenario("trade");
+    response.setMessageRef(messageRef );
+    client.addMessageResponse("test1", identifier, 14, response );
+    
+    Message message2 = client.findMessageById("test1", identifier, 14);
+    assertNotNull(message2);
+    
+    Response response2 = client.findMessageResponseById("test1", identifier, 14, "trade");
+    assertNotNull(response2);
+    MessageRef messageRef2 = response2.getMessageRef();
+    assertNotNull(messageRef2);
+    
+    client.deleteMessageResponse("test1", identifier, 14, "trade");
+    
+     try {
+      client.deleteMessageResponse("test1", identifier, 14, "trade");
+      fail("deletion failed");
+    } catch (ApiException e) {
+      assertEquals(404, e.getCode());
+    }
+    
+    client.deleteRepository(repository.getName(), identifier);
+  }
+  
+  @Test
+  public void findMessageResponse() throws ApiException {
+    Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Message message = new Message();
+    ObjectId oid = new ObjectId();
+    oid.setAbbrName("Order");
+    oid.setId(14);
+    oid.setName("NewOrderSingle");
+    message.setOid(oid);
+    message.setMsgType("D");
+    message.setScenario("base");
+    Structure structure = new Structure();
+    message.setStructure(structure);
+    client.addMessage("test1", identifier, message);
+    
+    Response response = new Response();
+    response.setName("trade");
+    MessageRef messageRef = new MessageRef();
+    messageRef.setName("ExecutionReport");
+    messageRef.setMsgType("8");
+    messageRef.setScenario("trade");
+    response.setMessageRef(messageRef );
+    client.addMessageResponse("test1", identifier, 14, response );
+    
+    Message message2 = client.findMessageById("test1", identifier, 14);
+    assertNotNull(message2);
+    
+    Response response2 = client.findMessageResponseById("test1", identifier, 14, "trade");
+    assertNotNull(response2);
+    assertEquals("trade", response2.getName());
+    MessageRef messageRef2 = response2.getMessageRef();
+    assertNotNull(messageRef2);
+    assertEquals("ExecutionReport", messageRef2.getName());
+    assertEquals("8", messageRef2.getMsgType());
+    assertEquals("trade", messageRef2.getScenario());
+    
+    client.deleteRepository(repository.getName(), identifier);
+  }
+  
+  @Test
+  public void searchMessageResponses() throws ApiException {
+    Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Message message = new Message();
+    ObjectId oid = new ObjectId();
+    oid.setAbbrName("Order");
+    oid.setId(14);
+    oid.setName("NewOrderSingle");
+    message.setOid(oid);
+    message.setMsgType("D");
+    message.setScenario("base");
+    Structure structure = new Structure();
+    message.setStructure(structure);
+    client.addMessage("test1", identifier, message);
+    
+    Response response = new Response();
+    response.setName("trade");
+    MessageRef messageRef = new MessageRef();
+    messageRef.setName("ExecutionReport");
+    messageRef.setMsgType("8");
+    messageRef.setScenario("trade");
+    response.setMessageRef(messageRef );
+    client.addMessageResponse("test1", identifier, 14, response );
+    
+    Message message2 = client.findMessageById("test1", identifier, 14);
+    assertNotNull(message2);
+    
+    List<Response> responses = client.searchMessageResponses("test1", identifier, 14, null, null, null);
+    assertNotNull(responses);
+    assertEquals(1, responses.size());
+    Response response2 = responses.get(0);
+    assertEquals("trade", response2.getName());
+    MessageRef messageRef2 = response2.getMessageRef();
+    assertNotNull(messageRef2);
+    assertEquals("ExecutionReport", messageRef2.getName());
+    assertEquals("8", messageRef2.getMsgType());
+    assertEquals("trade", messageRef2.getScenario());
+    
+    client.deleteRepository(repository.getName(), identifier);
+  }
+  
+  @Test
+  public void updateMessageResponse() throws ApiException {
+    Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Message message = new Message();
+    ObjectId oid = new ObjectId();
+    oid.setAbbrName("Order");
+    oid.setId(14);
+    oid.setName("NewOrderSingle");
+    message.setOid(oid);
+    message.setMsgType("D");
+    message.setScenario("base");
+    Structure structure = new Structure();
+    message.setStructure(structure);
+    client.addMessage("test1", identifier, message);
+    
+    Response response = new Response();
+    response.setName("trade");
+    MessageRef messageRef = new MessageRef();
+    messageRef.setName("ExecutionReport");
+    messageRef.setMsgType("8");
+    messageRef.setScenario("trade");
+    response.setMessageRef(messageRef );
+    client.addMessageResponse("test1", identifier, 14, response );
+    
+    Message message2 = client.findMessageById("test1", identifier, 14);
+    assertNotNull(message2);
+    
+    Response response2 = client.findMessageResponseById("test1", identifier, 14, "trade");
+    assertNotNull(response2);
+    assertEquals("trade", response2.getName());
+    
+    response2.setWhen("match happened");
+    client.updateMessageResponse("test1", identifier, 14, "trade", response2);
+    
+    Response response3 = client.findMessageResponseById("test1", identifier, 14, "trade");
+    assertNotNull(response3);
+    assertEquals("trade", response3.getName());
+    assertEquals("match happened", response3.getWhen());
+    assertEquals("trade", response3.getName());
+    MessageRef messageRef3 = response3.getMessageRef();
+    assertNotNull(messageRef3);
+    assertEquals("ExecutionReport", messageRef3.getName());
+    
+    client.deleteRepository(repository.getName(), identifier);
   }
 
   /**

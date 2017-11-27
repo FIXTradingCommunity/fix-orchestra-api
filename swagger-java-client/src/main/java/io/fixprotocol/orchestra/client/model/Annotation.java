@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Annotation
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-21T23:02:09.711Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-24T16:52:38.175Z")
 public class Annotation {
   @JsonProperty("appinfo")
   private List<Appinfo> appinfo = new ArrayList<Appinfo>();

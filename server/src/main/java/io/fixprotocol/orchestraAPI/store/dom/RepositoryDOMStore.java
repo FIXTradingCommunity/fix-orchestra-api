@@ -29,8 +29,10 @@ import io.fixprotocol._2016.fixrepository.Fields;
 import io.fixprotocol._2016.fixrepository.FlowType;
 import io.fixprotocol._2016.fixrepository.GroupType;
 import io.fixprotocol._2016.fixrepository.MessageType;
+import io.fixprotocol._2016.fixrepository.MessageType.Responses;
 import io.fixprotocol._2016.fixrepository.Messages;
 import io.fixprotocol._2016.fixrepository.Repository;
+import io.fixprotocol._2016.fixrepository.ResponseType;
 import io.fixprotocol.orchestra.model.Actor;
 import io.fixprotocol.orchestra.model.Code;
 import io.fixprotocol.orchestra.model.CodeSet;
@@ -41,6 +43,7 @@ import io.fixprotocol.orchestra.model.Flow;
 import io.fixprotocol.orchestra.model.Group;
 import io.fixprotocol.orchestra.model.Message;
 import io.fixprotocol.orchestra.model.Metadata;
+import io.fixprotocol.orchestra.model.Response;
 import io.fixprotocol.orchestraAPI.store.DuplicateKeyException;
 import io.fixprotocol.orchestraAPI.store.RepositoryStore;
 import io.fixprotocol.orchestraAPI.store.RepositoryStoreException;
@@ -297,7 +300,7 @@ public class RepositoryDOMStore implements RepositoryStore {
     for (int i = 0; i < flows.size(); i++) {
       FlowType flowType = flows.get(i);
       if (flow.getName().equals(flowType.getName())) {
-        throw new DuplicateKeyException(String.format("Duplicate actor %s", flow.getName()));
+        throw new DuplicateKeyException(String.format("Duplicate flow %s", flow.getName()));
       }
     }
     repository.getActors().getActorOrFlow().add(OrchestraAPItoDOM.FlowToDOM(flow));
@@ -346,6 +349,36 @@ public class RepositoryDOMStore implements RepositoryStore {
     } else {
       messages.add(OrchestraAPItoDOM.MessageToDOM(message));
     }
+  }
+
+  @Override
+  public void createMessageResponse(String reposName, String version, Integer id, Response response)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(response, "Message response value missing");
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(id, "Message ID missing");
+    Repository repository = repositories.get(new RepositoryKey(reposName, version));
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+    List<MessageType> messageList = getMessageList(repository);
+
+    for (MessageType messageType : messageList) {
+      if (id == messageType.getId().intValue()) {
+        List<ResponseType> responseList = getResponseList(messageType);
+        for (ResponseType responseType : responseList) {
+          if (response.getName().equals(responseType.getName())) {
+            throw new DuplicateKeyException(String.format("Duplicate response %s", response.getName()));
+          }
+        }
+        responseList.add(OrchestraAPItoDOM.ResponseToDOM(response));
+        return;
+      }
+    }
+    throw new ResourceNotFoundException(
+        String.format("Message with ID=%d not found", id));
   }
 
   @Override
@@ -628,6 +661,36 @@ public class RepositoryDOMStore implements RepositoryStore {
 
     throw new ResourceNotFoundException(String.format("Message with ID=%d not found", id));
   }
+
+  @Override
+  public void deleteMessageResponse(String reposName, String version, Integer id, String name)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(id, "Message ID missing");
+    Objects.requireNonNull(name, "Response name missing");
+    Repository repository = repositories.get(new RepositoryKey(reposName, version));
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+    List<MessageType> messageList = getMessageList(repository);
+
+    for (MessageType messageType : messageList) {
+      if (id == messageType.getId().intValue()) {
+        List<ResponseType> responseList = getResponseList(messageType);
+        for (ResponseType responseType : responseList) {
+          if (name.equals(responseType.getName())) {
+            responseList.remove(responseType);        
+            return;
+          }
+        }
+        throw new ResourceNotFoundException(String.format("Response %s not found", name));
+      }
+    }
+    throw new ResourceNotFoundException(
+        String.format("Message with ID=%d not found", id));  
+    }
 
   @Override
   public void deleteRepository(String reposName, String version) throws RepositoryStoreException {
@@ -1025,6 +1088,64 @@ public class RepositoryDOMStore implements RepositoryStore {
   }
 
   @Override
+  public Response getMessageResponse(String reposName, String version, Integer id, String name)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(id, "Message ID missing");
+    Objects.requireNonNull(name, "Response name missing");
+    Repository repository = repositories.get(new RepositoryKey(reposName, version));
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+    List<MessageType> messageList = getMessageList(repository);
+
+    for (MessageType messageType : messageList) {
+      if (id == messageType.getId().intValue()) {
+        List<ResponseType> responseList = getResponseList(messageType);
+        for (ResponseType responseType : responseList) {
+          if (name.equals(responseType.getName())) {
+            return OrchestraAPItoDOM.DOMToResponse(responseType);
+          }
+        }
+      }
+    }
+    throw new ResourceNotFoundException(
+        String.format("Message with ID=%d not found", id));  
+  }
+
+  @Override
+  public List<Response> getMessageResponses(String reposName, String version, Integer id,
+      Predicate<Response> search) throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(id, "Message ID missing");
+    Repository repository = repositories.get(new RepositoryKey(reposName, version));
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+    Predicate<Response> predicate = search != null ? search : t -> true;
+
+    List<MessageType> messages = getMessageList(repository);
+
+    for (int i = 0; i < messages.size(); i++) {
+      MessageType messageType = messages.get(i);
+      if (id == messageType.getId().intValue()) {
+        List<ResponseType> responseList = getResponseList(messageType);
+        return responseList.stream().map(OrchestraAPItoDOM::DOMToResponse)
+        .filter(predicate)
+        .collect(Collectors.toList());
+      }
+    }
+    throw new ResourceNotFoundException(
+        String.format("Message with ID=%d not found", id));  
+
+
+  }
+
+  @Override
   public List<Message> getMessages(String reposName, String version, Predicate<Message> search)
       throws RepositoryStoreException {
     Objects.requireNonNull(reposName, "Repository name missing");
@@ -1292,6 +1413,7 @@ public class RepositoryDOMStore implements RepositoryStore {
     throw new ResourceNotFoundException(String.format("Actor %s not found", name));
   }
 
+
   @Override
   public void updateGroup(String reposName, String version, Integer id, Group group)
       throws RepositoryStoreException {
@@ -1347,6 +1469,38 @@ public class RepositoryDOMStore implements RepositoryStore {
   }
 
   @Override
+  public void updateMessageResponse(String reposName, String version, Integer id, String name,
+      Response response) throws RepositoryStoreException {
+    Objects.requireNonNull(response, "Message response value missing");
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(id, "Message ID missing");
+    Repository repository = repositories.get(new RepositoryKey(reposName, version));
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+    List<MessageType> messageList = getMessageList(repository);
+
+    for (MessageType messageType : messageList) {
+      if (id == messageType.getId().intValue()) {
+        List<ResponseType> responseList = getResponseList(messageType);
+        for (int j = 0; j < responseList.size(); j++) {
+          ResponseType responseType = responseList.get(j);
+          if (response.getName().equals(responseType.getName())) {
+            responseList.set(j, OrchestraAPItoDOM.ResponseToDOM(response));
+            return;
+          }
+        }
+        throw new ResourceNotFoundException(
+            String.format("Response %s not found", name));
+      }
+    }
+    throw new ResourceNotFoundException(
+        String.format("Message with ID=%d not found", id));
+  }
+
+  @Override
   public void updateRepositoryMetadata(String reposName, String version,
       io.fixprotocol.orchestra.model.Repository repository) throws RepositoryStoreException {
     Objects.requireNonNull(reposName, "Repository name missing");
@@ -1370,8 +1524,7 @@ public class RepositoryDOMStore implements RepositoryStore {
     return actors.getActorOrFlow().stream().filter(o -> o instanceof ActorType)
         .map(o -> (ActorType) o).collect(Collectors.toList());
   }
-
-
+  
   private List<CodeSetType> getCodeSets(Repository repository) {
     CodeSets codeSets = repository.getCodeSets();
     if (codeSets == null) {
@@ -1425,6 +1578,15 @@ public class RepositoryDOMStore implements RepositoryStore {
       repository.setMessages(messages);
     }
     return messages.getMessage();
+  }
+
+  private List<ResponseType> getResponseList(MessageType messageType) {
+    Responses responses = messageType.getResponses();
+    if (responses == null) {
+      responses = new Responses();
+      messageType.setResponses(responses);
+    }
+    return responses.getResponse();
   }
 
   private File marshal(Repository repository) throws JAXBException, IOException {

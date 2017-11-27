@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-21T23:02:09.711Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-24T16:52:38.175Z")
 public class RepositoryApi {
   private ApiClient apiClient;
 
@@ -836,7 +836,7 @@ public class RepositoryApi {
     apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
   }
   /**
-   * deletes a single Orchestra repository  based on the ID supplied
+   * deletes a single Orchestra repository based on the ID supplied
    * 
    * @param reposName name of Orchestra repository to delete (required)
    * @param version version of Orchestra repository to delete (required)

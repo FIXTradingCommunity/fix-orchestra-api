@@ -24,8 +24,10 @@ import io.fixprotocol._2016.fixrepository.FieldType;
 import io.fixprotocol._2016.fixrepository.FlowType;
 import io.fixprotocol._2016.fixrepository.GroupRefType;
 import io.fixprotocol._2016.fixrepository.GroupType;
+import io.fixprotocol._2016.fixrepository.MessageRefType;
 import io.fixprotocol._2016.fixrepository.MessageType;
 import io.fixprotocol._2016.fixrepository.Repository;
+import io.fixprotocol._2016.fixrepository.ResponseType;
 import io.fixprotocol.orchestra.api.RFC3339DateFormat;
 import io.fixprotocol.orchestra.model.Actor;
 import io.fixprotocol.orchestra.model.Code;
@@ -39,8 +41,10 @@ import io.fixprotocol.orchestra.model.Group;
 import io.fixprotocol.orchestra.model.GroupProperties;
 import io.fixprotocol.orchestra.model.GroupRef;
 import io.fixprotocol.orchestra.model.Message;
+import io.fixprotocol.orchestra.model.MessageRef;
 import io.fixprotocol.orchestra.model.Metadata;
 import io.fixprotocol.orchestra.model.ObjectId;
+import io.fixprotocol.orchestra.model.Response;
 import io.fixprotocol.orchestra.model.Structure;
 
 
@@ -230,6 +234,14 @@ public final class OrchestraAPItoDOM {
     return message;
   }
 
+  public static MessageRef DOMToMessageRef(MessageRefType messageRefType) {
+    MessageRef messageRef = new MessageRef();
+    messageRef.setName(messageRefType.getName());
+    messageRef.setMsgType(messageRefType.getMsgType());
+    messageRef.setScenario(messageRefType.getScenario());
+    return messageRef;
+  }
+
   public static Metadata DOMToMetadata(ElementOrRefinementContainer element) {
     Metadata metadata = new Metadata();
     List<JAXBElement<SimpleLiteral>> literals = element.getAny();
@@ -272,6 +284,16 @@ public final class OrchestraAPItoDOM {
     return metadata;
   }
 
+  public static Response DOMToResponse(ResponseType responseType) {
+    Response response = new Response();
+    response.setName(responseType.getName());
+    response.setWhen(responseType.getWhen());
+    response.setMessageRef((MessageRef) (responseType.getMessageRefOrAssignOrTrigger().stream()
+        .filter(o -> o instanceof MessageRefType)).map(o -> (MessageRefType) o)
+            .map(m -> DOMToMessageRef(m)).findFirst().get());
+    return response;
+  }
+
   public static FieldType FieldToDOM(Field field) {
     FieldType fieldType = new FieldType();
     fieldType.setId(BigInteger.valueOf(field.getOid().getId()));
@@ -292,10 +314,13 @@ public final class OrchestraAPItoDOM {
 
   public static MessageType MessageToDOM(Message message) {
     MessageType messageType = new MessageType();
-    messageType.setAbbrName(message.getOid().getAbbrName());
-    messageType.setId(BigInteger.valueOf(message.getOid().getId()));
-    messageType.setName(message.getOid().getName());
-    messageType.setOid(message.getOid().getOid());
+    final ObjectId oid = message.getOid();
+    if (oid != null) {
+      messageType.setAbbrName(oid.getAbbrName());
+      messageType.setId(BigInteger.valueOf(oid.getId()));
+      messageType.setName(oid.getName());
+      messageType.setOid(oid.getOid());
+    }
     messageType.setCategory(message.getCategory());
     messageType.setExtends(message.getExtends());
     messageType.setFlow(message.getFlow());
@@ -387,6 +412,24 @@ public final class OrchestraAPItoDOM {
       repositoryDOM.setMetadata(MetadataToDOM(repository.getMetadata()));
     }
     return repositoryDOM;
+  }
+
+  public static ResponseType ResponseToDOM(Response response) {
+    ResponseType responseType = new ResponseType();
+    responseType.setName(response.getName());
+    responseType.setWhen(response.getWhen());
+    if (response.getMessageRef() != null) {
+      responseType.getMessageRefOrAssignOrTrigger().add(MessageRefToDOM(response.getMessageRef()));
+    }
+    return responseType;
+  }
+
+  private static MessageRefType MessageRefToDOM(MessageRef messageRef) {
+    MessageRefType messageRefType = new MessageRefType();
+    messageRefType.setName(messageRef.getName());
+    messageRefType.setMsgType(messageRef.getMsgType());
+    messageRefType.setScenario(messageRef.getScenario());
+    return messageRefType;
   }
 
   private static void populateComponent(ComponentType componentType, Component component) {

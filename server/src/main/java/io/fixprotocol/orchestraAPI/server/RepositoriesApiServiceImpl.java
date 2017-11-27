@@ -1,6 +1,7 @@
 package io.fixprotocol.orchestraAPI.server;
 
 import java.io.File;
+import java.net.URI;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Level;
@@ -24,6 +25,7 @@ import io.fixprotocol.orchestra.model.Group;
 import io.fixprotocol.orchestra.model.Message;
 import io.fixprotocol.orchestra.model.Metadata;
 import io.fixprotocol.orchestra.model.Repository;
+
 import io.fixprotocol.orchestraAPI.store.DuplicateKeyException;
 import io.fixprotocol.orchestraAPI.store.RepositoryStore;
 import io.fixprotocol.orchestraAPI.store.RepositoryStoreException;
@@ -40,8 +42,8 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   }
 
   @Override
-  public Response addActor(String reposName, String version, Actor actor, SecurityContext securityContext)
-      throws NotFoundException {
+  public Response addActor(String reposName, String version, Actor actor,
+      SecurityContext securityContext) throws NotFoundException {
     try {
       repositoryStore.createActor(reposName, version, actor);
       return Response.created(UriBuilder.fromPath("repositories").path(reposName).path(version)
@@ -143,8 +145,8 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   }
 
   @Override
-  public Response addFlow(String reposName, String version, Flow flow, SecurityContext securityContext)
-      throws NotFoundException {
+  public Response addFlow(String reposName, String version, Flow flow,
+      SecurityContext securityContext) throws NotFoundException {
     try {
       repositoryStore.createFlow(reposName, version, flow);
       return Response.created(UriBuilder.fromPath("repositories").path(reposName).path(version)
@@ -194,6 +196,25 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   }
 
   @Override
+  public Response addMessageResponse(String reposName, String version, Integer id,
+      io.fixprotocol.orchestra.model.Response response, SecurityContext securityContext)
+      throws NotFoundException {
+    try {
+      repositoryStore.createMessageResponse(reposName, version, id, response);
+      final URI uri = UriBuilder.fromPath("repositories").path(reposName).path(version)
+          .path("messages").path(id.toString()).path("responses").path(response.getName()).build();
+      return Response.created(uri).build();
+    } catch (DuplicateKeyException e) {
+      return Response.noContent().status(Status.CONFLICT).build();
+    } catch (ResourceNotFoundException e) {
+      return Response.noContent().status(Status.NOT_FOUND).build();
+    } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
+      return Response.serverError().build();
+    }
+  }
+
+  @Override
   public Response addRepository(Repository repository, String nameToClone, String versionToClone,
       SecurityContext securityContext) throws NotFoundException {
     try {
@@ -211,8 +232,8 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   }
 
   @Override
-  public Response deleteActor(String reposName, String version, String name, SecurityContext securityContext)
-      throws NotFoundException {
+  public Response deleteActor(String reposName, String version, String name,
+      SecurityContext securityContext) throws NotFoundException {
     try {
       repositoryStore.deleteActor(reposName, version, name);
       return Response.noContent().build();
@@ -295,8 +316,8 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   }
 
   @Override
-  public Response deleteFlow(String reposName, String version, String name, SecurityContext securityContext)
-      throws NotFoundException {
+  public Response deleteFlow(String reposName, String version, String name,
+      SecurityContext securityContext) throws NotFoundException {
     try {
       repositoryStore.deleteFlow(reposName, version, name);
       return Response.noContent().build();
@@ -327,6 +348,20 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
       SecurityContext securityContext) throws NotFoundException {
     try {
       repositoryStore.deleteMessage(reposName, version, id);
+      return Response.noContent().build();
+    } catch (ResourceNotFoundException e) {
+      return Response.noContent().status(Status.NOT_FOUND).build();
+    } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
+      return Response.serverError().build();
+    }
+  }
+
+  @Override
+  public Response deleteMessageResponse(String reposName, String version, Integer id, String name,
+      SecurityContext securityContext) throws NotFoundException {
+    try {
+      repositoryStore.deleteMessageResponse(reposName, version, id, name);
       return Response.noContent().build();
     } catch (ResourceNotFoundException e) {
       return Response.noContent().status(Status.NOT_FOUND).build();
@@ -375,8 +410,8 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   }
 
   @Override
-  public Response findActorByName(String reposName, String version, String name, SecurityContext securityContext)
-      throws NotFoundException {
+  public Response findActorByName(String reposName, String version, String name,
+      SecurityContext securityContext) throws NotFoundException {
     try {
       Actor actor = repositoryStore.getActor(reposName, version, name);
       return Response.ok().entity(actor).build();
@@ -429,6 +464,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     }
   }
 
+
   @Override
   public Response findDatatypeByName(String reposName, String version, String name,
       SecurityContext securityContext) throws NotFoundException {
@@ -456,10 +492,9 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     }
   }
 
-
   @Override
-  public Response findFlowByName(String reposName, String version, String name, SecurityContext securityContext)
-      throws NotFoundException {
+  public Response findFlowByName(String reposName, String version, String name,
+      SecurityContext securityContext) throws NotFoundException {
     try {
       Flow flow = repositoryStore.getFlow(reposName, version, name);
       return Response.ok().entity(flow).build();
@@ -499,6 +534,21 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   }
 
   @Override
+  public Response findMessageResponseById(String reposName, String version, Integer id, String name,
+      SecurityContext securityContext) throws NotFoundException {
+    try {
+      io.fixprotocol.orchestra.model.Response response =
+          repositoryStore.getMessageResponse(reposName, version, id, name);
+      return Response.ok().entity(response).build();
+    } catch (ResourceNotFoundException e) {
+      return Response.noContent().status(Status.NOT_FOUND).build();
+    } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
+      return Response.serverError().build();
+    }
+  }
+
+  @Override
   public Response findRepositoryById(String reposName, String version,
       SecurityContext securityContext) throws NotFoundException {
     try {
@@ -513,9 +563,8 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   }
 
   @Override
-  public Response searchActors(String reposName, String version, String searchString,
-      Integer skip, Integer limit,
-      SecurityContext securityContext) throws NotFoundException {
+  public Response searchActors(String reposName, String version, String searchString, Integer skip,
+      Integer limit, SecurityContext securityContext) throws NotFoundException {
     try {
       Predicate<Actor> predicate =
           searchString != null ? actor -> searchString.equals(actor.getName()) : t -> true;
@@ -626,8 +675,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
 
   @Override
   public Response searchFlows(String reposName, String version, String searchString, Integer skip,
-      Integer limit,
-      SecurityContext securityContext) throws NotFoundException {
+      Integer limit, SecurityContext securityContext) throws NotFoundException {
     try {
       Predicate<Flow> predicate =
           searchString != null ? flow -> searchString.equals(flow.getName()) : t -> true;
@@ -653,6 +701,25 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
 
       List<Group> filtered = repositoryStore.getGroups(reposName, version, predicate);
       List<Group> range =
+          filtered.subList(skip != null ? skip : 0, limit != null ? limit : filtered.size());
+      return Response.ok().entity(range).build();
+    } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
+      return Response.serverError().build();
+    }
+  }
+
+  @Override
+  public Response searchMessageResponses(String reposName, String version, Integer id,
+      String searchString, Integer skip, Integer limit, SecurityContext securityContext)
+      throws NotFoundException {
+    try {
+      Predicate<io.fixprotocol.orchestra.model.Response> predicate =
+          searchString != null ? r -> searchString.equals(r.getName()) : r -> true;
+
+      List<io.fixprotocol.orchestra.model.Response> filtered =
+          repositoryStore.getMessageResponses(reposName, version, id, predicate);
+      List<io.fixprotocol.orchestra.model.Response> range =
           filtered.subList(skip != null ? skip : 0, limit != null ? limit : filtered.size());
       return Response.ok().entity(range).build();
     } catch (RepositoryStoreException e) {
@@ -706,7 +773,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
       return Response.serverError().build();
-    } 
+    }
   }
 
   @Override
@@ -758,7 +825,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
       return Response.serverError().build();
-    } 
+    }
   }
 
   @Override
@@ -784,7 +851,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
       return Response.serverError().build();
-    } 
+    }
   }
 
   @Override
@@ -811,6 +878,21 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (RepositoryStoreException e) {
       return Response.serverError().build();
     }
+  }
+
+  @Override
+  public Response updateMessageResponse(String reposName, String version, Integer id, String name,
+      io.fixprotocol.orchestra.model.Response response, SecurityContext securityContext)
+      throws NotFoundException {
+    try {
+      repositoryStore.updateMessageResponse(reposName, version, id, name, response);
+      return Response.ok().build();
+    } catch (ResourceNotFoundException e) {
+      return Response.noContent().status(Status.NOT_FOUND).build();
+    } catch (RepositoryStoreException e) {
+      return Response.serverError().build();
+    }
+
   }
 
   @Override

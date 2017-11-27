@@ -21,6 +21,7 @@ import io.fixprotocol.orchestra.client.model.Flow;
 import io.fixprotocol.orchestra.client.model.Group;
 import io.fixprotocol.orchestra.client.model.Message;
 import io.fixprotocol.orchestra.client.model.Repository;
+import io.fixprotocol.orchestra.client.model.Response;
 
 public class Client {
 
@@ -203,6 +204,20 @@ public class Client {
   }
 
   /**
+   * Adds a Response to a message
+   * 
+   * @param reposName name of Orchestra repository
+   * @param version version of Orchestra repository
+   * @param id message ID
+   * @param response Response to add
+   * @throws ApiException if the API call fails
+   */
+  public void addMessageResponse(String reposName, String version, Integer id, Response response)
+      throws ApiException {
+    workflowApi.addMessageResponse(reposName, version, id, response);
+  }
+
+  /**
    * Adds an Orchestra repository file
    * 
    * @param repository metadata of an Orchestra file to add
@@ -324,6 +339,21 @@ public class Client {
   public void deleteMessage(String reposName, String version, Integer messageid)
       throws ApiException {
     repositoryApi.deleteMessage(reposName, version, messageid);
+  }
+
+  /**
+   * Deletes a Response to a message
+   * 
+   * @param reposName name of Orchestra repository
+   * @param version version of Orchestra repository
+   * @param id Message identifier
+   * @param name Response name
+   * @throws ApiException if the API call fails
+   */
+
+  public void deleteMessageResponse(String reposName, String version, Integer id, String name)
+      throws ApiException {
+    workflowApi.deleteMessageResponse(reposName, version, id, name);
   }
 
   /**
@@ -471,6 +501,22 @@ public class Client {
   public Message findMessageById(String reposName, String version, Integer messageid)
       throws ApiException {
     return repositoryApi.findMessageById(reposName, version, messageid);
+  }
+
+  /**
+   * Returns a single message Response, if found
+   * 
+   * @param reposName name of Orchestra repository file (required)
+   * @param version version of Orchestra repository file (required)
+   * @param id Message identifier
+   * @param name Response name
+   * @return a Response
+   * @throws ApiException if the API call fails or the Response is not found
+   */
+
+  public Response findMessageResponseById(String reposName, String version, Integer id, String name)
+      throws ApiException {
+    return workflowApi.findMessageResponseById(reposName, version, id, name);
   }
 
   /**
@@ -624,6 +670,25 @@ public class Client {
   public List<Group> searchGroups(String reposName, String version, String searchString,
       Integer skip, Integer limit) throws ApiException {
     return repositoryApi.searchGroups(reposName, version, searchString, skip, limit);
+  }
+
+  /**
+   * searches responses to a Message
+   *
+   * By passing in the appropriate options, you can search for responses
+   * 
+   * @param reposName name of Orchestra repository file (required)
+   * @param version version of Orchestra repository file (required)
+   * @param id message identifier
+   * @param searchString pass an optional search string for looking up responses (optional)
+   * @param skip number of records to skip for pagination (optional)
+   * @param limit maximum number of records to return (optional)
+   * @return List&lt;Response&gt;
+   * @throws ApiException if the API call fails
+   */
+  public List<Response> searchMessageResponses(String reposName, String version, Integer id,
+      String searchString, Integer skip, Integer limit) throws ApiException {
+    return workflowApi.searchMessageResponses(reposName, version, id, searchString, skip, limit);
   }
 
   /**
@@ -790,6 +855,21 @@ public class Client {
   }
 
   /**
+   * Updates a single message Response, if found (idempotent)
+   * 
+   * @param reposName name of Orchestra repository
+   * @param version version of Orchestra repository
+   * @param id Message ID
+   * @param name Response name
+   * @param message to update
+   * @throws ApiException if the API call fails or the Message is not found
+   */
+  public void updateMessageResponse(String reposName, String version, Integer id, String name,
+      Response response) throws ApiException {
+    workflowApi.updateMessageResponse(reposName, version, id, name, response);
+  }
+
+  /**
    * Updates Metadata of an Orchestra repository file, if found (idempotent)
    * 
    * @param reposName name of Orchestra repository
@@ -801,4 +881,6 @@ public class Client {
       throws ApiException {
     repositoryApi.updateRepositoryById(reposName, version, repository);
   }
+
+
 }

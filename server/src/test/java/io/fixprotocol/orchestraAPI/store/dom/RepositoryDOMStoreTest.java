@@ -20,6 +20,8 @@ import org.junit.Test;
 import org.xml.sax.SAXException;
 
 import io.fixprotocol.orchestra.model.Flow;
+import io.fixprotocol.orchestra.model.MessageRef;
+import io.fixprotocol.orchestra.model.Response;
 import io.fixprotocol.orchestra.model.Actor;
 import io.fixprotocol.orchestra.model.Code;
 import io.fixprotocol.orchestra.model.CodeSet;
@@ -199,6 +201,51 @@ public class RepositoryDOMStoreTest {
     assertEquals(1, components.size());
     List<FieldRef> fields = structure2.getFields();
     assertEquals(1, fields.size());
+    
+    store.deleteRepository(repository.getName(), identifier);
+  };
+
+  @Test
+  public void addFindMessageResponse() throws RepositoryStoreException {
+    Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    store.createRepository(repository, null, null);
+
+    Message message = new Message();
+    ObjectId oid = new ObjectId();
+    oid.setAbbrName("Order");
+    oid.setId(14);
+    oid.setName("NewOrderSingle");
+    message.setOid(oid);
+    message.setMsgType("D");
+    message.setScenario("base");
+    Structure structure = new Structure();
+    message.setStructure(structure);
+    store.createMessage("test1", identifier, message, null);
+    
+    Response response = new Response();
+    response.setName("trade");
+    MessageRef messageRef = new MessageRef();
+    messageRef.setName("ExecutionReport");
+    messageRef.setMsgType("8");
+    messageRef.setScenario("trade");
+    response.setMessageRef(messageRef );
+    response.setWhen("match happened");
+    store.createMessageResponse("test1", identifier, 14, response );
+    
+    Response response2 = store.getMessageResponse("test1", identifier, 14, "trade");
+    assertNotNull(response2);
+    assertEquals("trade", response2.getName());
+    MessageRef messageRef2 = response2.getMessageRef();
+    assertNotNull(messageRef2);
+    assertEquals("ExecutionReport", messageRef2.getName());
     
     store.deleteRepository(repository.getName(), identifier);
   };

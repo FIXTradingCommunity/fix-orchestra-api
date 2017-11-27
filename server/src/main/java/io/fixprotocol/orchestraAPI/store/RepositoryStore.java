@@ -15,6 +15,7 @@ import io.fixprotocol.orchestra.model.Group;
 import io.fixprotocol.orchestra.model.Message;
 import io.fixprotocol.orchestra.model.Metadata;
 import io.fixprotocol.orchestra.model.Repository;
+import io.fixprotocol.orchestra.model.Response;
 
 
 
@@ -119,6 +120,19 @@ public interface RepositoryStore {
    * @throws RepositoryStoreException if the store operation fails
    */
   void createMessage(String reposName, String version, Message message, Integer toClone)
+      throws RepositoryStoreException;
+
+  /**
+   * Creates a new message response in a repository
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param id ID of message
+   * @param response Response to add
+   * @throws ResourceNotFoundException if the repository to update does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  void createMessageResponse(String reposName, String version, Integer id, Response response)
       throws RepositoryStoreException;
 
   /**
@@ -245,6 +259,20 @@ public interface RepositoryStore {
    * @throws RepositoryStoreException if the store operation fails
    */
   void deleteMessage(String reposName, String version, Integer id) throws RepositoryStoreException;
+
+  /**
+   * Deletes one message response if it exists
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param id message identifier
+   * @param name of response
+   * @throws ResourceNotFoundException if the repository or message response to delete does not
+   *         exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  void deleteMessageResponse(String reposName, String version, Integer id, String name)
+      throws RepositoryStoreException;
 
   /**
    * Deletes one repository if it exists
@@ -476,6 +504,35 @@ public interface RepositoryStore {
       throws RepositoryStoreException;
 
   /**
+   * Retrieves a message response by name
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param id ID of the message
+   * @param name response identifier
+   * @return the message response
+   * @throws ResourceNotFoundException if the repository or response does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  Response getMessageResponse(String reposName, String version, Integer id, String name)
+      throws RepositoryStoreException;
+
+  /**
+   * Retrieves all responses to a message
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param id ID of a message
+   * @param predicate filter for responses to return
+   * @return a list of responses
+   * @throws ResourceNotFoundException if the repository does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+
+  List<Response> getMessageResponses(String reposName, String version, Integer id,
+      Predicate<Response> predicate) throws RepositoryStoreException;
+
+  /**
    * Retrieves all messages in a repository
    * 
    * @param reposName name of Orchestra repository (required)
@@ -558,7 +615,7 @@ public interface RepositoryStore {
    * @throws RepositoryStoreException if the store operation fails
    */
   void updateCodeSet(String reposName, String version, Integer id, CodeSet codeSet)
-      throws RepositoryStoreException;
+      throws RepositoryStoreException;;
 
   /**
    * Update an existing Component
@@ -600,7 +657,7 @@ public interface RepositoryStore {
       throws RepositoryStoreException;
 
   void updateFlow(String reposName, String version, String name, Flow flow)
-      throws RepositoryStoreException;;
+      throws RepositoryStoreException;
 
   /**
    * Update an existing Group
@@ -627,6 +684,20 @@ public interface RepositoryStore {
    */
   void updateMessage(String reposName, String version, Integer id, Message message)
       throws RepositoryStoreException;
+
+  /**
+   * Update an existing message response
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param id ID of the message to update
+   * @param name of the Response to update
+   * @param response new value of the Response
+   * @throws ResourceNotFoundException if the repository or message to update does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  void updateMessageResponse(String reposName, String version, Integer id, String name,
+      Response response) throws RepositoryStoreException;
 
   /**
    * Update the metadata of an existing repository

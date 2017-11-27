@@ -4,6 +4,7 @@ import io.fixprotocol.orchestra.client.ApiException;
 import io.fixprotocol.orchestra.client.model.Actor;
 import io.fixprotocol.orchestra.client.model.ErrorModel;
 import io.fixprotocol.orchestra.client.model.Flow;
+import io.fixprotocol.orchestra.client.model.Response;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -56,6 +57,25 @@ public class WorkflowApiTest {
     }
     
     /**
+     * adds a response to a message scenario
+     *
+     * Adds a message scenario response
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void addMessageResponseTest() throws ApiException {
+        String reposName = null;
+        String version = null;
+        Integer id = null;
+        Response response = null;
+        // api.addMessageResponse(reposName, version, id, response);
+
+        // TODO: test validations
+    }
+    
+    /**
      * deletes a single Actor based on the name supplied
      *
      * 
@@ -92,6 +112,25 @@ public class WorkflowApiTest {
     }
     
     /**
+     * deletes a single response to a message scenario based on the ID supplied
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void deleteMessageResponseTest() throws ApiException {
+        String reposName = null;
+        String version = null;
+        Integer id = null;
+        String name = null;
+        // api.deleteMessageResponse(reposName, version, id, name);
+
+        // TODO: test validations
+    }
+    
+    /**
      * Returns a single Actor, if found
      *
      * 
@@ -123,6 +162,25 @@ public class WorkflowApiTest {
         String version = null;
         String name = null;
         // Flow response = api.findFlowByName(reposName, version, name);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * Returns a single response to a message scenario, if found
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void findMessageResponseByIdTest() throws ApiException {
+        String reposName = null;
+        String version = null;
+        Integer id = null;
+        String name = null;
+        // Response response = api.findMessageResponseById(reposName, version, id, name);
 
         // TODO: test validations
     }
@@ -168,6 +226,27 @@ public class WorkflowApiTest {
     }
     
     /**
+     * searches message responses
+     *
+     * By passing in the appropriate options, you can search for message responses
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void searchMessageResponsesTest() throws ApiException {
+        String reposName = null;
+        String version = null;
+        Integer id = null;
+        String searchString = null;
+        Integer skip = null;
+        Integer limit = null;
+        // List<Response> response = api.searchMessageResponses(reposName, version, id, searchString, skip, limit);
+
+        // TODO: test validations
+    }
+    
+    /**
      * Updates a single Actor, if found (idempotent)
      *
      * 
@@ -201,6 +280,26 @@ public class WorkflowApiTest {
         String name = null;
         Flow actor = null;
         // api.updateFlowByName(reposName, version, name, actor);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * Updates a single response to a message scenario, if found (idempotent)
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void updateMessageResponseTest() throws ApiException {
+        String reposName = null;
+        String version = null;
+        Integer id = null;
+        String name = null;
+        Response response = null;
+        // api.updateMessageResponse(reposName, version, id, name, response);
 
         // TODO: test validations
     }

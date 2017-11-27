@@ -302,7 +302,7 @@ public class RepositoryApiTest {
     }
     
     /**
-     * deletes a single Orchestra repository  based on the ID supplied
+     * deletes a single Orchestra repository based on the ID supplied
      *
      * 
      *
