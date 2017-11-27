@@ -28,6 +28,7 @@ import io.fixprotocol._2016.fixrepository.MessageRefType;
 import io.fixprotocol._2016.fixrepository.MessageType;
 import io.fixprotocol._2016.fixrepository.Repository;
 import io.fixprotocol._2016.fixrepository.ResponseType;
+import io.fixprotocol._2016.fixrepository.TriggerType;
 import io.fixprotocol.orchestra.api.RFC3339DateFormat;
 import io.fixprotocol.orchestra.model.Actor;
 import io.fixprotocol.orchestra.model.Code;
@@ -46,6 +47,7 @@ import io.fixprotocol.orchestra.model.Metadata;
 import io.fixprotocol.orchestra.model.ObjectId;
 import io.fixprotocol.orchestra.model.Response;
 import io.fixprotocol.orchestra.model.Structure;
+import io.fixprotocol.orchestra.model.Trigger;
 
 
 public final class OrchestraAPItoDOM {
@@ -288,10 +290,24 @@ public final class OrchestraAPItoDOM {
     Response response = new Response();
     response.setName(responseType.getName());
     response.setWhen(responseType.getWhen());
-    response.setMessageRef((MessageRef) (responseType.getMessageRefOrAssignOrTrigger().stream()
-        .filter(o -> o instanceof MessageRefType)).map(o -> (MessageRefType) o)
-            .map(m -> DOMToMessageRef(m)).findFirst().get());
+    responseType.getMessageRefOrAssignOrTrigger().stream().filter(o -> o instanceof String)
+      .map(Object::toString).findFirst().ifPresent(response::setAssign);
+    responseType.getMessageRefOrAssignOrTrigger().stream()
+      .filter(o -> o instanceof MessageRefType).map(o -> (MessageRefType) o)
+        .map(m -> DOMToMessageRef(m)).findFirst().ifPresent(response::setMessageRef);
+    responseType.getMessageRefOrAssignOrTrigger().stream()
+      .filter(o -> o instanceof TriggerType).map(o -> (TriggerType) o).map(t -> DOMToTrigger(t)).findFirst()
+      .ifPresent(response::setTrigger);
+
     return response;
+  }
+
+  public static Trigger DOMToTrigger(TriggerType t) {
+    Trigger trigger = new Trigger();
+    trigger.setName(t.getName());
+    trigger.setActor(t.getActor());
+    trigger.setStateMachine(t.getStateMachine());
+    return trigger;
   }
 
   public static FieldType FieldToDOM(Field field) {
@@ -310,6 +326,14 @@ public final class OrchestraAPItoDOM {
     flowType.setName(flow.getName());
     flowType.setSource(flow.getSource());
     return flowType;
+  }
+
+  public static MessageRefType MessageRefToDOM(MessageRef messageRef) {
+    MessageRefType messageRefType = new MessageRefType();
+    messageRefType.setName(messageRef.getName());
+    messageRefType.setMsgType(messageRef.getMsgType());
+    messageRefType.setScenario(messageRef.getScenario());
+    return messageRefType;
   }
 
   public static MessageType MessageToDOM(Message message) {
@@ -418,18 +442,24 @@ public final class OrchestraAPItoDOM {
     ResponseType responseType = new ResponseType();
     responseType.setName(response.getName());
     responseType.setWhen(response.getWhen());
+    if (response.getAssign() != null) {
+      responseType.getMessageRefOrAssignOrTrigger().add(response.getAssign());
+    }
     if (response.getMessageRef() != null) {
       responseType.getMessageRefOrAssignOrTrigger().add(MessageRefToDOM(response.getMessageRef()));
+    }
+    if (response.getTrigger() != null) {
+      responseType.getMessageRefOrAssignOrTrigger().add(TriggerToDOM(response.getTrigger()));
     }
     return responseType;
   }
 
-  private static MessageRefType MessageRefToDOM(MessageRef messageRef) {
-    MessageRefType messageRefType = new MessageRefType();
-    messageRefType.setName(messageRef.getName());
-    messageRefType.setMsgType(messageRef.getMsgType());
-    messageRefType.setScenario(messageRef.getScenario());
-    return messageRefType;
+  public static TriggerType TriggerToDOM(Trigger trigger) {
+    TriggerType triggerType = new TriggerType();
+    triggerType.setName(trigger.getName());
+    triggerType.setActor(trigger.getActor());
+    triggerType.setStateMachine(trigger.getStateMachine());
+    return triggerType;
   }
 
   private static void populateComponent(ComponentType componentType, Component component) {

@@ -32,6 +32,7 @@ import io.fixprotocol.orchestra.client.model.ObjectId;
 import io.fixprotocol.orchestra.client.model.Repository;
 import io.fixprotocol.orchestra.client.model.Response;
 import io.fixprotocol.orchestra.client.model.Structure;
+import io.fixprotocol.orchestra.client.model.Trigger;
 import io.fixprotocol.orchestra.client.model.ComponentRef;
 import io.fixprotocol.orchestra.client.model.Message;
 import io.fixprotocol.orchestra.client.model.MessageRef;
@@ -188,6 +189,7 @@ public class ClientTest {
     messageRef.setMsgType("8");
     messageRef.setScenario("trade");
     response.setMessageRef(messageRef );
+    response.setAssign("OrdQty = in.OrdQty");
     client.addMessageResponse("test1", identifier, 14, response );
     
     Message message2 = client.findMessageById("test1", identifier, 14);
@@ -201,6 +203,7 @@ public class ClientTest {
     assertEquals("ExecutionReport", messageRef2.getName());
     assertEquals("8", messageRef2.getMsgType());
     assertEquals("trade", messageRef2.getScenario());
+    assertNotNull(response2.getAssign());
     
     client.deleteRepository(repository.getName(), identifier);
   }
@@ -298,6 +301,11 @@ public class ClientTest {
     assertEquals("trade", response2.getName());
     
     response2.setWhen("match happened");
+    Trigger trigger = new Trigger();
+    trigger.setActor("a1");
+    trigger.setName("t1");
+    trigger.setStateMachine("sm1");
+    response2.setTrigger(trigger );
     client.updateMessageResponse("test1", identifier, 14, "trade", response2);
     
     Response response3 = client.findMessageResponseById("test1", identifier, 14, "trade");
@@ -308,6 +316,7 @@ public class ClientTest {
     MessageRef messageRef3 = response3.getMessageRef();
     assertNotNull(messageRef3);
     assertEquals("ExecutionReport", messageRef3.getName());
+    assertNotNull(response3.getTrigger());
     
     client.deleteRepository(repository.getName(), identifier);
   }
