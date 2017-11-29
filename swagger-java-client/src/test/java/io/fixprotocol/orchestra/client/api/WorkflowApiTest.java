@@ -5,6 +5,7 @@ import io.fixprotocol.orchestra.client.model.Actor;
 import io.fixprotocol.orchestra.client.model.ErrorModel;
 import io.fixprotocol.orchestra.client.model.Flow;
 import io.fixprotocol.orchestra.client.model.Response;
+import io.fixprotocol.orchestra.client.model.StateMachine;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -76,6 +77,25 @@ public class WorkflowApiTest {
     }
     
     /**
+     * adds a state machine
+     *
+     * Adds a StateMachine
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void addStateMachineTest() throws ApiException {
+        String reposName = null;
+        String version = null;
+        String name = null;
+        StateMachine stateMachine = null;
+        // api.addStateMachine(reposName, version, name, stateMachine);
+
+        // TODO: test validations
+    }
+    
+    /**
      * deletes a single Actor based on the name supplied
      *
      * 
@@ -131,6 +151,25 @@ public class WorkflowApiTest {
     }
     
     /**
+     * deletes a single StateMachine based on the name supplied
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void deleteStateMachineTest() throws ApiException {
+        String reposName = null;
+        String version = null;
+        String name = null;
+        String smName = null;
+        // api.deleteStateMachine(reposName, version, name, smName);
+
+        // TODO: test validations
+    }
+    
+    /**
      * Returns a single Actor, if found
      *
      * 
@@ -181,6 +220,25 @@ public class WorkflowApiTest {
         Integer id = null;
         String name = null;
         // Response response = api.findMessageResponseById(reposName, version, id, name);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * Returns a single StateMachine, if found
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void findStateMachineTest() throws ApiException {
+        String reposName = null;
+        String version = null;
+        String name = null;
+        String smName = null;
+        // StateMachine response = api.findStateMachine(reposName, version, name, smName);
 
         // TODO: test validations
     }
@@ -247,6 +305,27 @@ public class WorkflowApiTest {
     }
     
     /**
+     * searches state machines
+     *
+     * By passing in the appropriate options, you can search for state machines
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void searchStateMachinesTest() throws ApiException {
+        String reposName = null;
+        String version = null;
+        String name = null;
+        String searchString = null;
+        Integer skip = null;
+        Integer limit = null;
+        // List<StateMachine> response = api.searchStateMachines(reposName, version, name, searchString, skip, limit);
+
+        // TODO: test validations
+    }
+    
+    /**
      * Updates a single Actor, if found (idempotent)
      *
      * 
@@ -300,6 +379,26 @@ public class WorkflowApiTest {
         String name = null;
         Response response = null;
         // api.updateMessageResponse(reposName, version, id, name, response);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * Updates a single StateMachine, if found (idempotent)
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void updateStateMachineTest() throws ApiException {
+        String reposName = null;
+        String version = null;
+        String name = null;
+        String smName = null;
+        StateMachine stateMachine = null;
+        // api.updateStateMachine(reposName, version, name, smName, stateMachine);
 
         // TODO: test validations
     }

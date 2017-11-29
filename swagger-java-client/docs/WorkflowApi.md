@@ -7,18 +7,23 @@ Method | HTTP request | Description
 [**addActor**](WorkflowApi.md#addActor) | **POST** /repositories/{repos-name}/{version}/actors | adds an Actor
 [**addFlow**](WorkflowApi.md#addFlow) | **POST** /repositories/{repos-name}/{version}/flows | adds a Flow
 [**addMessageResponse**](WorkflowApi.md#addMessageResponse) | **POST** /repositories/{repos-name}/{version}/messages/{id}/responses | adds a response to a message scenario
+[**addStateMachine**](WorkflowApi.md#addStateMachine) | **POST** /repositories/{repos-name}/{version}/actors/{name}/statemachines | adds a state machine
 [**deleteActor**](WorkflowApi.md#deleteActor) | **DELETE** /repositories/{repos-name}/{version}/actors/{name} | deletes a single Actor based on the name supplied
 [**deleteFlow**](WorkflowApi.md#deleteFlow) | **DELETE** /repositories/{repos-name}/{version}/flows/{name} | deletes a single Flow based on the name supplied
 [**deleteMessageResponse**](WorkflowApi.md#deleteMessageResponse) | **DELETE** /repositories/{repos-name}/{version}/messages/{id}/responses/{name} | deletes a single response to a message scenario based on the ID supplied
+[**deleteStateMachine**](WorkflowApi.md#deleteStateMachine) | **DELETE** /repositories/{repos-name}/{version}/actors/{name}/statemachines/{sm-name} | deletes a single StateMachine based on the name supplied
 [**findActorByName**](WorkflowApi.md#findActorByName) | **GET** /repositories/{repos-name}/{version}/actors/{name} | Returns a single Actor, if found
 [**findFlowByName**](WorkflowApi.md#findFlowByName) | **GET** /repositories/{repos-name}/{version}/flows/{name} | Returns a single Flow, if found
 [**findMessageResponseById**](WorkflowApi.md#findMessageResponseById) | **GET** /repositories/{repos-name}/{version}/messages/{id}/responses/{name} | Returns a single response to a message scenario, if found
+[**findStateMachine**](WorkflowApi.md#findStateMachine) | **GET** /repositories/{repos-name}/{version}/actors/{name}/statemachines/{sm-name} | Returns a single StateMachine, if found
 [**searchActors**](WorkflowApi.md#searchActors) | **GET** /repositories/{repos-name}/{version}/actors | searches actors
 [**searchFlows**](WorkflowApi.md#searchFlows) | **GET** /repositories/{repos-name}/{version}/flows | searches flows
 [**searchMessageResponses**](WorkflowApi.md#searchMessageResponses) | **GET** /repositories/{repos-name}/{version}/messages/{id}/responses | searches message responses
+[**searchStateMachines**](WorkflowApi.md#searchStateMachines) | **GET** /repositories/{repos-name}/{version}/actors/{name}/statemachines | searches state machines
 [**updateActorByName**](WorkflowApi.md#updateActorByName) | **PUT** /repositories/{repos-name}/{version}/actors/{name} | Updates a single Actor, if found (idempotent)
 [**updateFlowByName**](WorkflowApi.md#updateFlowByName) | **PUT** /repositories/{repos-name}/{version}/flows/{name} | Updates a single Flow, if found (idempotent)
 [**updateMessageResponse**](WorkflowApi.md#updateMessageResponse) | **PUT** /repositories/{repos-name}/{version}/messages/{id}/responses/{name} | Updates a single response to a message scenario, if found (idempotent)
+[**updateStateMachine**](WorkflowApi.md#updateStateMachine) | **PUT** /repositories/{repos-name}/{version}/actors/{name}/statemachines/{sm-name} | Updates a single StateMachine, if found (idempotent)
 
 
 <a name="addActor"></a>
@@ -153,6 +158,56 @@ Name | Type | Description  | Notes
  **version** | **String**| version of Orchestra repository |
  **id** | **Integer**| ID of message to update |
  **response** | [**Response**](Response.md)| message response to add | [optional]
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: Not defined
+
+<a name="addStateMachine"></a>
+# **addStateMachine**
+> addStateMachine(reposName, version, name, stateMachine)
+
+adds a state machine
+
+Adds a StateMachine
+
+### Example
+```java
+// Import classes:
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.WorkflowApi;
+
+
+WorkflowApi apiInstance = new WorkflowApi();
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
+String name = "name_example"; // String | name of Actor to update
+StateMachine stateMachine = new StateMachine(); // StateMachine | StateMachine to add
+try {
+    apiInstance.addStateMachine(reposName, version, name, stateMachine);
+} catch (ApiException e) {
+    System.err.println("Exception when calling WorkflowApi#addStateMachine");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
+ **name** | **String**| name of Actor to update |
+ **stateMachine** | [**StateMachine**](StateMachine.md)| StateMachine to add | [optional]
 
 ### Return type
 
@@ -307,6 +362,54 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: Not defined
 
+<a name="deleteStateMachine"></a>
+# **deleteStateMachine**
+> deleteStateMachine(reposName, version, name, smName)
+
+deletes a single StateMachine based on the name supplied
+
+### Example
+```java
+// Import classes:
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.WorkflowApi;
+
+
+WorkflowApi apiInstance = new WorkflowApi();
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
+String name = "name_example"; // String | name of Actor to update
+String smName = "smName_example"; // String | name of StateMachine to delete
+try {
+    apiInstance.deleteStateMachine(reposName, version, name, smName);
+} catch (ApiException e) {
+    System.err.println("Exception when calling WorkflowApi#deleteStateMachine");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
+ **name** | **String**| name of Actor to update |
+ **smName** | **String**| name of StateMachine to delete |
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
 <a name="findActorByName"></a>
 # **findActorByName**
 > Actor findActorByName(reposName, version, name)
@@ -440,6 +543,55 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**Response**](Response.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+<a name="findStateMachine"></a>
+# **findStateMachine**
+> StateMachine findStateMachine(reposName, version, name, smName)
+
+Returns a single StateMachine, if found
+
+### Example
+```java
+// Import classes:
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.WorkflowApi;
+
+
+WorkflowApi apiInstance = new WorkflowApi();
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
+String name = "name_example"; // String | name of Actor to search
+String smName = "smName_example"; // String | name of StateMachine to fetch
+try {
+    StateMachine result = apiInstance.findStateMachine(reposName, version, name, smName);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling WorkflowApi#findStateMachine");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
+ **name** | **String**| name of Actor to search |
+ **smName** | **String**| name of StateMachine to fetch |
+
+### Return type
+
+[**StateMachine**](StateMachine.md)
 
 ### Authorization
 
@@ -611,6 +763,61 @@ No authorization required
  - **Content-Type**: Not defined
  - **Accept**: application/json
 
+<a name="searchStateMachines"></a>
+# **searchStateMachines**
+> List&lt;StateMachine&gt; searchStateMachines(reposName, version, name, searchString, skip, limit)
+
+searches state machines
+
+By passing in the appropriate options, you can search for state machines
+
+### Example
+```java
+// Import classes:
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.WorkflowApi;
+
+
+WorkflowApi apiInstance = new WorkflowApi();
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
+String name = "name_example"; // String | name of Actor to search
+String searchString = "searchString_example"; // String | pass an optional search string for looking up actors
+Integer skip = 56; // Integer | number of records to skip for pagination
+Integer limit = 56; // Integer | maximum number of records to return
+try {
+    List<StateMachine> result = apiInstance.searchStateMachines(reposName, version, name, searchString, skip, limit);
+    System.out.println(result);
+} catch (ApiException e) {
+    System.err.println("Exception when calling WorkflowApi#searchStateMachines");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
+ **name** | **String**| name of Actor to search |
+ **searchString** | **String**| pass an optional search string for looking up actors | [optional]
+ **skip** | **Integer**| number of records to skip for pagination | [optional]
+ **limit** | **Integer**| maximum number of records to return | [optional]
+
+### Return type
+
+[**List&lt;StateMachine&gt;**](StateMachine.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
 <a name="updateActorByName"></a>
 # **updateActorByName**
 > updateActorByName(reposName, version, name, actor)
@@ -743,6 +950,56 @@ Name | Type | Description  | Notes
  **id** | **Integer**| ID of message |
  **name** | **String**| name of message response to update |
  **response** | [**Response**](Response.md)| message response to update |
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: Not defined
+
+<a name="updateStateMachine"></a>
+# **updateStateMachine**
+> updateStateMachine(reposName, version, name, smName, stateMachine)
+
+Updates a single StateMachine, if found (idempotent)
+
+### Example
+```java
+// Import classes:
+//import io.fixprotocol.orchestra.client.ApiException;
+//import io.fixprotocol.orchestra.client.api.WorkflowApi;
+
+
+WorkflowApi apiInstance = new WorkflowApi();
+String reposName = "reposName_example"; // String | name of Orchestra repository
+String version = "version_example"; // String | version of Orchestra repository
+String name = "name_example"; // String | name of Actor to update
+String smName = "smName_example"; // String | name of StateMachine to update
+StateMachine stateMachine = new StateMachine(); // StateMachine | StateMachine to update
+try {
+    apiInstance.updateStateMachine(reposName, version, name, smName, stateMachine);
+} catch (ApiException e) {
+    System.err.println("Exception when calling WorkflowApi#updateStateMachine");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **reposName** | **String**| name of Orchestra repository |
+ **version** | **String**| version of Orchestra repository |
+ **name** | **String**| name of Actor to update |
+ **smName** | **String**| name of StateMachine to update |
+ **stateMachine** | [**StateMachine**](StateMachine.md)| StateMachine to update |
 
 ### Return type
 

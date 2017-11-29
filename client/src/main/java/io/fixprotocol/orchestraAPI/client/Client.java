@@ -22,6 +22,7 @@ import io.fixprotocol.orchestra.client.model.Group;
 import io.fixprotocol.orchestra.client.model.Message;
 import io.fixprotocol.orchestra.client.model.Repository;
 import io.fixprotocol.orchestra.client.model.Response;
+import io.fixprotocol.orchestra.client.model.StateMachine;
 
 public class Client {
 
@@ -882,5 +883,80 @@ public class Client {
     repositoryApi.updateRepositoryById(reposName, version, repository);
   }
 
+  /**
+   * adds a state machine Adds a StateMachine
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param name name of Actor to update (required)
+   * @param stateMachine StateMachine to add (optional)
+   * @throws ApiException if fails to make API call
+   */
+  public void addStateMachine(String reposName, String version, String name,
+      StateMachine stateMachine) throws ApiException {
+    workflowApi.addStateMachine(reposName, version, name, stateMachine);
+  }
+
+  /**
+   * deletes a single StateMachine based on the name supplied
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param name name of Actor to update (required)
+   * @param smName name of StateMachine to delete (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void deleteStateMachine(String reposName, String version, String name, String smName)
+      throws ApiException {
+    workflowApi.deleteStateMachine(reposName, version, name, smName);
+  }
+
+  /**
+   * Returns a single StateMachine, if found
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param name name of Actor to search (required)
+   * @param smName name of StateMachine to fetch (required)
+   * @return StateMachine
+   * @throws ApiException if fails to make API call
+   */
+  public StateMachine findStateMachine(String reposName, String version, String name, String smName)
+      throws ApiException {
+    return workflowApi.findStateMachine(reposName, version, name, smName);
+  }
+
+  /**
+   * searches state machines By passing in the appropriate options, you can search for state
+   * machines
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param name name of Actor to search (required)
+   * @param searchString pass an optional search string for looking up actors (optional)
+   * @param skip number of records to skip for pagination (optional)
+   * @param limit maximum number of records to return (optional)
+   * @return List<StateMachine>
+   * @throws ApiException if fails to make API call
+   */
+  public List<StateMachine> searchStateMachines(String reposName, String version, String name,
+      String searchString, Integer skip, Integer limit) throws ApiException {
+    return workflowApi.searchStateMachines(reposName, version, name, searchString, skip, limit);
+  }
+
+  /**
+   * Updates a single StateMachine, if found (idempotent)
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param name name of Actor to update (required)
+   * @param smName name of StateMachine to update (required)
+   * @param stateMachine StateMachine to update (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void updateStateMachine(String reposName, String version, String name, String smName,
+      StateMachine stateMachine) throws ApiException {
+    workflowApi.updateStateMachine(reposName, version, name, smName, stateMachine);
+  }
 
 }

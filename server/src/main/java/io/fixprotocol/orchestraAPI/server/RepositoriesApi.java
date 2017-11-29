@@ -17,8 +17,8 @@ import javax.ws.rs.core.SecurityContext;
 
 import io.fixprotocol.orchestra.api.NotFoundException;
 import io.fixprotocol.orchestra.api.RepositoriesApiService;
-
 import io.fixprotocol.orchestra.model.Actor;
+import io.fixprotocol.orchestra.model.Annotation;
 import io.fixprotocol.orchestra.model.Code;
 import io.fixprotocol.orchestra.model.CodeSet;
 import io.fixprotocol.orchestra.model.Component;
@@ -28,14 +28,14 @@ import io.fixprotocol.orchestra.model.Flow;
 import io.fixprotocol.orchestra.model.Group;
 import io.fixprotocol.orchestra.model.Message;
 import io.fixprotocol.orchestra.model.Repository;
-
+import io.fixprotocol.orchestra.model.StateMachine;
 import io.swagger.annotations.ApiParam;
 
 @Path("/repositories")
 
 
 @io.swagger.annotations.Api(description = "the repositories API")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-24T16:52:01.174Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-29T15:58:53.146Z")
 public class RepositoriesApi  {
    private final RepositoriesApiService delegate = RepositoriesApiServiceFactory.getRepositoriesApi();
 
@@ -56,6 +56,26 @@ public class RepositoriesApi  {
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.addActor(reposName,version,actor,securityContext);
+    }
+    @POST
+    @Path("/{repos-name}/{version}/annotations")
+    @Consumes({ "application/json" })
+    
+    @io.swagger.annotations.ApiOperation(value = "adds an Annotation", notes = "Adds an Annotation", response = void.class, tags={ "documentation", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 201, message = "item created", response = void.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 400, message = "invalid input, object invalid", response = void.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 409, message = "an existing item already exists", response = void.class) })
+    public Response addAnnotation(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
+,@ApiParam(value = "",required=true) @QueryParam("elementId") String elementId
+,@ApiParam(value = "", allowableValues="codeSet, component, datatype, field, group, message, actor, flow, response") @QueryParam("elementType") String elementType
+,@ApiParam(value = "Annotation to add" ) Annotation annotation
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.addAnnotation(reposName,version,elementId,elementType,annotation,securityContext);
     }
     @POST
     @Path("/{repos-name}/{version}/codesets/{codesetid}/codes")
@@ -242,6 +262,25 @@ public class RepositoriesApi  {
     throws NotFoundException {
         return delegate.addRepository(repository,nameToClone,versionToClone,securityContext);
     }
+    @POST
+    @Path("/{repos-name}/{version}/actors/{name}/statemachines")
+    @Consumes({ "application/json" })
+    
+    @io.swagger.annotations.ApiOperation(value = "adds a state machine", notes = "Adds a StateMachine", response = void.class, tags={ "workflow", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 201, message = "item created", response = void.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 400, message = "invalid input, object invalid", response = void.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 409, message = "an existing item already exists", response = void.class) })
+    public Response addStateMachine(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
+,@ApiParam(value = "name of Actor to update",required=true) @PathParam("name") String name
+,@ApiParam(value = "StateMachine to add" ) StateMachine stateMachine
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.addStateMachine(reposName,version,name,stateMachine,securityContext);
+    }
     @DELETE
     @Path("/{repos-name}/{version}/actors/{name}")
     
@@ -257,6 +296,23 @@ public class RepositoriesApi  {
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.deleteActor(reposName,version,name,securityContext);
+    }
+    @DELETE
+    @Path("/{repos-name}/{version}/annotations")
+    
+    
+    @io.swagger.annotations.ApiOperation(value = "deletes a single Annotation", notes = "", response = void.class, tags={ "documentation", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 204, message = "Annotation deleted", response = void.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 404, message = "Annotation not found", response = void.class) })
+    public Response deleteAnnotation(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
+,@ApiParam(value = "",required=true) @QueryParam("elementId") String elementId
+,@ApiParam(value = "", allowableValues="codeSet, component, datatype, field, group, message, actor, flow, response") @QueryParam("elementType") String elementType
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.deleteAnnotation(reposName,version,elementId,elementType,securityContext);
     }
     @DELETE
     @Path("/{repos-name}/{version}/codesets/{codesetid}/codes/{id}")
@@ -418,6 +474,23 @@ public class RepositoriesApi  {
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.deleteRepository(reposName,version,securityContext);
+    }
+    @DELETE
+    @Path("/{repos-name}/{version}/actors/{name}/statemachines/{sm-name}")
+    
+    
+    @io.swagger.annotations.ApiOperation(value = "deletes a single StateMachine based on the name supplied", notes = "", response = void.class, tags={ "workflow", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 204, message = "StateMachine deleted", response = void.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 404, message = "StateMachine not found", response = void.class) })
+    public Response deleteStateMachine(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
+,@ApiParam(value = "name of Actor to update",required=true) @PathParam("name") String name
+,@ApiParam(value = "name of StateMachine to delete",required=true) @PathParam("sm-name") String smName
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.deleteStateMachine(reposName,version,name,smName,securityContext);
     }
     @GET
     @Path("/{repos-name}/{version}/file")
@@ -612,6 +685,23 @@ public class RepositoriesApi  {
         return delegate.findRepositoryById(reposName,version,securityContext);
     }
     @GET
+    @Path("/{repos-name}/{version}/actors/{name}/statemachines/{sm-name}")
+    
+    @Produces({ "application/json" })
+    @io.swagger.annotations.ApiOperation(value = "Returns a single StateMachine, if found", notes = "", response = StateMachine.class, tags={ "workflow", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "StateMachine response", response = StateMachine.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 200, message = "unexpected error", response = StateMachine.class) })
+    public Response findStateMachine(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
+,@ApiParam(value = "name of Actor to search",required=true) @PathParam("name") String name
+,@ApiParam(value = "name of StateMachine to fetch",required=true) @PathParam("sm-name") String smName
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.findStateMachine(reposName,version,name,smName,securityContext);
+    }
+    @GET
     @Path("/{repos-name}/{version}/actors")
     
     @Produces({ "application/json" })
@@ -628,6 +718,26 @@ public class RepositoriesApi  {
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.searchActors(reposName,version,searchString,skip,limit,securityContext);
+    }
+    @GET
+    @Path("/{repos-name}/{version}/annotations")
+    
+    @Produces({ "application/json" })
+    @io.swagger.annotations.ApiOperation(value = "searches annotations", notes = "By passing in the appropriate options, you can search for annotations", response = Annotation.class, tags={ "documentation", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "search results matching criteria", response = Annotation.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 400, message = "bad input parameter", response = Annotation.class) })
+    public Response searchAnnotations(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
+,@ApiParam(value = "",required=true) @QueryParam("elementId") String elementId
+,@ApiParam(value = "", allowableValues="codeSet, component, datatype, field, group, message, actor, flow, response") @QueryParam("elementType") String elementType
+,@ApiParam(value = "pass an optional search string for looking up annotations") @QueryParam("searchString") String searchString
+,@ApiParam(value = "number of records to skip for pagination") @QueryParam("skip") Integer skip
+,@ApiParam(value = "maximum number of records to return") @QueryParam("limit") Integer limit
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.searchAnnotations(reposName,version,elementId,elementType,searchString,skip,limit,securityContext);
     }
     @GET
     @Path("/{repos-name}/{version}/codesets")
@@ -809,6 +919,25 @@ public class RepositoriesApi  {
     throws NotFoundException {
         return delegate.searchRepositories(searchString,skip,limit,securityContext);
     }
+    @GET
+    @Path("/{repos-name}/{version}/actors/{name}/statemachines")
+    
+    @Produces({ "application/json" })
+    @io.swagger.annotations.ApiOperation(value = "searches state machines", notes = "By passing in the appropriate options, you can search for state machines", response = StateMachine.class, responseContainer = "List", tags={ "workflow", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 200, message = "search results matching criteria", response = StateMachine.class, responseContainer = "List"),
+        
+        @io.swagger.annotations.ApiResponse(code = 400, message = "bad input parameter", response = StateMachine.class, responseContainer = "List") })
+    public Response searchStateMachines(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
+,@ApiParam(value = "name of Actor to search",required=true) @PathParam("name") String name
+,@ApiParam(value = "pass an optional search string for looking up actors") @QueryParam("searchString") String searchString
+,@ApiParam(value = "number of records to skip for pagination") @QueryParam("skip") Integer skip
+,@ApiParam(value = "maximum number of records to return") @QueryParam("limit") Integer limit
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.searchStateMachines(reposName,version,name,searchString,skip,limit,securityContext);
+    }
     @PUT
     @Path("/{repos-name}/{version}/actors/{name}")
     @Consumes({ "application/json" })
@@ -825,6 +954,24 @@ public class RepositoriesApi  {
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.updateActorByName(reposName,version,name,actor,securityContext);
+    }
+    @PUT
+    @Path("/{repos-name}/{version}/annotations")
+    @Consumes({ "application/json" })
+    
+    @io.swagger.annotations.ApiOperation(value = "Updates a single Annotation, if found (idempotent)", notes = "", response = void.class, tags={ "documentation", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 204, message = "Annotation updated", response = void.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 200, message = "unexpected error", response = void.class) })
+    public Response updateAnnotation(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
+,@ApiParam(value = "",required=true) @QueryParam("elementId") String elementId
+,@ApiParam(value = "Annotation to update" ,required=true) Annotation annotation
+,@ApiParam(value = "", allowableValues="codeSet, component, datatype, field, group, message, actor, flow, response") @QueryParam("elementType") String elementType
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.updateAnnotation(reposName,version,elementId,annotation,elementType,securityContext);
     }
     @PUT
     @Path("/{repos-name}/{version}/codesets/{codesetid}/codes/{id}")
@@ -996,5 +1143,23 @@ public class RepositoriesApi  {
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.updateRepositoryById(reposName,version,repository,securityContext);
+    }
+    @PUT
+    @Path("/{repos-name}/{version}/actors/{name}/statemachines/{sm-name}")
+    @Consumes({ "application/json" })
+    
+    @io.swagger.annotations.ApiOperation(value = "Updates a single StateMachine, if found (idempotent)", notes = "", response = void.class, tags={ "workflow", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 204, message = "StateMachine updated", response = void.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 200, message = "unexpected error", response = void.class) })
+    public Response updateStateMachine(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
+,@ApiParam(value = "name of Actor to update",required=true) @PathParam("name") String name
+,@ApiParam(value = "name of StateMachine to update",required=true) @PathParam("sm-name") String smName
+,@ApiParam(value = "StateMachine to update" ,required=true) StateMachine stateMachine
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.updateStateMachine(reposName,version,name,smName,stateMachine,securityContext);
     }
 }

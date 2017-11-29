@@ -15,6 +15,7 @@ import javax.ws.rs.core.UriBuilder;
 import io.fixprotocol.orchestra.api.NotFoundException;
 import io.fixprotocol.orchestra.api.RepositoriesApiService;
 import io.fixprotocol.orchestra.model.Actor;
+import io.fixprotocol.orchestra.model.Annotation;
 import io.fixprotocol.orchestra.model.Code;
 import io.fixprotocol.orchestra.model.CodeSet;
 import io.fixprotocol.orchestra.model.Component;
@@ -25,7 +26,7 @@ import io.fixprotocol.orchestra.model.Group;
 import io.fixprotocol.orchestra.model.Message;
 import io.fixprotocol.orchestra.model.Metadata;
 import io.fixprotocol.orchestra.model.Repository;
-
+import io.fixprotocol.orchestra.model.StateMachine;
 import io.fixprotocol.orchestraAPI.store.DuplicateKeyException;
 import io.fixprotocol.orchestraAPI.store.RepositoryStore;
 import io.fixprotocol.orchestraAPI.store.RepositoryStoreException;
@@ -907,4 +908,150 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
       return Response.serverError().build();
     }
   }
+
+  @Override
+  public Response addAnnotation(String reposName, String version, String elementId, String elementType, Annotation annotation,
+      SecurityContext securityContext) throws NotFoundException {
+//    try {
+//      repositoryStore.createAnnotation(reposName, version, elementId, elementType, annotation);
+//      return Response.created(createAnnotationUri(reposName, version, elementId, elementType)).build();
+//    } catch (DuplicateKeyException e) {
+//      return Response.noContent().status(Status.CONFLICT).build();
+//    } catch (ResourceNotFoundException e) {
+//      return Response.noContent().status(Status.NOT_FOUND).build();
+//    } catch (RepositoryStoreException e) {
+//      logger.log(Level.WARNING, "Server error", e);
+//      return Response.serverError().build();
+//    }
+    return null;
+  }
+
+  private URI createAnnotationUri(String reposName, String version, String elementId,
+      String elementType) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public Response addStateMachine(String reposName, String version, String actor, StateMachine stateMachine,
+      SecurityContext securityContext) throws NotFoundException {
+    try {
+      repositoryStore.createStateMachine(reposName, version, actor, stateMachine);
+      return Response.created(UriBuilder.fromPath("repositories").path(reposName).path(version)
+          .path("actors").path(actor).path("statemachines").path(stateMachine.getName()).build()).build();
+    } catch (DuplicateKeyException e) {
+      return Response.noContent().status(Status.CONFLICT).build();
+    } catch (ResourceNotFoundException e) {
+      return Response.noContent().status(Status.NOT_FOUND).build();
+    } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
+      return Response.serverError().build();
+    }
+  }
+
+  @Override
+  public Response deleteAnnotation(String reposName, String version, String elementId, String elementType,
+      SecurityContext securityContext) throws NotFoundException {
+    try {
+      repositoryStore.deleteAnnotation(reposName, version, elementId, elementType);
+      return Response.noContent().build();
+    } catch (ResourceNotFoundException e) {
+      return Response.noContent().status(Status.NOT_FOUND).build();
+    } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
+      return Response.serverError().build();
+    }
+  }
+
+  @Override
+  public Response deleteStateMachine(String reposName, String version, String actor, String name,
+      SecurityContext securityContext) throws NotFoundException {
+    try {
+      repositoryStore.deleteStateMachine(reposName, version, actor, name);
+      return Response.noContent().build();
+    } catch (ResourceNotFoundException e) {
+      return Response.noContent().status(Status.NOT_FOUND).build();
+    } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
+      return Response.serverError().build();
+    }
+  }
+
+  @Override
+  public Response findStateMachine(String reposName, String version, String actor, String name,
+      SecurityContext securityContext) throws NotFoundException {
+    try {
+      StateMachine stateMachine = repositoryStore.getStateMachine(reposName, version, actor, name);
+      return Response.ok().entity(stateMachine).build();
+    } catch (ResourceNotFoundException e) {
+      return Response.noContent().status(Status.NOT_FOUND).build();
+    } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
+      return Response.serverError().build();
+    }
+  }
+
+  @Override
+  public Response searchAnnotations(String reposName, String version, String elementId, String elementType, String searchString, Integer skip,
+      Integer limit, SecurityContext securityContext) throws NotFoundException {
+//    try {
+//      Predicate<Annotation> predicate =
+//          searchString != null
+//              ? annotation -> searchString.equals(field.getOid().getName())
+//                  || searchString.equals(field.getOid().getAbbrName())
+//              : t -> true;
+//
+//      List<Annotation> filtered = repositoryStore.getAnnotations(reposName, version, predicate);
+//      List<Annotation> range =
+//          filtered.subList(skip != null ? skip : 0, limit != null ? limit : filtered.size());
+//      return Response.ok().entity(range).build();
+//    } catch (RepositoryStoreException e) {
+//      return Response.serverError().build();
+//    }
+    return null;
+  }
+
+  @Override
+  public Response searchStateMachines(String reposName, String version, String actor, String searchString, Integer skip,
+      Integer limit, SecurityContext securityContext) throws NotFoundException {
+    try {
+      Predicate<StateMachine> predicate =
+          searchString != null
+              ? stateMachine -> searchString.equals(stateMachine.getName())
+              : t -> true;
+
+      List<StateMachine> filtered = repositoryStore.getStateMachines(reposName, version, predicate);
+      List<StateMachine> range =
+          filtered.subList(skip != null ? skip : 0, limit != null ? limit : filtered.size());
+      return Response.ok().entity(range).build();
+    } catch (RepositoryStoreException e) {
+      return Response.serverError().build();
+    }
+  }
+
+  @Override
+  public Response updateAnnotation(String reposName, String version, String elementId, Annotation annotation,
+      String elementType, SecurityContext securityContext) throws NotFoundException {
+    try {
+      repositoryStore.updateAnnotation(reposName, version, elementId, elementType, annotation);
+      return Response.ok().build();
+    } catch (ResourceNotFoundException e) {
+      return Response.noContent().status(Status.NOT_FOUND).build();
+    } catch (RepositoryStoreException e) {
+      return Response.serverError().build();
+    }
+  }
+
+  @Override
+  public Response updateStateMachine(String reposName, String version, String actor, String name,
+      StateMachine stateMachine, SecurityContext securityContext) throws NotFoundException {
+    try {
+      repositoryStore.updateStateMachine(reposName, version, actor, name,
+          stateMachine);
+      return Response.ok().build();
+    } catch (ResourceNotFoundException e) {
+      return Response.noContent().status(Status.NOT_FOUND).build();
+    } catch (RepositoryStoreException e) {
+      return Response.serverError().build();
+    }  }
 }

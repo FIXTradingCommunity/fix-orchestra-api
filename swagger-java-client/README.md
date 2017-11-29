@@ -61,24 +61,25 @@ Please follow the [installation](#installation) instruction and execute the foll
 import io.fixprotocol.orchestra.client.*;
 import io.fixprotocol.orchestra.client.auth.*;
 import io.fixprotocol.orchestra.client.model.*;
-import io.fixprotocol.orchestra.client.api.RepositoryApi;
+import io.fixprotocol.orchestra.client.api.DocumentationApi;
 
 import java.io.File;
 import java.util.*;
 
-public class RepositoryApiExample {
+public class DocumentationApiExample {
 
     public static void main(String[] args) {
         
-        RepositoryApi apiInstance = new RepositoryApi();
+        DocumentationApi apiInstance = new DocumentationApi();
         String reposName = "reposName_example"; // String | name of Orchestra repository
         String version = "version_example"; // String | version of Orchestra repository
-        Integer codesetid = 56; // Integer | ID of CodeSet
-        Code code = new Code(); // Code | Code to add
+        String elementId = "elementId_example"; // String | 
+        String elementType = "elementType_example"; // String | 
+        Annotation annotation = new Annotation(); // Annotation | Annotation to add
         try {
-            apiInstance.addCode(reposName, version, codesetid, code);
+            apiInstance.addAnnotation(reposName, version, elementId, elementType, annotation);
         } catch (ApiException e) {
-            System.err.println("Exception when calling RepositoryApi#addCode");
+            System.err.println("Exception when calling DocumentationApi#addAnnotation");
             e.printStackTrace();
         }
     }
@@ -92,6 +93,10 @@ All URIs are relative to *https://virtserver.swaggerhub.com/FIXTradingCommunity/
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*DocumentationApi* | [**addAnnotation**](docs/DocumentationApi.md#addAnnotation) | **POST** /repositories/{repos-name}/{version}/annotations | adds an Annotation
+*DocumentationApi* | [**deleteAnnotation**](docs/DocumentationApi.md#deleteAnnotation) | **DELETE** /repositories/{repos-name}/{version}/annotations | deletes a single Annotation
+*DocumentationApi* | [**searchAnnotations**](docs/DocumentationApi.md#searchAnnotations) | **GET** /repositories/{repos-name}/{version}/annotations | searches annotations
+*DocumentationApi* | [**updateAnnotation**](docs/DocumentationApi.md#updateAnnotation) | **PUT** /repositories/{repos-name}/{version}/annotations | Updates a single Annotation, if found (idempotent)
 *RepositoryApi* | [**addCode**](docs/RepositoryApi.md#addCode) | **POST** /repositories/{repos-name}/{version}/codesets/{codesetid}/codes | adds a Code to CodeSet
 *RepositoryApi* | [**addCodeSet**](docs/RepositoryApi.md#addCodeSet) | **POST** /repositories/{repos-name}/{version}/codesets | adds a CodeSet
 *RepositoryApi* | [**addComponent**](docs/RepositoryApi.md#addComponent) | **POST** /repositories/{repos-name}/{version}/components | adds a component
@@ -136,18 +141,23 @@ Class | Method | HTTP request | Description
 *WorkflowApi* | [**addActor**](docs/WorkflowApi.md#addActor) | **POST** /repositories/{repos-name}/{version}/actors | adds an Actor
 *WorkflowApi* | [**addFlow**](docs/WorkflowApi.md#addFlow) | **POST** /repositories/{repos-name}/{version}/flows | adds a Flow
 *WorkflowApi* | [**addMessageResponse**](docs/WorkflowApi.md#addMessageResponse) | **POST** /repositories/{repos-name}/{version}/messages/{id}/responses | adds a response to a message scenario
+*WorkflowApi* | [**addStateMachine**](docs/WorkflowApi.md#addStateMachine) | **POST** /repositories/{repos-name}/{version}/actors/{name}/statemachines | adds a state machine
 *WorkflowApi* | [**deleteActor**](docs/WorkflowApi.md#deleteActor) | **DELETE** /repositories/{repos-name}/{version}/actors/{name} | deletes a single Actor based on the name supplied
 *WorkflowApi* | [**deleteFlow**](docs/WorkflowApi.md#deleteFlow) | **DELETE** /repositories/{repos-name}/{version}/flows/{name} | deletes a single Flow based on the name supplied
 *WorkflowApi* | [**deleteMessageResponse**](docs/WorkflowApi.md#deleteMessageResponse) | **DELETE** /repositories/{repos-name}/{version}/messages/{id}/responses/{name} | deletes a single response to a message scenario based on the ID supplied
+*WorkflowApi* | [**deleteStateMachine**](docs/WorkflowApi.md#deleteStateMachine) | **DELETE** /repositories/{repos-name}/{version}/actors/{name}/statemachines/{sm-name} | deletes a single StateMachine based on the name supplied
 *WorkflowApi* | [**findActorByName**](docs/WorkflowApi.md#findActorByName) | **GET** /repositories/{repos-name}/{version}/actors/{name} | Returns a single Actor, if found
 *WorkflowApi* | [**findFlowByName**](docs/WorkflowApi.md#findFlowByName) | **GET** /repositories/{repos-name}/{version}/flows/{name} | Returns a single Flow, if found
 *WorkflowApi* | [**findMessageResponseById**](docs/WorkflowApi.md#findMessageResponseById) | **GET** /repositories/{repos-name}/{version}/messages/{id}/responses/{name} | Returns a single response to a message scenario, if found
+*WorkflowApi* | [**findStateMachine**](docs/WorkflowApi.md#findStateMachine) | **GET** /repositories/{repos-name}/{version}/actors/{name}/statemachines/{sm-name} | Returns a single StateMachine, if found
 *WorkflowApi* | [**searchActors**](docs/WorkflowApi.md#searchActors) | **GET** /repositories/{repos-name}/{version}/actors | searches actors
 *WorkflowApi* | [**searchFlows**](docs/WorkflowApi.md#searchFlows) | **GET** /repositories/{repos-name}/{version}/flows | searches flows
 *WorkflowApi* | [**searchMessageResponses**](docs/WorkflowApi.md#searchMessageResponses) | **GET** /repositories/{repos-name}/{version}/messages/{id}/responses | searches message responses
+*WorkflowApi* | [**searchStateMachines**](docs/WorkflowApi.md#searchStateMachines) | **GET** /repositories/{repos-name}/{version}/actors/{name}/statemachines | searches state machines
 *WorkflowApi* | [**updateActorByName**](docs/WorkflowApi.md#updateActorByName) | **PUT** /repositories/{repos-name}/{version}/actors/{name} | Updates a single Actor, if found (idempotent)
 *WorkflowApi* | [**updateFlowByName**](docs/WorkflowApi.md#updateFlowByName) | **PUT** /repositories/{repos-name}/{version}/flows/{name} | Updates a single Flow, if found (idempotent)
 *WorkflowApi* | [**updateMessageResponse**](docs/WorkflowApi.md#updateMessageResponse) | **PUT** /repositories/{repos-name}/{version}/messages/{id}/responses/{name} | Updates a single response to a message scenario, if found (idempotent)
+*WorkflowApi* | [**updateStateMachine**](docs/WorkflowApi.md#updateStateMachine) | **PUT** /repositories/{repos-name}/{version}/actors/{name}/statemachines/{sm-name} | Updates a single StateMachine, if found (idempotent)
 
 
 ## Documentation for Models

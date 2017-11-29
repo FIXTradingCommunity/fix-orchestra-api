@@ -6,6 +6,7 @@ import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -33,7 +34,9 @@ import io.fixprotocol._2016.fixrepository.MessageType.Responses;
 import io.fixprotocol._2016.fixrepository.Messages;
 import io.fixprotocol._2016.fixrepository.Repository;
 import io.fixprotocol._2016.fixrepository.ResponseType;
+import io.fixprotocol._2016.fixrepository.StateMachineType;
 import io.fixprotocol.orchestra.model.Actor;
+import io.fixprotocol.orchestra.model.Annotation;
 import io.fixprotocol.orchestra.model.Code;
 import io.fixprotocol.orchestra.model.CodeSet;
 import io.fixprotocol.orchestra.model.Component;
@@ -44,7 +47,9 @@ import io.fixprotocol.orchestra.model.Group;
 import io.fixprotocol.orchestra.model.Message;
 import io.fixprotocol.orchestra.model.Metadata;
 import io.fixprotocol.orchestra.model.Response;
+import io.fixprotocol.orchestra.model.StateMachine;
 import io.fixprotocol.orchestraAPI.store.DuplicateKeyException;
+import io.fixprotocol.orchestraAPI.store.ElementType;
 import io.fixprotocol.orchestraAPI.store.RepositoryStore;
 import io.fixprotocol.orchestraAPI.store.RepositoryStoreException;
 import io.fixprotocol.orchestraAPI.store.ResourceNotFoundException;
@@ -129,12 +134,10 @@ public class RepositoryDOMStore implements RepositoryStore {
     }
     List<ActorType> actors = getActorList(repository);
 
-    for (int i = 0; i < actors.size(); i++) {
-      ActorType actorType = actors.get(i);
-      if (actor.getName().equals(actorType.getName())) {
-        throw new DuplicateKeyException(String.format("Duplicate actor %s", actor.getName()));
-      }
+    if (actors.stream().anyMatch(a -> actor.getName().equals(a.getName()))) {
+      throw new DuplicateKeyException(String.format("Duplicate actor %s", actor.getName()));
     }
+
     repository.getActors().getActorOrFlow().add(OrchestraAPItoDOM.ActorToDOM(actor));
   }
 
@@ -156,11 +159,9 @@ public class RepositoryDOMStore implements RepositoryStore {
     for (CodeSetType codeSet : codeSets) {
       if (codesetid == codeSet.getId().intValue()) {
         List<CodeType> codes = codeSet.getCode();
-        for (CodeType codeType : codes) {
-          if (codeType.getId().intValue() == code.getOid().getId()) {
-            throw new DuplicateKeyException(
-                String.format("Duplicate code with ID=%d", code.getOid().getId()));
-          }
+        if (codes.stream().anyMatch(c -> c.getId().intValue() == code.getOid().getId())) {
+          throw new DuplicateKeyException(
+              String.format("Duplicate code with ID=%d", code.getOid().getId()));
         }
         codes.add(OrchestraAPItoDOM.CodeToDOM(code));
         return;
@@ -183,13 +184,9 @@ public class RepositoryDOMStore implements RepositoryStore {
     }
 
     List<CodeSetType> codeSets = getCodeSets(repository);
-
-    for (int i = 0; i < codeSets.size(); i++) {
-      CodeSetType fieldType = codeSets.get(i);
-      if (codeSet.getOid().getId() == fieldType.getId().intValue()) {
-        throw new DuplicateKeyException(
-            String.format("Duplicate field with ID=%d", codeSet.getOid().getId()));
-      }
+    if (codeSets.stream().anyMatch(cs -> codeSet.getOid().getId() == cs.getId().intValue())) {
+      throw new DuplicateKeyException(
+          String.format("Duplicate field with ID=%d", codeSet.getOid().getId()));
     }
     codeSets.add(OrchestraAPItoDOM.CodeSetToDOM(codeSet));
   }
@@ -207,18 +204,14 @@ public class RepositoryDOMStore implements RepositoryStore {
     }
     List<ComponentType> components = getComponentList(repository);
 
-    for (int i = 0; i < components.size(); i++) {
-      ComponentType componentType = components.get(i);
-      if (component.getOid().getId() == componentType.getId().intValue()) {
-        throw new DuplicateKeyException(
-            String.format("Duplicate component with ID=%d", component.getOid().getId()));
-      }
+    if (components.stream().anyMatch(c -> component.getOid().getId() == c.getId().intValue())) {
+      throw new DuplicateKeyException(
+          String.format("Duplicate component with ID=%d", component.getOid().getId()));
     }
 
     if (toClone != null) {
       ComponentType componentTypeToClone = null;
-      for (int i = 0; i < components.size(); i++) {
-        ComponentType componentType = components.get(i);
+      for (ComponentType componentType : components) {
         if (toClone == componentType.getId().intValue()) {
           componentTypeToClone = componentType;
           break;
@@ -252,11 +245,8 @@ public class RepositoryDOMStore implements RepositoryStore {
     }
     List<io.fixprotocol._2016.fixrepository.Datatype> datatypes = getDatatypeList(repository);
 
-    for (int i = 0; i < datatypes.size(); i++) {
-      io.fixprotocol._2016.fixrepository.Datatype datatypeDOM = datatypes.get(i);
-      if (datatype.getName().equals(datatypeDOM.getName())) {
-        throw new DuplicateKeyException(String.format("Duplicate datatype %s", datatype.getName()));
-      }
+    if (datatypes.stream().anyMatch(d -> datatype.getName().equals(d.getName()))) {
+      throw new DuplicateKeyException(String.format("Duplicate datatype %s", datatype.getName()));
     }
     datatypes.add(OrchestraAPItoDOM.DatatypeToDOM(datatype));
   }
@@ -274,12 +264,9 @@ public class RepositoryDOMStore implements RepositoryStore {
     }
     List<FieldType> fields = getFieldList(repository);
 
-    for (int i = 0; i < fields.size(); i++) {
-      FieldType fieldType = fields.get(i);
-      if (field.getOid().getId() == fieldType.getId().intValue()) {
-        throw new DuplicateKeyException(
-            String.format("Duplicate field with ID=%d", field.getOid().getId()));
-      }
+    if (fields.stream().anyMatch(f -> field.getOid().getId() == f.getId().intValue())) {
+      throw new DuplicateKeyException(
+          String.format("Duplicate field with ID=%d", field.getOid().getId()));
     }
     fields.add(OrchestraAPItoDOM.FieldToDOM(field));
   }
@@ -297,11 +284,8 @@ public class RepositoryDOMStore implements RepositoryStore {
     }
     List<FlowType> flows = getFlowList(repository);
 
-    for (int i = 0; i < flows.size(); i++) {
-      FlowType flowType = flows.get(i);
-      if (flow.getName().equals(flowType.getName())) {
-        throw new DuplicateKeyException(String.format("Duplicate flow %s", flow.getName()));
-      }
+    if (flows.stream().anyMatch(f -> flow.getName().equals(f.getName()))) {
+      throw new DuplicateKeyException(String.format("Duplicate flow %s", flow.getName()));
     }
     repository.getActors().getActorOrFlow().add(OrchestraAPItoDOM.FlowToDOM(flow));
   }
@@ -319,17 +303,14 @@ public class RepositoryDOMStore implements RepositoryStore {
     }
     List<MessageType> messages = getMessageList(repository);
 
-    for (int i = 0; i < messages.size(); i++) {
-      MessageType messageType = messages.get(i);
-      if (message.getOid().getId() == messageType.getId().intValue()) {
-        throw new DuplicateKeyException(
-            String.format("Duplicate message with ID=%d", message.getOid().getId()));
-      }
+    if (messages.stream().anyMatch(m -> message.getOid().getId() == m.getId().intValue())) {
+      throw new DuplicateKeyException(
+          String.format("Duplicate message with ID=%d", message.getOid().getId()));
     }
+
     if (toClone != null) {
       MessageType messageTypeToClone = null;
-      for (int i = 0; i < messages.size(); i++) {
-        MessageType messageType = messages.get(i);
+      for (MessageType messageType : messages) {
         if (toClone == messageType.getId().intValue()) {
           messageTypeToClone = messageType;
           break;
@@ -368,17 +349,15 @@ public class RepositoryDOMStore implements RepositoryStore {
     for (MessageType messageType : messageList) {
       if (id == messageType.getId().intValue()) {
         List<ResponseType> responseList = getResponseList(messageType);
-        for (ResponseType responseType : responseList) {
-          if (response.getName().equals(responseType.getName())) {
-            throw new DuplicateKeyException(String.format("Duplicate response %s", response.getName()));
-          }
+        if (responseList.stream().anyMatch(r -> response.getName().equals(r.getName()))) {
+          throw new DuplicateKeyException(
+              String.format("Duplicate response %s", response.getName()));
         }
         responseList.add(OrchestraAPItoDOM.ResponseToDOM(response));
         return;
       }
     }
-    throw new ResourceNotFoundException(
-        String.format("Message with ID=%d not found", id));
+    throw new ResourceNotFoundException(String.format("Message with ID=%d not found", id));
   }
 
   @Override
@@ -681,16 +660,15 @@ public class RepositoryDOMStore implements RepositoryStore {
         List<ResponseType> responseList = getResponseList(messageType);
         for (ResponseType responseType : responseList) {
           if (name.equals(responseType.getName())) {
-            responseList.remove(responseType);        
+            responseList.remove(responseType);
             return;
           }
         }
         throw new ResourceNotFoundException(String.format("Response %s not found", name));
       }
     }
-    throw new ResourceNotFoundException(
-        String.format("Message with ID=%d not found", id));  
-    }
+    throw new ResourceNotFoundException(String.format("Message with ID=%d not found", id));
+  }
 
   @Override
   public void deleteRepository(String reposName, String version) throws RepositoryStoreException {
@@ -1060,7 +1038,7 @@ public class RepositoryDOMStore implements RepositoryStore {
 
     Function<ComponentType, GroupType> subclass = c -> (GroupType) c;
 
-    return components.stream().filter(c -> c instanceof GroupType).map(subclass::apply)
+    return components.stream().filter(c -> c instanceof GroupType).map(subclass)
         .map(OrchestraAPItoDOM::DOMToGroup).filter(predicate).collect(Collectors.toList());
   }
 
@@ -1111,8 +1089,7 @@ public class RepositoryDOMStore implements RepositoryStore {
         }
       }
     }
-    throw new ResourceNotFoundException(
-        String.format("Message with ID=%d not found", id));  
+    throw new ResourceNotFoundException(String.format("Message with ID=%d not found", id));
   }
 
   @Override
@@ -1130,17 +1107,14 @@ public class RepositoryDOMStore implements RepositoryStore {
 
     List<MessageType> messages = getMessageList(repository);
 
-    for (int i = 0; i < messages.size(); i++) {
-      MessageType messageType = messages.get(i);
+    for (MessageType messageType : messages) {
       if (id == messageType.getId().intValue()) {
         List<ResponseType> responseList = getResponseList(messageType);
-        return responseList.stream().map(OrchestraAPItoDOM::DOMToResponse)
-        .filter(predicate)
-        .collect(Collectors.toList());
+        return responseList.stream().map(OrchestraAPItoDOM::DOMToResponse).filter(predicate)
+                .collect(Collectors.toList());
       }
     }
-    throw new ResourceNotFoundException(
-        String.format("Message with ID=%d not found", id));  
+    throw new ResourceNotFoundException(String.format("Message with ID=%d not found", id));
 
 
   }
@@ -1492,12 +1466,10 @@ public class RepositoryDOMStore implements RepositoryStore {
             return;
           }
         }
-        throw new ResourceNotFoundException(
-            String.format("Response %s not found", name));
+        throw new ResourceNotFoundException(String.format("Response %s not found", name));
       }
     }
-    throw new ResourceNotFoundException(
-        String.format("Message with ID=%d not found", id));
+    throw new ResourceNotFoundException(String.format("Message with ID=%d not found", id));
   }
 
   @Override
@@ -1524,7 +1496,7 @@ public class RepositoryDOMStore implements RepositoryStore {
     return actors.getActorOrFlow().stream().filter(o -> o instanceof ActorType)
         .map(o -> (ActorType) o).collect(Collectors.toList());
   }
-  
+
   private List<CodeSetType> getCodeSets(Repository repository) {
     CodeSets codeSets = repository.getCodeSets();
     if (codeSets == null) {
@@ -1601,6 +1573,193 @@ public class RepositoryDOMStore implements RepositoryStore {
     JAXBContext jaxbContext = JAXBContext.newInstance(Repository.class);
     Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
     return (Repository) unmarshaller.unmarshal(file);
+  }
+
+  @Override
+  public void createAnnotation(String reposName, String version, String elementId,
+      ElementType elementType, Annotation annotation) throws RepositoryStoreException {
+    // TODO Auto-generated method stub
+
+  }
+
+  @Override
+  public void createStateMachine(String reposName, String version, String actor,
+      StateMachine stateMachine) throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(actor, "Actor name missing");
+    Objects.requireNonNull(actor, "StateMachine value missing");
+    Repository repository = repositories.get(new RepositoryKey(reposName, version));
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+    List<ActorType> actors = getActorList(repository);
+
+    for (ActorType actorType : actors) {
+      if (actor.equals(actorType.getName())) {
+        List<Object> elements = actorType.getFieldOrFieldRefOrComponent();
+        if (elements.stream().filter(o -> o instanceof StateMachineType)
+                .map(o -> (StateMachineType) o)
+                .anyMatch(sm -> sm.getName().equals(stateMachine.getName()))) {
+          throw new DuplicateKeyException(
+                  String.format("Duplicate state machine with name=%s", stateMachine.getName()));
+        }
+        elements.add(OrchestraAPItoDOM.StateMachineToDOM(stateMachine));
+        return;
+      }
+    }
+    throw new ResourceNotFoundException(String.format("Actor with name=%s not found", actor));
+  }
+
+  @Override
+  public void deleteAnnotation(String reposName, String version, String elementId,
+      String elementType) throws RepositoryStoreException {
+    // TODO Auto-generated method stub
+
+  }
+
+  @Override
+  public void deleteStateMachine(String reposName, String version, String actor, String name)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(actor, "Actor name missing");
+    Objects.requireNonNull(name, "StateMachine name missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+
+    final Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+
+    List<ActorType> actorList = getActorList(repository);
+    for (ActorType actorType : actorList) {
+      if (actor.equals(actorType.getName())) {
+        List<Object> elements = actorType.getFieldOrFieldRefOrComponent();
+        for (int i = 0; i < elements.size(); i++) {
+          if (elements.get(i) instanceof StateMachineType
+              && name.equals(((StateMachineType) elements.get(i)).getName())) {
+            elements.remove(i);
+            return;
+          }
+        }
+        throw new ResourceNotFoundException(String.format("State machine %s not found", name));
+
+      }
+    }
+
+    throw new ResourceNotFoundException(String.format("Actor %s not found", name));
+  }
+
+  @Override
+  public List<Annotation> getAnnotations(String reposName, String version,
+      Predicate<Annotation> predicate) throws RepositoryStoreException {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public StateMachine getStateMachine(String reposName, String version, String actor, String name)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(actor, "Actor name missing");
+    Objects.requireNonNull(name, "StateMachine name missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+
+    final Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+
+    List<ActorType> actors = getActorList(repository);
+
+    for (ActorType actorType : actors) {
+      if (actor.equals(actorType.getName())) {
+        List<Object> elements = actorType.getFieldOrFieldRefOrComponent();
+        for (Object obj : elements) {
+          if (obj instanceof StateMachineType &&
+              name.equals(((StateMachineType)obj).getName())) {
+            return OrchestraAPItoDOM.DOMToStateMachine((StateMachineType) obj);
+          }   
+        }
+        throw new ResourceNotFoundException(String.format("StateMachine %s not found", name));
+      }
+    }
+
+    throw new ResourceNotFoundException(String.format("Actor %s not found", actor));
+  }
+
+  @Override
+  public List<StateMachine> getStateMachines(String reposName, String version,
+      Predicate<StateMachine> search) throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+    Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+    Predicate<StateMachine> predicate = search != null ? search : t -> true;
+
+    List<ActorType> actors = getActorList(repository);
+
+    return actors.stream().flatMap(a -> a.getFieldOrFieldRefOrComponent().stream())
+        .filter(o -> o instanceof StateMachineType).map(o -> (StateMachineType)o)
+        .map(OrchestraAPItoDOM::DOMToStateMachine).filter(predicate)
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  public void updateAnnotation(String reposName, String version, String elementId,
+      String elementType, Annotation annotation) throws RepositoryStoreException {
+    // TODO Auto-generated method stub
+
+  }
+
+  @Override
+  public void updateStateMachine(String reposName, String version, String actor, String name,
+      StateMachine stateMachine) throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(actor, "Actor name missing");
+    Objects.requireNonNull(name, "StateMachine name missing");
+    Objects.requireNonNull(stateMachine, "StateMachine value missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+
+    final Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+
+    Actors actors = repository.getActors();
+    if (actors == null) {
+      throw new ResourceNotFoundException(String.format("Actor %s not found", actor));
+    }
+
+    Optional<ActorType> opt = actors.getActorOrFlow().stream().filter(o -> o instanceof ActorType)
+        .map(o -> (ActorType) o).filter(a -> actor.equals(a.getName())).findFirst();
+    if (opt.isPresent()) {
+      ActorType actorType = opt.get();
+      List<Object> elements = actorType.getFieldOrFieldRefOrComponent();
+      for (int j = 0; j < elements.size(); j++) {
+        if (elements.get(j) instanceof StateMachineType) {
+          StateMachineType stateMachineType = (StateMachineType) elements.get(j);
+          if (name.equals(stateMachineType.getName())) {
+            elements.set(j, OrchestraAPItoDOM.StateMachineToDOM(stateMachine));
+            return;
+          }
+        }
+      }
+      throw new ResourceNotFoundException(String.format("StateMachine %s not found", name));
+    } else {
+      throw new ResourceNotFoundException(String.format("Actor %s not found", actor));
+    }
   }
 
 }

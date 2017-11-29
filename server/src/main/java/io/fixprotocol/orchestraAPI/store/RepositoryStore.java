@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 import io.fixprotocol.orchestra.model.Actor;
+import io.fixprotocol.orchestra.model.Annotation;
 import io.fixprotocol.orchestra.model.Code;
 import io.fixprotocol.orchestra.model.CodeSet;
 import io.fixprotocol.orchestra.model.Component;
@@ -16,6 +17,7 @@ import io.fixprotocol.orchestra.model.Message;
 import io.fixprotocol.orchestra.model.Metadata;
 import io.fixprotocol.orchestra.model.Repository;
 import io.fixprotocol.orchestra.model.Response;
+import io.fixprotocol.orchestra.model.StateMachine;
 
 
 
@@ -31,6 +33,20 @@ public interface RepositoryStore {
    * @throws RepositoryStoreException if the store operation fails
    */
   void createActor(String reposName, String version, Actor actor) throws RepositoryStoreException;
+
+  /**
+   * Creates a new Annotation to an element in a repository
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param elementId identifier of the element to annotate
+   * @param elementType type of the element
+   * @param annotation to add to an element
+   * @throws ResourceNotFoundException if the repository to update does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  void createAnnotation(String reposName, String version, String elementId, ElementType elementType,
+      Annotation annotation) throws RepositoryStoreException;
 
   /**
    * Creates a new Code in a repository
@@ -158,6 +174,18 @@ public interface RepositoryStore {
   void createRepositoryFromFile(File file) throws RepositoryStoreException;
 
   /**
+   * Creates a new Actor in a repository
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param actor to add to the repository
+   * @throws ResourceNotFoundException if the repository to update does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  void createStateMachine(String reposName, String version, String actor, StateMachine stateMachine)
+      throws RepositoryStoreException;
+
+  /**
    * Deletes one Actor if it exists
    * 
    * @param reposName name of Orchestra repository (required)
@@ -167,6 +195,19 @@ public interface RepositoryStore {
    * @throws RepositoryStoreException if the store operation fails
    */
   void deleteActor(String reposName, String version, String name) throws RepositoryStoreException;
+
+  /**
+   * Deletes one Annotation if it exists
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param elementId identifier of the element to remove Annotation
+   * @param elementType type of the element
+   * @throws ResourceNotFoundException if the repository or actor to delete does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  void deleteAnnotation(String reposName, String version, String elementId, String elementType)
+      throws RepositoryStoreException;
 
   /**
    * Deletes one Code if it exists
@@ -285,6 +326,19 @@ public interface RepositoryStore {
   void deleteRepository(String reposName, String version) throws RepositoryStoreException;
 
   /**
+   * Deletes one StateMachine if it exists
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param actor actor name
+   * @param name state machine name
+   * @throws ResourceNotFoundException if the repository or actor to delete does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  void deleteStateMachine(String reposName, String version, String actor, String name)
+      throws RepositoryStoreException;
+
+  /**
    * Retrieves an Actor by name
    * 
    * @param reposName name of Orchestra repository (required)
@@ -307,6 +361,19 @@ public interface RepositoryStore {
    * @throws RepositoryStoreException if the store operation fails
    */
   List<Actor> getActors(String reposName, String version, Predicate<Actor> predicate)
+      throws RepositoryStoreException;
+
+  /**
+   * Retrieves all annotations in a repository
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param predicate filter for annotations to return
+   * @return a list of annotations
+   * @throws ResourceNotFoundException if the repository does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  List<Annotation> getAnnotations(String reposName, String version, Predicate<Annotation> predicate)
       throws RepositoryStoreException;
 
   /**
@@ -579,6 +646,33 @@ public interface RepositoryStore {
   Metadata getRepositoryMetadata(String reposName, String version) throws RepositoryStoreException;
 
   /**
+   * Retrieves an StateMachine by name
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param actor actor name
+   * @param name state machine name
+   * @return the state machine
+   * @throws ResourceNotFoundException if the repository or actor does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  StateMachine getStateMachine(String reposName, String version, String actor, String name)
+      throws RepositoryStoreException;
+
+  /**
+   * Retrieves all state machines in a repository
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param predicate filter for state machines to return
+   * @return a list of state machines
+   * @throws ResourceNotFoundException if the repository does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  List<StateMachine> getStateMachines(String reposName, String version,
+      Predicate<StateMachine> predicate) throws RepositoryStoreException;
+
+  /**
    * Update an existing Actor
    * 
    * @param reposName name of Orchestra repository (required)
@@ -590,6 +684,20 @@ public interface RepositoryStore {
    */
   void updateActor(String reposName, String version, String name, Actor actor)
       throws RepositoryStoreException;
+
+  /**
+   * Update an existing Annotation
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param elementId identifier of the element to annotate
+   * @param elementType type of the element
+   * @param annotation new value of Annotation
+   * @throws ResourceNotFoundException if the repository or element to update does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  void updateAnnotation(String reposName, String version, String elementId, String elementType,
+      Annotation annotation) throws RepositoryStoreException;
 
   /**
    * Update an existing Code
@@ -615,7 +723,7 @@ public interface RepositoryStore {
    * @throws RepositoryStoreException if the store operation fails
    */
   void updateCodeSet(String reposName, String version, Integer id, CodeSet codeSet)
-      throws RepositoryStoreException;;
+      throws RepositoryStoreException;
 
   /**
    * Update an existing Component
@@ -711,5 +819,17 @@ public interface RepositoryStore {
   void updateRepositoryMetadata(String reposName, String version, Repository repository)
       throws RepositoryStoreException;
 
-
+  /**
+   * Update an existing StateMachine
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param actor name of actor to update
+   * @param name name of StateMachine to update
+   * @param stateMachine new value of StateMachine
+   * @throws ResourceNotFoundException if the repository or actor to update does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  void updateStateMachine(String reposName, String version, String actor, String name,
+      StateMachine stateMachine) throws RepositoryStoreException;
 }

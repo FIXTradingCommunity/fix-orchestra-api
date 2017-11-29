@@ -39,7 +39,7 @@ import java.util.List;
 /**
  * Structure
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-24T16:52:01.174Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-29T15:58:53.146Z")
 public class Structure   {
   @JsonProperty("fields")
   private List<FieldRef> fields = new ArrayList<FieldRef>();

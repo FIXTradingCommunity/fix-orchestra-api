@@ -15,6 +15,8 @@ tags:
   description: "Message structure operations"
 - name: "workflow"
   description: "Actors and actions"
+- name: "documentation"
+  description: "Documentation of repository or workflow elements"
 schemes:
 - "https"
 paths:
@@ -386,6 +388,213 @@ paths:
           description: "Actor deleted"
         404:
           description: "Actor not found"
+  /repositories/{repos-name}/{version}/actors/{name}/statemachines:
+    get:
+      tags:
+      - "workflow"
+      summary: "searches state machines"
+      description: "By passing in the appropriate options, you can search for state\
+        \ machines"
+      operationId: "searchStateMachines"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "repos-name"
+        in: "path"
+        description: "name of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "name"
+        in: "path"
+        description: "name of Actor to search"
+        required: true
+        type: "string"
+      - name: "searchString"
+        in: "query"
+        description: "pass an optional search string for looking up actors"
+        required: false
+        type: "string"
+      - name: "skip"
+        in: "query"
+        description: "number of records to skip for pagination"
+        required: false
+        type: "integer"
+        minimum: 0
+        format: "int32"
+      - name: "limit"
+        in: "query"
+        description: "maximum number of records to return"
+        required: false
+        type: "integer"
+        maximum: 50.0
+        minimum: 0
+        format: "int32"
+      responses:
+        200:
+          description: "search results matching criteria"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/StateMachine"
+        400:
+          description: "bad input parameter"
+    post:
+      tags:
+      - "workflow"
+      summary: "adds a state machine"
+      description: "Adds a StateMachine"
+      operationId: "addStateMachine"
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "repos-name"
+        in: "path"
+        description: "name of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "name"
+        in: "path"
+        description: "name of Actor to update"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "stateMachine"
+        description: "StateMachine to add"
+        required: false
+        schema:
+          $ref: "#/definitions/StateMachine"
+      responses:
+        201:
+          description: "item created"
+          headers:
+            Location:
+              type: "string"
+              format: "uri"
+              description: "URL of created resource"
+        400:
+          description: "invalid input, object invalid"
+        409:
+          description: "an existing item already exists"
+  /repositories/{repos-name}/{version}/actors/{name}/statemachines/{sm-name}:
+    get:
+      tags:
+      - "workflow"
+      summary: "Returns a single StateMachine, if found"
+      operationId: "findStateMachine"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "repos-name"
+        in: "path"
+        description: "name of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "name"
+        in: "path"
+        description: "name of Actor to search"
+        required: true
+        type: "string"
+      - name: "sm-name"
+        in: "path"
+        description: "name of StateMachine to fetch"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "StateMachine response"
+          schema:
+            $ref: "#/definitions/StateMachine"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    put:
+      tags:
+      - "workflow"
+      summary: "Updates a single StateMachine, if found (idempotent)"
+      operationId: "updateStateMachine"
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "repos-name"
+        in: "path"
+        description: "name of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "name"
+        in: "path"
+        description: "name of Actor to update"
+        required: true
+        type: "string"
+      - name: "sm-name"
+        in: "path"
+        description: "name of StateMachine to update"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "stateMachine"
+        description: "StateMachine to update"
+        required: true
+        schema:
+          $ref: "#/definitions/StateMachine"
+      responses:
+        204:
+          description: "StateMachine updated"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    delete:
+      tags:
+      - "workflow"
+      summary: "deletes a single StateMachine based on the name supplied"
+      operationId: "deleteStateMachine"
+      parameters:
+      - name: "repos-name"
+        in: "path"
+        description: "name of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "name"
+        in: "path"
+        description: "name of Actor to update"
+        required: true
+        type: "string"
+      - name: "sm-name"
+        in: "path"
+        description: "name of StateMachine to delete"
+        required: true
+        type: "string"
+      responses:
+        204:
+          description: "StateMachine deleted"
+        404:
+          description: "StateMachine not found"
   /repositories/{repos-name}/{version}/codesets/{codesetid}/codes:
     get:
       tags:
@@ -2120,6 +2329,214 @@ paths:
           description: "message response deleted"
         404:
           description: "message not found"
+  /repositories/{repos-name}/{version}/annotations:
+    get:
+      tags:
+      - "documentation"
+      summary: "searches annotations"
+      description: "By passing in the appropriate options, you can search for annotations"
+      operationId: "searchAnnotations"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "repos-name"
+        in: "path"
+        description: "name of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "elementId"
+        in: "query"
+        required: true
+        type: "string"
+      - name: "elementType"
+        in: "query"
+        required: false
+        type: "string"
+        enum:
+        - "codeSet"
+        - "component"
+        - "datatype"
+        - "field"
+        - "group"
+        - "message"
+        - "actor"
+        - "flow"
+        - "response"
+      - name: "searchString"
+        in: "query"
+        description: "pass an optional search string for looking up annotations"
+        required: false
+        type: "string"
+      - name: "skip"
+        in: "query"
+        description: "number of records to skip for pagination"
+        required: false
+        type: "integer"
+        minimum: 0
+        format: "int32"
+      - name: "limit"
+        in: "query"
+        description: "maximum number of records to return"
+        required: false
+        type: "integer"
+        maximum: 50.0
+        minimum: 0
+        format: "int32"
+      responses:
+        200:
+          description: "search results matching criteria"
+          schema:
+            $ref: "#/definitions/Annotation"
+        400:
+          description: "bad input parameter"
+    post:
+      tags:
+      - "documentation"
+      summary: "adds an Annotation"
+      description: "Adds an Annotation"
+      operationId: "addAnnotation"
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "repos-name"
+        in: "path"
+        description: "name of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "elementId"
+        in: "query"
+        required: true
+        type: "string"
+      - name: "elementType"
+        in: "query"
+        required: false
+        type: "string"
+        enum:
+        - "codeSet"
+        - "component"
+        - "datatype"
+        - "field"
+        - "group"
+        - "message"
+        - "actor"
+        - "flow"
+        - "response"
+      - in: "body"
+        name: "annotation"
+        description: "Annotation to add"
+        required: false
+        schema:
+          $ref: "#/definitions/Annotation"
+      responses:
+        201:
+          description: "item created"
+          headers:
+            Location:
+              type: "string"
+              format: "uri"
+              description: "URL of created resource"
+        400:
+          description: "invalid input, object invalid"
+        409:
+          description: "an existing item already exists"
+    put:
+      tags:
+      - "documentation"
+      summary: "Updates a single Annotation, if found (idempotent)"
+      operationId: "updateAnnotation"
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "repos-name"
+        in: "path"
+        description: "name of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "elementId"
+        in: "query"
+        required: true
+        type: "string"
+      - name: "elementType"
+        in: "query"
+        required: false
+        type: "string"
+        enum:
+        - "codeSet"
+        - "component"
+        - "datatype"
+        - "field"
+        - "group"
+        - "message"
+        - "actor"
+        - "flow"
+        - "response"
+      - in: "body"
+        name: "annotation"
+        description: "Annotation to update"
+        required: true
+        schema:
+          $ref: "#/definitions/Annotation"
+      responses:
+        204:
+          description: "Annotation updated"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    delete:
+      tags:
+      - "documentation"
+      summary: "deletes a single Annotation"
+      operationId: "deleteAnnotation"
+      parameters:
+      - name: "repos-name"
+        in: "path"
+        description: "name of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version of Orchestra repository"
+        required: true
+        type: "string"
+      - name: "elementId"
+        in: "query"
+        required: true
+        type: "string"
+      - name: "elementType"
+        in: "query"
+        required: false
+        type: "string"
+        enum:
+        - "codeSet"
+        - "component"
+        - "datatype"
+        - "field"
+        - "group"
+        - "message"
+        - "actor"
+        - "flow"
+        - "response"
+      responses:
+        204:
+          description: "Annotation deleted"
+        404:
+          description: "Annotation not found"
 definitions:
   Actor:
     type: "object"
@@ -2574,8 +2991,10 @@ definitions:
       name:
         type: "string"
         maxLength: 64
-      transition:
-        $ref: "#/definitions/Transition"
+      transitions:
+        type: "array"
+        items:
+          $ref: "#/definitions/Transition"
       annotation:
         $ref: "#/definitions/Annotation"
   Transition:

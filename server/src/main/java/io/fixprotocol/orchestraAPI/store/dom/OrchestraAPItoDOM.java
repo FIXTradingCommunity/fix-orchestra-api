@@ -15,6 +15,7 @@ import org.purl.dc.elements._1.SimpleLiteral;
 import org.purl.dc.terms.ElementOrRefinementContainer;
 
 import io.fixprotocol._2016.fixrepository.ActorType;
+import io.fixprotocol._2016.fixrepository.Annotation;
 import io.fixprotocol._2016.fixrepository.CodeSetType;
 import io.fixprotocol._2016.fixrepository.CodeType;
 import io.fixprotocol._2016.fixrepository.ComponentRefType;
@@ -28,6 +29,9 @@ import io.fixprotocol._2016.fixrepository.MessageRefType;
 import io.fixprotocol._2016.fixrepository.MessageType;
 import io.fixprotocol._2016.fixrepository.Repository;
 import io.fixprotocol._2016.fixrepository.ResponseType;
+import io.fixprotocol._2016.fixrepository.StateMachineType;
+import io.fixprotocol._2016.fixrepository.StateType;
+import io.fixprotocol._2016.fixrepository.TransitionType;
 import io.fixprotocol._2016.fixrepository.TriggerType;
 import io.fixprotocol.orchestra.api.RFC3339DateFormat;
 import io.fixprotocol.orchestra.model.Actor;
@@ -46,7 +50,10 @@ import io.fixprotocol.orchestra.model.MessageRef;
 import io.fixprotocol.orchestra.model.Metadata;
 import io.fixprotocol.orchestra.model.ObjectId;
 import io.fixprotocol.orchestra.model.Response;
+import io.fixprotocol.orchestra.model.State;
+import io.fixprotocol.orchestra.model.StateMachine;
 import io.fixprotocol.orchestra.model.Structure;
+import io.fixprotocol.orchestra.model.Transition;
 import io.fixprotocol.orchestra.model.Trigger;
 
 
@@ -61,7 +68,7 @@ public final class OrchestraAPItoDOM {
     Structure structure = actor.getStructure();
     List<Object> objects = actorType.getFieldOrFieldRefOrComponent();
     populateStructureDOM(structure, objects);
-    actorType.getAnnotation();
+    actorType.setAnnotation(new Annotation());
     return actorType;
   }
 
@@ -75,6 +82,7 @@ public final class OrchestraAPItoDOM {
     codeSetType.setType(codeSet.getType());
     codeSetType.getCode().addAll(
         codeSet.getCodes().stream().map(OrchestraAPItoDOM::CodeToDOM).collect(Collectors.toList()));
+    codeSetType.setAnnotation(new Annotation());
     return codeSetType;
   }
 
@@ -85,6 +93,7 @@ public final class OrchestraAPItoDOM {
     codeType.setName(code.getOid().getName());
     codeType.setOid(code.getOid().getOid());
     codeType.setValue(code.getValue());
+    codeType.setAnnotation(new Annotation());
     return codeType;
   }
 
@@ -118,6 +127,7 @@ public final class OrchestraAPItoDOM {
         new io.fixprotocol._2016.fixrepository.Datatype();
     datatypeDOM.setName(datatype.getName());
     datatypeDOM.setBaseType(datatype.getBaseType());
+    datatypeDOM.setAnnotation(new Annotation());
     return datatypeDOM;
   }
 
@@ -291,15 +301,39 @@ public final class OrchestraAPItoDOM {
     response.setName(responseType.getName());
     response.setWhen(responseType.getWhen());
     responseType.getMessageRefOrAssignOrTrigger().stream().filter(o -> o instanceof String)
-      .map(Object::toString).findFirst().ifPresent(response::setAssign);
-    responseType.getMessageRefOrAssignOrTrigger().stream()
-      .filter(o -> o instanceof MessageRefType).map(o -> (MessageRefType) o)
-        .map(m -> DOMToMessageRef(m)).findFirst().ifPresent(response::setMessageRef);
-    responseType.getMessageRefOrAssignOrTrigger().stream()
-      .filter(o -> o instanceof TriggerType).map(o -> (TriggerType) o).map(t -> DOMToTrigger(t)).findFirst()
-      .ifPresent(response::setTrigger);
+        .map(Object::toString).findFirst().ifPresent(response::setAssign);
+    responseType.getMessageRefOrAssignOrTrigger().stream().filter(o -> o instanceof MessageRefType)
+        .map(o -> (MessageRefType) o).map(OrchestraAPItoDOM::DOMToMessageRef).findFirst()
+        .ifPresent(response::setMessageRef);
+    responseType.getMessageRefOrAssignOrTrigger().stream().filter(o -> o instanceof TriggerType)
+        .map(o -> (TriggerType) o).map(OrchestraAPItoDOM::DOMToTrigger).findFirst()
+        .ifPresent(response::setTrigger);
 
     return response;
+  }
+
+  public static State DOMToState(StateType stateType) {
+    State state = new State();
+    state.setName(stateType.getName());
+    state.setTransitions(stateType.getTransition().stream().map(OrchestraAPItoDOM::DOMToTransition)
+        .collect(Collectors.toList()));
+    return state;
+  }
+
+  public static StateMachine DOMToStateMachine(StateMachineType stateMachineType) {
+    StateMachine stateMachine = new StateMachine();
+    stateMachine.setName(stateMachineType.getName());
+    stateMachine.setInitial(DOMToState(stateMachineType.getInitial()));
+    stateMachine.setStates(
+        stateMachineType.getState().stream().map(OrchestraAPItoDOM::DOMToState).collect(Collectors.toList()));
+    return stateMachine;
+  }
+
+  public static Transition DOMToTransition(TransitionType transitionType) {
+    Transition transition = new Transition();
+    transition.setTarget(transitionType.getTarget());
+    transition.setWhen(transitionType.getWhen());
+    return transition;
   }
 
   public static Trigger DOMToTrigger(TriggerType t) {
@@ -317,6 +351,7 @@ public final class OrchestraAPItoDOM {
     fieldType.setAbbrName(field.getOid().getAbbrName());
     fieldType.setType(field.getType());
     fieldType.setBaseCategory(field.getCategory());
+    fieldType.setAnnotation(new Annotation());
     return fieldType;
   }
 
@@ -325,6 +360,7 @@ public final class OrchestraAPItoDOM {
     flowType.setDestination(flow.getDestination());
     flowType.setName(flow.getName());
     flowType.setSource(flow.getSource());
+    flowType.setAnnotation(new Annotation());
     return flowType;
   }
 
@@ -354,6 +390,7 @@ public final class OrchestraAPItoDOM {
     List<Object> elements = messageType.getStructure().getComponentOrComponentRefOrGroup();
     Structure structure = message.getStructure();
     populateStructureDOM(structure, elements);
+    messageType.setAnnotation(new Annotation());
     return messageType;
   }
 
@@ -451,7 +488,33 @@ public final class OrchestraAPItoDOM {
     if (response.getTrigger() != null) {
       responseType.getMessageRefOrAssignOrTrigger().add(TriggerToDOM(response.getTrigger()));
     }
+    responseType.setAnnotation(new Annotation());
     return responseType;
+  }
+
+  public static StateMachineType StateMachineToDOM(StateMachine stateMachine) {
+    StateMachineType stateMachineType = new StateMachineType();
+    stateMachineType.setName(stateMachine.getName());
+    stateMachineType.setInitial(StateToDOM(stateMachine.getInitial()));
+    stateMachineType.getState().addAll(
+        stateMachine.getStates().stream().map(OrchestraAPItoDOM::StateToDOM).collect(Collectors.toList()));
+    return stateMachineType;
+  }
+
+  public static StateType StateToDOM(State state) {
+    StateType stateType = new StateType();
+    stateType.setName(state.getName());
+    List<TransitionType> transitions =
+        state.getTransitions().stream().map(OrchestraAPItoDOM::TransitionToDOM).collect(Collectors.toList());
+    stateType.getTransition().addAll(transitions);
+    return stateType;
+  }
+
+  public static TransitionType TransitionToDOM(Transition transition) {
+    TransitionType transitionType = new TransitionType();
+    transitionType.setWhen(transition.getWhen());
+    transitionType.setTarget(transition.getTarget());
+    return transitionType;
   }
 
   public static TriggerType TriggerToDOM(Trigger trigger) {
@@ -487,6 +550,8 @@ public final class OrchestraAPItoDOM {
     List<Object> elements = componentType.getComponentRefOrGroupRefOrFieldRef();
     Structure structure = component.getStructure();
     populateStructureDOM(structure, elements);
+
+    componentType.setAnnotation(new Annotation());
   }
 
   private static void populateStructure(List<Object> elements, Structure structure) {

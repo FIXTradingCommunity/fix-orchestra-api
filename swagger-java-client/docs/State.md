@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **String** |  | 
-**transition** | [**Transition**](Transition.md) |  |  [optional]
+**transitions** | [**List&lt;Transition&gt;**](Transition.md) |  |  [optional]
 **annotation** | [**Annotation**](Annotation.md) |  |  [optional]
 
 

@@ -7,17 +7,19 @@ import io.fixprotocol.orchestra.client.model.Annotation;
 import io.fixprotocol.orchestra.client.model.Transition;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * State
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-24T16:52:38.175Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-29T15:57:45.378Z")
 public class State {
   @JsonProperty("name")
   private String name = null;
 
-  @JsonProperty("transition")
-  private Transition transition = null;
+  @JsonProperty("transitions")
+  private List<Transition> transitions = new ArrayList<Transition>();
 
   @JsonProperty("annotation")
   private Annotation annotation = null;
@@ -40,22 +42,27 @@ public class State {
     this.name = name;
   }
 
-  public State transition(Transition transition) {
-    this.transition = transition;
+  public State transitions(List<Transition> transitions) {
+    this.transitions = transitions;
+    return this;
+  }
+
+  public State addTransitionsItem(Transition transitionsItem) {
+    this.transitions.add(transitionsItem);
     return this;
   }
 
    /**
-   * Get transition
-   * @return transition
+   * Get transitions
+   * @return transitions
   **/
   @ApiModelProperty(value = "")
-  public Transition getTransition() {
-    return transition;
+  public List<Transition> getTransitions() {
+    return transitions;
   }
 
-  public void setTransition(Transition transition) {
-    this.transition = transition;
+  public void setTransitions(List<Transition> transitions) {
+    this.transitions = transitions;
   }
 
   public State annotation(Annotation annotation) {
@@ -87,13 +94,13 @@ public class State {
     }
     State state = (State) o;
     return Objects.equals(this.name, state.name) &&
-        Objects.equals(this.transition, state.transition) &&
+        Objects.equals(this.transitions, state.transitions) &&
         Objects.equals(this.annotation, state.annotation);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, transition, annotation);
+    return Objects.hash(name, transitions, annotation);
   }
 
 
@@ -103,7 +110,7 @@ public class State {
     sb.append("class State {\n");
     
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    transition: ").append(toIndentedString(transition)).append("\n");
+    sb.append("    transitions: ").append(toIndentedString(transitions)).append("\n");
     sb.append("    annotation: ").append(toIndentedString(annotation)).append("\n");
     sb.append("}");
     return sb.toString();

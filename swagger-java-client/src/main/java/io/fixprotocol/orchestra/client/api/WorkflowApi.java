@@ -11,13 +11,14 @@ import io.fixprotocol.orchestra.client.model.Actor;
 import io.fixprotocol.orchestra.client.model.ErrorModel;
 import io.fixprotocol.orchestra.client.model.Flow;
 import io.fixprotocol.orchestra.client.model.Response;
+import io.fixprotocol.orchestra.client.model.StateMachine;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-24T16:52:38.175Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-29T15:57:45.378Z")
 public class WorkflowApi {
   private ApiClient apiClient;
 
@@ -192,6 +193,62 @@ public class WorkflowApi {
     apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
   }
   /**
+   * adds a state machine
+   * Adds a StateMachine
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param name name of Actor to update (required)
+   * @param stateMachine StateMachine to add (optional)
+   * @throws ApiException if fails to make API call
+   */
+  public void addStateMachine(String reposName, String version, String name, StateMachine stateMachine) throws ApiException {
+    Object localVarPostBody = stateMachine;
+    
+    // verify the required parameter 'reposName' is set
+    if (reposName == null) {
+      throw new ApiException(400, "Missing the required parameter 'reposName' when calling addStateMachine");
+    }
+    
+    // verify the required parameter 'version' is set
+    if (version == null) {
+      throw new ApiException(400, "Missing the required parameter 'version' when calling addStateMachine");
+    }
+    
+    // verify the required parameter 'name' is set
+    if (name == null) {
+      throw new ApiException(400, "Missing the required parameter 'name' when calling addStateMachine");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/repositories/{repos-name}/{version}/actors/{name}/statemachines".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
+      .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
+      .replaceAll("\\{" + "name" + "\\}", apiClient.escapeString(name.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    
+    
+    final String[] localVarAccepts = {
+      
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+
+    apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+  }
+  /**
    * deletes a single Actor based on the name supplied
    * 
    * @param reposName name of Orchestra repository (required)
@@ -339,6 +396,68 @@ public class WorkflowApi {
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()))
       .replaceAll("\\{" + "name" + "\\}", apiClient.escapeString(name.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    
+    
+    final String[] localVarAccepts = {
+      
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+
+    apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+  }
+  /**
+   * deletes a single StateMachine based on the name supplied
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param name name of Actor to update (required)
+   * @param smName name of StateMachine to delete (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void deleteStateMachine(String reposName, String version, String name, String smName) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'reposName' is set
+    if (reposName == null) {
+      throw new ApiException(400, "Missing the required parameter 'reposName' when calling deleteStateMachine");
+    }
+    
+    // verify the required parameter 'version' is set
+    if (version == null) {
+      throw new ApiException(400, "Missing the required parameter 'version' when calling deleteStateMachine");
+    }
+    
+    // verify the required parameter 'name' is set
+    if (name == null) {
+      throw new ApiException(400, "Missing the required parameter 'name' when calling deleteStateMachine");
+    }
+    
+    // verify the required parameter 'smName' is set
+    if (smName == null) {
+      throw new ApiException(400, "Missing the required parameter 'smName' when calling deleteStateMachine");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/repositories/{repos-name}/{version}/actors/{name}/statemachines/{sm-name}".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
+      .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
+      .replaceAll("\\{" + "name" + "\\}", apiClient.escapeString(name.toString()))
+      .replaceAll("\\{" + "sm-name" + "\\}", apiClient.escapeString(smName.toString()));
 
     // query params
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -539,6 +658,69 @@ public class WorkflowApi {
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
   /**
+   * Returns a single StateMachine, if found
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param name name of Actor to search (required)
+   * @param smName name of StateMachine to fetch (required)
+   * @return StateMachine
+   * @throws ApiException if fails to make API call
+   */
+  public StateMachine findStateMachine(String reposName, String version, String name, String smName) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'reposName' is set
+    if (reposName == null) {
+      throw new ApiException(400, "Missing the required parameter 'reposName' when calling findStateMachine");
+    }
+    
+    // verify the required parameter 'version' is set
+    if (version == null) {
+      throw new ApiException(400, "Missing the required parameter 'version' when calling findStateMachine");
+    }
+    
+    // verify the required parameter 'name' is set
+    if (name == null) {
+      throw new ApiException(400, "Missing the required parameter 'name' when calling findStateMachine");
+    }
+    
+    // verify the required parameter 'smName' is set
+    if (smName == null) {
+      throw new ApiException(400, "Missing the required parameter 'smName' when calling findStateMachine");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/repositories/{repos-name}/{version}/actors/{name}/statemachines/{sm-name}".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
+      .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
+      .replaceAll("\\{" + "name" + "\\}", apiClient.escapeString(name.toString()))
+      .replaceAll("\\{" + "sm-name" + "\\}", apiClient.escapeString(smName.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    
+    
+    final String[] localVarAccepts = {
+      "application/json"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+    GenericType<StateMachine> localVarReturnType = new GenericType<StateMachine>() {};
+    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+  /**
    * searches actors
    * By passing in the appropriate options, you can search for actors 
    * @param reposName name of Orchestra repository (required)
@@ -711,6 +893,68 @@ public class WorkflowApi {
     return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
       }
   /**
+   * searches state machines
+   * By passing in the appropriate options, you can search for state machines
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param name name of Actor to search (required)
+   * @param searchString pass an optional search string for looking up actors (optional)
+   * @param skip number of records to skip for pagination (optional)
+   * @param limit maximum number of records to return (optional)
+   * @return List<StateMachine>
+   * @throws ApiException if fails to make API call
+   */
+  public List<StateMachine> searchStateMachines(String reposName, String version, String name, String searchString, Integer skip, Integer limit) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'reposName' is set
+    if (reposName == null) {
+      throw new ApiException(400, "Missing the required parameter 'reposName' when calling searchStateMachines");
+    }
+    
+    // verify the required parameter 'version' is set
+    if (version == null) {
+      throw new ApiException(400, "Missing the required parameter 'version' when calling searchStateMachines");
+    }
+    
+    // verify the required parameter 'name' is set
+    if (name == null) {
+      throw new ApiException(400, "Missing the required parameter 'name' when calling searchStateMachines");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/repositories/{repos-name}/{version}/actors/{name}/statemachines".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
+      .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
+      .replaceAll("\\{" + "name" + "\\}", apiClient.escapeString(name.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+    localVarQueryParams.addAll(apiClient.parameterToPairs("", "searchString", searchString));
+    localVarQueryParams.addAll(apiClient.parameterToPairs("", "skip", skip));
+    localVarQueryParams.addAll(apiClient.parameterToPairs("", "limit", limit));
+
+    
+    
+    final String[] localVarAccepts = {
+      "application/json"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+    GenericType<List<StateMachine>> localVarReturnType = new GenericType<List<StateMachine>>() {};
+    return apiClient.invokeAPI(localVarPath, "GET", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+      }
+  /**
    * Updates a single Actor, if found (idempotent)
    * 
    * @param reposName name of Orchestra repository (required)
@@ -876,6 +1120,74 @@ public class WorkflowApi {
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()))
       .replaceAll("\\{" + "name" + "\\}", apiClient.escapeString(name.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    
+    
+    final String[] localVarAccepts = {
+      
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+
+    apiClient.invokeAPI(localVarPath, "PUT", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+  }
+  /**
+   * Updates a single StateMachine, if found (idempotent)
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param name name of Actor to update (required)
+   * @param smName name of StateMachine to update (required)
+   * @param stateMachine StateMachine to update (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void updateStateMachine(String reposName, String version, String name, String smName, StateMachine stateMachine) throws ApiException {
+    Object localVarPostBody = stateMachine;
+    
+    // verify the required parameter 'reposName' is set
+    if (reposName == null) {
+      throw new ApiException(400, "Missing the required parameter 'reposName' when calling updateStateMachine");
+    }
+    
+    // verify the required parameter 'version' is set
+    if (version == null) {
+      throw new ApiException(400, "Missing the required parameter 'version' when calling updateStateMachine");
+    }
+    
+    // verify the required parameter 'name' is set
+    if (name == null) {
+      throw new ApiException(400, "Missing the required parameter 'name' when calling updateStateMachine");
+    }
+    
+    // verify the required parameter 'smName' is set
+    if (smName == null) {
+      throw new ApiException(400, "Missing the required parameter 'smName' when calling updateStateMachine");
+    }
+    
+    // verify the required parameter 'stateMachine' is set
+    if (stateMachine == null) {
+      throw new ApiException(400, "Missing the required parameter 'stateMachine' when calling updateStateMachine");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/repositories/{repos-name}/{version}/actors/{name}/statemachines/{sm-name}".replaceAll("\\{format\\}","json")
+      .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
+      .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
+      .replaceAll("\\{" + "name" + "\\}", apiClient.escapeString(name.toString()))
+      .replaceAll("\\{" + "sm-name" + "\\}", apiClient.escapeString(smName.toString()));
 
     // query params
     List<Pair> localVarQueryParams = new ArrayList<Pair>();

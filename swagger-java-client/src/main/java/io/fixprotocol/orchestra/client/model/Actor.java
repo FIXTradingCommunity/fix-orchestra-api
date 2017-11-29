@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
  * Represents a class of participants
  */
 @ApiModel(description = "Represents a class of participants")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-24T16:52:38.175Z")
+@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-29T15:57:45.378Z")
 public class Actor {
   @JsonProperty("name")
   private String name = null;

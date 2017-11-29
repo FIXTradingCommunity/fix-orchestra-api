@@ -6,6 +6,7 @@ package io.fixprotocol.orchestraAPI.client;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -31,7 +32,10 @@ import io.fixprotocol.orchestra.client.model.Metadata;
 import io.fixprotocol.orchestra.client.model.ObjectId;
 import io.fixprotocol.orchestra.client.model.Repository;
 import io.fixprotocol.orchestra.client.model.Response;
+import io.fixprotocol.orchestra.client.model.State;
+import io.fixprotocol.orchestra.client.model.StateMachine;
 import io.fixprotocol.orchestra.client.model.Structure;
+import io.fixprotocol.orchestra.client.model.Transition;
 import io.fixprotocol.orchestra.client.model.Trigger;
 import io.fixprotocol.orchestra.client.model.ComponentRef;
 import io.fixprotocol.orchestra.client.model.Message;
@@ -47,17 +51,53 @@ public class ClientTest {
   private Client client;
   private final Random random = new Random();
 
-  /**
-   * @throws java.lang.Exception
-   */
-  @Before
-  public void setUp() throws Exception {
-    final ApiClient apiClient = new ApiClient();
-    apiClient.setBasePath("http://localhost:8080/FIXTradingCommunity/orchestra-api/1.0.0");
-    // apiClient.setDebugging(true);
-    client = new Client(apiClient);
+  @Test
+  public void addActor() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Actor actor = new Actor();
+    actor.setStructure(new Structure());
+    actor.setName("actor1");
+    client.addActor("test1", identifier, actor);
+
+    Actor actor2 = client.findActorByName("test1", identifier, "actor1");
+    assertNotNull(actor2);
+
+    client.deleteRepository("test1", identifier);
   }
-  
+
+  @Test
+  public void addFlow() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Flow flow = new Flow();
+    flow.setName("flow1");
+    client.addFlow("test1", identifier, flow);
+
+    Flow flow2 = client.findFlowByName("test1", identifier, "flow1");
+    assertNotNull(flow2);
+
+    client.deleteRepository("test1", identifier);
+  }
+
   @Test
   public void addMessageResponse() throws ApiException {
     Repository repository = new Repository();
@@ -82,27 +122,129 @@ public class ClientTest {
     Structure structure = new Structure();
     message.setStructure(structure);
     client.addMessage("test1", identifier, message);
-    
+
     Response response = new Response();
     response.setName("trade");
     MessageRef messageRef = new MessageRef();
     messageRef.setName("ExecutionReport");
     messageRef.setMsgType("8");
     messageRef.setScenario("trade");
-    response.setMessageRef(messageRef );
-    client.addMessageResponse("test1", identifier, 14, response );
-    
+    response.setMessageRef(messageRef);
+    client.addMessageResponse("test1", identifier, 14, response);
+
     Message message2 = client.findMessageById("test1", identifier, 14);
     assertNotNull(message2);
-    
+
     Response response2 = client.findMessageResponseById("test1", identifier, 14, "trade");
     assertNotNull(response2);
     MessageRef messageRef2 = response2.getMessageRef();
     assertNotNull(messageRef2);
-    
+
     client.deleteRepository(repository.getName(), identifier);
   }
-  
+
+  @Test
+  public void addStateMachine() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Actor actor = new Actor();
+    actor.setStructure(new Structure());
+    actor.setName("actor1");
+    client.addActor("test1", identifier, actor);
+
+    Actor actor2 = client.findActorByName("test1", identifier, "actor1");
+    assertNotNull(actor2);
+
+    StateMachine stateMachine = new StateMachine();
+    stateMachine.setName("switch");
+    State off = new State();
+    off.setName("off");
+    stateMachine.setInitial(off);
+    List<State> states = new ArrayList<State>();
+    State on = new State();
+    on.setName("on");
+    states.add(on);
+    stateMachine.setStates(states);
+    client.addStateMachine("test1", identifier, "actor1", stateMachine);
+
+    StateMachine stateMachine2 = client.findStateMachine("test1", identifier, "actor1", "switch");
+    assertNotNull(stateMachine2);
+
+    client.deleteRepository("test1", identifier);
+  }
+
+  @Test
+  public void deleteActor() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Actor actor = new Actor();
+    actor.setName("actor1");
+    actor.setStructure(new Structure());
+    client.addActor("test1", identifier, actor);
+
+    Actor actor2 = client.findActorByName("test1", identifier, "actor1");
+    assertNotNull(actor2);
+
+    client.deleteActor("test1", identifier, "actor1");
+    try {
+      client.findActorByName("test1", identifier, "actor1");
+      fail("deletion failed");
+    } catch (ApiException e) {
+      assertEquals(404, e.getCode());
+    }
+
+    client.deleteRepository("test1", identifier);
+  }
+
+  @Test
+  public void deleteFlow() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Flow flow = new Flow();
+    flow.setName("flow1");
+    client.addFlow("test1", identifier, flow);
+
+    Flow flow2 = client.findFlowByName("test1", identifier, "flow1");
+    assertNotNull(flow2);
+
+    client.deleteFlow("test1", identifier, "flow1");
+    try {
+      client.deleteFlow("test1", identifier, "flow1");
+      fail("deletion failed");
+    } catch (ApiException e) {
+      assertEquals(404, e.getCode());
+    }
+
+    client.deleteRepository("test1", identifier);
+  }
+
   @Test
   public void deleteMessageResponse() throws ApiException {
     Repository repository = new Repository();
@@ -127,36 +269,137 @@ public class ClientTest {
     Structure structure = new Structure();
     message.setStructure(structure);
     client.addMessage("test1", identifier, message);
-    
+
     Response response = new Response();
     response.setName("trade");
     MessageRef messageRef = new MessageRef();
     messageRef.setName("ExecutionReport");
     messageRef.setMsgType("8");
     messageRef.setScenario("trade");
-    response.setMessageRef(messageRef );
-    client.addMessageResponse("test1", identifier, 14, response );
-    
+    response.setMessageRef(messageRef);
+    client.addMessageResponse("test1", identifier, 14, response);
+
     Message message2 = client.findMessageById("test1", identifier, 14);
     assertNotNull(message2);
-    
+
     Response response2 = client.findMessageResponseById("test1", identifier, 14, "trade");
     assertNotNull(response2);
     MessageRef messageRef2 = response2.getMessageRef();
     assertNotNull(messageRef2);
-    
+
     client.deleteMessageResponse("test1", identifier, 14, "trade");
-    
-     try {
+
+    try {
       client.deleteMessageResponse("test1", identifier, 14, "trade");
       fail("deletion failed");
     } catch (ApiException e) {
       assertEquals(404, e.getCode());
     }
-    
+
     client.deleteRepository(repository.getName(), identifier);
   }
-  
+
+  @Test
+  public void deleteStateMachine() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Actor actor = new Actor();
+    actor.setStructure(new Structure());
+    actor.setName("actor1");
+    client.addActor("test1", identifier, actor);
+
+    Actor actor2 = client.findActorByName("test1", identifier, "actor1");
+    assertNotNull(actor2);
+
+    StateMachine stateMachine = new StateMachine();
+    stateMachine.setName("switch");
+    State off = new State();
+    off.setName("off");
+    stateMachine.setInitial(off);
+    List<State> states = new ArrayList<State>();
+    State on = new State();
+    on.setName("on");
+    states.add(on);
+    stateMachine.setStates(states);
+    client.addStateMachine("test1", identifier, "actor1", stateMachine);
+
+    StateMachine stateMachine2 = client.findStateMachine("test1", identifier, "actor1", "switch");
+    assertNotNull(stateMachine2);
+
+    client.deleteStateMachine("test1", identifier, "actor1", "switch");
+    try {
+      client.findStateMachine("test1", identifier, "actor1", "switch");
+      fail("deletion failed");
+    } catch (ApiException e) {
+      assertEquals(404, e.getCode());
+    }
+
+    client.deleteRepository("test1", identifier);
+  }
+
+  @Test
+  public void findActorByName() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Actor actor = new Actor();
+    actor.setName("actor1");
+    actor.setExtends("actor2");
+    actor.setStructure(new Structure());
+    client.addActor("test1", identifier, actor);
+
+    Actor actor2 = client.findActorByName("test1", identifier, "actor1");
+    assertNotNull(actor2);
+    assertEquals("actor1", actor2.getName());
+
+    client.deleteRepository("test1", identifier);
+  }
+
+  @Test
+  public void findFlowByName() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Flow flow = new Flow();
+    flow.setName("flow1");
+    flow.setSource("actor1");
+    flow.setDestination("actor2");
+    client.addFlow("test1", identifier, flow);
+
+    Flow flow2 = client.findFlowByName("test1", identifier, "flow1");
+    assertNotNull(flow2);
+    assertEquals("flow1", flow2.getName());
+    assertEquals("actor1", flow2.getSource());
+    assertEquals("actor2", flow2.getDestination());
+    client.deleteRepository("test1", identifier);
+  }
+
+
   @Test
   public void findMessageResponse() throws ApiException {
     Repository repository = new Repository();
@@ -181,20 +424,20 @@ public class ClientTest {
     Structure structure = new Structure();
     message.setStructure(structure);
     client.addMessage("test1", identifier, message);
-    
+
     Response response = new Response();
     response.setName("trade");
     MessageRef messageRef = new MessageRef();
     messageRef.setName("ExecutionReport");
     messageRef.setMsgType("8");
     messageRef.setScenario("trade");
-    response.setMessageRef(messageRef );
+    response.setMessageRef(messageRef);
     response.setAssign("OrdQty = in.OrdQty");
-    client.addMessageResponse("test1", identifier, 14, response );
-    
+    client.addMessageResponse("test1", identifier, 14, response);
+
     Message message2 = client.findMessageById("test1", identifier, 14);
     assertNotNull(message2);
-    
+
     Response response2 = client.findMessageResponseById("test1", identifier, 14, "trade");
     assertNotNull(response2);
     assertEquals("trade", response2.getName());
@@ -204,10 +447,108 @@ public class ClientTest {
     assertEquals("8", messageRef2.getMsgType());
     assertEquals("trade", messageRef2.getScenario());
     assertNotNull(response2.getAssign());
-    
+
     client.deleteRepository(repository.getName(), identifier);
   }
-  
+
+  @Test
+  public void findStateMachine() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Actor actor = new Actor();
+    actor.setStructure(new Structure());
+    actor.setName("actor1");
+    client.addActor("test1", identifier, actor);
+
+    Actor actor2 = client.findActorByName("test1", identifier, "actor1");
+    assertNotNull(actor2);
+
+    StateMachine stateMachine = new StateMachine();
+    stateMachine.setName("switch");
+    State off = new State();
+    off.setName("off");
+    stateMachine.setInitial(off);
+    Transition onTransition = new Transition();
+    onTransition.setTarget("on");
+    off.addTransitionsItem(onTransition);
+    List<State> states = new ArrayList<State>();
+    State on = new State();
+    on.setName("on");
+    states.add(on);
+    stateMachine.setStates(states);
+    client.addStateMachine("test1", identifier, "actor1", stateMachine);
+
+    StateMachine stateMachine2 = client.findStateMachine("test1", identifier, "actor1", "switch");
+    assertNotNull(stateMachine2);
+    assertEquals("switch", stateMachine2.getName());
+    assertEquals("off", stateMachine2.getInitial().getName());
+    assertEquals(1, stateMachine2.getInitial().getTransitions().size());
+    assertEquals(1, stateMachine2.getStates().size());
+    
+    client.deleteStateMachine("test1", identifier, "actor1", "switch");
+
+    client.deleteRepository("test1", identifier);
+  }
+
+  @Test
+  public void searchActors() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Actor actor = new Actor();
+    actor.setStructure(new Structure());
+    actor.setName("actor1");
+    client.addActor("test1", identifier, actor);
+
+    List<Actor> actors = client.searchActors("test1", identifier, null, null, null);
+    assertEquals(1, actors.size());
+
+    client.deleteRepository("test1", identifier);
+  }
+
+  @Test
+  public void searchFlows() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Flow flow = new Flow();
+    flow.setName("flow1");
+    client.addFlow("test1", identifier, flow);
+
+    List<Flow> flows = client.searchFlows("test1", identifier, null, null, null);
+    assertEquals(1, flows.size());
+
+    List<Actor> actors = client.searchActors("test1", identifier, null, null, null);
+    assertEquals(0, actors.size());
+
+    client.deleteRepository("test1", identifier);
+  }
+
   @Test
   public void searchMessageResponses() throws ApiException {
     Repository repository = new Repository();
@@ -232,20 +573,21 @@ public class ClientTest {
     Structure structure = new Structure();
     message.setStructure(structure);
     client.addMessage("test1", identifier, message);
-    
+
     Response response = new Response();
     response.setName("trade");
     MessageRef messageRef = new MessageRef();
     messageRef.setName("ExecutionReport");
     messageRef.setMsgType("8");
     messageRef.setScenario("trade");
-    response.setMessageRef(messageRef );
-    client.addMessageResponse("test1", identifier, 14, response );
-    
+    response.setMessageRef(messageRef);
+    client.addMessageResponse("test1", identifier, 14, response);
+
     Message message2 = client.findMessageById("test1", identifier, 14);
     assertNotNull(message2);
-    
-    List<Response> responses = client.searchMessageResponses("test1", identifier, 14, null, null, null);
+
+    List<Response> responses =
+        client.searchMessageResponses("test1", identifier, 14, null, null, null);
     assertNotNull(responses);
     assertEquals(1, responses.size());
     Response response2 = responses.get(0);
@@ -255,70 +597,74 @@ public class ClientTest {
     assertEquals("ExecutionReport", messageRef2.getName());
     assertEquals("8", messageRef2.getMsgType());
     assertEquals("trade", messageRef2.getScenario());
-    
+
     client.deleteRepository(repository.getName(), identifier);
   }
-  
+
   @Test
-  public void updateMessageResponse() throws ApiException {
-    Repository repository = new Repository();
+  public void searchStateMachines() throws ApiException {
+    final Repository repository = new Repository();
     repository.setName("test1");
     final String identifier = Integer.toString(random.nextInt());
     repository.setVersion(identifier);
     repository.setHasComponents(true);
-    Metadata metadata = new Metadata();
+    final Metadata metadata = new Metadata();
     metadata.description("A test repository");
     metadata.identifier(identifier);
     repository.setMetadata(metadata);
     client.addRepository(repository);
 
-    Message message = new Message();
-    ObjectId oid = new ObjectId();
-    oid.setAbbrName("Order");
-    oid.setId(14);
-    oid.setName("NewOrderSingle");
-    message.setOid(oid);
-    message.setMsgType("D");
-    message.setScenario("base");
-    Structure structure = new Structure();
-    message.setStructure(structure);
-    client.addMessage("test1", identifier, message);
-    
-    Response response = new Response();
-    response.setName("trade");
-    MessageRef messageRef = new MessageRef();
-    messageRef.setName("ExecutionReport");
-    messageRef.setMsgType("8");
-    messageRef.setScenario("trade");
-    response.setMessageRef(messageRef );
-    client.addMessageResponse("test1", identifier, 14, response );
-    
-    Message message2 = client.findMessageById("test1", identifier, 14);
-    assertNotNull(message2);
-    
-    Response response2 = client.findMessageResponseById("test1", identifier, 14, "trade");
-    assertNotNull(response2);
-    assertEquals("trade", response2.getName());
-    
-    response2.setWhen("match happened");
-    Trigger trigger = new Trigger();
-    trigger.setActor("a1");
-    trigger.setName("t1");
-    trigger.setStateMachine("sm1");
-    response2.setTrigger(trigger );
-    client.updateMessageResponse("test1", identifier, 14, "trade", response2);
-    
-    Response response3 = client.findMessageResponseById("test1", identifier, 14, "trade");
-    assertNotNull(response3);
-    assertEquals("trade", response3.getName());
-    assertEquals("match happened", response3.getWhen());
-    assertEquals("trade", response3.getName());
-    MessageRef messageRef3 = response3.getMessageRef();
-    assertNotNull(messageRef3);
-    assertEquals("ExecutionReport", messageRef3.getName());
-    assertNotNull(response3.getTrigger());
-    
-    client.deleteRepository(repository.getName(), identifier);
+    Actor actor = new Actor();
+    actor.setStructure(new Structure());
+    actor.setName("actor1");
+    client.addActor("test1", identifier, actor);
+
+    Actor actor2 = client.findActorByName("test1", identifier, "actor1");
+    assertNotNull(actor2);
+
+    StateMachine stateMachine = new StateMachine();
+    stateMachine.setName("switch");
+    State off = new State();
+    off.setName("off");
+    stateMachine.setInitial(off);
+    List<State> states = new ArrayList<State>();
+    State on = new State();
+    on.setName("on");
+    states.add(on);
+    stateMachine.setStates(states);
+    client.addStateMachine("test1", identifier, "actor1", stateMachine);
+
+    StateMachine stateMachine2 = new StateMachine();
+    stateMachine2.setName("switch2");
+    State off2 = new State();
+    off2.setName("off");
+    stateMachine2.setInitial(off2);
+    List<State> states2 = new ArrayList<State>();
+    State on2 = new State();
+    on2.setName("on");
+    states2.add(on2);
+    State maybe = new State();
+    maybe.setName("maybe");
+    states2.add(maybe);
+    stateMachine2.setStates(states2);
+    client.addStateMachine("test1", identifier, "actor1", stateMachine2);
+
+    List<StateMachine> stateMachines =
+        client.searchStateMachines("test1", identifier, "actor1", null, null, null);
+    assertEquals(2, stateMachines.size());
+
+    client.deleteRepository("test1", identifier);
+  }
+
+  /**
+   * @throws java.lang.Exception
+   */
+  @Before
+  public void setUp() throws Exception {
+    final ApiClient apiClient = new ApiClient();
+    apiClient.setBasePath("http://localhost:8080/FIXTradingCommunity/orchestra-api/1.0.0");
+    // apiClient.setDebugging(true);
+    client = new Client(apiClient);
   }
 
   /**
@@ -326,287 +672,7 @@ public class ClientTest {
    */
   @After
   public void tearDown() throws Exception {}
-  
-  @Test
-  public void addActor() throws ApiException {
-    final Repository repository = new Repository();
-    repository.setName("test1");
-    final String identifier = Integer.toString(random.nextInt());
-    repository.setVersion(identifier);
-    repository.setHasComponents(true);
-    final Metadata metadata = new Metadata();
-    metadata.description("A test repository");
-    metadata.identifier(identifier);
-    repository.setMetadata(metadata);
-    client.addRepository(repository);
-    
-    Actor actor = new Actor();
-    actor.setStructure(new Structure());
-    actor.setName("actor1");
-    client.addActor("test1", identifier, actor);
-    
-    Actor actor2 = client.findActorByName("test1", identifier, "actor1");
-    assertNotNull(actor2);
-    
-    client.deleteRepository("test1", identifier);
-  }
 
-  @Test
-  public void addFlow() throws ApiException {
-    final Repository repository = new Repository();
-    repository.setName("test1");
-    final String identifier = Integer.toString(random.nextInt());
-    repository.setVersion(identifier);
-    repository.setHasComponents(true);
-    final Metadata metadata = new Metadata();
-    metadata.description("A test repository");
-    metadata.identifier(identifier);
-    repository.setMetadata(metadata);
-    client.addRepository(repository);
-    
-    Flow flow = new Flow();
-    flow.setName("flow1");
-    client.addFlow("test1", identifier, flow);
-    
-    Flow flow2 = client.findFlowByName("test1", identifier, "flow1");
-    assertNotNull(flow2);
-    
-    client.deleteRepository("test1", identifier);
-  }
-
-  @Test
-  public void deleteActor() throws ApiException {
-    final Repository repository = new Repository();
-    repository.setName("test1");
-    final String identifier = Integer.toString(random.nextInt());
-    repository.setVersion(identifier);
-    repository.setHasComponents(true);
-    final Metadata metadata = new Metadata();
-    metadata.description("A test repository");
-    metadata.identifier(identifier);
-    repository.setMetadata(metadata);
-    client.addRepository(repository);
-    
-    Actor actor = new Actor();
-    actor.setName("actor1");
-    actor.setStructure(new Structure());
-    client.addActor("test1", identifier, actor);
-    
-    Actor actor2 = client.findActorByName("test1", identifier, "actor1");
-    assertNotNull(actor2);
-    
-    client.deleteActor("test1", identifier, "actor1");
-    try {
-      client.findActorByName("test1", identifier, "actor1");
-      fail("deletion failed");
-    } catch (ApiException e) {
-      assertEquals(404, e.getCode());
-    }
-
-    client.deleteRepository("test1", identifier);
-  }
-  
-  @Test
-  public void deleteFlow() throws ApiException {
-    final Repository repository = new Repository();
-    repository.setName("test1");
-    final String identifier = Integer.toString(random.nextInt());
-    repository.setVersion(identifier);
-    repository.setHasComponents(true);
-    final Metadata metadata = new Metadata();
-    metadata.description("A test repository");
-    metadata.identifier(identifier);
-    repository.setMetadata(metadata);
-    client.addRepository(repository);
-    
-    Flow flow = new Flow();
-    flow.setName("flow1");
-    client.addFlow("test1", identifier, flow);
-    
-    Flow flow2 = client.findFlowByName("test1", identifier, "flow1");
-    assertNotNull(flow2);
-
-    client.deleteFlow("test1", identifier, "flow1");
-    try {
-      client.deleteFlow("test1", identifier, "flow1");
-      fail("deletion failed");
-    } catch (ApiException e) {
-      assertEquals(404, e.getCode());
-    }
-
-    client.deleteRepository("test1", identifier);
-  }
-  
-  @Test
-  public void findActorByName() throws ApiException {
-    final Repository repository = new Repository();
-    repository.setName("test1");
-    final String identifier = Integer.toString(random.nextInt());
-    repository.setVersion(identifier);
-    repository.setHasComponents(true);
-    final Metadata metadata = new Metadata();
-    metadata.description("A test repository");
-    metadata.identifier(identifier);
-    repository.setMetadata(metadata);
-    client.addRepository(repository);
-    
-    Actor actor = new Actor();
-    actor.setName("actor1");
-    actor.setExtends("actor2");
-    actor.setStructure(new Structure());
-    client.addActor("test1", identifier, actor);
-    
-    Actor actor2 = client.findActorByName("test1", identifier, "actor1");
-    assertNotNull(actor2);
-    assertEquals("actor1", actor2.getName());
-    
-    client.deleteRepository("test1", identifier);
-  }
-  
-  @Test
-  public void findFlowByName() throws ApiException {
-    final Repository repository = new Repository();
-    repository.setName("test1");
-    final String identifier = Integer.toString(random.nextInt());
-    repository.setVersion(identifier);
-    repository.setHasComponents(true);
-    final Metadata metadata = new Metadata();
-    metadata.description("A test repository");
-    metadata.identifier(identifier);
-    repository.setMetadata(metadata);
-    client.addRepository(repository);
-    
-    Flow flow = new Flow();
-    flow.setName("flow1");
-    flow.setSource("actor1");
-    flow.setDestination("actor2");
-    client.addFlow("test1", identifier, flow);
-    
-    Flow flow2 = client.findFlowByName("test1", identifier, "flow1");
-    assertNotNull(flow2);
-    assertEquals("flow1", flow2.getName());
-    assertEquals("actor1", flow2.getSource());
-    assertEquals("actor2", flow2.getDestination());
-    client.deleteRepository("test1", identifier);
-  }
-  
-  @Test 
-  public void searchActors() throws ApiException {
-    final Repository repository = new Repository();
-    repository.setName("test1");
-    final String identifier = Integer.toString(random.nextInt());
-    repository.setVersion(identifier);
-    repository.setHasComponents(true);
-    final Metadata metadata = new Metadata();
-    metadata.description("A test repository");
-    metadata.identifier(identifier);
-    repository.setMetadata(metadata);
-    client.addRepository(repository);
-    
-    Actor actor = new Actor();
-    actor.setStructure(new Structure());
-    actor.setName("actor1");
-    client.addActor("test1", identifier, actor);
-
-    List<Actor> actors = client.searchActors("test1", identifier, null, null, null);
-    assertEquals(1, actors.size());
-    
-    client.deleteRepository("test1", identifier);
-  }
-  
-  @Test
-  public void searchFlows()  throws ApiException {
-    final Repository repository = new Repository();
-    repository.setName("test1");
-    final String identifier = Integer.toString(random.nextInt());
-    repository.setVersion(identifier);
-    repository.setHasComponents(true);
-    final Metadata metadata = new Metadata();
-    metadata.description("A test repository");
-    metadata.identifier(identifier);
-    repository.setMetadata(metadata);
-    client.addRepository(repository);
-    
-    Flow flow = new Flow();
-    flow.setName("flow1");
-    client.addFlow("test1", identifier, flow);
-    
-    List<Flow> flows = client.searchFlows("test1", identifier, null, null, null);
-    assertEquals(1, flows.size());
-    
-    List<Actor> actors = client.searchActors("test1", identifier, null, null, null);
-    assertEquals(0, actors.size());
-    
-    client.deleteRepository("test1", identifier);
-  }
-  
-  @Test 
-  public void updateActorByName() throws ApiException {
-    final Repository repository = new Repository();
-    repository.setName("test1");
-    final String identifier = Integer.toString(random.nextInt());
-    repository.setVersion(identifier);
-    repository.setHasComponents(true);
-    final Metadata metadata = new Metadata();
-    metadata.description("A test repository");
-    metadata.identifier(identifier);
-    repository.setMetadata(metadata);
-    client.addRepository(repository);
-    
-    Actor actor = new Actor();
-    actor.setName("actor1");
-    actor.setStructure(new Structure());
-    client.addActor("test1", identifier, actor);
-    
-    Actor actor2 = client.findActorByName("test1", identifier, "actor1");
-    assertNotNull(actor2);
-    actor2.setExtends("actor2");
-
-    client.updateActorByName("test1", identifier, "actor1", actor2);
-    
-    Actor actor3 = client.findActorByName("test1", identifier, "actor1");
-    assertNotNull(actor3);
-    assertEquals("actor1", actor3.getName());
-    assertEquals("actor2", actor3.getExtends());
-   
-    client.deleteRepository("test1", identifier);
-  }
-  
-  @Test
-  public void updateFlowByName() throws ApiException {
-    final Repository repository = new Repository();
-    repository.setName("test1");
-    final String identifier = Integer.toString(random.nextInt());
-    repository.setVersion(identifier);
-    repository.setHasComponents(true);
-    final Metadata metadata = new Metadata();
-    metadata.description("A test repository");
-    metadata.identifier(identifier);
-    repository.setMetadata(metadata);
-    client.addRepository(repository);
-    
-    Flow flow = new Flow();
-    flow.setName("flow1");
-    flow.setSource("actor1");
-    flow.setDestination("actor2");
-    client.addFlow("test1", identifier, flow);
-    
-    Flow flow2 = client.findFlowByName("test1", identifier, "flow1");
-    assertNotNull(flow2);
-    flow2.setDestination("actor4");
-    
-    client.updateFlowByName("test1", identifier, "flow1", flow2);
-    
-    Flow flow4 = client.findFlowByName("test1", identifier, "flow1");
-    assertNotNull(flow4);
-    
-    assertEquals("flow1", flow4.getName());
-    assertEquals("actor1", flow4.getSource());
-    assertEquals("actor4", flow4.getDestination());
-    
-    client.deleteRepository("test1", identifier);
-  }
-   
   /**
    * Test method for
    * {@link io.fixprotocol.orchestraAPI.client.Client#addCode(java.lang.String, java.lang.Integer, io.swagger.client.model.Code)}.
@@ -687,7 +753,8 @@ public class ClientTest {
   /**
    * Test method for
    * {@link io.fixprotocol.orchestraAPI.client.Client#addComponent(java.lang.String, io.swagger.client.model.Component)}.
-   * @throws ApiException 
+   * 
+   * @throws ApiException
    */
   @Test
   public void testAddComponentStringComponent() throws ApiException {
@@ -702,26 +769,26 @@ public class ClientTest {
     repository.setMetadata(metadata);
     client.addRepository(repository);
 
-    Component component =  new Component();
+    Component component = new Component();
     ObjectId oid = new ObjectId();
     oid.setAbbrName("Instrmt");
     oid.setId(1003);
     oid.setName("Instrument");
     component.setCategory("Common");
-    component.setOid(oid );
+    component.setOid(oid);
     Structure structure = new Structure();
     component.setStructure(structure);
     FieldRef fieldRef = new FieldRef();
     ObjectId fieldOid = new ObjectId();
     fieldOid.setName("SecurityID");
     fieldOid.setId(48);
-    fieldRef.setOid(fieldOid );
+    fieldRef.setOid(fieldOid);
     structure.addFieldsItem(fieldRef);
     GroupRef groupRef = new GroupRef();
-    ObjectId groupOid =  new ObjectId();
+    ObjectId groupOid = new ObjectId();
     groupOid.setId(2226);
     groupOid.setName("SecondaryAssetGrp");
-    groupRef.setOid(groupOid );
+    groupRef.setOid(groupOid);
     structure.addGroupsItem(groupRef);
     client.addComponent("test1", identifier, component);
 
@@ -730,86 +797,12 @@ public class ClientTest {
 
     client.deleteRepository("test1", identifier);
   }
-  
-  @Test
-  public void testAddGroup() throws ApiException {
-    final Repository repository = new Repository();
-    repository.setName("test1");
-    final String identifier = Integer.toString(random.nextInt());
-    repository.setVersion(identifier);
-    repository.setHasComponents(true);
-    final Metadata metadata = new Metadata();
-    metadata.description("A test repository");
-    metadata.identifier(identifier);
-    repository.setMetadata(metadata);
-    client.addRepository(repository);
-
-    Group group = new Group();
-    ObjectId groupOid = new ObjectId();
-    groupOid.setId(1007);
-    groupOid.setName("LegStipulations");
-    group.setOid(groupOid);
-    GroupProperties groupProperties = new GroupProperties();
-    group.setGroupProperties(groupProperties );
-    groupProperties.setNumInGroupId(683);
-    groupProperties.setNumInGroupName("NoLegStipulations");
-    Structure structure = new Structure();
-    group.setStructure(structure );
-    client.addGroup("test1", identifier, group);
-
-    Component component2 = client.findComponentById("test1", identifier, 1007);
-    assertNotNull(component2);
-
-    client.deleteRepository("test1", identifier);
-  }
-  
-  @Test
-  public void testCloneGroup() throws ApiException {
-    final Repository repository = new Repository();
-    repository.setName("test1");
-    final String identifier = Integer.toString(random.nextInt());
-    repository.setVersion(identifier);
-    repository.setHasComponents(true);
-    final Metadata metadata = new Metadata();
-    metadata.description("A test repository");
-    metadata.identifier(identifier);
-    repository.setMetadata(metadata);
-    client.addRepository(repository);
-
-    Group group = new Group();
-    ObjectId groupOid = new ObjectId();
-    groupOid.setId(1007);
-    groupOid.setName("LegStipulations");
-    group.setOid(groupOid);
-    GroupProperties groupProperties = new GroupProperties();
-    group.setGroupProperties(groupProperties );
-    groupProperties.setNumInGroupId(683);
-    groupProperties.setNumInGroupName("NoLegStipulations");
-    Structure structure = new Structure();
-    group.setStructure(structure );
-    client.addGroup("test1", identifier, group);
-
-    Group group2 = client.findGroupById("test1", identifier, 1007);
-    assertNotNull(group2);
-    ObjectId groupOid2 = new ObjectId();
-    groupOid2.setId(9007);
-    groupOid2.setName("CLegStipulations");
-    group2.setOid(groupOid2);
-    client.addGroup("test1", identifier, group2, 1007);
-    
-    Group group4 = client.findGroupById("test1", identifier, 9007);
-    assertNotNull(group4);
-    assertEquals(9007, group4.getOid().getId().intValue());
-    assertEquals("CLegStipulations", group4.getOid().getName());
-
-    client.deleteRepository("test1", identifier);
-  }
-
 
   /**
    * Test method for
    * {@link io.fixprotocol.orchestraAPI.client.Client#addComponent(java.lang.String, io.swagger.client.model.Component, java.lang.Integer)}.
-   * @throws ApiException 
+   * 
+   * @throws ApiException
    */
   @Test
   public void testAddComponentStringComponentInteger() throws ApiException {
@@ -824,32 +817,32 @@ public class ClientTest {
     repository.setMetadata(metadata);
     client.addRepository(repository);
 
-    Component component =  new Component();
+    Component component = new Component();
     ObjectId oid = new ObjectId();
     oid.setAbbrName("Instrmt");
     oid.setId(1003);
     oid.setName("Instrument");
     component.setCategory("Common");
-    component.setOid(oid );
+    component.setOid(oid);
     Structure structure = new Structure();
     component.setStructure(structure);
     FieldRef fieldRef = new FieldRef();
     ObjectId fieldOid = new ObjectId();
     fieldOid.setName("SecurityID");
     fieldOid.setId(48);
-    fieldRef.setOid(fieldOid );
+    fieldRef.setOid(fieldOid);
     structure.addFieldsItem(fieldRef);
     GroupRef groupRef = new GroupRef();
-    ObjectId groupOid =  new ObjectId();
+    ObjectId groupOid = new ObjectId();
     groupOid.setId(2226);
     groupOid.setName("SecondaryAssetGrp");
-    groupRef.setOid(groupOid );
+    groupRef.setOid(groupOid);
     structure.addGroupsItem(groupRef);
     client.addComponent("test1", identifier, component);
 
     Component component2 = client.findComponentById("test1", identifier, 1003);
     assertNotNull(component2);
-    
+
     Component component3 = new Component();
     ObjectId oid3 = new ObjectId();
     oid3.setAbbrName("CInstrmt");
@@ -857,7 +850,7 @@ public class ClientTest {
     oid3.setName("CInstrument");
     component3.setOid(oid3);
     client.addComponent("test1", identifier, component3, 1003);
-    
+
     Component component4 = client.findComponentById("test1", identifier, 9003);
     assertNotNull(component4);
     assertEquals(9003, component4.getOid().getId().intValue());
@@ -933,10 +926,43 @@ public class ClientTest {
     client.deleteRepository("test1", identifier);
   }
 
+  @Test
+  public void testAddGroup() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Group group = new Group();
+    ObjectId groupOid = new ObjectId();
+    groupOid.setId(1007);
+    groupOid.setName("LegStipulations");
+    group.setOid(groupOid);
+    GroupProperties groupProperties = new GroupProperties();
+    group.setGroupProperties(groupProperties);
+    groupProperties.setNumInGroupId(683);
+    groupProperties.setNumInGroupName("NoLegStipulations");
+    Structure structure = new Structure();
+    group.setStructure(structure);
+    client.addGroup("test1", identifier, group);
+
+    Component component2 = client.findComponentById("test1", identifier, 1007);
+    assertNotNull(component2);
+
+    client.deleteRepository("test1", identifier);
+  }
+
   /**
    * Test method for
    * {@link io.fixprotocol.orchestraAPI.client.Client#addMessage(java.lang.String, io.swagger.client.model.Message)}.
-   * @throws ApiException 
+   * 
+   * @throws ApiException
    */
   @Test
   public void testAddMessageStringMessage() throws ApiException {
@@ -966,26 +992,27 @@ public class ClientTest {
     ObjectId componentOid = new ObjectId();
     componentOid.setId(1057);
     componentOid.setName("ApplicationSequenceControl");
-    componentsItem.setOid(componentOid );
+    componentsItem.setOid(componentOid);
     structure.addComponentsItem(componentsItem);
     FieldRef fieldsItem = new FieldRef();
     ObjectId fieldOid = new ObjectId();
     fieldOid.setId(23);
     fieldOid.setName("IOIID");
     fieldsItem.setOid(fieldOid);
-    structure.addFieldsItem(fieldsItem );
+    structure.addFieldsItem(fieldsItem);
     client.addMessage("test1", identifier, message);
-    
+
     Message message2 = client.findMessageById("test1", identifier, 7);
     assertNotNull(message2);
-    
+
     client.deleteRepository(repository.getName(), identifier);
   }
 
   /**
    * Test method for
    * {@link io.fixprotocol.orchestraAPI.client.Client#addMessage(java.lang.String, io.swagger.client.model.Message, java.lang.Integer)}.
-   * @throws ApiException 
+   * 
+   * @throws ApiException
    */
   @Test
   public void testAddMessageStringMessageInteger() throws ApiException {
@@ -1014,20 +1041,20 @@ public class ClientTest {
     ObjectId componentOid = new ObjectId();
     componentOid.setId(1057);
     componentOid.setName("ApplicationSequenceControl");
-    componentsItem.setOid(componentOid );
+    componentsItem.setOid(componentOid);
     structure.addComponentsItem(componentsItem);
     FieldRef fieldsItem = new FieldRef();
     ObjectId fieldOid = new ObjectId();
     fieldOid.setId(23);
     fieldOid.setName("IOIID");
     fieldsItem.setOid(fieldOid);
-    structure.addFieldsItem(fieldsItem );
+    structure.addFieldsItem(fieldsItem);
     client.addMessage("test1", identifier, message);
-    
+
     Message message2 = client.findMessageById("test1", identifier, 7);
     assertNotNull(message2);
     assertEquals(7, message2.getOid().getId().intValue());
-    
+
     ObjectId oid2 = new ObjectId();
     oid2.setAbbrName("CIOI");
     oid2.setId(9007);
@@ -1037,16 +1064,17 @@ public class ClientTest {
     message2.setExtends("base");
     assertEquals(9007, message2.getOid().getId().intValue());
     client.addMessage("test1", identifier, message2, 7);
-    
-    Message message4 = client.findMessageById("test1", identifier, 9007);  
+
+    Message message4 = client.findMessageById("test1", identifier, 9007);
     assertNotNull(message4);
     assertEquals(9007, message4.getOid().getId().intValue());
     assertEquals("CIOI", message4.getOid().getName());
     assertEquals("Special", message4.getScenario());
     assertEquals("base", message4.getExtends());
-    
+
     client.deleteRepository(repository.getName(), identifier);
   }
+
 
   @Test
   public void testAddRepository() throws ApiException {
@@ -1064,6 +1092,47 @@ public class ClientTest {
     client.deleteRepository("test1", identifier);
   }
 
+  @Test
+  public void testCloneGroup() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Group group = new Group();
+    ObjectId groupOid = new ObjectId();
+    groupOid.setId(1007);
+    groupOid.setName("LegStipulations");
+    group.setOid(groupOid);
+    GroupProperties groupProperties = new GroupProperties();
+    group.setGroupProperties(groupProperties);
+    groupProperties.setNumInGroupId(683);
+    groupProperties.setNumInGroupName("NoLegStipulations");
+    Structure structure = new Structure();
+    group.setStructure(structure);
+    client.addGroup("test1", identifier, group);
+
+    Group group2 = client.findGroupById("test1", identifier, 1007);
+    assertNotNull(group2);
+    ObjectId groupOid2 = new ObjectId();
+    groupOid2.setId(9007);
+    groupOid2.setName("CLegStipulations");
+    group2.setOid(groupOid2);
+    client.addGroup("test1", identifier, group2, 1007);
+
+    Group group4 = client.findGroupById("test1", identifier, 9007);
+    assertNotNull(group4);
+    assertEquals(9007, group4.getOid().getId().intValue());
+    assertEquals("CLegStipulations", group4.getOid().getName());
+
+    client.deleteRepository("test1", identifier);
+  }
 
   /**
    * Test method for
@@ -1162,7 +1231,8 @@ public class ClientTest {
   /**
    * Test method for
    * {@link io.fixprotocol.orchestraAPI.client.Client#deleteComponent(java.lang.String, java.lang.Integer)}.
-   * @throws ApiException 
+   * 
+   * @throws ApiException
    */
   @Test
   public void testDeleteComponent() throws ApiException {
@@ -1177,32 +1247,32 @@ public class ClientTest {
     repository.setMetadata(metadata);
     client.addRepository(repository);
 
-    Component component =  new Component();
+    Component component = new Component();
     ObjectId oid = new ObjectId();
     oid.setAbbrName("Instrmt");
     oid.setId(1003);
     oid.setName("Instrument");
     component.setCategory("Common");
-    component.setOid(oid );
+    component.setOid(oid);
     Structure structure = new Structure();
     component.setStructure(structure);
     FieldRef fieldRef = new FieldRef();
     ObjectId fieldOid = new ObjectId();
     fieldOid.setName("SecurityID");
     fieldOid.setId(48);
-    fieldRef.setOid(fieldOid );
+    fieldRef.setOid(fieldOid);
     structure.addFieldsItem(fieldRef);
     GroupRef groupRef = new GroupRef();
-    ObjectId groupOid =  new ObjectId();
+    ObjectId groupOid = new ObjectId();
     groupOid.setId(2226);
     groupOid.setName("SecondaryAssetGrp");
-    groupRef.setOid(groupOid );
+    groupRef.setOid(groupOid);
     structure.addGroupsItem(groupRef);
     client.addComponent("test1", identifier, component);
 
     Component component2 = client.findComponentById("test1", identifier, 1003);
     assertNotNull(component2);
-    
+
     client.deleteComponent("test1", identifier, 1003);
 
     try {
@@ -1257,6 +1327,7 @@ public class ClientTest {
     client.deleteRepository("test1", identifier);
   }
 
+
   /**
    * Test method for
    * {@link io.fixprotocol.orchestraAPI.client.Client#deleteField(java.lang.String, java.lang.Integer)}.
@@ -1302,7 +1373,8 @@ public class ClientTest {
   /**
    * Test method for
    * {@link io.fixprotocol.orchestraAPI.client.Client#deleteMessage(java.lang.String, java.lang.Integer)}.
-   * @throws ApiException 
+   * 
+   * @throws ApiException
    */
   @Test
   public void testDeleteMessage() throws ApiException {
@@ -1331,16 +1403,16 @@ public class ClientTest {
     ObjectId componentOid = new ObjectId();
     componentOid.setId(1057);
     componentOid.setName("ApplicationSequenceControl");
-    componentsItem.setOid(componentOid );
+    componentsItem.setOid(componentOid);
     structure.addComponentsItem(componentsItem);
     FieldRef fieldsItem = new FieldRef();
     ObjectId fieldOid = new ObjectId();
     fieldOid.setId(23);
     fieldOid.setName("IOIID");
     fieldsItem.setOid(fieldOid);
-    structure.addFieldsItem(fieldsItem );
+    structure.addFieldsItem(fieldsItem);
     client.addMessage("test1", identifier, message);
-    
+
     Message message2 = client.findMessageById("test1", identifier, 7);
     assertNotNull(message2);
     client.deleteMessage("test1", identifier, 7);
@@ -1351,7 +1423,7 @@ public class ClientTest {
     } catch (ApiException e) {
       assertEquals(404, e.getCode());
     }
-    
+
     client.deleteRepository(repository.getName(), identifier);
   }
 
@@ -1505,7 +1577,8 @@ public class ClientTest {
   /**
    * Test method for
    * {@link io.fixprotocol.orchestraAPI.client.Client#findComponentById(java.lang.String, java.lang.Integer)}.
-   * @throws ApiException 
+   * 
+   * @throws ApiException
    */
   @Test
   public void testFindComponentById() throws ApiException {
@@ -1520,26 +1593,26 @@ public class ClientTest {
     repository.setMetadata(metadata);
     client.addRepository(repository);
 
-    Component component =  new Component();
+    Component component = new Component();
     ObjectId oid = new ObjectId();
     oid.setAbbrName("Instrmt");
     oid.setId(1003);
     oid.setName("Instrument");
     component.setCategory("Common");
-    component.setOid(oid );
+    component.setOid(oid);
     Structure structure = new Structure();
     component.setStructure(structure);
     FieldRef fieldRef = new FieldRef();
     ObjectId fieldOid = new ObjectId();
     fieldOid.setName("SecurityID");
     fieldOid.setId(48);
-    fieldRef.setOid(fieldOid );
+    fieldRef.setOid(fieldOid);
     structure.addFieldsItem(fieldRef);
     GroupRef groupRef = new GroupRef();
-    ObjectId groupOid =  new ObjectId();
+    ObjectId groupOid = new ObjectId();
     groupOid.setId(2226);
     groupOid.setName("SecondaryAssetGrp");
-    groupRef.setOid(groupOid );
+    groupRef.setOid(groupOid);
     structure.addGroupsItem(groupRef);
     client.addComponent("test1", identifier, component);
 
@@ -1622,7 +1695,8 @@ public class ClientTest {
   /**
    * Test method for
    * {@link io.fixprotocol.orchestraAPI.client.Client#findMessageById(java.lang.String, java.lang.Integer)}.
-   * @throws ApiException 
+   * 
+   * @throws ApiException
    */
   @Test
   public void testFindMessageById() throws ApiException {
@@ -1651,25 +1725,25 @@ public class ClientTest {
     ObjectId componentOid = new ObjectId();
     componentOid.setId(1057);
     componentOid.setName("ApplicationSequenceControl");
-    componentsItem.setOid(componentOid );
+    componentsItem.setOid(componentOid);
     structure.addComponentsItem(componentsItem);
     FieldRef fieldsItem = new FieldRef();
     ObjectId fieldOid = new ObjectId();
     fieldOid.setId(23);
     fieldOid.setName("IOIID");
     fieldsItem.setOid(fieldOid);
-    structure.addFieldsItem(fieldsItem );
+    structure.addFieldsItem(fieldsItem);
     client.addMessage("test1", identifier, message);
-    
+
     Message message2 = client.findMessageById("test1", identifier, 7);
-    assertEquals("IOI" , message2.getOid().getName());
-    assertEquals("base" , message2.getScenario());
+    assertEquals("IOI", message2.getOid().getName());
+    assertEquals("base", message2.getScenario());
     Structure structure2 = message2.getStructure();
     List<ComponentRef> components = structure2.getComponents();
     assertEquals(1, components.size());
     List<FieldRef> fields = structure2.getFields();
     assertEquals(1, fields.size());
-    
+
     client.deleteRepository(repository.getName(), identifier);
 
   }
@@ -1791,7 +1865,8 @@ public class ClientTest {
   /**
    * Test method for
    * {@link io.fixprotocol.orchestraAPI.client.Client#searchComponents(java.lang.String, java.lang.String, java.lang.Integer, java.lang.Integer)}.
-   * @throws ApiException 
+   * 
+   * @throws ApiException
    */
   @Test
   public void testSearchComponents() throws ApiException {
@@ -1806,36 +1881,36 @@ public class ClientTest {
     repository.setMetadata(metadata);
     client.addRepository(repository);
 
-    Component component =  new Component();
+    Component component = new Component();
     ObjectId oid = new ObjectId();
     oid.setAbbrName("Instrmt");
     oid.setId(1003);
     oid.setName("Instrument");
     component.setCategory("Common");
-    component.setOid(oid );
+    component.setOid(oid);
     Structure structure = new Structure();
     component.setStructure(structure);
     FieldRef fieldRef = new FieldRef();
     ObjectId fieldOid = new ObjectId();
     fieldOid.setName("SecurityID");
     fieldOid.setId(48);
-    fieldRef.setOid(fieldOid );
+    fieldRef.setOid(fieldOid);
     structure.addFieldsItem(fieldRef);
     GroupRef groupRef = new GroupRef();
-    ObjectId groupRefOid =  new ObjectId();
+    ObjectId groupRefOid = new ObjectId();
     groupRefOid.setId(2226);
     groupRefOid.setName("SecondaryAssetGrp");
-    groupRef.setOid(groupRefOid );
+    groupRef.setOid(groupRefOid);
     structure.addGroupsItem(groupRef);
     client.addComponent("test1", identifier, component);
-    
+
     Group group = new Group();
     ObjectId groupOid = new ObjectId();
     groupOid.setId(1007);
     groupOid.setName("LegStipulations");
     group.setOid(groupOid);
     GroupProperties groupProperties = new GroupProperties();
-    group.setGroupProperties(groupProperties );
+    group.setGroupProperties(groupProperties);
     groupProperties.setNumInGroupId(683);
     groupProperties.setNumInGroupName("NoLegStipulations");
     Structure groupStruct = new Structure();
@@ -1844,69 +1919,6 @@ public class ClientTest {
 
     List<Component> componentList = client.searchComponents("test1", identifier, null, null, null);
     assertEquals(1, componentList.size());
-
-    client.deleteRepository("test1", identifier);
-  }
-
-  @Test
-  public void testSearchGroups() throws ApiException {
-    final Repository repository = new Repository();
-    repository.setName("test1");
-    final String identifier = Integer.toString(random.nextInt());
-    repository.setVersion(identifier);
-    repository.setHasComponents(true);
-    final Metadata metadata = new Metadata();
-    metadata.description("A test repository");
-    metadata.identifier(identifier);
-    repository.setMetadata(metadata);
-    client.addRepository(repository);
-
-    Component component =  new Component();
-    ObjectId oid = new ObjectId();
-    oid.setAbbrName("Instrmt");
-    oid.setId(1003);
-    oid.setName("Instrument");
-    component.setCategory("Common");
-    component.setOid(oid );
-    Structure structure = new Structure();
-    component.setStructure(structure );
-    FieldRef fieldRef = new FieldRef();
-    ObjectId fieldOid = new ObjectId();
-    fieldOid.setName("SecurityID");
-    fieldOid.setId(48);
-    fieldRef.setOid(fieldOid );
-    structure.addFieldsItem(fieldRef);
-    GroupRef groupRef = new GroupRef();
-    ObjectId groupRefOid =  new ObjectId();
-    groupRefOid.setId(2226);
-    groupRefOid.setName("SecondaryAssetGrp");
-    groupRef.setOid(groupRefOid );
-    structure.addGroupsItem(groupRef);
-    client.addComponent("test1", identifier, component);
-    
-    Group group = new Group();
-    ObjectId groupOid = new ObjectId();
-    groupOid.setId(1007);
-    groupOid.setName("LegStipulations");
-    group.setOid(groupOid);
-    GroupProperties groupProperties = new GroupProperties();
-    group.setGroupProperties(groupProperties );
-    groupProperties.setNumInGroupId(683);
-    groupProperties.setNumInGroupName("NoLegStipulations");
-    
-    Structure groupStruct = new Structure();
-    group.setStructure(groupStruct);
-
-    client.addGroup("test1", identifier, group);
-
-    List<Group> groupList = client.searchGroups("test1", identifier, null, null, null);
-    assertEquals(1, groupList.size());
-    
-    List<Group> groupList2 = client.searchGroups("test1", identifier, "LegStipulations", null, null);
-    assertEquals(1, groupList2.size());
-    
-    List<Group> groupList3 = client.searchGroups("test1", identifier, "Foo", null, null);
-    assertEquals(0, groupList3.size());
 
     client.deleteRepository("test1", identifier);
   }
@@ -1984,14 +1996,79 @@ public class ClientTest {
 
     List<Field> fields2 = client.searchFields("test1", identifier, "Acct", null, null);
     assertEquals(1, fields2.size());
-    
+
+    client.deleteRepository("test1", identifier);
+  }
+
+  @Test
+  public void testSearchGroups() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Component component = new Component();
+    ObjectId oid = new ObjectId();
+    oid.setAbbrName("Instrmt");
+    oid.setId(1003);
+    oid.setName("Instrument");
+    component.setCategory("Common");
+    component.setOid(oid);
+    Structure structure = new Structure();
+    component.setStructure(structure);
+    FieldRef fieldRef = new FieldRef();
+    ObjectId fieldOid = new ObjectId();
+    fieldOid.setName("SecurityID");
+    fieldOid.setId(48);
+    fieldRef.setOid(fieldOid);
+    structure.addFieldsItem(fieldRef);
+    GroupRef groupRef = new GroupRef();
+    ObjectId groupRefOid = new ObjectId();
+    groupRefOid.setId(2226);
+    groupRefOid.setName("SecondaryAssetGrp");
+    groupRef.setOid(groupRefOid);
+    structure.addGroupsItem(groupRef);
+    client.addComponent("test1", identifier, component);
+
+    Group group = new Group();
+    ObjectId groupOid = new ObjectId();
+    groupOid.setId(1007);
+    groupOid.setName("LegStipulations");
+    group.setOid(groupOid);
+    GroupProperties groupProperties = new GroupProperties();
+    group.setGroupProperties(groupProperties);
+    groupProperties.setNumInGroupId(683);
+    groupProperties.setNumInGroupName("NoLegStipulations");
+
+    Structure groupStruct = new Structure();
+    group.setStructure(groupStruct);
+
+    client.addGroup("test1", identifier, group);
+
+    List<Group> groupList = client.searchGroups("test1", identifier, null, null, null);
+    assertEquals(1, groupList.size());
+
+    List<Group> groupList2 =
+        client.searchGroups("test1", identifier, "LegStipulations", null, null);
+    assertEquals(1, groupList2.size());
+
+    List<Group> groupList3 = client.searchGroups("test1", identifier, "Foo", null, null);
+    assertEquals(0, groupList3.size());
+
     client.deleteRepository("test1", identifier);
   }
 
   /**
    * Test method for
    * {@link io.fixprotocol.orchestraAPI.client.Client#searchMessages(java.lang.String, java.lang.String, java.lang.Integer, java.lang.Integer)}.
-   * @throws ApiException 
+   * 
+   * @throws ApiException
    */
   @Test
   public void testSearchMessages() throws ApiException {
@@ -2020,16 +2097,16 @@ public class ClientTest {
     ObjectId componentOid = new ObjectId();
     componentOid.setId(1057);
     componentOid.setName("ApplicationSequenceControl");
-    componentsItem.setOid(componentOid );
+    componentsItem.setOid(componentOid);
     structure.addComponentsItem(componentsItem);
     FieldRef fieldsItem = new FieldRef();
     ObjectId fieldOid = new ObjectId();
     fieldOid.setId(23);
     fieldOid.setName("IOIID");
     fieldsItem.setOid(fieldOid);
-    structure.addFieldsItem(fieldsItem );
+    structure.addFieldsItem(fieldsItem);
     client.addMessage("test1", identifier, message);
-    
+
     Message message2 = new Message();
     ObjectId oid2 = new ObjectId();
     oid2.setAbbrName("Adv");
@@ -2047,13 +2124,14 @@ public class ClientTest {
     fieldsItem2.setOid(fieldOid2);
     structure.addFieldsItem(fieldsItem2);
     client.addMessage("test1", identifier, message2);
-    
+
     List<Message> messages = client.searchMessages("test1", identifier, null, null, null);
     assertEquals(2, messages.size());
-    
-    List<Message> messages2 = client.searchMessages("test1", identifier, "Advertisement", null, null);
+
+    List<Message> messages2 =
+        client.searchMessages("test1", identifier, "Advertisement", null, null);
     assertEquals(1, messages2.size());
-    
+
     client.deleteRepository(repository.getName(), identifier);
   }
 
@@ -2164,7 +2242,8 @@ public class ClientTest {
   /**
    * Test method for
    * {@link io.fixprotocol.orchestraAPI.client.Client#updateComponentById(java.lang.String, java.lang.Integer, io.swagger.client.model.Component)}.
-   * @throws ApiException 
+   * 
+   * @throws ApiException
    */
   @Test
   public void testUpdateComponentById() throws ApiException {
@@ -2179,26 +2258,26 @@ public class ClientTest {
     repository.setMetadata(metadata);
     client.addRepository(repository);
 
-    Component component =  new Component();
+    Component component = new Component();
     ObjectId oid = new ObjectId();
     oid.setAbbrName("Instrmt");
     oid.setId(1003);
     oid.setName("Instrument");
     component.setCategory("Common");
-    component.setOid(oid );
+    component.setOid(oid);
     Structure structure = new Structure();
-    component.setStructure(structure );
+    component.setStructure(structure);
     FieldRef fieldRef = new FieldRef();
     ObjectId fieldOid = new ObjectId();
     fieldOid.setName("SecurityID");
     fieldOid.setId(48);
-    fieldRef.setOid(fieldOid );
+    fieldRef.setOid(fieldOid);
     structure.addFieldsItem(fieldRef);
     GroupRef groupRef = new GroupRef();
-    ObjectId groupOid =  new ObjectId();
+    ObjectId groupOid = new ObjectId();
     groupOid.setId(2226);
     groupOid.setName("SecondaryAssetGrp");
-    groupRef.setOid(groupOid );
+    groupRef.setOid(groupOid);
     structure.addGroupsItem(groupRef);
     client.addComponent("test1", identifier, component);
 
@@ -2207,11 +2286,11 @@ public class ClientTest {
     component2.setCategory("Uncommon");
 
     client.updateComponentById("test1", identifier, 1003, component2);
-    
+
     Component component3 = client.findComponentById("test1", identifier, 1003);
     assertNotNull(component3);
     assertEquals("Uncommon", component3.getCategory());
-    
+
     client.deleteRepository("test1", identifier);
 
   }
@@ -2295,7 +2374,8 @@ public class ClientTest {
   /**
    * Test method for
    * {@link io.fixprotocol.orchestraAPI.client.Client#updateMessageById(java.lang.String, java.lang.Integer, io.swagger.client.model.Message)}.
-   * @throws ApiException 
+   * 
+   * @throws ApiException
    */
   @Test
   public void testUpdateMessageById() throws ApiException {
@@ -2324,25 +2404,25 @@ public class ClientTest {
     ObjectId componentOid = new ObjectId();
     componentOid.setId(1057);
     componentOid.setName("ApplicationSequenceControl");
-    componentsItem.setOid(componentOid );
+    componentsItem.setOid(componentOid);
     structure.addComponentsItem(componentsItem);
     FieldRef fieldsItem = new FieldRef();
     ObjectId fieldOid = new ObjectId();
     fieldOid.setId(23);
     fieldOid.setName("IOIID");
     fieldsItem.setOid(fieldOid);
-    structure.addFieldsItem(fieldsItem );
+    structure.addFieldsItem(fieldsItem);
     client.addMessage("test1", identifier, message);
-    
+
     Message message2 = client.findMessageById("test1", identifier, 7);
     assertNotNull(message2);
     message2.setFlow("Upstream");
-    
+
     client.updateMessageById("test1", identifier, 7, message2);
     Message message3 = client.findMessageById("test1", identifier, 7);
     assertNotNull(message3);
     assertEquals("Upstream", message3.getFlow());
-    
+
     client.deleteRepository(repository.getName(), identifier);
   }
 
@@ -2367,6 +2447,191 @@ public class ClientTest {
 
     metadata.setSubject("My subject");
     client.updateRepositoryById("test1", identifier, repository);
+
+    client.deleteRepository("test1", identifier);
+  }
+
+  @Test
+  public void updateActorByName() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Actor actor = new Actor();
+    actor.setName("actor1");
+    actor.setStructure(new Structure());
+    client.addActor("test1", identifier, actor);
+
+    Actor actor2 = client.findActorByName("test1", identifier, "actor1");
+    assertNotNull(actor2);
+    actor2.setExtends("actor2");
+
+    client.updateActorByName("test1", identifier, "actor1", actor2);
+
+    Actor actor3 = client.findActorByName("test1", identifier, "actor1");
+    assertNotNull(actor3);
+    assertEquals("actor1", actor3.getName());
+    assertEquals("actor2", actor3.getExtends());
+
+    client.deleteRepository("test1", identifier);
+  }
+
+  @Test
+  public void updateFlowByName() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Flow flow = new Flow();
+    flow.setName("flow1");
+    flow.setSource("actor1");
+    flow.setDestination("actor2");
+    client.addFlow("test1", identifier, flow);
+
+    Flow flow2 = client.findFlowByName("test1", identifier, "flow1");
+    assertNotNull(flow2);
+    flow2.setDestination("actor4");
+
+    client.updateFlowByName("test1", identifier, "flow1", flow2);
+
+    Flow flow4 = client.findFlowByName("test1", identifier, "flow1");
+    assertNotNull(flow4);
+
+    assertEquals("flow1", flow4.getName());
+    assertEquals("actor1", flow4.getSource());
+    assertEquals("actor4", flow4.getDestination());
+
+    client.deleteRepository("test1", identifier);
+  }
+
+  @Test
+  public void updateMessageResponse() throws ApiException {
+    Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Message message = new Message();
+    ObjectId oid = new ObjectId();
+    oid.setAbbrName("Order");
+    oid.setId(14);
+    oid.setName("NewOrderSingle");
+    message.setOid(oid);
+    message.setMsgType("D");
+    message.setScenario("base");
+    Structure structure = new Structure();
+    message.setStructure(structure);
+    client.addMessage("test1", identifier, message);
+
+    Response response = new Response();
+    response.setName("trade");
+    MessageRef messageRef = new MessageRef();
+    messageRef.setName("ExecutionReport");
+    messageRef.setMsgType("8");
+    messageRef.setScenario("trade");
+    response.setMessageRef(messageRef);
+    client.addMessageResponse("test1", identifier, 14, response);
+
+    Message message2 = client.findMessageById("test1", identifier, 14);
+    assertNotNull(message2);
+
+    Response response2 = client.findMessageResponseById("test1", identifier, 14, "trade");
+    assertNotNull(response2);
+    assertEquals("trade", response2.getName());
+
+    response2.setWhen("match happened");
+    Trigger trigger = new Trigger();
+    trigger.setActor("a1");
+    trigger.setName("t1");
+    trigger.setStateMachine("sm1");
+    response2.setTrigger(trigger);
+    client.updateMessageResponse("test1", identifier, 14, "trade", response2);
+
+    Response response3 = client.findMessageResponseById("test1", identifier, 14, "trade");
+    assertNotNull(response3);
+    assertEquals("trade", response3.getName());
+    assertEquals("match happened", response3.getWhen());
+    assertEquals("trade", response3.getName());
+    MessageRef messageRef3 = response3.getMessageRef();
+    assertNotNull(messageRef3);
+    assertEquals("ExecutionReport", messageRef3.getName());
+    assertNotNull(response3.getTrigger());
+
+    client.deleteRepository(repository.getName(), identifier);
+  }
+
+  @Test
+  public void updateStateMachine() throws ApiException {
+    final Repository repository = new Repository();
+    repository.setName("test1");
+    final String identifier = Integer.toString(random.nextInt());
+    repository.setVersion(identifier);
+    repository.setHasComponents(true);
+    final Metadata metadata = new Metadata();
+    metadata.description("A test repository");
+    metadata.identifier(identifier);
+    repository.setMetadata(metadata);
+    client.addRepository(repository);
+
+    Actor actor = new Actor();
+    actor.setStructure(new Structure());
+    actor.setName("actor1");
+    client.addActor("test1", identifier, actor);
+
+    Actor actor2 = client.findActorByName("test1", identifier, "actor1");
+    assertNotNull(actor2);
+
+    StateMachine stateMachine = new StateMachine();
+    stateMachine.setName("switch");
+    State off = new State();
+    off.setName("off");
+    stateMachine.setInitial(off);
+    Transition onTransition = new Transition();
+    onTransition.setTarget("on");
+    off.addTransitionsItem(onTransition);
+    List<State> states = new ArrayList<State>();
+    State on = new State();
+    on.setName("on");
+    states.add(on);
+    stateMachine.setStates(states);
+    client.addStateMachine("test1", identifier, "actor1", stateMachine);
+
+    StateMachine stateMachine2 = client.findStateMachine("test1", identifier, "actor1", "switch");
+    assertNotNull(stateMachine2);
+
+    State state = stateMachine2.getStates().get(0);
+    Transition offTransition = new Transition();
+    offTransition.setTarget("off");
+    state.addTransitionsItem(offTransition);
+    
+    client.updateStateMachine("test1", identifier, "actor1", "switch", stateMachine2);
+
+    StateMachine stateMachine3 = client.findStateMachine("test1", identifier, "actor1", "switch");
+    assertEquals("switch", stateMachine3.getName());
+    assertEquals("off", stateMachine3.getInitial().getName());
+    assertEquals(1, stateMachine3.getInitial().getTransitions().size());
+    assertEquals(1, stateMachine3.getStates().size());
+    assertEquals(1, stateMachine3.getStates().get(0).getTransitions().size());
 
     client.deleteRepository("test1", identifier);
   }
