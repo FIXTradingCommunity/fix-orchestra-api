@@ -31,12 +31,13 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.*;
 
 /**
  * element metadata including pedigree
  */
 @ApiModel(description = "element metadata including pedigree")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-29T15:58:53.146Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-30T16:33:12.690Z")
 public class EntityAttributes   {
   @JsonProperty("added")
   private String added = null;
@@ -146,10 +147,11 @@ public class EntityAttributes   {
     return this;
   }
 
-   /**
+  /**
    * Get added
    * @return added
-  **/
+   **/
+  @JsonProperty("added")
   @ApiModelProperty(value = "")
   public String getAdded() {
     return added;
@@ -164,10 +166,11 @@ public class EntityAttributes   {
     return this;
   }
 
-   /**
+  /**
    * Get addedEP
    * @return addedEP
-  **/
+   **/
+  @JsonProperty("addedEP")
   @ApiModelProperty(value = "")
   public Integer getAddedEP() {
     return addedEP;
@@ -182,10 +185,11 @@ public class EntityAttributes   {
     return this;
   }
 
-   /**
+  /**
    * Get changeType
    * @return changeType
-  **/
+   **/
+  @JsonProperty("changeType")
   @ApiModelProperty(value = "")
   public ChangeTypeEnum getChangeType() {
     return changeType;
@@ -200,10 +204,11 @@ public class EntityAttributes   {
     return this;
   }
 
-   /**
+  /**
    * Get deprecated
    * @return deprecated
-  **/
+   **/
+  @JsonProperty("deprecated")
   @ApiModelProperty(value = "")
   public String getDeprecated() {
     return deprecated;
@@ -218,10 +223,11 @@ public class EntityAttributes   {
     return this;
   }
 
-   /**
+  /**
    * Get deprecatedEP
    * @return deprecatedEP
-  **/
+   **/
+  @JsonProperty("deprecatedEP")
   @ApiModelProperty(value = "")
   public Integer getDeprecatedEP() {
     return deprecatedEP;
@@ -236,10 +242,11 @@ public class EntityAttributes   {
     return this;
   }
 
-   /**
+  /**
    * Get issue
    * @return issue
-  **/
+   **/
+  @JsonProperty("issue")
   @ApiModelProperty(value = "")
   public String getIssue() {
     return issue;
@@ -254,10 +261,11 @@ public class EntityAttributes   {
     return this;
   }
 
-   /**
+  /**
    * Get lastModified
    * @return lastModified
-  **/
+   **/
+  @JsonProperty("lastModified")
   @ApiModelProperty(value = "")
   public String getLastModified() {
     return lastModified;
@@ -272,10 +280,11 @@ public class EntityAttributes   {
     return this;
   }
 
-   /**
+  /**
    * Get replaced
    * @return replaced
-  **/
+   **/
+  @JsonProperty("replaced")
   @ApiModelProperty(value = "")
   public String getReplaced() {
     return replaced;
@@ -290,10 +299,11 @@ public class EntityAttributes   {
     return this;
   }
 
-   /**
+  /**
    * Get replacedEP
    * @return replacedEP
-  **/
+   **/
+  @JsonProperty("replacedEP")
   @ApiModelProperty(value = "")
   public Integer getReplacedEP() {
     return replacedEP;
@@ -308,10 +318,11 @@ public class EntityAttributes   {
     return this;
   }
 
-   /**
+  /**
    * Get replacedByField
    * @return replacedByField
-  **/
+   **/
+  @JsonProperty("replacedByField")
   @ApiModelProperty(value = "")
   public Integer getReplacedByField() {
     return replacedByField;
@@ -326,10 +337,11 @@ public class EntityAttributes   {
     return this;
   }
 
-   /**
+  /**
    * Get supported
    * @return supported
-  **/
+   **/
+  @JsonProperty("supported")
   @ApiModelProperty(value = "")
   public SupportedEnum getSupported() {
     return supported;
@@ -344,10 +356,11 @@ public class EntityAttributes   {
     return this;
   }
 
-   /**
+  /**
    * Get updated
    * @return updated
-  **/
+   **/
+  @JsonProperty("updated")
   @ApiModelProperty(value = "")
   public String getUpdated() {
     return updated;
@@ -362,10 +375,11 @@ public class EntityAttributes   {
     return this;
   }
 
-   /**
+  /**
    * Get updatedEP
    * @return updatedEP
-  **/
+   **/
+  @JsonProperty("updatedEP")
   @ApiModelProperty(value = "")
   public Integer getUpdatedEP() {
     return updatedEP;

@@ -35,20 +35,21 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.constraints.*;
 
 /**
  * Structure
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-29T15:58:53.146Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-30T16:33:12.690Z")
 public class Structure   {
   @JsonProperty("fields")
-  private List<FieldRef> fields = new ArrayList<FieldRef>();
+  private List<FieldRef> fields = null;
 
   @JsonProperty("components")
-  private List<ComponentRef> components = new ArrayList<ComponentRef>();
+  private List<ComponentRef> components = null;
 
   @JsonProperty("groups")
-  private List<GroupRef> groups = new ArrayList<GroupRef>();
+  private List<GroupRef> groups = null;
 
   public Structure fields(List<FieldRef> fields) {
     this.fields = fields;
@@ -56,14 +57,18 @@ public class Structure   {
   }
 
   public Structure addFieldsItem(FieldRef fieldsItem) {
+    if (this.fields == null) {
+      this.fields = new ArrayList<>();
+    }
     this.fields.add(fieldsItem);
     return this;
   }
 
-   /**
+  /**
    * Get fields
    * @return fields
-  **/
+   **/
+  @JsonProperty("fields")
   @ApiModelProperty(value = "")
   public List<FieldRef> getFields() {
     return fields;
@@ -79,14 +84,18 @@ public class Structure   {
   }
 
   public Structure addComponentsItem(ComponentRef componentsItem) {
+    if (this.components == null) {
+      this.components = new ArrayList<>();
+    }
     this.components.add(componentsItem);
     return this;
   }
 
-   /**
+  /**
    * Get components
    * @return components
-  **/
+   **/
+  @JsonProperty("components")
   @ApiModelProperty(value = "")
   public List<ComponentRef> getComponents() {
     return components;
@@ -102,14 +111,18 @@ public class Structure   {
   }
 
   public Structure addGroupsItem(GroupRef groupsItem) {
+    if (this.groups == null) {
+      this.groups = new ArrayList<>();
+    }
     this.groups.add(groupsItem);
     return this;
   }
 
-   /**
+  /**
    * Get groups
    * @return groups
-  **/
+   **/
+  @JsonProperty("groups")
   @ApiModelProperty(value = "")
   public List<GroupRef> getGroups() {
     return groups;

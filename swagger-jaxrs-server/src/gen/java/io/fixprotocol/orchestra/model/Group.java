@@ -36,11 +36,12 @@ import io.fixprotocol.orchestra.model.ObjectId;
 import io.fixprotocol.orchestra.model.Structure;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.*;
 
 /**
  * Group
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-29T15:58:53.146Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-30T16:33:12.690Z")
 public class Group extends Component  {
   @JsonProperty("groupProperties")
   private GroupProperties groupProperties = null;
@@ -50,11 +51,13 @@ public class Group extends Component  {
     return this;
   }
 
-   /**
+  /**
    * Get groupProperties
    * @return groupProperties
-  **/
+   **/
+  @JsonProperty("groupProperties")
   @ApiModelProperty(required = true, value = "")
+  @NotNull
   public GroupProperties getGroupProperties() {
     return groupProperties;
   }

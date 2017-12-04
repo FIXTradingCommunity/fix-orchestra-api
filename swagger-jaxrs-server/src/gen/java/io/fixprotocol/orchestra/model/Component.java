@@ -35,11 +35,12 @@ import io.fixprotocol.orchestra.model.ObjectId;
 import io.fixprotocol.orchestra.model.Structure;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.*;
 
 /**
  * Component
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-29T15:58:53.146Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-30T16:33:12.690Z")
 public class Component extends MessageElement  {
   @JsonProperty("structure")
   private Structure structure = null;
@@ -49,11 +50,13 @@ public class Component extends MessageElement  {
     return this;
   }
 
-   /**
+  /**
    * Get structure
    * @return structure
-  **/
+   **/
+  @JsonProperty("structure")
   @ApiModelProperty(required = true, value = "")
+  @NotNull
   public Structure getStructure() {
     return structure;
   }

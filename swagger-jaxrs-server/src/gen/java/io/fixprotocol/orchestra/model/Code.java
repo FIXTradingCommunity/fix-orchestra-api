@@ -33,11 +33,12 @@ import io.fixprotocol.orchestra.model.EntityAttributes;
 import io.fixprotocol.orchestra.model.ObjectId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.*;
 
 /**
  * Code
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-29T15:58:53.146Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-30T16:33:12.690Z")
 public class Code   {
   @JsonProperty("oid")
   private ObjectId oid = null;
@@ -56,11 +57,13 @@ public class Code   {
     return this;
   }
 
-   /**
+  /**
    * Get oid
    * @return oid
-  **/
+   **/
+  @JsonProperty("oid")
   @ApiModelProperty(required = true, value = "")
+  @NotNull
   public ObjectId getOid() {
     return oid;
   }
@@ -74,11 +77,13 @@ public class Code   {
     return this;
   }
 
-   /**
+  /**
    * Get value
    * @return value
-  **/
+   **/
+  @JsonProperty("value")
   @ApiModelProperty(required = true, value = "")
+  @NotNull
   public String getValue() {
     return value;
   }
@@ -92,10 +97,11 @@ public class Code   {
     return this;
   }
 
-   /**
+  /**
    * Get annotation
    * @return annotation
-  **/
+   **/
+  @JsonProperty("annotation")
   @ApiModelProperty(value = "")
   public Annotation getAnnotation() {
     return annotation;
@@ -110,10 +116,11 @@ public class Code   {
     return this;
   }
 
-   /**
+  /**
    * Get entityAttributes
    * @return entityAttributes
-  **/
+   **/
+  @JsonProperty("entityAttributes")
   @ApiModelProperty(value = "")
   public EntityAttributes getEntityAttributes() {
     return entityAttributes;

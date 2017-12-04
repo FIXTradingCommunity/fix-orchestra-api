@@ -18,10 +18,13 @@ import org.junit.Test;
 import io.fixprotocol.orchestra.client.ApiClient;
 import io.fixprotocol.orchestra.client.ApiException;
 import io.fixprotocol.orchestra.client.model.Actor;
+import io.fixprotocol.orchestra.client.model.Annotation;
+import io.fixprotocol.orchestra.client.model.Appinfo;
 import io.fixprotocol.orchestra.client.model.Code;
 import io.fixprotocol.orchestra.client.model.CodeSet;
 import io.fixprotocol.orchestra.client.model.Component;
 import io.fixprotocol.orchestra.client.model.Datatype;
+import io.fixprotocol.orchestra.client.model.Documentation;
 import io.fixprotocol.orchestra.client.model.Field;
 import io.fixprotocol.orchestra.client.model.FieldRef;
 import io.fixprotocol.orchestra.client.model.Flow;
@@ -368,7 +371,27 @@ public class ClientTest {
     Actor actor2 = client.findActorByName("test1", identifier, "actor1");
     assertNotNull(actor2);
     assertEquals("actor1", actor2.getName());
-
+    
+    Annotation annotation = new Annotation();
+    Documentation documentation = new Documentation();
+    documentation.setLangId("en");
+    documentation.setPurpose("SYNOPSIS");
+    documentation.setValue("The best actor");
+    annotation.addDocumentationItem(documentation );
+    Appinfo appinfo = new Appinfo();
+    appinfo.setValue("my app info");
+    annotation.addAppinfoItem(appinfo);
+    client.addAnnotation("test1", identifier, "actor1", "actor", null, annotation );
+    
+    Annotation annotation2 = client.searchAnnotations("test1", identifier, "actor1", "actor", null, null, null, null);
+    assertNotNull(annotation2);
+    assertEquals(0, annotation2.getAppinfo().size());
+    assertEquals(1, annotation2.getDocumentation().size());
+    Documentation documentation2 = annotation2.getDocumentation().get(0);
+    assertEquals("en", documentation2.getLangId());
+    assertEquals("SYNOPSIS", documentation2.getPurpose());
+    assertEquals("The best actor", documentation2.getValue());
+    
     client.deleteRepository("test1", identifier);
   }
 

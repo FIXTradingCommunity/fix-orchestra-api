@@ -12,6 +12,7 @@ import io.fixprotocol.orchestra.client.model.Group;
 import io.fixprotocol.orchestra.client.model.Message;
 import io.fixprotocol.orchestra.client.model.Repository;
 import org.junit.Test;
+import org.junit.Ignore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +22,7 @@ import java.util.Map;
 /**
  * API tests for RepositoryApi
  */
+@Ignore
 public class RepositoryApiTest {
 
     private final RepositoryApi api = new RepositoryApi();
@@ -40,7 +42,7 @@ public class RepositoryApiTest {
         String version = null;
         Integer codesetid = null;
         Code code = null;
-        // api.addCode(reposName, version, codesetid, code);
+        api.addCode(reposName, version, codesetid, code);
 
         // TODO: test validations
     }
@@ -58,7 +60,7 @@ public class RepositoryApiTest {
         String reposName = null;
         String version = null;
         CodeSet codeSet = null;
-        // api.addCodeSet(reposName, version, codeSet);
+        api.addCodeSet(reposName, version, codeSet);
 
         // TODO: test validations
     }
@@ -77,7 +79,7 @@ public class RepositoryApiTest {
         String version = null;
         Component component = null;
         Integer toClone = null;
-        // api.addComponent(reposName, version, component, toClone);
+        api.addComponent(reposName, version, component, toClone);
 
         // TODO: test validations
     }
@@ -95,7 +97,7 @@ public class RepositoryApiTest {
         String reposName = null;
         String version = null;
         Datatype datatype = null;
-        // api.addDatatype(reposName, version, datatype);
+        api.addDatatype(reposName, version, datatype);
 
         // TODO: test validations
     }
@@ -113,7 +115,7 @@ public class RepositoryApiTest {
         String reposName = null;
         String version = null;
         Field field = null;
-        // api.addField(reposName, version, field);
+        api.addField(reposName, version, field);
 
         // TODO: test validations
     }
@@ -132,7 +134,7 @@ public class RepositoryApiTest {
         String version = null;
         Group group = null;
         Integer toClone = null;
-        // api.addGroup(reposName, version, group, toClone);
+        api.addGroup(reposName, version, group, toClone);
 
         // TODO: test validations
     }
@@ -151,7 +153,7 @@ public class RepositoryApiTest {
         String version = null;
         Message message = null;
         Integer toClone = null;
-        // api.addMessage(reposName, version, message, toClone);
+        api.addMessage(reposName, version, message, toClone);
 
         // TODO: test validations
     }
@@ -169,7 +171,7 @@ public class RepositoryApiTest {
         Repository repository = null;
         String nameToClone = null;
         String versionToClone = null;
-        // api.addRepository(repository, nameToClone, versionToClone);
+        api.addRepository(repository, nameToClone, versionToClone);
 
         // TODO: test validations
     }
@@ -188,7 +190,7 @@ public class RepositoryApiTest {
         String version = null;
         Integer codesetid = null;
         Integer id = null;
-        // api.deleteCode(reposName, version, codesetid, id);
+        api.deleteCode(reposName, version, codesetid, id);
 
         // TODO: test validations
     }
@@ -206,7 +208,7 @@ public class RepositoryApiTest {
         String reposName = null;
         String version = null;
         Integer id = null;
-        // api.deleteCodeSet(reposName, version, id);
+        api.deleteCodeSet(reposName, version, id);
 
         // TODO: test validations
     }
@@ -224,7 +226,7 @@ public class RepositoryApiTest {
         String reposName = null;
         String version = null;
         Integer id = null;
-        // api.deleteComponent(reposName, version, id);
+        api.deleteComponent(reposName, version, id);
 
         // TODO: test validations
     }
@@ -242,7 +244,7 @@ public class RepositoryApiTest {
         String reposName = null;
         String version = null;
         String name = null;
-        // api.deleteDatatype(reposName, version, name);
+        api.deleteDatatype(reposName, version, name);
 
         // TODO: test validations
     }
@@ -260,7 +262,7 @@ public class RepositoryApiTest {
         String reposName = null;
         String version = null;
         Integer id = null;
-        // api.deleteField(reposName, version, id);
+        api.deleteField(reposName, version, id);
 
         // TODO: test validations
     }
@@ -278,7 +280,7 @@ public class RepositoryApiTest {
         String reposName = null;
         String version = null;
         Integer id = null;
-        // api.deleteGroup(reposName, version, id);
+        api.deleteGroup(reposName, version, id);
 
         // TODO: test validations
     }
@@ -296,7 +298,7 @@ public class RepositoryApiTest {
         String reposName = null;
         String version = null;
         Integer id = null;
-        // api.deleteMessage(reposName, version, id);
+        api.deleteMessage(reposName, version, id);
 
         // TODO: test validations
     }
@@ -313,7 +315,7 @@ public class RepositoryApiTest {
     public void deleteRepositoryTest() throws ApiException {
         String reposName = null;
         String version = null;
-        // api.deleteRepository(reposName, version);
+        api.deleteRepository(reposName, version);
 
         // TODO: test validations
     }
@@ -330,7 +332,7 @@ public class RepositoryApiTest {
     public void downloadRepositoryByIdTest() throws ApiException {
         String reposName = null;
         String version = null;
-        // File response = api.downloadRepositoryById(reposName, version);
+        File response = api.downloadRepositoryById(reposName, version);
 
         // TODO: test validations
     }
@@ -349,7 +351,7 @@ public class RepositoryApiTest {
         String version = null;
         Integer codesetid = null;
         Integer id = null;
-        // Code response = api.findCodeById(reposName, version, codesetid, id);
+        Code response = api.findCodeById(reposName, version, codesetid, id);
 
         // TODO: test validations
     }
@@ -367,7 +369,7 @@ public class RepositoryApiTest {
         String reposName = null;
         String version = null;
         Integer id = null;
-        // CodeSet response = api.findCodeSetById(reposName, version, id);
+        CodeSet response = api.findCodeSetById(reposName, version, id);
 
         // TODO: test validations
     }
@@ -385,7 +387,7 @@ public class RepositoryApiTest {
         String reposName = null;
         String version = null;
         Integer id = null;
-        // Component response = api.findComponentById(reposName, version, id);
+        Component response = api.findComponentById(reposName, version, id);
 
         // TODO: test validations
     }
@@ -403,7 +405,7 @@ public class RepositoryApiTest {
         String reposName = null;
         String version = null;
         String name = null;
-        // Datatype response = api.findDatatypeByName(reposName, version, name);
+        Datatype response = api.findDatatypeByName(reposName, version, name);
 
         // TODO: test validations
     }
@@ -421,7 +423,7 @@ public class RepositoryApiTest {
         String reposName = null;
         String version = null;
         Integer id = null;
-        // Field response = api.findFieldById(reposName, version, id);
+        Field response = api.findFieldById(reposName, version, id);
 
         // TODO: test validations
     }
@@ -439,7 +441,7 @@ public class RepositoryApiTest {
         String reposName = null;
         String version = null;
         Integer id = null;
-        // Group response = api.findGroupById(reposName, version, id);
+        Group response = api.findGroupById(reposName, version, id);
 
         // TODO: test validations
     }
@@ -457,7 +459,7 @@ public class RepositoryApiTest {
         String reposName = null;
         String version = null;
         Integer id = null;
-        // Message response = api.findMessageById(reposName, version, id);
+        Message response = api.findMessageById(reposName, version, id);
 
         // TODO: test validations
     }
@@ -474,7 +476,7 @@ public class RepositoryApiTest {
     public void findRepositoryByIdTest() throws ApiException {
         String reposName = null;
         String version = null;
-        // Repository response = api.findRepositoryById(reposName, version);
+        Repository response = api.findRepositoryById(reposName, version);
 
         // TODO: test validations
     }
@@ -494,7 +496,7 @@ public class RepositoryApiTest {
         String searchString = null;
         Integer skip = null;
         Integer limit = null;
-        // List<CodeSet> response = api.searchCodeSets(reposName, version, searchString, skip, limit);
+        List<CodeSet> response = api.searchCodeSets(reposName, version, searchString, skip, limit);
 
         // TODO: test validations
     }
@@ -515,7 +517,7 @@ public class RepositoryApiTest {
         String searchString = null;
         Integer skip = null;
         Integer limit = null;
-        // List<Code> response = api.searchCodes(reposName, version, codesetid, searchString, skip, limit);
+        List<Code> response = api.searchCodes(reposName, version, codesetid, searchString, skip, limit);
 
         // TODO: test validations
     }
@@ -535,7 +537,7 @@ public class RepositoryApiTest {
         String searchString = null;
         Integer skip = null;
         Integer limit = null;
-        // List<Component> response = api.searchComponents(reposName, version, searchString, skip, limit);
+        List<Component> response = api.searchComponents(reposName, version, searchString, skip, limit);
 
         // TODO: test validations
     }
@@ -555,7 +557,7 @@ public class RepositoryApiTest {
         String searchString = null;
         Integer skip = null;
         Integer limit = null;
-        // List<Datatype> response = api.searchDatatypes(reposName, version, searchString, skip, limit);
+        List<Datatype> response = api.searchDatatypes(reposName, version, searchString, skip, limit);
 
         // TODO: test validations
     }
@@ -575,7 +577,7 @@ public class RepositoryApiTest {
         String searchString = null;
         Integer skip = null;
         Integer limit = null;
-        // List<Field> response = api.searchFields(reposName, version, searchString, skip, limit);
+        List<Field> response = api.searchFields(reposName, version, searchString, skip, limit);
 
         // TODO: test validations
     }
@@ -595,7 +597,7 @@ public class RepositoryApiTest {
         String searchString = null;
         Integer skip = null;
         Integer limit = null;
-        // List<Group> response = api.searchGroups(reposName, version, searchString, skip, limit);
+        List<Group> response = api.searchGroups(reposName, version, searchString, skip, limit);
 
         // TODO: test validations
     }
@@ -615,7 +617,7 @@ public class RepositoryApiTest {
         String searchString = null;
         Integer skip = null;
         Integer limit = null;
-        // List<Message> response = api.searchMessages(reposName, version, searchString, skip, limit);
+        List<Message> response = api.searchMessages(reposName, version, searchString, skip, limit);
 
         // TODO: test validations
     }
@@ -633,7 +635,7 @@ public class RepositoryApiTest {
         String searchString = null;
         Integer skip = null;
         Integer limit = null;
-        // List<Repository> response = api.searchRepositories(searchString, skip, limit);
+        List<Repository> response = api.searchRepositories(searchString, skip, limit);
 
         // TODO: test validations
     }
@@ -653,7 +655,7 @@ public class RepositoryApiTest {
         Integer codesetid = null;
         Integer id = null;
         Code code = null;
-        // api.updateCodeById(reposName, version, codesetid, id, code);
+        api.updateCodeById(reposName, version, codesetid, id, code);
 
         // TODO: test validations
     }
@@ -672,7 +674,7 @@ public class RepositoryApiTest {
         String version = null;
         Integer id = null;
         CodeSet codeSet = null;
-        // api.updateCodeSetById(reposName, version, id, codeSet);
+        api.updateCodeSetById(reposName, version, id, codeSet);
 
         // TODO: test validations
     }
@@ -691,7 +693,7 @@ public class RepositoryApiTest {
         String version = null;
         Integer id = null;
         Component component = null;
-        // api.updateComponentById(reposName, version, id, component);
+        api.updateComponentById(reposName, version, id, component);
 
         // TODO: test validations
     }
@@ -710,7 +712,7 @@ public class RepositoryApiTest {
         String version = null;
         String name = null;
         Datatype datatype = null;
-        // api.updateDatatypeByName(reposName, version, name, datatype);
+        api.updateDatatypeByName(reposName, version, name, datatype);
 
         // TODO: test validations
     }
@@ -729,7 +731,7 @@ public class RepositoryApiTest {
         String version = null;
         Integer id = null;
         Field field = null;
-        // api.updateFieldById(reposName, version, id, field);
+        api.updateFieldById(reposName, version, id, field);
 
         // TODO: test validations
     }
@@ -748,7 +750,7 @@ public class RepositoryApiTest {
         String version = null;
         Integer id = null;
         Group group = null;
-        // api.updateGroupById(reposName, version, id, group);
+        api.updateGroupById(reposName, version, id, group);
 
         // TODO: test validations
     }
@@ -767,7 +769,7 @@ public class RepositoryApiTest {
         String version = null;
         Integer id = null;
         Message message = null;
-        // api.updateMessageById(reposName, version, id, message);
+        api.updateMessageById(reposName, version, id, message);
 
         // TODO: test validations
     }
@@ -785,7 +787,7 @@ public class RepositoryApiTest {
         String reposName = null;
         String version = null;
         Repository repository = null;
-        // api.updateRepositoryById(reposName, version, repository);
+        api.updateRepositoryById(reposName, version, repository);
 
         // TODO: test validations
     }

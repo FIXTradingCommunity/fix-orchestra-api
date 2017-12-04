@@ -3,6 +3,7 @@ package io.fixprotocol.orchestra.client.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.fixprotocol.orchestra.client.model.ComponentRef;
 import io.fixprotocol.orchestra.client.model.FieldRef;
 import io.fixprotocol.orchestra.client.model.GroupRef;
@@ -14,16 +15,16 @@ import java.util.List;
 /**
  * Structure
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-29T15:57:45.378Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-30T16:31:59.574Z")
 public class Structure {
   @JsonProperty("fields")
-  private List<FieldRef> fields = new ArrayList<FieldRef>();
+  private List<FieldRef> fields = null;
 
   @JsonProperty("components")
-  private List<ComponentRef> components = new ArrayList<ComponentRef>();
+  private List<ComponentRef> components = null;
 
   @JsonProperty("groups")
-  private List<GroupRef> groups = new ArrayList<GroupRef>();
+  private List<GroupRef> groups = null;
 
   public Structure fields(List<FieldRef> fields) {
     this.fields = fields;
@@ -31,6 +32,9 @@ public class Structure {
   }
 
   public Structure addFieldsItem(FieldRef fieldsItem) {
+    if (this.fields == null) {
+      this.fields = new ArrayList<>();
+    }
     this.fields.add(fieldsItem);
     return this;
   }
@@ -54,6 +58,9 @@ public class Structure {
   }
 
   public Structure addComponentsItem(ComponentRef componentsItem) {
+    if (this.components == null) {
+      this.components = new ArrayList<>();
+    }
     this.components.add(componentsItem);
     return this;
   }
@@ -77,6 +84,9 @@ public class Structure {
   }
 
   public Structure addGroupsItem(GroupRef groupsItem) {
+    if (this.groups == null) {
+      this.groups = new ArrayList<>();
+    }
     this.groups.add(groupsItem);
     return this;
   }
@@ -137,6 +147,6 @@ public class Structure {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
 }
 

@@ -4,6 +4,7 @@ import io.fixprotocol.orchestra.client.ApiException;
 import io.fixprotocol.orchestra.client.model.Annotation;
 import io.fixprotocol.orchestra.client.model.ErrorModel;
 import org.junit.Test;
+import org.junit.Ignore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,6 +14,7 @@ import java.util.Map;
 /**
  * API tests for DocumentationApi
  */
+@Ignore
 public class DocumentationApiTest {
 
     private final DocumentationApi api = new DocumentationApi();
@@ -32,8 +34,9 @@ public class DocumentationApiTest {
         String version = null;
         String elementId = null;
         String elementType = null;
+        String parentId = null;
         Annotation annotation = null;
-        // api.addAnnotation(reposName, version, elementId, elementType, annotation);
+        api.addAnnotation(reposName, version, elementId, elementType, parentId, annotation);
 
         // TODO: test validations
     }
@@ -52,7 +55,8 @@ public class DocumentationApiTest {
         String version = null;
         String elementId = null;
         String elementType = null;
-        // api.deleteAnnotation(reposName, version, elementId, elementType);
+        String parentId = null;
+        api.deleteAnnotation(reposName, version, elementId, elementType, parentId);
 
         // TODO: test validations
     }
@@ -71,10 +75,11 @@ public class DocumentationApiTest {
         String version = null;
         String elementId = null;
         String elementType = null;
+        String parentId = null;
         String searchString = null;
         Integer skip = null;
         Integer limit = null;
-        // Annotation response = api.searchAnnotations(reposName, version, elementId, elementType, searchString, skip, limit);
+        Annotation response = api.searchAnnotations(reposName, version, elementId, elementType, parentId, searchString, skip, limit);
 
         // TODO: test validations
     }
@@ -92,9 +97,10 @@ public class DocumentationApiTest {
         String reposName = null;
         String version = null;
         String elementId = null;
-        Annotation annotation = null;
         String elementType = null;
-        // api.updateAnnotation(reposName, version, elementId, annotation, elementType);
+        Annotation annotation = null;
+        String parentId = null;
+        api.updateAnnotation(reposName, version, elementId, elementType, annotation, parentId);
 
         // TODO: test validations
     }

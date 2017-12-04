@@ -31,12 +31,13 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
+import javax.validation.constraints.*;
 
 /**
  * description of an Orchestra repository, conforms to Dublin Core Terms
  */
 @ApiModel(description = "description of an Orchestra repository, conforms to Dublin Core Terms")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-29T15:58:53.146Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-30T16:33:12.690Z")
 public class Metadata   {
   @JsonProperty("identifier")
   private String identifier = null;
@@ -88,11 +89,13 @@ public class Metadata   {
     return this;
   }
 
-   /**
+  /**
    * unique ID of an Orchestra repository
    * @return identifier
-  **/
+   **/
+  @JsonProperty("identifier")
   @ApiModelProperty(required = true, value = "unique ID of an Orchestra repository")
+  @NotNull
   public String getIdentifier() {
     return identifier;
   }
@@ -106,10 +109,11 @@ public class Metadata   {
     return this;
   }
 
-   /**
+  /**
    * Get contributor
    * @return contributor
-  **/
+   **/
+  @JsonProperty("contributor")
   @ApiModelProperty(value = "")
   public String getContributor() {
     return contributor;
@@ -124,10 +128,11 @@ public class Metadata   {
     return this;
   }
 
-   /**
+  /**
    * a FIX category or guideline
    * @return coverage
-  **/
+   **/
+  @JsonProperty("coverage")
   @ApiModelProperty(example = "SingleGeneralOrderHandling", value = "a FIX category or guideline")
   public String getCoverage() {
     return coverage;
@@ -142,10 +147,11 @@ public class Metadata   {
     return this;
   }
 
-   /**
+  /**
    * Get creator
    * @return creator
-  **/
+   **/
+  @JsonProperty("creator")
   @ApiModelProperty(value = "")
   public String getCreator() {
     return creator;
@@ -160,10 +166,11 @@ public class Metadata   {
     return this;
   }
 
-   /**
+  /**
    * when the file was produced
    * @return date
-  **/
+   **/
+  @JsonProperty("date")
   @ApiModelProperty(value = "when the file was produced")
   public LocalDate getDate() {
     return date;
@@ -178,10 +185,11 @@ public class Metadata   {
     return this;
   }
 
-   /**
+  /**
    * a summary
    * @return description
-  **/
+   **/
+  @JsonProperty("description")
   @ApiModelProperty(value = "a summary")
   public String getDescription() {
     return description;
@@ -196,10 +204,11 @@ public class Metadata   {
     return this;
   }
 
-   /**
+  /**
    * file format
    * @return format
-  **/
+   **/
+  @JsonProperty("format")
   @ApiModelProperty(value = "file format")
   public String getFormat() {
     return format;
@@ -214,10 +223,11 @@ public class Metadata   {
     return this;
   }
 
-   /**
+  /**
    * Get language
    * @return language
-  **/
+   **/
+  @JsonProperty("language")
   @ApiModelProperty(value = "")
   public String getLanguage() {
     return language;
@@ -232,10 +242,11 @@ public class Metadata   {
     return this;
   }
 
-   /**
+  /**
    * a related resource
    * @return relation
-  **/
+   **/
+  @JsonProperty("relation")
   @ApiModelProperty(value = "a related resource")
   public String getRelation() {
     return relation;
@@ -250,10 +261,11 @@ public class Metadata   {
     return this;
   }
 
-   /**
+  /**
    * Get rights
    * @return rights
-  **/
+   **/
+  @JsonProperty("rights")
   @ApiModelProperty(value = "")
   public String getRights() {
     return rights;
@@ -268,10 +280,11 @@ public class Metadata   {
     return this;
   }
 
-   /**
+  /**
    * Get publisher
    * @return publisher
-  **/
+   **/
+  @JsonProperty("publisher")
   @ApiModelProperty(example = "FIX Trading Community", value = "")
   public String getPublisher() {
     return publisher;
@@ -286,10 +299,11 @@ public class Metadata   {
     return this;
   }
 
-   /**
+  /**
    * a resource from which this one was derived
    * @return source
-  **/
+   **/
+  @JsonProperty("source")
   @ApiModelProperty(value = "a resource from which this one was derived")
   public String getSource() {
     return source;
@@ -304,10 +318,11 @@ public class Metadata   {
     return this;
   }
 
-   /**
+  /**
    * Get subject
    * @return subject
-  **/
+   **/
+  @JsonProperty("subject")
   @ApiModelProperty(value = "")
   public String getSubject() {
     return subject;
@@ -322,10 +337,11 @@ public class Metadata   {
     return this;
   }
 
-   /**
+  /**
    * Get title
    * @return title
-  **/
+   **/
+  @JsonProperty("title")
   @ApiModelProperty(value = "")
   public String getTitle() {
     return title;
@@ -340,10 +356,11 @@ public class Metadata   {
     return this;
   }
 
-   /**
+  /**
    * Get type
    * @return type
-  **/
+   **/
+  @JsonProperty("type")
   @ApiModelProperty(value = "")
   public String getType() {
     return type;

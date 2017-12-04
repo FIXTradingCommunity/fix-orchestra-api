@@ -3,6 +3,7 @@ package io.fixprotocol.orchestra.client.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.fixprotocol.orchestra.client.model.Appinfo;
 import io.fixprotocol.orchestra.client.model.Documentation;
 import io.swagger.annotations.ApiModel;
@@ -13,13 +14,13 @@ import java.util.List;
 /**
  * Annotation
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-29T15:57:45.378Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-30T16:31:59.574Z")
 public class Annotation {
   @JsonProperty("appinfo")
-  private List<Appinfo> appinfo = new ArrayList<Appinfo>();
+  private List<Appinfo> appinfo = null;
 
   @JsonProperty("documentation")
-  private List<Documentation> documentation = new ArrayList<Documentation>();
+  private List<Documentation> documentation = null;
 
   public Annotation appinfo(List<Appinfo> appinfo) {
     this.appinfo = appinfo;
@@ -27,6 +28,9 @@ public class Annotation {
   }
 
   public Annotation addAppinfoItem(Appinfo appinfoItem) {
+    if (this.appinfo == null) {
+      this.appinfo = new ArrayList<>();
+    }
     this.appinfo.add(appinfoItem);
     return this;
   }
@@ -50,6 +54,9 @@ public class Annotation {
   }
 
   public Annotation addDocumentationItem(Documentation documentationItem) {
+    if (this.documentation == null) {
+      this.documentation = new ArrayList<>();
+    }
     this.documentation.add(documentationItem);
     return this;
   }
@@ -108,6 +115,6 @@ public class Annotation {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
 }
 

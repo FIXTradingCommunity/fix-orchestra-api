@@ -34,17 +34,18 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.constraints.*;
 
 /**
  * State
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-29T15:58:53.146Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-30T16:33:12.690Z")
 public class State   {
   @JsonProperty("name")
   private String name = null;
 
   @JsonProperty("transitions")
-  private List<Transition> transitions = new ArrayList<Transition>();
+  private List<Transition> transitions = null;
 
   @JsonProperty("annotation")
   private Annotation annotation = null;
@@ -54,12 +55,14 @@ public class State   {
     return this;
   }
 
-   /**
+  /**
    * Get name
    * @return name
-  **/
+   **/
+  @JsonProperty("name")
   @ApiModelProperty(required = true, value = "")
-  public String getName() {
+  @NotNull
+ @Size(max=64)  public String getName() {
     return name;
   }
 
@@ -73,14 +76,18 @@ public class State   {
   }
 
   public State addTransitionsItem(Transition transitionsItem) {
+    if (this.transitions == null) {
+      this.transitions = new ArrayList<>();
+    }
     this.transitions.add(transitionsItem);
     return this;
   }
 
-   /**
+  /**
    * Get transitions
    * @return transitions
-  **/
+   **/
+  @JsonProperty("transitions")
   @ApiModelProperty(value = "")
   public List<Transition> getTransitions() {
     return transitions;
@@ -95,10 +102,11 @@ public class State   {
     return this;
   }
 
-   /**
+  /**
    * Get annotation
    * @return annotation
-  **/
+   **/
+  @JsonProperty("annotation")
   @ApiModelProperty(value = "")
   public Annotation getAnnotation() {
     return annotation;

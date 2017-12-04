@@ -1,6 +1,6 @@
 package io.fixprotocol.orchestra.api;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-29T15:58:53.146Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-30T16:33:12.690Z")
 public class StringUtil {
   /**
    * Check if the given array contains the given value (with case-insensitive comparison).

@@ -2351,13 +2351,22 @@ paths:
         type: "string"
       - name: "elementId"
         in: "query"
+        description: "name or ID as a string of the element to annotate"
         required: true
+        type: "string"
+      - name: "parentId"
+        in: "query"
+        description: "name or ID as a string of the parent of the element to annotate.\
+          \ Required for code, actor, stateMachine."
+        required: false
         type: "string"
       - name: "elementType"
         in: "query"
-        required: false
+        description: "type of element to annotate"
+        required: true
         type: "string"
         enum:
+        - "code"
         - "codeSet"
         - "component"
         - "datatype"
@@ -2367,6 +2376,7 @@ paths:
         - "actor"
         - "flow"
         - "response"
+        - "stateMachine"
       - name: "searchString"
         in: "query"
         description: "pass an optional search string for looking up annotations"
@@ -2415,13 +2425,22 @@ paths:
         type: "string"
       - name: "elementId"
         in: "query"
+        description: "name or ID as a string of the element to annotate"
         required: true
+        type: "string"
+      - name: "parentId"
+        in: "query"
+        description: "name or ID as a string of the parent of the element to annotate.\
+          \ Required for code, actor, stateMachine."
+        required: false
         type: "string"
       - name: "elementType"
         in: "query"
-        required: false
+        description: "type of element to annotate"
+        required: true
         type: "string"
         enum:
+        - "code"
         - "codeSet"
         - "component"
         - "datatype"
@@ -2431,6 +2450,7 @@ paths:
         - "actor"
         - "flow"
         - "response"
+        - "stateMachine"
       - in: "body"
         name: "annotation"
         description: "Annotation to add"
@@ -2469,13 +2489,22 @@ paths:
         type: "string"
       - name: "elementId"
         in: "query"
+        description: "name or ID as a string of the element to annotate"
         required: true
+        type: "string"
+      - name: "parentId"
+        in: "query"
+        description: "name or ID as a string of the parent of the element to annotate.\
+          \ Required for code, actor, stateMachine."
+        required: false
         type: "string"
       - name: "elementType"
         in: "query"
-        required: false
+        description: "type of element to annotate"
+        required: true
         type: "string"
         enum:
+        - "code"
         - "codeSet"
         - "component"
         - "datatype"
@@ -2485,6 +2514,7 @@ paths:
         - "actor"
         - "flow"
         - "response"
+        - "stateMachine"
       - in: "body"
         name: "annotation"
         description: "Annotation to update"
@@ -2516,13 +2546,22 @@ paths:
         type: "string"
       - name: "elementId"
         in: "query"
+        description: "name or ID as a string of the element to annotate"
         required: true
+        type: "string"
+      - name: "parentId"
+        in: "query"
+        description: "name or ID as a string of the parent of the element to annotate.\
+          \ Required for code, actor, stateMachine."
+        required: false
         type: "string"
       - name: "elementType"
         in: "query"
-        required: false
+        description: "type of element to annotate"
+        required: true
         type: "string"
         enum:
+        - "code"
         - "codeSet"
         - "component"
         - "datatype"
@@ -2532,6 +2571,7 @@ paths:
         - "actor"
         - "flow"
         - "response"
+        - "stateMachine"
       responses:
         204:
           description: "Annotation deleted"
@@ -2557,6 +2597,36 @@ definitions:
       annotation:
         $ref: "#/definitions/Annotation"
     description: "Represents a class of participants"
+    example:
+      annotation:
+        documentation:
+        - $: "$"
+          purpose: "SYNOPSIS"
+          langId: "en"
+        - $: "$"
+          purpose: "SYNOPSIS"
+          langId: "en"
+        appinfo:
+        - $: "$"
+          purpose: "SYNOPSIS"
+          specURL: "http://example.com/aeiou"
+          langId: "en"
+        - $: "$"
+          purpose: "SYNOPSIS"
+          specURL: "http://example.com/aeiou"
+          langId: "en"
+      extends: "extends"
+      name: "name"
+      structure:
+        components:
+        - ""
+        - ""
+        groups:
+        - ""
+        - ""
+        fields:
+        - ""
+        - ""
   Annotation:
     type: "object"
     properties:
@@ -2568,6 +2638,23 @@ definitions:
         type: "array"
         items:
           $ref: "#/definitions/Documentation"
+    example:
+      documentation:
+      - $: "$"
+        purpose: "SYNOPSIS"
+        langId: "en"
+      - $: "$"
+        purpose: "SYNOPSIS"
+        langId: "en"
+      appinfo:
+      - $: "$"
+        purpose: "SYNOPSIS"
+        specURL: "http://example.com/aeiou"
+        langId: "en"
+      - $: "$"
+        purpose: "SYNOPSIS"
+        specURL: "http://example.com/aeiou"
+        langId: "en"
   Appinfo:
     type: "object"
     required:
@@ -2587,6 +2674,11 @@ definitions:
         example: "SYNOPSIS"
     description: "Usage specific annotation, optionally with link to an external reference\
       \ or standard"
+    example:
+      $: "$"
+      purpose: "SYNOPSIS"
+      specURL: "http://example.com/aeiou"
+      langId: "en"
   Code:
     type: "object"
     required:
@@ -2601,6 +2693,44 @@ definitions:
         $ref: "#/definitions/Annotation"
       entityAttributes:
         $ref: "#/definitions/EntityAttributes"
+    example:
+      annotation:
+        documentation:
+        - $: "$"
+          purpose: "SYNOPSIS"
+          langId: "en"
+        - $: "$"
+          purpose: "SYNOPSIS"
+          langId: "en"
+        appinfo:
+        - $: "$"
+          purpose: "SYNOPSIS"
+          specURL: "http://example.com/aeiou"
+          langId: "en"
+        - $: "$"
+          purpose: "SYNOPSIS"
+          specURL: "http://example.com/aeiou"
+          langId: "en"
+      entityAttributes:
+        issue: "issue"
+        added: "added"
+        changeType: "Editorial"
+        deprecated: "deprecated"
+        replaced: "replaced"
+        replacedByField: 5
+        deprecatedEP: 6
+        updatedEP: 5
+        addedEP: 0
+        replacedEP: 1
+        lastModified: "lastModified"
+        updated: "updated"
+        supported: "supported"
+      oid:
+        abbrName: "Acct"
+        name: "Account"
+        id: 1
+        oid: "oid"
+      value: "value"
   CodeSet:
     type: "object"
     required:
@@ -2624,6 +2754,121 @@ definitions:
         $ref: "#/definitions/Annotation"
       entityAttributes:
         $ref: "#/definitions/EntityAttributes"
+    example:
+      annotation:
+        documentation:
+        - $: "$"
+          purpose: "SYNOPSIS"
+          langId: "en"
+        - $: "$"
+          purpose: "SYNOPSIS"
+          langId: "en"
+        appinfo:
+        - $: "$"
+          purpose: "SYNOPSIS"
+          specURL: "http://example.com/aeiou"
+          langId: "en"
+        - $: "$"
+          purpose: "SYNOPSIS"
+          specURL: "http://example.com/aeiou"
+          langId: "en"
+      codes:
+      - annotation:
+          documentation:
+          - $: "$"
+            purpose: "SYNOPSIS"
+            langId: "en"
+          - $: "$"
+            purpose: "SYNOPSIS"
+            langId: "en"
+          appinfo:
+          - $: "$"
+            purpose: "SYNOPSIS"
+            specURL: "http://example.com/aeiou"
+            langId: "en"
+          - $: "$"
+            purpose: "SYNOPSIS"
+            specURL: "http://example.com/aeiou"
+            langId: "en"
+        entityAttributes:
+          issue: "issue"
+          added: "added"
+          changeType: "Editorial"
+          deprecated: "deprecated"
+          replaced: "replaced"
+          replacedByField: 5
+          deprecatedEP: 6
+          updatedEP: 5
+          addedEP: 0
+          replacedEP: 1
+          lastModified: "lastModified"
+          updated: "updated"
+          supported: "supported"
+        oid:
+          abbrName: "Acct"
+          name: "Account"
+          id: 1
+          oid: "oid"
+        value: "value"
+      - annotation:
+          documentation:
+          - $: "$"
+            purpose: "SYNOPSIS"
+            langId: "en"
+          - $: "$"
+            purpose: "SYNOPSIS"
+            langId: "en"
+          appinfo:
+          - $: "$"
+            purpose: "SYNOPSIS"
+            specURL: "http://example.com/aeiou"
+            langId: "en"
+          - $: "$"
+            purpose: "SYNOPSIS"
+            specURL: "http://example.com/aeiou"
+            langId: "en"
+        entityAttributes:
+          issue: "issue"
+          added: "added"
+          changeType: "Editorial"
+          deprecated: "deprecated"
+          replaced: "replaced"
+          replacedByField: 5
+          deprecatedEP: 6
+          updatedEP: 5
+          addedEP: 0
+          replacedEP: 1
+          lastModified: "lastModified"
+          updated: "updated"
+          supported: "supported"
+        oid:
+          abbrName: "Acct"
+          name: "Account"
+          id: 1
+          oid: "oid"
+        value: "value"
+      default: "default"
+      entityAttributes:
+        issue: "issue"
+        added: "added"
+        changeType: "Editorial"
+        deprecated: "deprecated"
+        replaced: "replaced"
+        replacedByField: 5
+        deprecatedEP: 6
+        updatedEP: 5
+        addedEP: 0
+        replacedEP: 1
+        lastModified: "lastModified"
+        updated: "updated"
+        supported: "supported"
+      oid:
+        abbrName: "Acct"
+        name: "Account"
+        id: 1
+        oid: "oid"
+      type: "type"
+      specURL: "http://example.com/aeiou"
   Component:
     allOf:
     - $ref: "#/definitions/MessageElement"
@@ -2652,6 +2897,10 @@ definitions:
       purpose:
         type: "string"
         example: "SYNOPSIS"
+    example:
+      $: "$"
+      purpose: "SYNOPSIS"
+      langId: "en"
   Datatype:
     type: "object"
     required:
@@ -2665,6 +2914,40 @@ definitions:
         $ref: "#/definitions/Annotation"
       entityAttributes:
         $ref: "#/definitions/EntityAttributes"
+    example:
+      annotation:
+        documentation:
+        - $: "$"
+          purpose: "SYNOPSIS"
+          langId: "en"
+        - $: "$"
+          purpose: "SYNOPSIS"
+          langId: "en"
+        appinfo:
+        - $: "$"
+          purpose: "SYNOPSIS"
+          specURL: "http://example.com/aeiou"
+          langId: "en"
+        - $: "$"
+          purpose: "SYNOPSIS"
+          specURL: "http://example.com/aeiou"
+          langId: "en"
+      entityAttributes:
+        issue: "issue"
+        added: "added"
+        changeType: "Editorial"
+        deprecated: "deprecated"
+        replaced: "replaced"
+        replacedByField: 5
+        deprecatedEP: 6
+        updatedEP: 5
+        addedEP: 0
+        replacedEP: 1
+        lastModified: "lastModified"
+        updated: "updated"
+        supported: "supported"
+      name: "name"
+      baseType: "baseType"
   EntityAttributes:
     type: "object"
     properties:
@@ -2703,6 +2986,20 @@ definitions:
       updatedEP:
         type: "integer"
     description: "element metadata including pedigree"
+    example:
+      issue: "issue"
+      added: "added"
+      changeType: "Editorial"
+      deprecated: "deprecated"
+      replaced: "replaced"
+      replacedByField: 5
+      deprecatedEP: 6
+      updatedEP: 5
+      addedEP: 0
+      replacedEP: 1
+      lastModified: "lastModified"
+      updated: "updated"
+      supported: "supported"
   ErrorModel:
     type: "object"
     required:
@@ -2762,6 +3059,27 @@ definitions:
       annotation:
         $ref: "#/definitions/Annotation"
     description: "A stream of messages in one direction"
+    example:
+      annotation:
+        documentation:
+        - $: "$"
+          purpose: "SYNOPSIS"
+          langId: "en"
+        - $: "$"
+          purpose: "SYNOPSIS"
+          langId: "en"
+        appinfo:
+        - $: "$"
+          purpose: "SYNOPSIS"
+          specURL: "http://example.com/aeiou"
+          langId: "en"
+        - $: "$"
+          purpose: "SYNOPSIS"
+          specURL: "http://example.com/aeiou"
+          langId: "en"
+      name: "name"
+      destination: "destination"
+      source: "source"
   Group:
     allOf:
     - $ref: "#/definitions/Component"
@@ -2820,6 +3138,84 @@ definitions:
         type: "array"
         items:
           $ref: "#/definitions/Response"
+    example:
+      msgType: "msgType"
+      extends: "extends"
+      scenario: "base"
+      responses:
+      - annotation:
+          documentation:
+          - $: "$"
+            purpose: "SYNOPSIS"
+            langId: "en"
+          - $: "$"
+            purpose: "SYNOPSIS"
+            langId: "en"
+          appinfo:
+          - $: "$"
+            purpose: "SYNOPSIS"
+            specURL: "http://example.com/aeiou"
+            langId: "en"
+          - $: "$"
+            purpose: "SYNOPSIS"
+            specURL: "http://example.com/aeiou"
+            langId: "en"
+        messageRef:
+          msgType: "msgType"
+          scenario: "base"
+          name: "name"
+        name: "name"
+        trigger:
+          actor: "actor"
+          stateMachine: "stateMachine"
+          name: "name"
+        when: "when"
+        assign: "assign"
+      - annotation:
+          documentation:
+          - $: "$"
+            purpose: "SYNOPSIS"
+            langId: "en"
+          - $: "$"
+            purpose: "SYNOPSIS"
+            langId: "en"
+          appinfo:
+          - $: "$"
+            purpose: "SYNOPSIS"
+            specURL: "http://example.com/aeiou"
+            langId: "en"
+          - $: "$"
+            purpose: "SYNOPSIS"
+            specURL: "http://example.com/aeiou"
+            langId: "en"
+        messageRef:
+          msgType: "msgType"
+          scenario: "base"
+          name: "name"
+        name: "name"
+        trigger:
+          actor: "actor"
+          stateMachine: "stateMachine"
+          name: "name"
+        when: "when"
+        assign: "assign"
+      oid:
+        abbrName: "Acct"
+        name: "Account"
+        id: 1
+        oid: "oid"
+      category: "category"
+      flow: "flow"
+      structure:
+        components:
+        - ""
+        - ""
+        groups:
+        - ""
+        - ""
+        fields:
+        - ""
+        - ""
   MessageElement:
     type: "object"
     required:
@@ -2849,6 +3245,10 @@ definitions:
         description: "Use case of a message type"
         maxLength: 64
         default: "base"
+    example:
+      msgType: "msgType"
+      scenario: "base"
+      name: "name"
   Metadata:
     type: "object"
     required:
@@ -2896,6 +3296,22 @@ definitions:
         type: "string"
     description: "description of an Orchestra repository, conforms to Dublin Core\
       \ Terms"
+    example:
+      coverage: "SingleGeneralOrderHandling"
+      date: "2000-01-23"
+      identifier: "identifier"
+      creator: "creator"
+      subject: "subject"
+      format: "format"
+      description: "description"
+      language: "language"
+      source: "source"
+      title: "title"
+      type: "type"
+      relation: "relation"
+      contributor: "contributor"
+      rights: "rights"
+      publisher: "FIX Trading Community"
   ObjectId:
     type: "object"
     required:
@@ -2920,6 +3336,11 @@ definitions:
       oid:
         type: "string"
         description: "Globally unique object identifier, a URI or UUID"
+    example:
+      abbrName: "Acct"
+      name: "Account"
+      id: 1
+      oid: "oid"
   Repository:
     type: "object"
     required:
@@ -2946,6 +3367,29 @@ definitions:
         type: "boolean"
       metadata:
         $ref: "#/definitions/Metadata"
+    example:
+      metadata:
+        coverage: "SingleGeneralOrderHandling"
+        date: "2000-01-23"
+        identifier: "identifier"
+        creator: "creator"
+        subject: "subject"
+        format: "format"
+        description: "description"
+        language: "language"
+        source: "source"
+        title: "title"
+        type: "type"
+        relation: "relation"
+        contributor: "contributor"
+        rights: "rights"
+        publisher: "FIX Trading Community"
+      name: "name"
+      namespace: "http://example.com/aeiou"
+      oid: "oid"
+      specURL: "http://example.com/aeiou"
+      hasComponents: true
+      version: "version"
   Response:
     type: "object"
     required:
@@ -2967,6 +3411,35 @@ definitions:
         $ref: "#/definitions/Trigger"
       annotation:
         $ref: "#/definitions/Annotation"
+    example:
+      annotation:
+        documentation:
+        - $: "$"
+          purpose: "SYNOPSIS"
+          langId: "en"
+        - $: "$"
+          purpose: "SYNOPSIS"
+          langId: "en"
+        appinfo:
+        - $: "$"
+          purpose: "SYNOPSIS"
+          specURL: "http://example.com/aeiou"
+          langId: "en"
+        - $: "$"
+          purpose: "SYNOPSIS"
+          specURL: "http://example.com/aeiou"
+          langId: "en"
+      messageRef:
+        msgType: "msgType"
+        scenario: "base"
+        name: "name"
+      name: "name"
+      trigger:
+        actor: "actor"
+        stateMachine: "stateMachine"
+        name: "name"
+      when: "when"
+      assign: "assign"
   StateMachine:
     type: "object"
     required:
@@ -2983,6 +3456,204 @@ definitions:
           $ref: "#/definitions/State"
       annotation:
         $ref: "#/definitions/Annotation"
+    example:
+      annotation:
+        documentation:
+        - $: "$"
+          purpose: "SYNOPSIS"
+          langId: "en"
+        - $: "$"
+          purpose: "SYNOPSIS"
+          langId: "en"
+        appinfo:
+        - $: "$"
+          purpose: "SYNOPSIS"
+          specURL: "http://example.com/aeiou"
+          langId: "en"
+        - $: "$"
+          purpose: "SYNOPSIS"
+          specURL: "http://example.com/aeiou"
+          langId: "en"
+      initial:
+        annotation:
+          documentation:
+          - $: "$"
+            purpose: "SYNOPSIS"
+            langId: "en"
+          - $: "$"
+            purpose: "SYNOPSIS"
+            langId: "en"
+          appinfo:
+          - $: "$"
+            purpose: "SYNOPSIS"
+            specURL: "http://example.com/aeiou"
+            langId: "en"
+          - $: "$"
+            purpose: "SYNOPSIS"
+            specURL: "http://example.com/aeiou"
+            langId: "en"
+        name: "name"
+        transitions:
+        - annotation:
+            documentation:
+            - $: "$"
+              purpose: "SYNOPSIS"
+              langId: "en"
+            - $: "$"
+              purpose: "SYNOPSIS"
+              langId: "en"
+            appinfo:
+            - $: "$"
+              purpose: "SYNOPSIS"
+              specURL: "http://example.com/aeiou"
+              langId: "en"
+            - $: "$"
+              purpose: "SYNOPSIS"
+              specURL: "http://example.com/aeiou"
+              langId: "en"
+          name: "name"
+          when: "when"
+          target: "target"
+        - annotation:
+            documentation:
+            - $: "$"
+              purpose: "SYNOPSIS"
+              langId: "en"
+            - $: "$"
+              purpose: "SYNOPSIS"
+              langId: "en"
+            appinfo:
+            - $: "$"
+              purpose: "SYNOPSIS"
+              specURL: "http://example.com/aeiou"
+              langId: "en"
+            - $: "$"
+              purpose: "SYNOPSIS"
+              specURL: "http://example.com/aeiou"
+              langId: "en"
+          name: "name"
+          when: "when"
+          target: "target"
+      name: "name"
+      states:
+      - annotation:
+          documentation:
+          - $: "$"
+            purpose: "SYNOPSIS"
+            langId: "en"
+          - $: "$"
+            purpose: "SYNOPSIS"
+            langId: "en"
+          appinfo:
+          - $: "$"
+            purpose: "SYNOPSIS"
+            specURL: "http://example.com/aeiou"
+            langId: "en"
+          - $: "$"
+            purpose: "SYNOPSIS"
+            specURL: "http://example.com/aeiou"
+            langId: "en"
+        name: "name"
+        transitions:
+        - annotation:
+            documentation:
+            - $: "$"
+              purpose: "SYNOPSIS"
+              langId: "en"
+            - $: "$"
+              purpose: "SYNOPSIS"
+              langId: "en"
+            appinfo:
+            - $: "$"
+              purpose: "SYNOPSIS"
+              specURL: "http://example.com/aeiou"
+              langId: "en"
+            - $: "$"
+              purpose: "SYNOPSIS"
+              specURL: "http://example.com/aeiou"
+              langId: "en"
+          name: "name"
+          when: "when"
+          target: "target"
+        - annotation:
+            documentation:
+            - $: "$"
+              purpose: "SYNOPSIS"
+              langId: "en"
+            - $: "$"
+              purpose: "SYNOPSIS"
+              langId: "en"
+            appinfo:
+            - $: "$"
+              purpose: "SYNOPSIS"
+              specURL: "http://example.com/aeiou"
+              langId: "en"
+            - $: "$"
+              purpose: "SYNOPSIS"
+              specURL: "http://example.com/aeiou"
+              langId: "en"
+          name: "name"
+          when: "when"
+          target: "target"
+      - annotation:
+          documentation:
+          - $: "$"
+            purpose: "SYNOPSIS"
+            langId: "en"
+          - $: "$"
+            purpose: "SYNOPSIS"
+            langId: "en"
+          appinfo:
+          - $: "$"
+            purpose: "SYNOPSIS"
+            specURL: "http://example.com/aeiou"
+            langId: "en"
+          - $: "$"
+            purpose: "SYNOPSIS"
+            specURL: "http://example.com/aeiou"
+            langId: "en"
+        name: "name"
+        transitions:
+        - annotation:
+            documentation:
+            - $: "$"
+              purpose: "SYNOPSIS"
+              langId: "en"
+            - $: "$"
+              purpose: "SYNOPSIS"
+              langId: "en"
+            appinfo:
+            - $: "$"
+              purpose: "SYNOPSIS"
+              specURL: "http://example.com/aeiou"
+              langId: "en"
+            - $: "$"
+              purpose: "SYNOPSIS"
+              specURL: "http://example.com/aeiou"
+              langId: "en"
+          name: "name"
+          when: "when"
+          target: "target"
+        - annotation:
+            documentation:
+            - $: "$"
+              purpose: "SYNOPSIS"
+              langId: "en"
+            - $: "$"
+              purpose: "SYNOPSIS"
+              langId: "en"
+            appinfo:
+            - $: "$"
+              purpose: "SYNOPSIS"
+              specURL: "http://example.com/aeiou"
+              langId: "en"
+            - $: "$"
+              purpose: "SYNOPSIS"
+              specURL: "http://example.com/aeiou"
+              langId: "en"
+          name: "name"
+          when: "when"
+          target: "target"
   State:
     type: "object"
     required:
@@ -2997,9 +3668,71 @@ definitions:
           $ref: "#/definitions/Transition"
       annotation:
         $ref: "#/definitions/Annotation"
+    example:
+      annotation:
+        documentation:
+        - $: "$"
+          purpose: "SYNOPSIS"
+          langId: "en"
+        - $: "$"
+          purpose: "SYNOPSIS"
+          langId: "en"
+        appinfo:
+        - $: "$"
+          purpose: "SYNOPSIS"
+          specURL: "http://example.com/aeiou"
+          langId: "en"
+        - $: "$"
+          purpose: "SYNOPSIS"
+          specURL: "http://example.com/aeiou"
+          langId: "en"
+      name: "name"
+      transitions:
+      - annotation:
+          documentation:
+          - $: "$"
+            purpose: "SYNOPSIS"
+            langId: "en"
+          - $: "$"
+            purpose: "SYNOPSIS"
+            langId: "en"
+          appinfo:
+          - $: "$"
+            purpose: "SYNOPSIS"
+            specURL: "http://example.com/aeiou"
+            langId: "en"
+          - $: "$"
+            purpose: "SYNOPSIS"
+            specURL: "http://example.com/aeiou"
+            langId: "en"
+        name: "name"
+        when: "when"
+        target: "target"
+      - annotation:
+          documentation:
+          - $: "$"
+            purpose: "SYNOPSIS"
+            langId: "en"
+          - $: "$"
+            purpose: "SYNOPSIS"
+            langId: "en"
+          appinfo:
+          - $: "$"
+            purpose: "SYNOPSIS"
+            specURL: "http://example.com/aeiou"
+            langId: "en"
+          - $: "$"
+            purpose: "SYNOPSIS"
+            specURL: "http://example.com/aeiou"
+            langId: "en"
+        name: "name"
+        when: "when"
+        target: "target"
   Transition:
     type: "object"
     properties:
+      name:
+        type: "string"
       when:
         type: "string"
         description: "Optional guard condition"
@@ -3009,6 +3742,27 @@ definitions:
         maxLength: 64
       annotation:
         $ref: "#/definitions/Annotation"
+    example:
+      annotation:
+        documentation:
+        - $: "$"
+          purpose: "SYNOPSIS"
+          langId: "en"
+        - $: "$"
+          purpose: "SYNOPSIS"
+          langId: "en"
+        appinfo:
+        - $: "$"
+          purpose: "SYNOPSIS"
+          specURL: "http://example.com/aeiou"
+          langId: "en"
+        - $: "$"
+          purpose: "SYNOPSIS"
+          specURL: "http://example.com/aeiou"
+          langId: "en"
+      name: "name"
+      when: "when"
+      target: "target"
   Trigger:
     type: "object"
     required:
@@ -3025,6 +3779,10 @@ definitions:
       name:
         type: "string"
         description: "name of Transition to invoke"
+    example:
+      actor: "actor"
+      stateMachine: "stateMachine"
+      name: "name"
   Structure:
     properties:
       fields:
@@ -3039,3 +3797,13 @@ definitions:
         type: "array"
         items:
           $ref: "#/definitions/GroupRef"
+    example:
+      components:
+      - ""
+      - ""
+      groups:
+      - ""
+      - ""
+      fields:
+      - ""
+      - ""

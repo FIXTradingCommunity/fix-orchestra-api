@@ -31,11 +31,12 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.fixprotocol.orchestra.model.Metadata;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.*;
 
 /**
  * Repository
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-29T15:58:53.146Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-30T16:33:12.690Z")
 public class Repository   {
   @JsonProperty("name")
   private String name = null;
@@ -63,11 +64,13 @@ public class Repository   {
     return this;
   }
 
-   /**
+  /**
    * Stable name that does not change with minor version updates
    * @return name
-  **/
+   **/
+  @JsonProperty("name")
   @ApiModelProperty(required = true, value = "Stable name that does not change with minor version updates")
+  @NotNull
   public String getName() {
     return name;
   }
@@ -81,11 +84,13 @@ public class Repository   {
     return this;
   }
 
-   /**
+  /**
    * Get version
    * @return version
-  **/
+   **/
+  @JsonProperty("version")
   @ApiModelProperty(required = true, value = "")
+  @NotNull
   public String getVersion() {
     return version;
   }
@@ -99,10 +104,11 @@ public class Repository   {
     return this;
   }
 
-   /**
+  /**
    * Globally unique object identifier, a URI or UUID
    * @return oid
-  **/
+   **/
+  @JsonProperty("oid")
   @ApiModelProperty(value = "Globally unique object identifier, a URI or UUID")
   public String getOid() {
     return oid;
@@ -117,10 +123,11 @@ public class Repository   {
     return this;
   }
 
-   /**
+  /**
    * Reference documentation
    * @return specURL
-  **/
+   **/
+  @JsonProperty("specURL")
   @ApiModelProperty(value = "Reference documentation")
   public String getSpecURL() {
     return specURL;
@@ -135,10 +142,11 @@ public class Repository   {
     return this;
   }
 
-   /**
+  /**
    * Associated schema namespace
    * @return namespace
-  **/
+   **/
+  @JsonProperty("namespace")
   @ApiModelProperty(value = "Associated schema namespace")
   public String getNamespace() {
     return namespace;
@@ -153,12 +161,13 @@ public class Repository   {
     return this;
   }
 
-   /**
+  /**
    * Get hasComponents
    * @return hasComponents
-  **/
+   **/
+  @JsonProperty("hasComponents")
   @ApiModelProperty(value = "")
-  public Boolean getHasComponents() {
+  public Boolean isHasComponents() {
     return hasComponents;
   }
 
@@ -171,10 +180,11 @@ public class Repository   {
     return this;
   }
 
-   /**
+  /**
    * Get metadata
    * @return metadata
-  **/
+   **/
+  @JsonProperty("metadata")
   @ApiModelProperty(value = "")
   public Metadata getMetadata() {
     return metadata;

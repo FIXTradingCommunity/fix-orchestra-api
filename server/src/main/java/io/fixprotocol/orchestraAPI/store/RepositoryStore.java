@@ -6,10 +6,12 @@ import java.util.function.Predicate;
 
 import io.fixprotocol.orchestra.model.Actor;
 import io.fixprotocol.orchestra.model.Annotation;
+import io.fixprotocol.orchestra.model.Appinfo;
 import io.fixprotocol.orchestra.model.Code;
 import io.fixprotocol.orchestra.model.CodeSet;
 import io.fixprotocol.orchestra.model.Component;
 import io.fixprotocol.orchestra.model.Datatype;
+import io.fixprotocol.orchestra.model.Documentation;
 import io.fixprotocol.orchestra.model.Field;
 import io.fixprotocol.orchestra.model.Flow;
 import io.fixprotocol.orchestra.model.Group;
@@ -41,12 +43,14 @@ public interface RepositoryStore {
    * @param version version of Orchestra repository (required)
    * @param elementId identifier of the element to annotate
    * @param elementType type of the element
+   * @param parentId  identifier of the parent of the element to annotate
    * @param annotation to add to an element
    * @throws ResourceNotFoundException if the repository to update does not exist
    * @throws RepositoryStoreException if the store operation fails
+   * @throws IllegalArgumentException if elementType is not a supported type
    */
   void createAnnotation(String reposName, String version, String elementId, ElementType elementType,
-      Annotation annotation) throws RepositoryStoreException;
+      String parentId, Annotation annotation) throws RepositoryStoreException;
 
   /**
    * Creates a new Code in a repository
@@ -203,10 +207,13 @@ public interface RepositoryStore {
    * @param version version of Orchestra repository (required)
    * @param elementId identifier of the element to remove Annotation
    * @param elementType type of the element
+   * @param parentId  identifier of the parent of the element to annotate
    * @throws ResourceNotFoundException if the repository or actor to delete does not exist
    * @throws RepositoryStoreException if the store operation fails
+   * @throws IllegalArgumentException if elementType is not a supported type
    */
-  void deleteAnnotation(String reposName, String version, String elementId, String elementType)
+  void deleteAnnotation(String reposName, String version, String elementId, ElementType elementType,
+      String parentId)
       throws RepositoryStoreException;
 
   /**
@@ -368,13 +375,18 @@ public interface RepositoryStore {
    * 
    * @param reposName name of Orchestra repository (required)
    * @param version version of Orchestra repository (required)
-   * @param predicate filter for annotations to return
+   * @param elementId identifier of the element to annotate
+   * @param elementType type of the element
+   * @param parentId identifier of the parent of the element to annotate
+   * @param documentationPredicate filter for Documentation elements to return
+   * @param appInfoPredicate filter for Appinfo elements to return
    * @return a list of annotations
    * @throws ResourceNotFoundException if the repository does not exist
    * @throws RepositoryStoreException if the store operation fails
    */
-  List<Annotation> getAnnotations(String reposName, String version, Predicate<Annotation> predicate)
-      throws RepositoryStoreException;
+  Annotation getAnnotations(String reposName, String version, String elementId,
+      ElementType elementType, String parentId, Predicate<Documentation> documentationPredicate,
+      Predicate<Appinfo> appInfoPredicate) throws RepositoryStoreException;
 
   /**
    * Retrieves a Code by its ID
@@ -692,12 +704,13 @@ public interface RepositoryStore {
    * @param version version of Orchestra repository (required)
    * @param elementId identifier of the element to annotate
    * @param elementType type of the element
+   * @param parentId  identifier of the parent of the element to annotate
    * @param annotation new value of Annotation
    * @throws ResourceNotFoundException if the repository or element to update does not exist
    * @throws RepositoryStoreException if the store operation fails
    */
-  void updateAnnotation(String reposName, String version, String elementId, String elementType,
-      Annotation annotation) throws RepositoryStoreException;
+  void updateAnnotation(String reposName, String version, String elementId, ElementType elementType,
+      String parentId, Annotation annotation) throws RepositoryStoreException;
 
   /**
    * Update an existing Code

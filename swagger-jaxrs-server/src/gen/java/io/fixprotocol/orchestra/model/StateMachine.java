@@ -34,11 +34,12 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.constraints.*;
 
 /**
  * StateMachine
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-29T15:58:53.146Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-30T16:33:12.690Z")
 public class StateMachine   {
   @JsonProperty("name")
   private String name = null;
@@ -47,7 +48,7 @@ public class StateMachine   {
   private State initial = null;
 
   @JsonProperty("states")
-  private List<State> states = new ArrayList<State>();
+  private List<State> states = null;
 
   @JsonProperty("annotation")
   private Annotation annotation = null;
@@ -57,12 +58,14 @@ public class StateMachine   {
     return this;
   }
 
-   /**
+  /**
    * Get name
    * @return name
-  **/
+   **/
+  @JsonProperty("name")
   @ApiModelProperty(required = true, value = "")
-  public String getName() {
+  @NotNull
+ @Size(max=64)  public String getName() {
     return name;
   }
 
@@ -75,10 +78,11 @@ public class StateMachine   {
     return this;
   }
 
-   /**
+  /**
    * Get initial
    * @return initial
-  **/
+   **/
+  @JsonProperty("initial")
   @ApiModelProperty(value = "")
   public State getInitial() {
     return initial;
@@ -94,14 +98,18 @@ public class StateMachine   {
   }
 
   public StateMachine addStatesItem(State statesItem) {
+    if (this.states == null) {
+      this.states = new ArrayList<>();
+    }
     this.states.add(statesItem);
     return this;
   }
 
-   /**
+  /**
    * Get states
    * @return states
-  **/
+   **/
+  @JsonProperty("states")
   @ApiModelProperty(value = "")
   public List<State> getStates() {
     return states;
@@ -116,10 +124,11 @@ public class StateMachine   {
     return this;
   }
 
-   /**
+  /**
    * Get annotation
    * @return annotation
-  **/
+   **/
+  @JsonProperty("annotation")
   @ApiModelProperty(value = "")
   public Annotation getAnnotation() {
     return annotation;

@@ -30,11 +30,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.*;
 
 /**
  * ObjectId
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-29T15:58:53.146Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-30T16:33:12.690Z")
 public class ObjectId   {
   @JsonProperty("name")
   private String name = null;
@@ -53,12 +54,14 @@ public class ObjectId   {
     return this;
   }
 
-   /**
+  /**
    * Name, unique within a file
    * @return name
-  **/
+   **/
+  @JsonProperty("name")
   @ApiModelProperty(example = "Account", required = true, value = "Name, unique within a file")
-  public String getName() {
+  @NotNull
+ @Size(max=64)  public String getName() {
     return name;
   }
 
@@ -71,11 +74,13 @@ public class ObjectId   {
     return this;
   }
 
-   /**
+  /**
    * Numeric ID, unique within a file, e.g. a field tag
    * @return id
-  **/
+   **/
+  @JsonProperty("id")
   @ApiModelProperty(example = "1", required = true, value = "Numeric ID, unique within a file, e.g. a field tag")
+  @NotNull
   public Integer getId() {
     return id;
   }
@@ -89,12 +94,13 @@ public class ObjectId   {
     return this;
   }
 
-   /**
+  /**
    * Short name
    * @return abbrName
-  **/
+   **/
+  @JsonProperty("abbrName")
   @ApiModelProperty(example = "Acct", value = "Short name")
-  public String getAbbrName() {
+ @Size(max=64)  public String getAbbrName() {
     return abbrName;
   }
 
@@ -107,10 +113,11 @@ public class ObjectId   {
     return this;
   }
 
-   /**
+  /**
    * Globally unique object identifier, a URI or UUID
    * @return oid
-  **/
+   **/
+  @JsonProperty("oid")
   @ApiModelProperty(value = "Globally unique object identifier, a URI or UUID")
   public String getOid() {
     return oid;

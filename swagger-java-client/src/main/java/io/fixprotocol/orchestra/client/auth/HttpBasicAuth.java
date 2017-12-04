@@ -4,14 +4,14 @@ package io.fixprotocol.orchestra.client.auth;
 
 import io.fixprotocol.orchestra.client.Pair;
 
-import com.migcomponents.migbase64.Base64;
+import java.util.Base64;
+import java.nio.charset.StandardCharsets;
 
 import java.util.Map;
 import java.util.List;
 
-import java.io.UnsupportedEncodingException;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-29T15:57:45.378Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-30T16:31:59.574Z")
 public class HttpBasicAuth implements Authentication {
   private String username;
   private String password;
@@ -38,10 +38,6 @@ public class HttpBasicAuth implements Authentication {
       return;
     }
     String str = (username == null ? "" : username) + ":" + (password == null ? "" : password);
-    try {
-      headerParams.put("Authorization", "Basic " + Base64.encodeToString(str.getBytes("UTF-8"), false));
-    } catch (UnsupportedEncodingException e) {
-      throw new RuntimeException(e);
-    }
+    headerParams.put("Authorization", "Basic " + Base64.getEncoder().encodeToString(str.getBytes(StandardCharsets.UTF_8)));
   }
 }

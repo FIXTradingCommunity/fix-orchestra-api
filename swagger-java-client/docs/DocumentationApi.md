@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 <a name="addAnnotation"></a>
 # **addAnnotation**
-> addAnnotation(reposName, version, elementId, elementType, annotation)
+> addAnnotation(reposName, version, elementId, elementType, parentId, annotation)
 
 adds an Annotation
 
@@ -28,11 +28,12 @@ Adds an Annotation
 DocumentationApi apiInstance = new DocumentationApi();
 String reposName = "reposName_example"; // String | name of Orchestra repository
 String version = "version_example"; // String | version of Orchestra repository
-String elementId = "elementId_example"; // String | 
-String elementType = "elementType_example"; // String | 
+String elementId = "elementId_example"; // String | name or ID as a string of the element to annotate
+String elementType = "elementType_example"; // String | type of element to annotate
+String parentId = "parentId_example"; // String | name or ID as a string of the parent of the element to annotate. Required for code, actor, stateMachine.
 Annotation annotation = new Annotation(); // Annotation | Annotation to add
 try {
-    apiInstance.addAnnotation(reposName, version, elementId, elementType, annotation);
+    apiInstance.addAnnotation(reposName, version, elementId, elementType, parentId, annotation);
 } catch (ApiException e) {
     System.err.println("Exception when calling DocumentationApi#addAnnotation");
     e.printStackTrace();
@@ -45,8 +46,9 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **reposName** | **String**| name of Orchestra repository |
  **version** | **String**| version of Orchestra repository |
- **elementId** | **String**|  |
- **elementType** | **String**|  | [optional] [enum: codeSet, component, datatype, field, group, message, actor, flow, response]
+ **elementId** | **String**| name or ID as a string of the element to annotate |
+ **elementType** | **String**| type of element to annotate | [enum: code, codeSet, component, datatype, field, group, message, actor, flow, response, stateMachine]
+ **parentId** | **String**| name or ID as a string of the parent of the element to annotate. Required for code, actor, stateMachine. | [optional]
  **annotation** | [**Annotation**](Annotation.md)| Annotation to add | [optional]
 
 ### Return type
@@ -64,7 +66,7 @@ No authorization required
 
 <a name="deleteAnnotation"></a>
 # **deleteAnnotation**
-> deleteAnnotation(reposName, version, elementId, elementType)
+> deleteAnnotation(reposName, version, elementId, elementType, parentId)
 
 deletes a single Annotation
 
@@ -78,10 +80,11 @@ deletes a single Annotation
 DocumentationApi apiInstance = new DocumentationApi();
 String reposName = "reposName_example"; // String | name of Orchestra repository
 String version = "version_example"; // String | version of Orchestra repository
-String elementId = "elementId_example"; // String | 
-String elementType = "elementType_example"; // String | 
+String elementId = "elementId_example"; // String | name or ID as a string of the element to annotate
+String elementType = "elementType_example"; // String | type of element to annotate
+String parentId = "parentId_example"; // String | name or ID as a string of the parent of the element to annotate. Required for code, actor, stateMachine.
 try {
-    apiInstance.deleteAnnotation(reposName, version, elementId, elementType);
+    apiInstance.deleteAnnotation(reposName, version, elementId, elementType, parentId);
 } catch (ApiException e) {
     System.err.println("Exception when calling DocumentationApi#deleteAnnotation");
     e.printStackTrace();
@@ -94,8 +97,9 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **reposName** | **String**| name of Orchestra repository |
  **version** | **String**| version of Orchestra repository |
- **elementId** | **String**|  |
- **elementType** | **String**|  | [optional] [enum: codeSet, component, datatype, field, group, message, actor, flow, response]
+ **elementId** | **String**| name or ID as a string of the element to annotate |
+ **elementType** | **String**| type of element to annotate | [enum: code, codeSet, component, datatype, field, group, message, actor, flow, response, stateMachine]
+ **parentId** | **String**| name or ID as a string of the parent of the element to annotate. Required for code, actor, stateMachine. | [optional]
 
 ### Return type
 
@@ -112,7 +116,7 @@ No authorization required
 
 <a name="searchAnnotations"></a>
 # **searchAnnotations**
-> Annotation searchAnnotations(reposName, version, elementId, elementType, searchString, skip, limit)
+> Annotation searchAnnotations(reposName, version, elementId, elementType, parentId, searchString, skip, limit)
 
 searches annotations
 
@@ -128,13 +132,14 @@ By passing in the appropriate options, you can search for annotations
 DocumentationApi apiInstance = new DocumentationApi();
 String reposName = "reposName_example"; // String | name of Orchestra repository
 String version = "version_example"; // String | version of Orchestra repository
-String elementId = "elementId_example"; // String | 
-String elementType = "elementType_example"; // String | 
+String elementId = "elementId_example"; // String | name or ID as a string of the element to annotate
+String elementType = "elementType_example"; // String | type of element to annotate
+String parentId = "parentId_example"; // String | name or ID as a string of the parent of the element to annotate. Required for code, actor, stateMachine.
 String searchString = "searchString_example"; // String | pass an optional search string for looking up annotations
 Integer skip = 56; // Integer | number of records to skip for pagination
 Integer limit = 56; // Integer | maximum number of records to return
 try {
-    Annotation result = apiInstance.searchAnnotations(reposName, version, elementId, elementType, searchString, skip, limit);
+    Annotation result = apiInstance.searchAnnotations(reposName, version, elementId, elementType, parentId, searchString, skip, limit);
     System.out.println(result);
 } catch (ApiException e) {
     System.err.println("Exception when calling DocumentationApi#searchAnnotations");
@@ -148,8 +153,9 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **reposName** | **String**| name of Orchestra repository |
  **version** | **String**| version of Orchestra repository |
- **elementId** | **String**|  |
- **elementType** | **String**|  | [optional] [enum: codeSet, component, datatype, field, group, message, actor, flow, response]
+ **elementId** | **String**| name or ID as a string of the element to annotate |
+ **elementType** | **String**| type of element to annotate | [enum: code, codeSet, component, datatype, field, group, message, actor, flow, response, stateMachine]
+ **parentId** | **String**| name or ID as a string of the parent of the element to annotate. Required for code, actor, stateMachine. | [optional]
  **searchString** | **String**| pass an optional search string for looking up annotations | [optional]
  **skip** | **Integer**| number of records to skip for pagination | [optional]
  **limit** | **Integer**| maximum number of records to return | [optional]
@@ -169,7 +175,7 @@ No authorization required
 
 <a name="updateAnnotation"></a>
 # **updateAnnotation**
-> updateAnnotation(reposName, version, elementId, annotation, elementType)
+> updateAnnotation(reposName, version, elementId, elementType, annotation, parentId)
 
 Updates a single Annotation, if found (idempotent)
 
@@ -183,11 +189,12 @@ Updates a single Annotation, if found (idempotent)
 DocumentationApi apiInstance = new DocumentationApi();
 String reposName = "reposName_example"; // String | name of Orchestra repository
 String version = "version_example"; // String | version of Orchestra repository
-String elementId = "elementId_example"; // String | 
+String elementId = "elementId_example"; // String | name or ID as a string of the element to annotate
+String elementType = "elementType_example"; // String | type of element to annotate
 Annotation annotation = new Annotation(); // Annotation | Annotation to update
-String elementType = "elementType_example"; // String | 
+String parentId = "parentId_example"; // String | name or ID as a string of the parent of the element to annotate. Required for code, actor, stateMachine.
 try {
-    apiInstance.updateAnnotation(reposName, version, elementId, annotation, elementType);
+    apiInstance.updateAnnotation(reposName, version, elementId, elementType, annotation, parentId);
 } catch (ApiException e) {
     System.err.println("Exception when calling DocumentationApi#updateAnnotation");
     e.printStackTrace();
@@ -200,9 +207,10 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **reposName** | **String**| name of Orchestra repository |
  **version** | **String**| version of Orchestra repository |
- **elementId** | **String**|  |
+ **elementId** | **String**| name or ID as a string of the element to annotate |
+ **elementType** | **String**| type of element to annotate | [enum: code, codeSet, component, datatype, field, group, message, actor, flow, response, stateMachine]
  **annotation** | [**Annotation**](Annotation.md)| Annotation to update |
- **elementType** | **String**|  | [optional] [enum: codeSet, component, datatype, field, group, message, actor, flow, response]
+ **parentId** | **String**| name or ID as a string of the parent of the element to annotate. Required for code, actor, stateMachine. | [optional]
 
 ### Return type
 

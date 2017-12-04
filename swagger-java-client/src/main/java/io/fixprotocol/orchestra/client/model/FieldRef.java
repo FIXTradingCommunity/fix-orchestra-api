@@ -9,7 +9,7 @@ import io.fixprotocol.orchestra.client.model.ObjectId;
 /**
  * FieldRef
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-29T15:57:45.378Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-30T16:31:59.574Z")
 public class FieldRef extends ElementRef {
 
   @Override
@@ -20,7 +20,7 @@ public class FieldRef extends ElementRef {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    return true;
+    return super.equals(o);
   }
 
   @Override
@@ -48,6 +48,6 @@ public class FieldRef extends ElementRef {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
 }
 

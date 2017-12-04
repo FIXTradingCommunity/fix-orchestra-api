@@ -31,12 +31,13 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.fixprotocol.orchestra.model.Annotation;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.*;
 
 /**
  * A stream of messages in one direction
  */
 @ApiModel(description = "A stream of messages in one direction")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-29T15:58:53.146Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-30T16:33:12.690Z")
 public class Flow   {
   @JsonProperty("name")
   private String name = null;
@@ -55,12 +56,14 @@ public class Flow   {
     return this;
   }
 
-   /**
+  /**
    * unique flow name
    * @return name
-  **/
+   **/
+  @JsonProperty("name")
   @ApiModelProperty(required = true, value = "unique flow name")
-  public String getName() {
+  @NotNull
+ @Size(max=64)  public String getName() {
     return name;
   }
 
@@ -73,12 +76,14 @@ public class Flow   {
     return this;
   }
 
-   /**
+  /**
    * Name of the actor that originates messages
    * @return source
-  **/
+   **/
+  @JsonProperty("source")
   @ApiModelProperty(required = true, value = "Name of the actor that originates messages")
-  public String getSource() {
+  @NotNull
+ @Size(max=64)  public String getSource() {
     return source;
   }
 
@@ -91,12 +96,14 @@ public class Flow   {
     return this;
   }
 
-   /**
+  /**
    * Name of the actor that receives messages
    * @return destination
-  **/
+   **/
+  @JsonProperty("destination")
   @ApiModelProperty(required = true, value = "Name of the actor that receives messages")
-  public String getDestination() {
+  @NotNull
+ @Size(max=64)  public String getDestination() {
     return destination;
   }
 
@@ -109,10 +116,11 @@ public class Flow   {
     return this;
   }
 
-   /**
+  /**
    * Get annotation
    * @return annotation
-  **/
+   **/
+  @JsonProperty("annotation")
   @ApiModelProperty(value = "")
   public Annotation getAnnotation() {
     return annotation;

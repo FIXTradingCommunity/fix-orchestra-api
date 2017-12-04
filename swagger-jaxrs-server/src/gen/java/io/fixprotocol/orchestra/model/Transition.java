@@ -31,12 +31,16 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.fixprotocol.orchestra.model.Annotation;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.*;
 
 /**
  * Transition
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-29T15:58:53.146Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-30T16:33:12.690Z")
 public class Transition   {
+  @JsonProperty("name")
+  private String name = null;
+
   @JsonProperty("when")
   private String when = null;
 
@@ -46,15 +50,35 @@ public class Transition   {
   @JsonProperty("annotation")
   private Annotation annotation = null;
 
+  public Transition name(String name) {
+    this.name = name;
+    return this;
+  }
+
+  /**
+   * Get name
+   * @return name
+   **/
+  @JsonProperty("name")
+  @ApiModelProperty(value = "")
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
   public Transition when(String when) {
     this.when = when;
     return this;
   }
 
-   /**
+  /**
    * Optional guard condition
    * @return when
-  **/
+   **/
+  @JsonProperty("when")
   @ApiModelProperty(value = "Optional guard condition")
   public String getWhen() {
     return when;
@@ -69,12 +93,13 @@ public class Transition   {
     return this;
   }
 
-   /**
+  /**
    * name of the target state
    * @return target
-  **/
+   **/
+  @JsonProperty("target")
   @ApiModelProperty(value = "name of the target state")
-  public String getTarget() {
+ @Size(max=64)  public String getTarget() {
     return target;
   }
 
@@ -87,10 +112,11 @@ public class Transition   {
     return this;
   }
 
-   /**
+  /**
    * Get annotation
    * @return annotation
-  **/
+   **/
+  @JsonProperty("annotation")
   @ApiModelProperty(value = "")
   public Annotation getAnnotation() {
     return annotation;
@@ -110,14 +136,15 @@ public class Transition   {
       return false;
     }
     Transition transition = (Transition) o;
-    return Objects.equals(this.when, transition.when) &&
+    return Objects.equals(this.name, transition.name) &&
+        Objects.equals(this.when, transition.when) &&
         Objects.equals(this.target, transition.target) &&
         Objects.equals(this.annotation, transition.annotation);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(when, target, annotation);
+    return Objects.hash(name, when, target, annotation);
   }
 
 
@@ -126,6 +153,7 @@ public class Transition   {
     StringBuilder sb = new StringBuilder();
     sb.append("class Transition {\n");
     
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    when: ").append(toIndentedString(when)).append("\n");
     sb.append("    target: ").append(toIndentedString(target)).append("\n");
     sb.append("    annotation: ").append(toIndentedString(annotation)).append("\n");

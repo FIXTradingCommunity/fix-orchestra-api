@@ -21,10 +21,13 @@ import org.junit.Test;
 import org.xml.sax.SAXException;
 
 import io.fixprotocol.orchestra.model.Actor;
+import io.fixprotocol.orchestra.model.Annotation;
+import io.fixprotocol.orchestra.model.Appinfo;
 import io.fixprotocol.orchestra.model.Code;
 import io.fixprotocol.orchestra.model.CodeSet;
 import io.fixprotocol.orchestra.model.Component;
 import io.fixprotocol.orchestra.model.ComponentRef;
+import io.fixprotocol.orchestra.model.Documentation;
 import io.fixprotocol.orchestra.model.Field;
 import io.fixprotocol.orchestra.model.FieldRef;
 import io.fixprotocol.orchestra.model.Flow;
@@ -40,6 +43,7 @@ import io.fixprotocol.orchestra.model.StateMachine;
 import io.fixprotocol.orchestra.model.Structure;
 import io.fixprotocol.orchestra.model.Transition;
 import io.fixprotocol.orchestraAPI.store.DuplicateKeyException;
+import io.fixprotocol.orchestraAPI.store.ElementType;
 import io.fixprotocol.orchestraAPI.store.RepositoryStoreException;
 import io.fixprotocol.orchestraAPI.store.ResourceNotFoundException;
 
@@ -79,6 +83,20 @@ public class RepositoryDOMStoreTest {
     assertNotNull(actor3);
     assertEquals("actor1", actor3.getName());
     assertEquals("actor2", actor3.getExtends());
+    
+    Annotation annotation = new Annotation();
+    Documentation documentation = new Documentation();
+    documentation.setLangId("en");
+    documentation.setPurpose("SYNOPSIS");
+    documentation.setValue("The best actor");
+    annotation.addDocumentationItem(documentation );
+    Appinfo appinfo = new Appinfo();
+    appinfo.setValue("my app info");
+    annotation.addAppinfoItem(appinfo);
+    store.createAnnotation("test1", identifier, "actor1", ElementType.actor, null, annotation );
+    
+    Annotation annotation2 = store.getAnnotations("test1", identifier, "actor1", ElementType.actor, null, null, null);
+    assertNotNull(annotation2);
 
     store.deleteActor("test1", identifier, "actor1");
 

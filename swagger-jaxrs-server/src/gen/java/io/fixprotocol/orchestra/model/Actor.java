@@ -32,12 +32,13 @@ import io.fixprotocol.orchestra.model.Annotation;
 import io.fixprotocol.orchestra.model.Structure;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.*;
 
 /**
  * Represents a class of participants
  */
 @ApiModel(description = "Represents a class of participants")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-29T15:58:53.146Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-30T16:33:12.690Z")
 public class Actor   {
   @JsonProperty("name")
   private String name = null;
@@ -56,12 +57,14 @@ public class Actor   {
     return this;
   }
 
-   /**
+  /**
    * unique name
    * @return name
-  **/
+   **/
+  @JsonProperty("name")
   @ApiModelProperty(required = true, value = "unique name")
-  public String getName() {
+  @NotNull
+ @Size(max=64)  public String getName() {
     return name;
   }
 
@@ -74,12 +77,13 @@ public class Actor   {
     return this;
   }
 
-   /**
+  /**
    * Inherits properties from another Actor
    * @return _extends
-  **/
+   **/
+  @JsonProperty("extends")
   @ApiModelProperty(value = "Inherits properties from another Actor")
-  public String getExtends() {
+ @Size(max=64)  public String getExtends() {
     return _extends;
   }
 
@@ -92,10 +96,11 @@ public class Actor   {
     return this;
   }
 
-   /**
+  /**
    * State variables
    * @return structure
-  **/
+   **/
+  @JsonProperty("structure")
   @ApiModelProperty(value = "State variables")
   public Structure getStructure() {
     return structure;
@@ -110,10 +115,11 @@ public class Actor   {
     return this;
   }
 
-   /**
+  /**
    * Get annotation
    * @return annotation
-  **/
+   **/
+  @JsonProperty("annotation")
   @ApiModelProperty(value = "")
   public Annotation getAnnotation() {
     return annotation;

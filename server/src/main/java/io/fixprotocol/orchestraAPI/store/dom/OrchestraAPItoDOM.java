@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,10 +17,12 @@ import org.purl.dc.terms.ElementOrRefinementContainer;
 
 import io.fixprotocol._2016.fixrepository.ActorType;
 import io.fixprotocol._2016.fixrepository.Annotation;
+import io.fixprotocol._2016.fixrepository.Appinfo;
 import io.fixprotocol._2016.fixrepository.CodeSetType;
 import io.fixprotocol._2016.fixrepository.CodeType;
 import io.fixprotocol._2016.fixrepository.ComponentRefType;
 import io.fixprotocol._2016.fixrepository.ComponentType;
+import io.fixprotocol._2016.fixrepository.Documentation;
 import io.fixprotocol._2016.fixrepository.FieldRefType;
 import io.fixprotocol._2016.fixrepository.FieldType;
 import io.fixprotocol._2016.fixrepository.FlowType;
@@ -72,6 +75,31 @@ public final class OrchestraAPItoDOM {
     return actorType;
   }
 
+  public static Annotation AnnotationToDOM(io.fixprotocol.orchestra.model.Annotation annotation) {
+    Annotation annotationDOM = new Annotation();
+    List<Object> listDOM = annotationDOM.getDocumentationOrAppinfo();
+    if (annotation.getAppinfo() != null) {
+      for (io.fixprotocol.orchestra.model.Appinfo appinfo : annotation.getAppinfo()) {
+        listDOM.add(AppinfoToDOM(appinfo));
+      }
+    }
+    if (annotation.getDocumentation() != null) {
+      for (io.fixprotocol.orchestra.model.Documentation documentation : annotation
+          .getDocumentation()) {
+        listDOM.add(DocumentationToDOM(documentation));
+      }
+    }
+    return annotationDOM;
+  }
+
+  public static Appinfo AppinfoToDOM(io.fixprotocol.orchestra.model.Appinfo appinfo) {
+    Appinfo appinfoDOM = new Appinfo();
+    appinfoDOM.setLangId(appinfo.getLangId());
+    appinfoDOM.setPurpose(appinfo.getPurpose());
+    appinfoDOM.setContent(appinfo.getValue());
+    return appinfoDOM;
+  }
+
   public static CodeSetType CodeSetToDOM(CodeSet codeSet) {
     CodeSetType codeSetType = new CodeSetType();
     codeSetType.setAbbrName(codeSet.getOid().getAbbrName());
@@ -80,9 +108,11 @@ public final class OrchestraAPItoDOM {
     codeSetType.setOid(codeSet.getOid().getOid());
     codeSetType.setSpecUrl(codeSet.getSpecURL());
     codeSetType.setType(codeSet.getType());
-    codeSetType.getCode().addAll(
-        codeSet.getCodes().stream().map(OrchestraAPItoDOM::CodeToDOM).collect(Collectors.toList()));
-    codeSetType.setAnnotation(new Annotation());
+    if (codeSet.getCodes() != null) {
+      codeSetType.getCode().addAll(codeSet.getCodes().stream().map(OrchestraAPItoDOM::CodeToDOM)
+          .collect(Collectors.toList()));
+      codeSetType.setAnnotation(new Annotation());
+    }
     return codeSetType;
   }
 
@@ -131,6 +161,15 @@ public final class OrchestraAPItoDOM {
     return datatypeDOM;
   }
 
+  public static Documentation DocumentationToDOM(
+      io.fixprotocol.orchestra.model.Documentation documentation) {
+    Documentation documentationDOM = new Documentation();
+    documentationDOM.setLangId(documentation.getLangId());
+    documentationDOM.setPurpose(documentation.getPurpose());
+    documentationDOM.getContent().add(documentation.getValue());
+    return documentationDOM;
+  }
+
   public static Actor DOMToActor(ActorType actorType) {
     Actor actor = new Actor();
     actor.setExtends(actorType.getExtends());
@@ -140,6 +179,27 @@ public final class OrchestraAPItoDOM {
     List<Object> objects = actorType.getFieldOrFieldRefOrComponent();
     populateStructure(objects, structure);
     return actor;
+  }
+
+  public static io.fixprotocol.orchestra.model.Annotation DOMToAnnotation(
+      Annotation annotationDOM) {
+    io.fixprotocol.orchestra.model.Annotation annotation =
+        new io.fixprotocol.orchestra.model.Annotation();
+    annotation.setAppinfo(
+        annotationDOM.getDocumentationOrAppinfo().stream().filter(o -> o instanceof Appinfo)
+            .map(o -> (Appinfo) o).map(a -> DOMToAppinfo(a)).collect(Collectors.toList()));
+    annotation.setDocumentation(annotationDOM.getDocumentationOrAppinfo().stream()
+        .filter(o -> o instanceof Documentation).map(o -> (Documentation) o)
+        .map(d -> DOMToDocumentation(d)).collect(Collectors.toList()));
+    return annotation;
+  }
+
+  public static io.fixprotocol.orchestra.model.Appinfo DOMToAppinfo(Appinfo appinfoDOM) {
+    io.fixprotocol.orchestra.model.Appinfo appinfo = new io.fixprotocol.orchestra.model.Appinfo();
+    appinfo.setLangId(appinfoDOM.getLangId());
+    appinfo.setPurpose(appinfoDOM.getPurpose());
+    appinfo.setValue(appinfoDOM.getContent());
+    return appinfo;
   }
 
   public static Code DOMToCode(CodeType codeType) {
@@ -182,6 +242,16 @@ public final class OrchestraAPItoDOM {
     datatype.setName(datatypeDOM.getName());
     datatype.setBaseType(datatypeDOM.getBaseType());
     return datatype;
+  }
+
+  public static io.fixprotocol.orchestra.model.Documentation DOMToDocumentation(
+      Documentation documentationDOM) {
+    io.fixprotocol.orchestra.model.Documentation documentation =
+        new io.fixprotocol.orchestra.model.Documentation();
+    documentation.setLangId(documentationDOM.getLangId());
+    documentation.setPurpose(documentationDOM.getPurpose());
+    documentation.setValue(documentationDOM.getContent().get(0).toString());
+    return documentation;
   }
 
   public static Field DOMToField(FieldType fieldType) {
@@ -324,8 +394,8 @@ public final class OrchestraAPItoDOM {
     StateMachine stateMachine = new StateMachine();
     stateMachine.setName(stateMachineType.getName());
     stateMachine.setInitial(DOMToState(stateMachineType.getInitial()));
-    stateMachine.setStates(
-        stateMachineType.getState().stream().map(OrchestraAPItoDOM::DOMToState).collect(Collectors.toList()));
+    stateMachine.setStates(stateMachineType.getState().stream().map(OrchestraAPItoDOM::DOMToState)
+        .collect(Collectors.toList()));
     return stateMachine;
   }
 
@@ -465,7 +535,7 @@ public final class OrchestraAPItoDOM {
     Repository repositoryDOM = new Repository();
     repositoryDOM.setName(repository.getName());
     repositoryDOM.setVersion(repository.getVersion());
-    repositoryDOM.setHasComponents(repository.getHasComponents());
+    repositoryDOM.setHasComponents(repository.isHasComponents());
     repositoryDOM.setNamespace(repository.getNamespace());
     repositoryDOM.setGuid(repository.getOid());
     repositoryDOM.setSpecUrl(repository.getSpecURL());
@@ -496,17 +566,19 @@ public final class OrchestraAPItoDOM {
     StateMachineType stateMachineType = new StateMachineType();
     stateMachineType.setName(stateMachine.getName());
     stateMachineType.setInitial(StateToDOM(stateMachine.getInitial()));
-    stateMachineType.getState().addAll(
-        stateMachine.getStates().stream().map(OrchestraAPItoDOM::StateToDOM).collect(Collectors.toList()));
+    stateMachineType.getState().addAll(stateMachine.getStates().stream()
+        .map(OrchestraAPItoDOM::StateToDOM).collect(Collectors.toList()));
     return stateMachineType;
   }
 
   public static StateType StateToDOM(State state) {
     StateType stateType = new StateType();
     stateType.setName(state.getName());
-    List<TransitionType> transitions =
-        state.getTransitions().stream().map(OrchestraAPItoDOM::TransitionToDOM).collect(Collectors.toList());
-    stateType.getTransition().addAll(transitions);
+    if (state.getTransitions() != null) {
+      List<TransitionType> transitions = state.getTransitions().stream()
+          .map(OrchestraAPItoDOM::TransitionToDOM).collect(Collectors.toList());
+      stateType.getTransition().addAll(transitions);
+    }
     return stateType;
   }
 
@@ -555,6 +627,10 @@ public final class OrchestraAPItoDOM {
   }
 
   private static void populateStructure(List<Object> elements, Structure structure) {
+    // don't let any structure arrays be null
+    structure.setComponents(new ArrayList<ComponentRef>());
+    structure.setFields(new ArrayList<FieldRef>());
+    structure.setGroups(new ArrayList<GroupRef>());
     for (Object element : elements) {
       if (element instanceof FieldRefType) {
         FieldRefType fieldRefType = (FieldRefType) element;
@@ -591,30 +667,35 @@ public final class OrchestraAPItoDOM {
   }
 
   private static void populateStructureDOM(Structure structure, List<Object> elements) {
-    for (FieldRef fieldRef : structure.getFields()) {
-      FieldRefType fieldRefType = new FieldRefType();
-      fieldRefType.setAbbrName(fieldRef.getOid().getAbbrName());
-      fieldRefType.setId(BigInteger.valueOf(fieldRef.getOid().getId()));
-      fieldRefType.setName(fieldRef.getOid().getName());
-      fieldRefType.setOid(fieldRef.getOid().getOid());
-      elements.add(fieldRefType);
+    if (structure.getFields() != null) {
+      for (FieldRef fieldRef : structure.getFields()) {
+        FieldRefType fieldRefType = new FieldRefType();
+        fieldRefType.setAbbrName(fieldRef.getOid().getAbbrName());
+        fieldRefType.setId(BigInteger.valueOf(fieldRef.getOid().getId()));
+        fieldRefType.setName(fieldRef.getOid().getName());
+        fieldRefType.setOid(fieldRef.getOid().getOid());
+        elements.add(fieldRefType);
+      }
     }
-    for (GroupRef groupRef : structure.getGroups()) {
-      GroupRefType groupRefType = new GroupRefType();
-      groupRefType.setAbbrName(groupRef.getOid().getAbbrName());
-      groupRefType.setId(BigInteger.valueOf(groupRef.getOid().getId()));
-      groupRefType.setName(groupRef.getOid().getName());
-      groupRefType.setOid(groupRef.getOid().getOid());
-      elements.add(groupRefType);
+    if (structure.getGroups() != null) {
+      for (GroupRef groupRef : structure.getGroups()) {
+        GroupRefType groupRefType = new GroupRefType();
+        groupRefType.setAbbrName(groupRef.getOid().getAbbrName());
+        groupRefType.setId(BigInteger.valueOf(groupRef.getOid().getId()));
+        groupRefType.setName(groupRef.getOid().getName());
+        groupRefType.setOid(groupRef.getOid().getOid());
+        elements.add(groupRefType);
+      }
     }
-    for (ComponentRef componentRef : structure.getComponents()) {
-      ComponentRefType componentRefType = new ComponentRefType();
-      componentRefType.setAbbrName(componentRef.getOid().getAbbrName());
-      componentRefType.setId(BigInteger.valueOf(componentRef.getOid().getId()));
-      componentRefType.setName(componentRef.getOid().getName());
-      componentRefType.setOid(componentRef.getOid().getOid());
-      elements.add(componentRefType);
+    if (structure.getComponents() != null) {
+      for (ComponentRef componentRef : structure.getComponents()) {
+        ComponentRefType componentRefType = new ComponentRefType();
+        componentRefType.setAbbrName(componentRef.getOid().getAbbrName());
+        componentRefType.setId(BigInteger.valueOf(componentRef.getOid().getId()));
+        componentRefType.setName(componentRef.getOid().getName());
+        componentRefType.setOid(componentRef.getOid().getOid());
+        elements.add(componentRefType);
+      }
     }
   }
-
 }

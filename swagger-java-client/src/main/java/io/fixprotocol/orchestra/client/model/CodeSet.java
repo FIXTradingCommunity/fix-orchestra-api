@@ -3,6 +3,7 @@ package io.fixprotocol.orchestra.client.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.fixprotocol.orchestra.client.model.Annotation;
 import io.fixprotocol.orchestra.client.model.Code;
 import io.fixprotocol.orchestra.client.model.EntityAttributes;
@@ -15,7 +16,7 @@ import java.util.List;
 /**
  * CodeSet
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-29T15:57:45.378Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-30T16:31:59.574Z")
 public class CodeSet {
   @JsonProperty("oid")
   private ObjectId oid = null;
@@ -30,7 +31,7 @@ public class CodeSet {
   private String _default = null;
 
   @JsonProperty("codes")
-  private List<Code> codes = new ArrayList<Code>();
+  private List<Code> codes = null;
 
   @JsonProperty("annotation")
   private Annotation annotation = null;
@@ -116,6 +117,9 @@ public class CodeSet {
   }
 
   public CodeSet addCodesItem(Code codesItem) {
+    if (this.codes == null) {
+      this.codes = new ArrayList<>();
+    }
     this.codes.add(codesItem);
     return this;
   }
@@ -220,6 +224,6 @@ public class CodeSet {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
 }
 

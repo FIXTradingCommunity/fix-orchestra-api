@@ -73,11 +73,12 @@ public class DocumentationApiExample {
         DocumentationApi apiInstance = new DocumentationApi();
         String reposName = "reposName_example"; // String | name of Orchestra repository
         String version = "version_example"; // String | version of Orchestra repository
-        String elementId = "elementId_example"; // String | 
-        String elementType = "elementType_example"; // String | 
+        String elementId = "elementId_example"; // String | name or ID as a string of the element to annotate
+        String elementType = "elementType_example"; // String | type of element to annotate
+        String parentId = "parentId_example"; // String | name or ID as a string of the parent of the element to annotate. Required for code, actor, stateMachine.
         Annotation annotation = new Annotation(); // Annotation | Annotation to add
         try {
-            apiInstance.addAnnotation(reposName, version, elementId, elementType, annotation);
+            apiInstance.addAnnotation(reposName, version, elementId, elementType, parentId, annotation);
         } catch (ApiException e) {
             System.err.println("Exception when calling DocumentationApi#addAnnotation");
             e.printStackTrace();

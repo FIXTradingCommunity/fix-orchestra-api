@@ -33,11 +33,12 @@ import io.fixprotocol.orchestra.model.MessageRef;
 import io.fixprotocol.orchestra.model.Trigger;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.*;
 
 /**
  * Response
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-29T15:58:53.146Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-30T16:33:12.690Z")
 public class Response   {
   @JsonProperty("name")
   private String name = null;
@@ -62,12 +63,14 @@ public class Response   {
     return this;
   }
 
-   /**
+  /**
    * Get name
    * @return name
-  **/
+   **/
+  @JsonProperty("name")
   @ApiModelProperty(required = true, value = "")
-  public String getName() {
+  @NotNull
+ @Size(max=64)  public String getName() {
     return name;
   }
 
@@ -80,10 +83,11 @@ public class Response   {
     return this;
   }
 
-   /**
+  /**
    * conditional expression; if not present, then response is unconditional
    * @return when
-  **/
+   **/
+  @JsonProperty("when")
   @ApiModelProperty(value = "conditional expression; if not present, then response is unconditional")
   public String getWhen() {
     return when;
@@ -98,10 +102,11 @@ public class Response   {
     return this;
   }
 
-   /**
+  /**
    * send a response message
    * @return messageRef
-  **/
+   **/
+  @JsonProperty("messageRef")
   @ApiModelProperty(value = "send a response message")
   public MessageRef getMessageRef() {
     return messageRef;
@@ -116,10 +121,11 @@ public class Response   {
     return this;
   }
 
-   /**
+  /**
    * assignment expression
    * @return assign
-  **/
+   **/
+  @JsonProperty("assign")
   @ApiModelProperty(value = "assignment expression")
   public String getAssign() {
     return assign;
@@ -134,10 +140,11 @@ public class Response   {
     return this;
   }
 
-   /**
+  /**
    * Get trigger
    * @return trigger
-  **/
+   **/
+  @JsonProperty("trigger")
   @ApiModelProperty(value = "")
   public Trigger getTrigger() {
     return trigger;
@@ -152,10 +159,11 @@ public class Response   {
     return this;
   }
 
-   /**
+  /**
    * Get annotation
    * @return annotation
-  **/
+   **/
+  @JsonProperty("annotation")
   @ApiModelProperty(value = "")
   public Annotation getAnnotation() {
     return annotation;

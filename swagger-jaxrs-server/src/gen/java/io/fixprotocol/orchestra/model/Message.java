@@ -35,11 +35,12 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.constraints.*;
 
 /**
  * Message
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-29T15:58:53.146Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-30T16:33:12.690Z")
 public class Message   {
   @JsonProperty("oid")
   private ObjectId oid = null;
@@ -63,18 +64,20 @@ public class Message   {
   private Structure structure = null;
 
   @JsonProperty("responses")
-  private List<Response> responses = new ArrayList<Response>();
+  private List<Response> responses = null;
 
   public Message oid(ObjectId oid) {
     this.oid = oid;
     return this;
   }
 
-   /**
+  /**
    * Get oid
    * @return oid
-  **/
+   **/
+  @JsonProperty("oid")
   @ApiModelProperty(required = true, value = "")
+  @NotNull
   public ObjectId getOid() {
     return oid;
   }
@@ -88,12 +91,13 @@ public class Message   {
     return this;
   }
 
-   /**
+  /**
    * Use case of a message type
    * @return scenario
-  **/
+   **/
+  @JsonProperty("scenario")
   @ApiModelProperty(value = "Use case of a message type")
-  public String getScenario() {
+ @Size(max=64)  public String getScenario() {
     return scenario;
   }
 
@@ -106,12 +110,13 @@ public class Message   {
     return this;
   }
 
-   /**
+  /**
    * Inherits properties from another scenario
    * @return _extends
-  **/
+   **/
+  @JsonProperty("extends")
   @ApiModelProperty(value = "Inherits properties from another scenario")
-  public String getExtends() {
+ @Size(max=64)  public String getExtends() {
     return _extends;
   }
 
@@ -124,12 +129,13 @@ public class Message   {
     return this;
   }
 
-   /**
+  /**
    * A stream of messages between actors
    * @return flow
-  **/
+   **/
+  @JsonProperty("flow")
   @ApiModelProperty(value = "A stream of messages between actors")
-  public String getFlow() {
+ @Size(max=64)  public String getFlow() {
     return flow;
   }
 
@@ -142,12 +148,13 @@ public class Message   {
     return this;
   }
 
-   /**
+  /**
    * Get msgType
    * @return msgType
-  **/
+   **/
+  @JsonProperty("msgType")
   @ApiModelProperty(value = "")
-  public String getMsgType() {
+ @Size(max=2)  public String getMsgType() {
     return msgType;
   }
 
@@ -160,10 +167,11 @@ public class Message   {
     return this;
   }
 
-   /**
+  /**
    * Get category
    * @return category
-  **/
+   **/
+  @JsonProperty("category")
   @ApiModelProperty(value = "")
   public String getCategory() {
     return category;
@@ -178,10 +186,11 @@ public class Message   {
     return this;
   }
 
-   /**
+  /**
    * Get structure
    * @return structure
-  **/
+   **/
+  @JsonProperty("structure")
   @ApiModelProperty(value = "")
   public Structure getStructure() {
     return structure;
@@ -197,14 +206,18 @@ public class Message   {
   }
 
   public Message addResponsesItem(Response responsesItem) {
+    if (this.responses == null) {
+      this.responses = new ArrayList<>();
+    }
     this.responses.add(responsesItem);
     return this;
   }
 
-   /**
+  /**
    * Get responses
    * @return responses
-  **/
+   **/
+  @JsonProperty("responses")
   @ApiModelProperty(value = "")
   public List<Response> getResponses() {
     return responses;

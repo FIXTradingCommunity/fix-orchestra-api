@@ -30,11 +30,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.*;
 
 /**
  * ErrorModel
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-29T15:58:53.146Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-30T16:33:12.690Z")
 public class ErrorModel   {
   @JsonProperty("code")
   private Integer code = null;
@@ -47,11 +48,13 @@ public class ErrorModel   {
     return this;
   }
 
-   /**
+  /**
    * Get code
    * @return code
-  **/
+   **/
+  @JsonProperty("code")
   @ApiModelProperty(required = true, value = "")
+  @NotNull
   public Integer getCode() {
     return code;
   }
@@ -65,11 +68,13 @@ public class ErrorModel   {
     return this;
   }
 
-   /**
+  /**
    * Get message
    * @return message
-  **/
+   **/
+  @JsonProperty("message")
   @ApiModelProperty(required = true, value = "")
+  @NotNull
   public String getMessage() {
     return message;
   }

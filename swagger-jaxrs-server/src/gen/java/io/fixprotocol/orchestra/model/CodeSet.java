@@ -36,11 +36,12 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.constraints.*;
 
 /**
  * CodeSet
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-29T15:58:53.146Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-30T16:33:12.690Z")
 public class CodeSet   {
   @JsonProperty("oid")
   private ObjectId oid = null;
@@ -55,7 +56,7 @@ public class CodeSet   {
   private String _default = null;
 
   @JsonProperty("codes")
-  private List<Code> codes = new ArrayList<Code>();
+  private List<Code> codes = null;
 
   @JsonProperty("annotation")
   private Annotation annotation = null;
@@ -68,11 +69,13 @@ public class CodeSet   {
     return this;
   }
 
-   /**
+  /**
    * Get oid
    * @return oid
-  **/
+   **/
+  @JsonProperty("oid")
   @ApiModelProperty(required = true, value = "")
+  @NotNull
   public ObjectId getOid() {
     return oid;
   }
@@ -86,11 +89,13 @@ public class CodeSet   {
     return this;
   }
 
-   /**
+  /**
    * Get type
    * @return type
-  **/
+   **/
+  @JsonProperty("type")
   @ApiModelProperty(required = true, value = "")
+  @NotNull
   public String getType() {
     return type;
   }
@@ -104,10 +109,11 @@ public class CodeSet   {
     return this;
   }
 
-   /**
+  /**
    * Get specURL
    * @return specURL
-  **/
+   **/
+  @JsonProperty("specURL")
   @ApiModelProperty(value = "")
   public String getSpecURL() {
     return specURL;
@@ -122,10 +128,11 @@ public class CodeSet   {
     return this;
   }
 
-   /**
+  /**
    * Get _default
    * @return _default
-  **/
+   **/
+  @JsonProperty("default")
   @ApiModelProperty(value = "")
   public String getDefault() {
     return _default;
@@ -141,14 +148,18 @@ public class CodeSet   {
   }
 
   public CodeSet addCodesItem(Code codesItem) {
+    if (this.codes == null) {
+      this.codes = new ArrayList<>();
+    }
     this.codes.add(codesItem);
     return this;
   }
 
-   /**
+  /**
    * Get codes
    * @return codes
-  **/
+   **/
+  @JsonProperty("codes")
   @ApiModelProperty(value = "")
   public List<Code> getCodes() {
     return codes;
@@ -163,10 +174,11 @@ public class CodeSet   {
     return this;
   }
 
-   /**
+  /**
    * Get annotation
    * @return annotation
-  **/
+   **/
+  @JsonProperty("annotation")
   @ApiModelProperty(value = "")
   public Annotation getAnnotation() {
     return annotation;
@@ -181,10 +193,11 @@ public class CodeSet   {
     return this;
   }
 
-   /**
+  /**
    * Get entityAttributes
    * @return entityAttributes
-  **/
+   **/
+  @JsonProperty("entityAttributes")
   @ApiModelProperty(value = "")
   public EntityAttributes getEntityAttributes() {
     return entityAttributes;

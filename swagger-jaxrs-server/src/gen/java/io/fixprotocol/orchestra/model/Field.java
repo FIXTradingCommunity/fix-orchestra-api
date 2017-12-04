@@ -34,11 +34,12 @@ import io.fixprotocol.orchestra.model.MessageElement;
 import io.fixprotocol.orchestra.model.ObjectId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.*;
 
 /**
  * Field
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-29T15:58:53.146Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-30T16:33:12.690Z")
 public class Field extends MessageElement  {
   @JsonProperty("type")
   private String type = null;
@@ -48,11 +49,13 @@ public class Field extends MessageElement  {
     return this;
   }
 
-   /**
+  /**
    * Get type
    * @return type
-  **/
+   **/
+  @JsonProperty("type")
   @ApiModelProperty(required = true, value = "")
+  @NotNull
   public String getType() {
     return type;
   }

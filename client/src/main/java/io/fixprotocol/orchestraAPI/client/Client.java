@@ -9,9 +9,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.fixprotocol.orchestra.client.ApiClient;
 import io.fixprotocol.orchestra.client.ApiException;
 import io.fixprotocol.orchestra.client.JSON;
+import io.fixprotocol.orchestra.client.api.DocumentationApi;
 import io.fixprotocol.orchestra.client.api.RepositoryApi;
 import io.fixprotocol.orchestra.client.api.WorkflowApi;
 import io.fixprotocol.orchestra.client.model.Actor;
+import io.fixprotocol.orchestra.client.model.Annotation;
 import io.fixprotocol.orchestra.client.model.Code;
 import io.fixprotocol.orchestra.client.model.CodeSet;
 import io.fixprotocol.orchestra.client.model.Component;
@@ -26,7 +28,8 @@ import io.fixprotocol.orchestra.client.model.StateMachine;
 
 public class Client {
 
-  private final RepositoryApi repositoryApi = new RepositoryApi();;
+  private final DocumentationApi documentationApi = new DocumentationApi();;
+  private final RepositoryApi repositoryApi = new RepositoryApi();
   private final WorkflowApi workflowApi = new WorkflowApi();
 
   /**
@@ -61,6 +64,24 @@ public class Client {
    */
   public void addActor(String reposName, String version, Actor actor) throws ApiException {
     workflowApi.addActor(reposName, version, actor);
+  }
+
+  /**
+   * adds an Annotation Adds an Annotation
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param elementId name or ID as a string of the element to annotate (required)
+   * @param elementType type of element to annotate (required)
+   * @param parentId name or ID as a string of the parent of the element to annotate. Required for
+   *        code, actor, stateMachine. (optional)
+   * @param annotation Annotation to add (optional)
+   * @throws ApiException if fails to make API call
+   */
+  public void addAnnotation(String reposName, String version, String elementId, String elementType,
+      String parentId, Annotation annotation) throws ApiException {
+    documentationApi.addAnnotation(reposName, version, elementId, elementType, parentId,
+        annotation);
   }
 
   /**
@@ -242,6 +263,20 @@ public class Client {
   }
 
   /**
+   * adds a state machine Adds a StateMachine
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param name name of Actor to update (required)
+   * @param stateMachine StateMachine to add (optional)
+   * @throws ApiException if fails to make API call
+   */
+  public void addStateMachine(String reposName, String version, String name,
+      StateMachine stateMachine) throws ApiException {
+    workflowApi.addStateMachine(reposName, version, name, stateMachine);
+  }
+
+  /**
    * deletes a single Actor based on the name supplied
    * 
    * @param reposName name of Orchestra repository (required)
@@ -251,6 +286,22 @@ public class Client {
    */
   public void deleteActor(String reposName, String version, String name) throws ApiException {
     workflowApi.deleteActor(reposName, version, name);
+  }
+
+  /**
+   * deletes a single Annotation
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param elementId name or ID as a string of the element to annotate (required)
+   * @param elementType type of element to annotate (required)
+   * @param parentId name or ID as a string of the parent of the element to annotate. Required for
+   *        code, actor, stateMachine. (optional)
+   * @throws ApiException if fails to make API call
+   */
+  public void deleteAnnotation(String reposName, String version, String elementId,
+      String elementType, String parentId) throws ApiException {
+    documentationApi.deleteAnnotation(reposName, version, elementId, elementType, parentId);
   }
 
   /**
@@ -366,6 +417,20 @@ public class Client {
    */
   public void deleteRepository(String reposName, String version) throws ApiException {
     repositoryApi.deleteRepository(reposName, version);
+  }
+
+  /**
+   * deletes a single StateMachine based on the name supplied
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param name name of Actor to update (required)
+   * @param smName name of StateMachine to delete (required)
+   * @throws ApiException if fails to make API call
+   */
+  public void deleteStateMachine(String reposName, String version, String name, String smName)
+      throws ApiException {
+    workflowApi.deleteStateMachine(reposName, version, name, smName);
   }
 
   /**
@@ -533,6 +598,21 @@ public class Client {
   }
 
   /**
+   * Returns a single StateMachine, if found
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param name name of Actor to search (required)
+   * @param smName name of StateMachine to fetch (required)
+   * @return StateMachine
+   * @throws ApiException if fails to make API call
+   */
+  public StateMachine findStateMachine(String reposName, String version, String name, String smName)
+      throws ApiException {
+    return workflowApi.findStateMachine(reposName, version, name, smName);
+  }
+
+  /**
    * searches actors By passing in the appropriate options, you can search for actors
    * 
    * @param reposName name of Orchestra repository (required)
@@ -546,6 +626,28 @@ public class Client {
   public List<Actor> searchActors(String reposName, String version, String searchString,
       Integer skip, Integer limit) throws ApiException {
     return workflowApi.searchActors(reposName, version, searchString, skip, limit);
+  }
+
+  /**
+   * searches annotations By passing in the appropriate options, you can search for annotations
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param elementId name or ID as a string of the element to annotate (required)
+   * @param elementType type of element to annotate (required)
+   * @param parentId name or ID as a string of the parent of the element to annotate. Required for
+   *        code, actor, stateMachine. (optional)
+   * @param searchString pass an optional search string for looking up annotations (optional)
+   * @param skip number of records to skip for pagination (optional)
+   * @param limit maximum number of records to return (optional)
+   * @return Annotation
+   * @throws ApiException if fails to make API call
+   */
+  public Annotation searchAnnotations(String reposName, String version, String elementId,
+      String elementType, String parentId, String searchString, Integer skip, Integer limit)
+      throws ApiException {
+    return documentationApi.searchAnnotations(reposName, version, elementId, elementType, parentId,
+        searchString, skip, limit);
   }
 
   /**
@@ -728,6 +830,24 @@ public class Client {
   }
 
   /**
+   * searches state machines By passing in the appropriate options, you can search for state
+   * machines
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param name name of Actor to search (required)
+   * @param searchString pass an optional search string for looking up actors (optional)
+   * @param skip number of records to skip for pagination (optional)
+   * @param limit maximum number of records to return (optional)
+   * @return List<StateMachine>
+   * @throws ApiException if fails to make API call
+   */
+  public List<StateMachine> searchStateMachines(String reposName, String version, String name,
+      String searchString, Integer skip, Integer limit) throws ApiException {
+    return workflowApi.searchStateMachines(reposName, version, name, searchString, skip, limit);
+  }
+
+  /**
    * Updates a single Actor, if found (idempotent)
    * 
    * @param reposName name of Orchestra repository (required)
@@ -739,6 +859,24 @@ public class Client {
   public void updateActorByName(String reposName, String version, String name, Actor actor)
       throws ApiException {
     workflowApi.updateActorByName(reposName, version, name, actor);
+  }
+
+  /**
+   * Updates a single Annotation, if found (idempotent)
+   * 
+   * @param reposName name of Orchestra repository (required)
+   * @param version version of Orchestra repository (required)
+   * @param elementId name or ID as a string of the element to annotate (required)
+   * @param elementType type of element to annotate (required)
+   * @param annotation Annotation to update (required)
+   * @param parentId name or ID as a string of the parent of the element to annotate. Required for
+   *        code, actor, stateMachine. (optional)
+   * @throws ApiException if fails to make API call
+   */
+  public void updateAnnotation(String reposName, String version, String elementId,
+      String elementType, Annotation annotation, String parentId) throws ApiException {
+    documentationApi.updateAnnotation(reposName, version, elementId, elementType, annotation,
+        parentId);
   }
 
   /**
@@ -881,67 +1019,6 @@ public class Client {
   public void updateRepositoryById(String reposName, String version, Repository repository)
       throws ApiException {
     repositoryApi.updateRepositoryById(reposName, version, repository);
-  }
-
-  /**
-   * adds a state machine Adds a StateMachine
-   * 
-   * @param reposName name of Orchestra repository (required)
-   * @param version version of Orchestra repository (required)
-   * @param name name of Actor to update (required)
-   * @param stateMachine StateMachine to add (optional)
-   * @throws ApiException if fails to make API call
-   */
-  public void addStateMachine(String reposName, String version, String name,
-      StateMachine stateMachine) throws ApiException {
-    workflowApi.addStateMachine(reposName, version, name, stateMachine);
-  }
-
-  /**
-   * deletes a single StateMachine based on the name supplied
-   * 
-   * @param reposName name of Orchestra repository (required)
-   * @param version version of Orchestra repository (required)
-   * @param name name of Actor to update (required)
-   * @param smName name of StateMachine to delete (required)
-   * @throws ApiException if fails to make API call
-   */
-  public void deleteStateMachine(String reposName, String version, String name, String smName)
-      throws ApiException {
-    workflowApi.deleteStateMachine(reposName, version, name, smName);
-  }
-
-  /**
-   * Returns a single StateMachine, if found
-   * 
-   * @param reposName name of Orchestra repository (required)
-   * @param version version of Orchestra repository (required)
-   * @param name name of Actor to search (required)
-   * @param smName name of StateMachine to fetch (required)
-   * @return StateMachine
-   * @throws ApiException if fails to make API call
-   */
-  public StateMachine findStateMachine(String reposName, String version, String name, String smName)
-      throws ApiException {
-    return workflowApi.findStateMachine(reposName, version, name, smName);
-  }
-
-  /**
-   * searches state machines By passing in the appropriate options, you can search for state
-   * machines
-   * 
-   * @param reposName name of Orchestra repository (required)
-   * @param version version of Orchestra repository (required)
-   * @param name name of Actor to search (required)
-   * @param searchString pass an optional search string for looking up actors (optional)
-   * @param skip number of records to skip for pagination (optional)
-   * @param limit maximum number of records to return (optional)
-   * @return List<StateMachine>
-   * @throws ApiException if fails to make API call
-   */
-  public List<StateMachine> searchStateMachines(String reposName, String version, String name,
-      String searchString, Integer skip, Integer limit) throws ApiException {
-    return workflowApi.searchStateMachines(reposName, version, name, searchString, skip, limit);
   }
 
   /**

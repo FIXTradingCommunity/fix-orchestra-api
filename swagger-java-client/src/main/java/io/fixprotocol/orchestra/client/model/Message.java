@@ -3,6 +3,7 @@ package io.fixprotocol.orchestra.client.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.fixprotocol.orchestra.client.model.ObjectId;
 import io.fixprotocol.orchestra.client.model.Response;
 import io.fixprotocol.orchestra.client.model.Structure;
@@ -14,7 +15,7 @@ import java.util.List;
 /**
  * Message
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-29T15:57:45.378Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-30T16:31:59.574Z")
 public class Message {
   @JsonProperty("oid")
   private ObjectId oid = null;
@@ -38,7 +39,7 @@ public class Message {
   private Structure structure = null;
 
   @JsonProperty("responses")
-  private List<Response> responses = new ArrayList<Response>();
+  private List<Response> responses = null;
 
   public Message oid(ObjectId oid) {
     this.oid = oid;
@@ -172,6 +173,9 @@ public class Message {
   }
 
   public Message addResponsesItem(Response responsesItem) {
+    if (this.responses == null) {
+      this.responses = new ArrayList<>();
+    }
     this.responses.add(responsesItem);
     return this;
   }
@@ -242,6 +246,6 @@ public class Message {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
 }
 

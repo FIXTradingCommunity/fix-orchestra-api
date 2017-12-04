@@ -37,10 +37,12 @@ import io.fixprotocol._2016.fixrepository.ResponseType;
 import io.fixprotocol._2016.fixrepository.StateMachineType;
 import io.fixprotocol.orchestra.model.Actor;
 import io.fixprotocol.orchestra.model.Annotation;
+import io.fixprotocol.orchestra.model.Appinfo;
 import io.fixprotocol.orchestra.model.Code;
 import io.fixprotocol.orchestra.model.CodeSet;
 import io.fixprotocol.orchestra.model.Component;
 import io.fixprotocol.orchestra.model.Datatype;
+import io.fixprotocol.orchestra.model.Documentation;
 import io.fixprotocol.orchestra.model.Field;
 import io.fixprotocol.orchestra.model.Flow;
 import io.fixprotocol.orchestra.model.Group;
@@ -139,6 +141,183 @@ public class RepositoryDOMStore implements RepositoryStore {
     }
 
     repository.getActors().getActorOrFlow().add(OrchestraAPItoDOM.ActorToDOM(actor));
+  }
+
+  @Override
+  public void createAnnotation(String reposName, String version, String elementId,
+      ElementType elementType, String parentId, Annotation annotation)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(elementType, "Element type missing");
+    Objects.requireNonNull(elementId, "Element ID or name missing");
+    Repository repository = repositories.get(new RepositoryKey(reposName, version));
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+
+    switch (elementType) {
+      case actor:
+        List<ActorType> actors = getActorList(repository);
+        Optional<ActorType> optActor =
+            actors.stream().filter(a -> elementId.equals(a.getName())).findFirst();
+        if (optActor.isPresent()) {
+          optActor.get().setAnnotation(OrchestraAPItoDOM.AnnotationToDOM(annotation));
+        } else {
+          throw new ResourceNotFoundException(String.format("Actor %s not found", elementId));
+        }
+        break;
+      case code:
+        Objects.requireNonNull(parentId, "Parent ID missing");
+
+        List<CodeSetType> codeSets = getCodeSets(repository);
+        Optional<CodeSetType> optCodeSet = codeSets.stream()
+            .filter(cs -> Integer.parseInt(parentId) == cs.getId().intValue()).findFirst();
+        if (optCodeSet.isPresent()) {
+          List<CodeType> codes = optCodeSet.get().getCode();
+          Optional<CodeType> optCode = codes.stream()
+              .filter(c -> c.getId().intValue() == Integer.parseInt(elementId)).findFirst();
+          if (optCode.isPresent()) {
+            optCode.get().setAnnotation(OrchestraAPItoDOM.AnnotationToDOM(annotation));
+          } else {
+            throw new ResourceNotFoundException(
+                String.format("Code with ID=%s not found", elementId));
+          }
+        } else {
+          throw new ResourceNotFoundException(
+              String.format("CodeSet with ID=%s not found", parentId));
+        }
+        break;
+      case codeSet:
+        List<CodeSetType> codeSets2 = getCodeSets(repository);
+        Optional<CodeSetType> optCodeSet2 = codeSets2.stream()
+            .filter(cs -> Integer.parseInt(elementId) == cs.getId().intValue()).findFirst();
+        if (optCodeSet2.isPresent()) {
+          optCodeSet2.get().setAnnotation(OrchestraAPItoDOM.AnnotationToDOM(annotation));
+        } else {
+          throw new ResourceNotFoundException(
+              String.format("CodeSet with ID=%s not found", elementId));
+        }
+        break;
+      case component:
+        List<ComponentType> components = getComponentList(repository);
+
+        Optional<ComponentType> optComponent = components.stream()
+            .filter(c -> Integer.parseInt(elementId) == c.getId().intValue()).findFirst();
+
+        if (optComponent.isPresent()) {
+          optComponent.get().setAnnotation(OrchestraAPItoDOM.AnnotationToDOM(annotation));
+        } else {
+          throw new ResourceNotFoundException(
+              String.format("Component with ID=%s not found", elementId));
+        }
+        break;
+      case datatype:
+        List<io.fixprotocol._2016.fixrepository.Datatype> datatypes = getDatatypeList(repository);
+
+        Optional<io.fixprotocol._2016.fixrepository.Datatype> optDatatype =
+            datatypes.stream().filter(d -> elementId.equals(d.getName())).findFirst();
+
+        if (optDatatype.isPresent()) {
+          optDatatype.get().setAnnotation(OrchestraAPItoDOM.AnnotationToDOM(annotation));
+        } else {
+          throw new ResourceNotFoundException(String.format("Datatype %s not found", elementId));
+        }
+        break;
+      case field:
+        List<FieldType> fields = getFieldList(repository);
+
+        Optional<FieldType> optField = fields.stream()
+            .filter(f -> Integer.parseInt(elementId) == f.getId().intValue()).findFirst();
+
+        if (optField.isPresent()) {
+          optField.get().setAnnotation(OrchestraAPItoDOM.AnnotationToDOM(annotation));
+        } else {
+          throw new ResourceNotFoundException(
+              String.format("Field with ID=%s not found", elementId));
+        }
+        break;
+      case flow:
+        List<FlowType> flows = getFlowList(repository);
+        Optional<FlowType> optFlow =
+            flows.stream().filter(f -> elementId.equals(f.getName())).findFirst();
+
+        if (optFlow.isPresent()) {
+          optFlow.get().setAnnotation(OrchestraAPItoDOM.AnnotationToDOM(annotation));
+        } else {
+          throw new ResourceNotFoundException(String.format("Flow %s not found", elementId));
+        }
+        break;
+      case group:
+        List<ComponentType> components2 = getComponentList(repository);
+
+        Optional<GroupType> optGroup =
+            components2.stream().filter(c -> Integer.parseInt(elementId) == c.getId().intValue())
+                .filter(c -> c instanceof GroupType).map(c -> (GroupType) c).findFirst();
+
+        if (optGroup.isPresent()) {
+          optGroup.get().setAnnotation(OrchestraAPItoDOM.AnnotationToDOM(annotation));
+        } else {
+          throw new ResourceNotFoundException(
+              String.format("Group with ID=%s not found", elementId));
+        }
+        break;
+      case message:
+        List<MessageType> messages = getMessageList(repository);
+
+        Optional<MessageType> optMessage = messages.stream()
+            .filter(m -> Integer.parseInt(elementId) == m.getId().intValue()).findFirst();
+
+        if (optMessage.isPresent()) {
+          optMessage.get().setAnnotation(OrchestraAPItoDOM.AnnotationToDOM(annotation));
+        } else {
+          throw new ResourceNotFoundException(
+              String.format("Message with ID=%s not found", elementId));
+        }
+        break;
+      case response:
+        Objects.requireNonNull(parentId, "Parent ID or name missing");
+
+        List<MessageType> messages2 = getMessageList(repository);
+
+        Optional<MessageType> optMessage2 =
+            messages2.stream().filter(m -> Integer.parseInt(parentId) == m.getId().intValue()).findFirst();
+
+        if (optMessage2.isPresent()) {
+          List<ResponseType> responses = getResponseList(optMessage2.get());
+          Optional<ResponseType> optResponse =
+              responses.stream().filter(r -> elementId.equals(r.getName())).findFirst();
+          if (optResponse.isPresent()) {
+            optResponse.get().setAnnotation(OrchestraAPItoDOM.AnnotationToDOM(annotation));
+          } else {
+            throw new ResourceNotFoundException(String.format("Message response %s not found", elementId));
+          }
+        } else {
+          throw new ResourceNotFoundException(String.format("Message with ID=%s not found", parentId));
+        }
+        break;
+      case stateMachine:
+        List<ActorType> actors2 = getActorList(repository);
+        Optional<ActorType> optActor2 =
+            actors2.stream().filter(a -> parentId.equals(a.getName())).findFirst();
+
+        if (optActor2.isPresent()) {
+          List<Object> elements = optActor2.get().getFieldOrFieldRefOrComponent();
+          Optional<StateMachineType> optStateMachine =
+              elements.stream().filter(o -> o instanceof StateMachineType)
+                  .map(o -> (StateMachineType) o).filter(sm -> elementId.equals(sm.getName())).findFirst();
+          if (optStateMachine.isPresent()) {
+            optStateMachine.get().setAnnotation(OrchestraAPItoDOM.AnnotationToDOM(annotation));
+          } else {
+            throw new ResourceNotFoundException(String.format("StateMachine %s not found", elementId));
+          }
+
+        } else {
+          throw new ResourceNotFoundException(String.format("Actor %s not found", parentId));
+        }
+        break;
+    }
   }
 
   @Override
@@ -412,6 +591,36 @@ public class RepositoryDOMStore implements RepositoryStore {
   }
 
   @Override
+  public void createStateMachine(String reposName, String version, String actor,
+      StateMachine stateMachine) throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(actor, "Actor name missing");
+    Objects.requireNonNull(actor, "StateMachine value missing");
+    Repository repository = repositories.get(new RepositoryKey(reposName, version));
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+    List<ActorType> actors = getActorList(repository);
+
+    for (ActorType actorType : actors) {
+      if (actor.equals(actorType.getName())) {
+        List<Object> elements = actorType.getFieldOrFieldRefOrComponent();
+        if (elements.stream().filter(o -> o instanceof StateMachineType)
+            .map(o -> (StateMachineType) o)
+            .anyMatch(sm -> sm.getName().equals(stateMachine.getName()))) {
+          throw new DuplicateKeyException(
+              String.format("Duplicate state machine with name=%s", stateMachine.getName()));
+        }
+        elements.add(OrchestraAPItoDOM.StateMachineToDOM(stateMachine));
+        return;
+      }
+    }
+    throw new ResourceNotFoundException(String.format("Actor with name=%s not found", actor));
+  }
+
+  @Override
   public void deleteActor(String reposName, String version, String name)
       throws RepositoryStoreException {
     Objects.requireNonNull(reposName, "Repository name missing");
@@ -442,6 +651,182 @@ public class RepositoryDOMStore implements RepositoryStore {
     }
 
     throw new ResourceNotFoundException(String.format("Actor %s not found", name));
+  }
+
+  @Override
+  public void deleteAnnotation(String reposName, String version, String elementId,
+      ElementType elementType, String parentId) throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(elementType, "Element type missing");
+    Objects.requireNonNull(elementId, "Element ID or name missing");
+    Repository repository = repositories.get(new RepositoryKey(reposName, version));
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+
+    switch (elementType) {
+      case actor:
+        List<ActorType> actors = getActorList(repository);
+        Optional<ActorType> optActor =
+            actors.stream().filter(a -> elementId.equals(a.getName())).findFirst();
+        if (optActor.isPresent()) {
+          optActor.get().setAnnotation(null);
+        } else {
+          throw new ResourceNotFoundException(String.format("Actor %s not found", elementId));
+        }
+        break;
+      case code:
+        Objects.requireNonNull(parentId, "Parent ID missing");
+
+        List<CodeSetType> codeSets = getCodeSets(repository);
+        Optional<CodeSetType> optCodeSet = codeSets.stream()
+            .filter(cs -> Integer.parseInt(parentId) == cs.getId().intValue()).findFirst();
+        if (optCodeSet.isPresent()) {
+          List<CodeType> codes = optCodeSet.get().getCode();
+          Optional<CodeType> optCode = codes.stream()
+              .filter(c -> c.getId().intValue() == Integer.parseInt(elementId)).findFirst();
+          if (optCode.isPresent()) {
+            optCode.get().setAnnotation(null);
+          } else {
+            throw new ResourceNotFoundException(
+                String.format("Code with ID=%s not found", elementId));
+          }
+        } else {
+          throw new ResourceNotFoundException(
+              String.format("CodeSet with ID=%s not found", parentId));
+        }
+        break;
+      case codeSet:
+        List<CodeSetType> codeSets2 = getCodeSets(repository);
+        Optional<CodeSetType> optCodeSet2 = codeSets2.stream()
+            .filter(cs -> Integer.parseInt(elementId) == cs.getId().intValue()).findFirst();
+        if (optCodeSet2.isPresent()) {
+          optCodeSet2.get().setAnnotation(null);
+        } else {
+          throw new ResourceNotFoundException(
+              String.format("CodeSet with ID=%s not found", elementId));
+        }
+        break;
+      case component:
+        List<ComponentType> components = getComponentList(repository);
+
+        Optional<ComponentType> optComponent = components.stream()
+            .filter(c -> Integer.parseInt(elementId) == c.getId().intValue()).findFirst();
+
+        if (optComponent.isPresent()) {
+          optComponent.get().setAnnotation(null);
+        } else {
+          throw new ResourceNotFoundException(
+              String.format("Component with ID=%s not found", elementId));
+        }
+        break;
+      case datatype:
+        List<io.fixprotocol._2016.fixrepository.Datatype> datatypes = getDatatypeList(repository);
+
+        Optional<io.fixprotocol._2016.fixrepository.Datatype> optDatatype =
+            datatypes.stream().filter(d -> elementId.equals(d.getName())).findFirst();
+
+        if (optDatatype.isPresent()) {
+          optDatatype.get().setAnnotation(null);
+        } else {
+          throw new ResourceNotFoundException(String.format("Datatype %s not found", elementId));
+        }
+        break;
+      case field:
+        List<FieldType> fields = getFieldList(repository);
+
+        Optional<FieldType> optField = fields.stream()
+            .filter(f -> Integer.parseInt(elementId) == f.getId().intValue()).findFirst();
+
+        if (optField.isPresent()) {
+          optField.get().setAnnotation(null);
+        } else {
+          throw new ResourceNotFoundException(
+              String.format("Field with ID=%s not found", elementId));
+        }
+        break;
+      case flow:
+        List<FlowType> flows = getFlowList(repository);
+        Optional<FlowType> optFlow =
+            flows.stream().filter(f -> elementId.equals(f.getName())).findFirst();
+
+        if (optFlow.isPresent()) {
+          optFlow.get().setAnnotation(null);
+        } else {
+          throw new ResourceNotFoundException(String.format("Flow %s not found", elementId));
+        }
+        break;
+      case group:
+        List<ComponentType> components2 = getComponentList(repository);
+
+        Optional<GroupType> optGroup =
+            components2.stream().filter(c -> Integer.parseInt(elementId) == c.getId().intValue())
+                .filter(c -> c instanceof GroupType).map(c -> (GroupType) c).findFirst();
+
+        if (optGroup.isPresent()) {
+          optGroup.get().setAnnotation(null);
+        } else {
+          throw new ResourceNotFoundException(
+              String.format("Group with ID=%s not found", elementId));
+        }
+        break;
+      case message:
+        List<MessageType> messages = getMessageList(repository);
+
+        Optional<MessageType> optMessage = messages.stream()
+            .filter(m -> Integer.parseInt(elementId) == m.getId().intValue()).findFirst();
+
+        if (optMessage.isPresent()) {
+          optMessage.get().setAnnotation(null);
+        } else {
+          throw new ResourceNotFoundException(
+              String.format("Message with ID=%s not found", elementId));
+        }
+        break;
+      case response:
+        Objects.requireNonNull(parentId, "Parent ID or name missing");
+
+        List<MessageType> messages2 = getMessageList(repository);
+
+        Optional<MessageType> optMessage2 =
+            messages2.stream().filter(m -> Integer.parseInt(parentId) == m.getId().intValue()).findFirst();
+
+        if (optMessage2.isPresent()) {
+          List<ResponseType> responses = getResponseList(optMessage2.get());
+          Optional<ResponseType> optResponse =
+              responses.stream().filter(r -> elementId.equals(r.getName())).findFirst();
+          if (optResponse.isPresent()) {
+            optResponse.get().setAnnotation(null);
+          } else {
+            throw new ResourceNotFoundException(String.format("Message response %s not found", elementId));
+          }
+        } else {
+          throw new ResourceNotFoundException(String.format("Message with ID=%s not found", parentId));
+        }
+        break;
+      case stateMachine:
+        List<ActorType> actors2 = getActorList(repository);
+        Optional<ActorType> optActor2 =
+            actors2.stream().filter(a -> parentId.equals(a.getName())).findFirst();
+
+        if (optActor2.isPresent()) {
+          List<Object> elements = optActor2.get().getFieldOrFieldRefOrComponent();
+          Optional<StateMachineType> optStateMachine =
+              elements.stream().filter(o -> o instanceof StateMachineType)
+                  .map(o -> (StateMachineType) o).filter(sm -> elementId.equals(sm.getName())).findFirst();
+          if (optStateMachine.isPresent()) {
+            optStateMachine.get().setAnnotation(null);
+          } else {
+            throw new ResourceNotFoundException(String.format("StateMachine %s not found", elementId));
+          }
+
+        } else {
+          throw new ResourceNotFoundException(String.format("Actor %s not found", parentId));
+        }
+        break;
+    }
   }
 
   @Override
@@ -683,6 +1068,40 @@ public class RepositoryDOMStore implements RepositoryStore {
   }
 
   @Override
+  public void deleteStateMachine(String reposName, String version, String actor, String name)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(actor, "Actor name missing");
+    Objects.requireNonNull(name, "StateMachine name missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+
+    final Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+
+    List<ActorType> actorList = getActorList(repository);
+    for (ActorType actorType : actorList) {
+      if (actor.equals(actorType.getName())) {
+        List<Object> elements = actorType.getFieldOrFieldRefOrComponent();
+        for (int i = 0; i < elements.size(); i++) {
+          if (elements.get(i) instanceof StateMachineType
+              && name.equals(((StateMachineType) elements.get(i)).getName())) {
+            elements.remove(i);
+            return;
+          }
+        }
+        throw new ResourceNotFoundException(String.format("State machine %s not found", name));
+
+      }
+    }
+
+    throw new ResourceNotFoundException(String.format("Actor %s not found", name));
+  }
+
+  @Override
   public Actor getActor(String reposName, String version, String name)
       throws RepositoryStoreException {
     Objects.requireNonNull(reposName, "Repository name missing");
@@ -697,14 +1116,14 @@ public class RepositoryDOMStore implements RepositoryStore {
     }
 
     List<ActorType> actors = getActorList(repository);
+    Optional<ActorType> optActor =
+        actors.stream().filter(a -> name.equals(a.getName())).findFirst();
 
-    for (ActorType actorType : actors) {
-      if (name.equals(actorType.getName())) {
-        return OrchestraAPItoDOM.DOMToActor(actorType);
-      }
+    if (optActor.isPresent()) {
+      return OrchestraAPItoDOM.DOMToActor(optActor.get());
+    } else {
+      throw new ResourceNotFoundException(String.format("Actor %s not found", name));
     }
-
-    throw new ResourceNotFoundException(String.format("Actor %s not found", name));
   }
 
   @Override
@@ -727,6 +1146,201 @@ public class RepositoryDOMStore implements RepositoryStore {
   }
 
   @Override
+  public Annotation getAnnotations(String reposName, String version, String elementId,
+      ElementType elementType, String parentId, Predicate<Documentation> documentationSearch,
+      Predicate<Appinfo> appInfoSearch) throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(elementType, "Element type missing");
+    Objects.requireNonNull(elementId, "Element ID or name missing");
+    Repository repository = repositories.get(new RepositoryKey(reposName, version));
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+
+    Predicate<Documentation> documentationPredicate = documentationSearch != null ? documentationSearch : t -> true;
+    Predicate<Appinfo> appInfoPredicate = appInfoSearch != null ? appInfoSearch : t -> true;
+    
+    Annotation annotation = null;
+    switch (elementType) {
+      case actor:
+        List<ActorType> actors = getActorList(repository);
+        Optional<ActorType> optActor =
+            actors.stream().filter(a -> elementId.equals(a.getName())).findFirst();
+        if (optActor.isPresent()) {
+          annotation = OrchestraAPItoDOM.DOMToAnnotation(optActor.get().getAnnotation());
+        } else {
+          throw new ResourceNotFoundException(String.format("Actor %s not found", elementId));
+        }
+        break;
+      case code:
+        Objects.requireNonNull(parentId, "Parent ID missing");
+
+        List<CodeSetType> codeSets = getCodeSets(repository);
+        Optional<CodeSetType> optCodeSet = codeSets.stream()
+            .filter(cs -> Integer.parseInt(parentId) == cs.getId().intValue()).findFirst();
+        if (optCodeSet.isPresent()) {
+          List<CodeType> codes = optCodeSet.get().getCode();
+          Optional<CodeType> optCode = codes.stream()
+              .filter(c -> c.getId().intValue() == Integer.parseInt(elementId)).findFirst();
+          if (optCode.isPresent()) {
+            annotation = OrchestraAPItoDOM.DOMToAnnotation(optCode.get().getAnnotation());
+          } else {
+            throw new ResourceNotFoundException(
+                String.format("Code with ID=%s not found", elementId));
+          }
+        } else {
+          throw new ResourceNotFoundException(
+              String.format("CodeSet with ID=%s not found", parentId));
+        }
+        break;
+      case codeSet:
+        List<CodeSetType> codeSets2 = getCodeSets(repository);
+        Optional<CodeSetType> optCodeSet2 = codeSets2.stream()
+            .filter(cs -> Integer.parseInt(elementId) == cs.getId().intValue()).findFirst();
+        if (optCodeSet2.isPresent()) {
+          annotation = OrchestraAPItoDOM.DOMToAnnotation(optCodeSet2.get().getAnnotation());
+        } else {
+          throw new ResourceNotFoundException(
+              String.format("CodeSet with ID=%s not found", elementId));
+        }
+        break;
+      case component:
+        List<ComponentType> components = getComponentList(repository);
+
+        Optional<ComponentType> optComponent = components.stream()
+            .filter(c -> Integer.parseInt(elementId) == c.getId().intValue()).findFirst();
+
+        if (optComponent.isPresent()) {
+          annotation = OrchestraAPItoDOM.DOMToAnnotation(optComponent.get().getAnnotation());
+
+        } else {
+          throw new ResourceNotFoundException(
+              String.format("Component with ID=%s not found", elementId));
+        }
+        break;
+      case datatype:
+        List<io.fixprotocol._2016.fixrepository.Datatype> datatypes = getDatatypeList(repository);
+
+        Optional<io.fixprotocol._2016.fixrepository.Datatype> optDatatype =
+            datatypes.stream().filter(d -> elementId.equals(d.getName())).findFirst();
+
+        if (optDatatype.isPresent()) {
+          annotation = OrchestraAPItoDOM.DOMToAnnotation(optDatatype.get().getAnnotation());
+
+        } else {
+          throw new ResourceNotFoundException(String.format("Datatype %s not found", elementId));
+        }
+        break;
+      case field:
+        List<FieldType> fields = getFieldList(repository);
+
+        Optional<FieldType> optField = fields.stream()
+            .filter(f -> Integer.parseInt(elementId) == f.getId().intValue()).findFirst();
+
+        if (optField.isPresent()) {
+          annotation = OrchestraAPItoDOM.DOMToAnnotation(optField.get().getAnnotation());
+        } else {
+          throw new ResourceNotFoundException(
+              String.format("Field with ID=%s not found", elementId));
+        }
+        break;
+      case flow:
+        List<FlowType> flows = getFlowList(repository);
+        Optional<FlowType> optFlow =
+            flows.stream().filter(f -> elementId.equals(f.getName())).findFirst();
+
+        if (optFlow.isPresent()) {
+          annotation = OrchestraAPItoDOM.DOMToAnnotation(optFlow.get().getAnnotation());
+        } else {
+          throw new ResourceNotFoundException(String.format("Flow %s not found", elementId));
+        }
+        break;
+      case group:
+        List<ComponentType> components2 = getComponentList(repository);
+
+        Optional<GroupType> optGroup =
+            components2.stream().filter(c -> Integer.parseInt(elementId) == c.getId().intValue())
+                .filter(c -> c instanceof GroupType).map(c -> (GroupType) c).findFirst();
+
+        if (optGroup.isPresent()) {
+          annotation = OrchestraAPItoDOM.DOMToAnnotation(optGroup.get().getAnnotation());
+        } else {
+          throw new ResourceNotFoundException(
+              String.format("Group with ID=%s not found", elementId));
+        }
+        break;
+      case message:
+        List<MessageType> messages = getMessageList(repository);
+
+        Optional<MessageType> optMessage = messages.stream()
+            .filter(m -> Integer.parseInt(elementId) == m.getId().intValue()).findFirst();
+
+        if (optMessage.isPresent()) {
+          annotation = OrchestraAPItoDOM.DOMToAnnotation(optMessage.get().getAnnotation());
+        } else {
+          throw new ResourceNotFoundException(
+              String.format("Message with ID=%s not found", elementId));
+        }
+        break;
+      case response:
+        Objects.requireNonNull(parentId, "Parent ID or name missing");
+
+        List<MessageType> messages2 = getMessageList(repository);
+
+        Optional<MessageType> optMessage2 = messages2.stream()
+            .filter(m -> Integer.parseInt(parentId) == m.getId().intValue()).findFirst();
+
+        if (optMessage2.isPresent()) {
+          List<ResponseType> responses = getResponseList(optMessage2.get());
+          Optional<ResponseType> optResponse =
+              responses.stream().filter(r -> elementId.equals(r.getName())).findFirst();
+          if (optResponse.isPresent()) {
+            annotation = OrchestraAPItoDOM.DOMToAnnotation(optResponse.get().getAnnotation());
+          } else {
+            throw new ResourceNotFoundException(
+                String.format("Message response %s not found", elementId));
+          }
+        } else {
+          throw new ResourceNotFoundException(
+              String.format("Message with ID=%s not found", parentId));
+        }
+        break;
+      case stateMachine:
+        List<ActorType> actors2 = getActorList(repository);
+        Optional<ActorType> optActor2 =
+            actors2.stream().filter(a -> parentId.equals(a.getName())).findFirst();
+
+        if (optActor2.isPresent()) {
+          List<Object> elements = optActor2.get().getFieldOrFieldRefOrComponent();
+          Optional<StateMachineType> optStateMachine = elements.stream()
+              .filter(o -> o instanceof StateMachineType).map(o -> (StateMachineType) o)
+              .filter(sm -> elementId.equals(sm.getName())).findFirst();
+          if (optStateMachine.isPresent()) {
+            annotation = OrchestraAPItoDOM.DOMToAnnotation(optStateMachine.get().getAnnotation());
+          } else {
+            throw new ResourceNotFoundException(
+                String.format("StateMachine %s not found", elementId));
+          }
+
+        } else {
+          throw new ResourceNotFoundException(String.format("Actor %s not found", parentId));
+        }
+        break;
+    }
+    if (annotation == null) {
+      throw new ResourceNotFoundException("Annotation not found");
+    }
+    Annotation filtered = new Annotation();
+    annotation.getAppinfo().stream().filter(appInfoPredicate)
+        .forEach(a -> filtered.addAppinfoItem(a));
+    annotation.getDocumentation().stream().filter(documentationPredicate)
+        .forEach(d -> filtered.addDocumentationItem(d));
+    return filtered;
+  }
+
+  @Override
   public Code getCodeById(String reposName, String version, Integer codesetid, Integer id)
       throws RepositoryStoreException {
     Objects.requireNonNull(reposName, "Repository name missing");
@@ -742,19 +1356,20 @@ public class RepositoryDOMStore implements RepositoryStore {
     }
 
     List<CodeSetType> codeSets = getCodeSets(repository);
-    for (CodeSetType codeSet : codeSets) {
-      if (codesetid == codeSet.getId().intValue()) {
-        List<CodeType> codes = codeSet.getCode();
-        for (CodeType codeType : codes) {
-          if (codeType.getId().intValue() == id) {
-            return OrchestraAPItoDOM.DOMToCode(codeType);
-          }
-        }
+    Optional<CodeSetType> optCodeSet =
+        codeSets.stream().filter(cs -> codesetid == cs.getId().intValue()).findFirst();
+    if (optCodeSet.isPresent()) {
+      List<CodeType> codes = optCodeSet.get().getCode();
+      Optional<CodeType> optCode =
+          codes.stream().filter(c -> c.getId().intValue() == id).findFirst();
+      if (optCode.isPresent()) {
+        return OrchestraAPItoDOM.DOMToCode(optCode.get());
+      } else {
         throw new ResourceNotFoundException(String.format("Code with ID=%d not found", id));
       }
+    } else {
+      throw new ResourceNotFoundException(String.format("CodeSet with ID=%d not found", id));
     }
-
-    throw new ResourceNotFoundException(String.format("CodeSet with ID=%d not found", codesetid));
   }
 
   @Override
@@ -774,15 +1389,15 @@ public class RepositoryDOMStore implements RepositoryStore {
     Predicate<Code> predicate = search != null ? search : t -> true;
 
     List<CodeSetType> codeSets = getCodeSets(repository);
-    for (CodeSetType codeSet : codeSets) {
-      if (codesetid == codeSet.getId().intValue()) {
-        List<CodeType> codes = codeSet.getCode();
-        return codes.stream().map(OrchestraAPItoDOM::DOMToCode).filter(predicate)
-            .collect(Collectors.toList());
-      }
+    Optional<CodeSetType> optCodeSet =
+        codeSets.stream().filter(cs -> codesetid == cs.getId().intValue()).findFirst();
+    if (optCodeSet.isPresent()) {
+      List<CodeType> codes = optCodeSet.get().getCode();
+      return codes.stream().map(OrchestraAPItoDOM::DOMToCode).filter(predicate)
+          .collect(Collectors.toList());
+    } else {
+      throw new ResourceNotFoundException(String.format("CodeSet with ID=%d not found", codesetid));
     }
-
-    throw new ResourceNotFoundException(String.format("CodeSet with ID=%d not found", codesetid));
   }
 
   @Override
@@ -798,14 +1413,13 @@ public class RepositoryDOMStore implements RepositoryStore {
           String.format("Repository with name=%s version=%s not found", reposName, version));
     }
     List<CodeSetType> codeSets = getCodeSets(repository);
-
-    for (CodeSetType codeSet : codeSets) {
-      if (id == codeSet.getId().intValue()) {
-        return OrchestraAPItoDOM.DOMToCodeSet(codeSet);
-      }
+    Optional<CodeSetType> optCodeSet =
+        codeSets.stream().filter(cs -> id == cs.getId().intValue()).findFirst();
+    if (optCodeSet.isPresent()) {
+      return OrchestraAPItoDOM.DOMToCodeSet(optCodeSet.get());
+    } else {
+      throw new ResourceNotFoundException(String.format("CodeSet with ID=%d not found", id));
     }
-
-    throw new ResourceNotFoundException(String.format("CodeSet with ID=%d not found", id));
   }
 
   @Override
@@ -840,13 +1454,14 @@ public class RepositoryDOMStore implements RepositoryStore {
     }
     List<ComponentType> components = getComponentList(repository);
 
-    for (ComponentType component : components) {
-      if (id == component.getId().intValue()) {
-        return OrchestraAPItoDOM.DOMToComponent(component);
-      }
-    }
+    Optional<ComponentType> optComponent =
+        components.stream().filter(c -> id == c.getId().intValue()).findFirst();
 
-    throw new ResourceNotFoundException(String.format("Component with ID=%d not found", id));
+    if (optComponent.isPresent()) {
+      return OrchestraAPItoDOM.DOMToComponent(optComponent.get());
+    } else {
+      throw new ResourceNotFoundException(String.format("Component with ID=%d not found", id));
+    }
   }
 
   @Override
@@ -882,15 +1497,14 @@ public class RepositoryDOMStore implements RepositoryStore {
     }
     List<io.fixprotocol._2016.fixrepository.Datatype> datatypes = getDatatypeList(repository);
 
-    for (io.fixprotocol._2016.fixrepository.Datatype datatype : datatypes) {
-      if (name.equals(datatype.getName())) {
-        return OrchestraAPItoDOM.DOMToDatatype(datatype);
-      }
+    Optional<io.fixprotocol._2016.fixrepository.Datatype> optDatatype =
+        datatypes.stream().filter(d -> name.equals(d.getName())).findFirst();
+
+    if (optDatatype.isPresent()) {
+      return OrchestraAPItoDOM.DOMToDatatype(optDatatype.get());
+    } else {
+      throw new ResourceNotFoundException(String.format("Datatype %s not found", name));
     }
-
-    throw new ResourceNotFoundException(String.format("Datatype %s not found", name));
-
-
   }
 
   @Override
@@ -926,13 +1540,14 @@ public class RepositoryDOMStore implements RepositoryStore {
     }
     List<FieldType> fields = getFieldList(repository);
 
-    for (FieldType field : fields) {
-      if (id == field.getId().intValue()) {
-        return OrchestraAPItoDOM.DOMToField(field);
-      }
-    }
+    Optional<FieldType> optField =
+        fields.stream().filter(f -> id == f.getId().intValue()).findFirst();
 
-    throw new ResourceNotFoundException(String.format("Field with ID=%d not found", id));
+    if (optField.isPresent()) {
+      return OrchestraAPItoDOM.DOMToField(optField.get());
+    } else {
+      throw new ResourceNotFoundException(String.format("Field with ID=%d not found", id));
+    }
   }
 
   @Override
@@ -969,13 +1584,13 @@ public class RepositoryDOMStore implements RepositoryStore {
 
     List<FlowType> flows = getFlowList(repository);
 
-    for (FlowType flowType : flows) {
-      if (name.equals(flowType.getName())) {
-        return OrchestraAPItoDOM.DOMToFlow(flowType);
-      }
-    }
+    Optional<FlowType> optFlow = flows.stream().filter(f -> name.equals(f.getName())).findFirst();
 
-    throw new ResourceNotFoundException(String.format("Actor %s not found", name));
+    if (optFlow.isPresent()) {
+      return OrchestraAPItoDOM.DOMToFlow(optFlow.get());
+    } else {
+      throw new ResourceNotFoundException(String.format("Flow %s not found", name));
+    }
   }
 
   @Override
@@ -1011,15 +1626,14 @@ public class RepositoryDOMStore implements RepositoryStore {
     }
     List<ComponentType> components = getComponentList(repository);
 
-    for (ComponentType component : components) {
-      if (id == component.getId().intValue() && component instanceof GroupType) {
-        GroupType group = (GroupType) component;
-        return OrchestraAPItoDOM.DOMToGroup(group);
-      }
+    Optional<GroupType> optGroup = components.stream().filter(c -> id == c.getId().intValue())
+        .filter(c -> c instanceof GroupType).map(c -> (GroupType) c).findFirst();
+
+    if (optGroup.isPresent()) {
+      return OrchestraAPItoDOM.DOMToGroup(optGroup.get());
+    } else {
+      throw new ResourceNotFoundException(String.format("Group with ID=%d not found", id));
     }
-
-    throw new ResourceNotFoundException(String.format("Group with ID=%d not found", id));
-
   }
 
   @Override
@@ -1056,13 +1670,14 @@ public class RepositoryDOMStore implements RepositoryStore {
     }
     List<MessageType> messages = getMessageList(repository);
 
-    for (MessageType message : messages) {
-      if (id == message.getId().intValue()) {
-        return OrchestraAPItoDOM.DOMToMessage(message);
-      }
-    }
+    Optional<MessageType> optMessage =
+        messages.stream().filter(f -> id == f.getId().intValue()).findFirst();
 
-    throw new ResourceNotFoundException(String.format("Message with ID=%d not found", id));
+    if (optMessage.isPresent()) {
+      return OrchestraAPItoDOM.DOMToMessage(optMessage.get());
+    } else {
+      throw new ResourceNotFoundException(String.format("Message with ID=%d not found", id));
+    }
   }
 
   @Override
@@ -1077,19 +1692,23 @@ public class RepositoryDOMStore implements RepositoryStore {
       throw new ResourceNotFoundException(
           String.format("Repository with name=%s version=%s not found", reposName, version));
     }
-    List<MessageType> messageList = getMessageList(repository);
+    List<MessageType> messages = getMessageList(repository);
 
-    for (MessageType messageType : messageList) {
-      if (id == messageType.getId().intValue()) {
-        List<ResponseType> responseList = getResponseList(messageType);
-        for (ResponseType responseType : responseList) {
-          if (name.equals(responseType.getName())) {
-            return OrchestraAPItoDOM.DOMToResponse(responseType);
-          }
-        }
+    Optional<MessageType> optMessage =
+        messages.stream().filter(m -> id == m.getId().intValue()).findFirst();
+
+    if (optMessage.isPresent()) {
+      List<ResponseType> responses = getResponseList(optMessage.get());
+      Optional<ResponseType> optResponse =
+          responses.stream().filter(r -> name.equals(r.getName())).findFirst();
+      if (optResponse.isPresent()) {
+        return OrchestraAPItoDOM.DOMToResponse(optResponse.get());
+      } else {
+        throw new ResourceNotFoundException(String.format("Message response %s not found", name));
       }
+    } else {
+      throw new ResourceNotFoundException(String.format("Message with ID=%d not found", id));
     }
-    throw new ResourceNotFoundException(String.format("Message with ID=%d not found", id));
   }
 
   @Override
@@ -1111,7 +1730,7 @@ public class RepositoryDOMStore implements RepositoryStore {
       if (id == messageType.getId().intValue()) {
         List<ResponseType> responseList = getResponseList(messageType);
         return responseList.stream().map(OrchestraAPItoDOM::DOMToResponse).filter(predicate)
-                .collect(Collectors.toList());
+            .collect(Collectors.toList());
       }
     }
     throw new ResourceNotFoundException(String.format("Message with ID=%d not found", id));
@@ -1178,6 +1797,62 @@ public class RepositoryDOMStore implements RepositoryStore {
   }
 
   @Override
+  public StateMachine getStateMachine(String reposName, String version, String actor, String name)
+      throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(actor, "Actor name missing");
+    Objects.requireNonNull(name, "StateMachine name missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+
+    final Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+
+    List<ActorType> actors = getActorList(repository);
+    Optional<ActorType> optActor =
+        actors.stream().filter(a -> actor.equals(a.getName())).findFirst();
+
+    if (optActor.isPresent()) {
+      List<Object> elements = optActor.get().getFieldOrFieldRefOrComponent();
+      Optional<StateMachineType> optStateMachine =
+          elements.stream().filter(o -> o instanceof StateMachineType)
+              .map(o -> (StateMachineType) o).filter(sm -> name.equals(sm.getName())).findFirst();
+      if (optStateMachine.isPresent()) {
+        return OrchestraAPItoDOM.DOMToStateMachine(optStateMachine.get());
+      } else {
+        throw new ResourceNotFoundException(String.format("StateMachine %s not found", name));
+      }
+
+    } else {
+      throw new ResourceNotFoundException(String.format("Actor %s not found", name));
+    }
+  }
+
+  @Override
+  public List<StateMachine> getStateMachines(String reposName, String version,
+      Predicate<StateMachine> search) throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+    Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+    Predicate<StateMachine> predicate = search != null ? search : t -> true;
+
+    List<ActorType> actors = getActorList(repository);
+
+    return actors.stream().flatMap(a -> a.getFieldOrFieldRefOrComponent().stream())
+        .filter(o -> o instanceof StateMachineType).map(o -> (StateMachineType) o)
+        .map(OrchestraAPItoDOM::DOMToStateMachine).filter(predicate).collect(Collectors.toList());
+  }
+
+
+  @Override
   public void updateActor(String reposName, String version, String name, Actor actor)
       throws RepositoryStoreException {
     Objects.requireNonNull(reposName, "Repository name missing");
@@ -1209,6 +1884,182 @@ public class RepositoryDOMStore implements RepositoryStore {
     }
 
     throw new ResourceNotFoundException(String.format("Actor %s not found", name));
+  }
+
+  @Override
+  public void updateAnnotation(String reposName, String version, String elementId,
+      ElementType elementType, String parentId, Annotation annotation) throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(elementType, "Element type missing");
+    Objects.requireNonNull(elementId, "Element ID or name missing");
+    Repository repository = repositories.get(new RepositoryKey(reposName, version));
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+
+    switch (elementType) {
+      case actor:
+        List<ActorType> actors = getActorList(repository);
+        Optional<ActorType> optActor =
+            actors.stream().filter(a -> elementId.equals(a.getName())).findFirst();
+        if (optActor.isPresent()) {
+          optActor.get().setAnnotation(OrchestraAPItoDOM.AnnotationToDOM(annotation));
+        } else {
+          throw new ResourceNotFoundException(String.format("Actor %s not found", elementId));
+        }
+        break;
+      case code:
+        Objects.requireNonNull(parentId, "Parent ID missing");
+
+        List<CodeSetType> codeSets = getCodeSets(repository);
+        Optional<CodeSetType> optCodeSet = codeSets.stream()
+            .filter(cs -> Integer.parseInt(parentId) == cs.getId().intValue()).findFirst();
+        if (optCodeSet.isPresent()) {
+          List<CodeType> codes = optCodeSet.get().getCode();
+          Optional<CodeType> optCode = codes.stream()
+              .filter(c -> c.getId().intValue() == Integer.parseInt(elementId)).findFirst();
+          if (optCode.isPresent()) {
+            optCode.get().setAnnotation(OrchestraAPItoDOM.AnnotationToDOM(annotation));
+          } else {
+            throw new ResourceNotFoundException(
+                String.format("Code with ID=%s not found", elementId));
+          }
+        } else {
+          throw new ResourceNotFoundException(
+              String.format("CodeSet with ID=%s not found", parentId));
+        }
+        break;
+      case codeSet:
+        List<CodeSetType> codeSets2 = getCodeSets(repository);
+        Optional<CodeSetType> optCodeSet2 = codeSets2.stream()
+            .filter(cs -> Integer.parseInt(elementId) == cs.getId().intValue()).findFirst();
+        if (optCodeSet2.isPresent()) {
+          optCodeSet2.get().setAnnotation(OrchestraAPItoDOM.AnnotationToDOM(annotation));
+        } else {
+          throw new ResourceNotFoundException(
+              String.format("CodeSet with ID=%s not found", elementId));
+        }
+        break;
+      case component:
+        List<ComponentType> components = getComponentList(repository);
+
+        Optional<ComponentType> optComponent = components.stream()
+            .filter(c -> Integer.parseInt(elementId) == c.getId().intValue()).findFirst();
+
+        if (optComponent.isPresent()) {
+          optComponent.get().setAnnotation(OrchestraAPItoDOM.AnnotationToDOM(annotation));
+        } else {
+          throw new ResourceNotFoundException(
+              String.format("Component with ID=%s not found", elementId));
+        }
+        break;
+      case datatype:
+        List<io.fixprotocol._2016.fixrepository.Datatype> datatypes = getDatatypeList(repository);
+
+        Optional<io.fixprotocol._2016.fixrepository.Datatype> optDatatype =
+            datatypes.stream().filter(d -> elementId.equals(d.getName())).findFirst();
+
+        if (optDatatype.isPresent()) {
+          optDatatype.get().setAnnotation(OrchestraAPItoDOM.AnnotationToDOM(annotation));
+        } else {
+          throw new ResourceNotFoundException(String.format("Datatype %s not found", elementId));
+        }
+        break;
+      case field:
+        List<FieldType> fields = getFieldList(repository);
+
+        Optional<FieldType> optField = fields.stream()
+            .filter(f -> Integer.parseInt(elementId) == f.getId().intValue()).findFirst();
+
+        if (optField.isPresent()) {
+          optField.get().setAnnotation(OrchestraAPItoDOM.AnnotationToDOM(annotation));
+        } else {
+          throw new ResourceNotFoundException(
+              String.format("Field with ID=%s not found", elementId));
+        }
+        break;
+      case flow:
+        List<FlowType> flows = getFlowList(repository);
+        Optional<FlowType> optFlow =
+            flows.stream().filter(f -> elementId.equals(f.getName())).findFirst();
+
+        if (optFlow.isPresent()) {
+          optFlow.get().setAnnotation(OrchestraAPItoDOM.AnnotationToDOM(annotation));
+        } else {
+          throw new ResourceNotFoundException(String.format("Flow %s not found", elementId));
+        }
+        break;
+      case group:
+        List<ComponentType> components2 = getComponentList(repository);
+
+        Optional<GroupType> optGroup =
+            components2.stream().filter(c -> Integer.parseInt(elementId) == c.getId().intValue())
+                .filter(c -> c instanceof GroupType).map(c -> (GroupType) c).findFirst();
+
+        if (optGroup.isPresent()) {
+          optGroup.get().setAnnotation(OrchestraAPItoDOM.AnnotationToDOM(annotation));
+        } else {
+          throw new ResourceNotFoundException(
+              String.format("Group with ID=%s not found", elementId));
+        }
+        break;
+      case message:
+        List<MessageType> messages = getMessageList(repository);
+
+        Optional<MessageType> optMessage = messages.stream()
+            .filter(m -> Integer.parseInt(elementId) == m.getId().intValue()).findFirst();
+
+        if (optMessage.isPresent()) {
+          optMessage.get().setAnnotation(OrchestraAPItoDOM.AnnotationToDOM(annotation));
+        } else {
+          throw new ResourceNotFoundException(
+              String.format("Message with ID=%s not found", elementId));
+        }
+        break;
+      case response:
+        Objects.requireNonNull(parentId, "Parent ID or name missing");
+
+        List<MessageType> messages2 = getMessageList(repository);
+
+        Optional<MessageType> optMessage2 =
+            messages2.stream().filter(m -> Integer.parseInt(parentId) == m.getId().intValue()).findFirst();
+
+        if (optMessage2.isPresent()) {
+          List<ResponseType> responses = getResponseList(optMessage2.get());
+          Optional<ResponseType> optResponse =
+              responses.stream().filter(r -> elementId.equals(r.getName())).findFirst();
+          if (optResponse.isPresent()) {
+            optResponse.get().setAnnotation(OrchestraAPItoDOM.AnnotationToDOM(annotation));
+          } else {
+            throw new ResourceNotFoundException(String.format("Message response %s not found", elementId));
+          }
+        } else {
+          throw new ResourceNotFoundException(String.format("Message with ID=%s not found", parentId));
+        }
+        break;
+      case stateMachine:
+        List<ActorType> actors2 = getActorList(repository);
+        Optional<ActorType> optActor2 =
+            actors2.stream().filter(a -> parentId.equals(a.getName())).findFirst();
+
+        if (optActor2.isPresent()) {
+          List<Object> elements = optActor2.get().getFieldOrFieldRefOrComponent();
+          Optional<StateMachineType> optStateMachine =
+              elements.stream().filter(o -> o instanceof StateMachineType)
+                  .map(o -> (StateMachineType) o).filter(sm -> elementId.equals(sm.getName())).findFirst();
+          if (optStateMachine.isPresent()) {
+            optStateMachine.get().setAnnotation(OrchestraAPItoDOM.AnnotationToDOM(annotation));
+          } else {
+            throw new ResourceNotFoundException(String.format("StateMachine %s not found", elementId));
+          }
+
+        } else {
+          throw new ResourceNotFoundException(String.format("Actor %s not found", parentId));
+        }
+        break;
+    }
   }
 
   @Override
@@ -1387,7 +2238,6 @@ public class RepositoryDOMStore implements RepositoryStore {
     throw new ResourceNotFoundException(String.format("Actor %s not found", name));
   }
 
-
   @Override
   public void updateGroup(String reposName, String version, Integer id, Group group)
       throws RepositoryStoreException {
@@ -1487,6 +2337,47 @@ public class RepositoryDOMStore implements RepositoryStore {
     }
   }
 
+  @Override
+  public void updateStateMachine(String reposName, String version, String actor, String name,
+      StateMachine stateMachine) throws RepositoryStoreException {
+    Objects.requireNonNull(reposName, "Repository name missing");
+    Objects.requireNonNull(version, "Repository version missing");
+    Objects.requireNonNull(actor, "Actor name missing");
+    Objects.requireNonNull(name, "StateMachine name missing");
+    Objects.requireNonNull(stateMachine, "StateMachine value missing");
+    final RepositoryKey key = new RepositoryKey(reposName, version);
+
+    final Repository repository = repositories.get(key);
+    if (repository == null) {
+      throw new ResourceNotFoundException(
+          String.format("Repository with name=%s version=%s not found", reposName, version));
+    }
+
+    Actors actors = repository.getActors();
+    if (actors == null) {
+      throw new ResourceNotFoundException(String.format("Actor %s not found", actor));
+    }
+
+    Optional<ActorType> opt = actors.getActorOrFlow().stream().filter(o -> o instanceof ActorType)
+        .map(o -> (ActorType) o).filter(a -> actor.equals(a.getName())).findFirst();
+    if (opt.isPresent()) {
+      ActorType actorType = opt.get();
+      List<Object> elements = actorType.getFieldOrFieldRefOrComponent();
+      for (int j = 0; j < elements.size(); j++) {
+        if (elements.get(j) instanceof StateMachineType) {
+          StateMachineType stateMachineType = (StateMachineType) elements.get(j);
+          if (name.equals(stateMachineType.getName())) {
+            elements.set(j, OrchestraAPItoDOM.StateMachineToDOM(stateMachine));
+            return;
+          }
+        }
+      }
+      throw new ResourceNotFoundException(String.format("StateMachine %s not found", name));
+    } else {
+      throw new ResourceNotFoundException(String.format("Actor %s not found", actor));
+    }
+  }
+
   private List<ActorType> getActorList(Repository repository) {
     Actors actors = repository.getActors();
     if (actors == null) {
@@ -1573,193 +2464,6 @@ public class RepositoryDOMStore implements RepositoryStore {
     JAXBContext jaxbContext = JAXBContext.newInstance(Repository.class);
     Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
     return (Repository) unmarshaller.unmarshal(file);
-  }
-
-  @Override
-  public void createAnnotation(String reposName, String version, String elementId,
-      ElementType elementType, Annotation annotation) throws RepositoryStoreException {
-    // TODO Auto-generated method stub
-
-  }
-
-  @Override
-  public void createStateMachine(String reposName, String version, String actor,
-      StateMachine stateMachine) throws RepositoryStoreException {
-    Objects.requireNonNull(reposName, "Repository name missing");
-    Objects.requireNonNull(version, "Repository version missing");
-    Objects.requireNonNull(actor, "Actor name missing");
-    Objects.requireNonNull(actor, "StateMachine value missing");
-    Repository repository = repositories.get(new RepositoryKey(reposName, version));
-    if (repository == null) {
-      throw new ResourceNotFoundException(
-          String.format("Repository with name=%s version=%s not found", reposName, version));
-    }
-    List<ActorType> actors = getActorList(repository);
-
-    for (ActorType actorType : actors) {
-      if (actor.equals(actorType.getName())) {
-        List<Object> elements = actorType.getFieldOrFieldRefOrComponent();
-        if (elements.stream().filter(o -> o instanceof StateMachineType)
-                .map(o -> (StateMachineType) o)
-                .anyMatch(sm -> sm.getName().equals(stateMachine.getName()))) {
-          throw new DuplicateKeyException(
-                  String.format("Duplicate state machine with name=%s", stateMachine.getName()));
-        }
-        elements.add(OrchestraAPItoDOM.StateMachineToDOM(stateMachine));
-        return;
-      }
-    }
-    throw new ResourceNotFoundException(String.format("Actor with name=%s not found", actor));
-  }
-
-  @Override
-  public void deleteAnnotation(String reposName, String version, String elementId,
-      String elementType) throws RepositoryStoreException {
-    // TODO Auto-generated method stub
-
-  }
-
-  @Override
-  public void deleteStateMachine(String reposName, String version, String actor, String name)
-      throws RepositoryStoreException {
-    Objects.requireNonNull(reposName, "Repository name missing");
-    Objects.requireNonNull(version, "Repository version missing");
-    Objects.requireNonNull(actor, "Actor name missing");
-    Objects.requireNonNull(name, "StateMachine name missing");
-    final RepositoryKey key = new RepositoryKey(reposName, version);
-
-    final Repository repository = repositories.get(key);
-    if (repository == null) {
-      throw new ResourceNotFoundException(
-          String.format("Repository with name=%s version=%s not found", reposName, version));
-    }
-
-    List<ActorType> actorList = getActorList(repository);
-    for (ActorType actorType : actorList) {
-      if (actor.equals(actorType.getName())) {
-        List<Object> elements = actorType.getFieldOrFieldRefOrComponent();
-        for (int i = 0; i < elements.size(); i++) {
-          if (elements.get(i) instanceof StateMachineType
-              && name.equals(((StateMachineType) elements.get(i)).getName())) {
-            elements.remove(i);
-            return;
-          }
-        }
-        throw new ResourceNotFoundException(String.format("State machine %s not found", name));
-
-      }
-    }
-
-    throw new ResourceNotFoundException(String.format("Actor %s not found", name));
-  }
-
-  @Override
-  public List<Annotation> getAnnotations(String reposName, String version,
-      Predicate<Annotation> predicate) throws RepositoryStoreException {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  public StateMachine getStateMachine(String reposName, String version, String actor, String name)
-      throws RepositoryStoreException {
-    Objects.requireNonNull(reposName, "Repository name missing");
-    Objects.requireNonNull(version, "Repository version missing");
-    Objects.requireNonNull(actor, "Actor name missing");
-    Objects.requireNonNull(name, "StateMachine name missing");
-    final RepositoryKey key = new RepositoryKey(reposName, version);
-
-    final Repository repository = repositories.get(key);
-    if (repository == null) {
-      throw new ResourceNotFoundException(
-          String.format("Repository with name=%s version=%s not found", reposName, version));
-    }
-
-    List<ActorType> actors = getActorList(repository);
-
-    for (ActorType actorType : actors) {
-      if (actor.equals(actorType.getName())) {
-        List<Object> elements = actorType.getFieldOrFieldRefOrComponent();
-        for (Object obj : elements) {
-          if (obj instanceof StateMachineType &&
-              name.equals(((StateMachineType)obj).getName())) {
-            return OrchestraAPItoDOM.DOMToStateMachine((StateMachineType) obj);
-          }   
-        }
-        throw new ResourceNotFoundException(String.format("StateMachine %s not found", name));
-      }
-    }
-
-    throw new ResourceNotFoundException(String.format("Actor %s not found", actor));
-  }
-
-  @Override
-  public List<StateMachine> getStateMachines(String reposName, String version,
-      Predicate<StateMachine> search) throws RepositoryStoreException {
-    Objects.requireNonNull(reposName, "Repository name missing");
-    Objects.requireNonNull(version, "Repository version missing");
-    final RepositoryKey key = new RepositoryKey(reposName, version);
-    Repository repository = repositories.get(key);
-    if (repository == null) {
-      throw new ResourceNotFoundException(
-          String.format("Repository with name=%s version=%s not found", reposName, version));
-    }
-    Predicate<StateMachine> predicate = search != null ? search : t -> true;
-
-    List<ActorType> actors = getActorList(repository);
-
-    return actors.stream().flatMap(a -> a.getFieldOrFieldRefOrComponent().stream())
-        .filter(o -> o instanceof StateMachineType).map(o -> (StateMachineType)o)
-        .map(OrchestraAPItoDOM::DOMToStateMachine).filter(predicate)
-        .collect(Collectors.toList());
-  }
-
-  @Override
-  public void updateAnnotation(String reposName, String version, String elementId,
-      String elementType, Annotation annotation) throws RepositoryStoreException {
-    // TODO Auto-generated method stub
-
-  }
-
-  @Override
-  public void updateStateMachine(String reposName, String version, String actor, String name,
-      StateMachine stateMachine) throws RepositoryStoreException {
-    Objects.requireNonNull(reposName, "Repository name missing");
-    Objects.requireNonNull(version, "Repository version missing");
-    Objects.requireNonNull(actor, "Actor name missing");
-    Objects.requireNonNull(name, "StateMachine name missing");
-    Objects.requireNonNull(stateMachine, "StateMachine value missing");
-    final RepositoryKey key = new RepositoryKey(reposName, version);
-
-    final Repository repository = repositories.get(key);
-    if (repository == null) {
-      throw new ResourceNotFoundException(
-          String.format("Repository with name=%s version=%s not found", reposName, version));
-    }
-
-    Actors actors = repository.getActors();
-    if (actors == null) {
-      throw new ResourceNotFoundException(String.format("Actor %s not found", actor));
-    }
-
-    Optional<ActorType> opt = actors.getActorOrFlow().stream().filter(o -> o instanceof ActorType)
-        .map(o -> (ActorType) o).filter(a -> actor.equals(a.getName())).findFirst();
-    if (opt.isPresent()) {
-      ActorType actorType = opt.get();
-      List<Object> elements = actorType.getFieldOrFieldRefOrComponent();
-      for (int j = 0; j < elements.size(); j++) {
-        if (elements.get(j) instanceof StateMachineType) {
-          StateMachineType stateMachineType = (StateMachineType) elements.get(j);
-          if (name.equals(stateMachineType.getName())) {
-            elements.set(j, OrchestraAPItoDOM.StateMachineToDOM(stateMachine));
-            return;
-          }
-        }
-      }
-      throw new ResourceNotFoundException(String.format("StateMachine %s not found", name));
-    } else {
-      throw new ResourceNotFoundException(String.format("Actor %s not found", actor));
-    }
   }
 
 }

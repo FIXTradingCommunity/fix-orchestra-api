@@ -30,11 +30,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.*;
 
 /**
  * MessageRef
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-29T15:58:53.146Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-30T16:33:12.690Z")
 public class MessageRef   {
   @JsonProperty("name")
   private String name = null;
@@ -50,12 +51,14 @@ public class MessageRef   {
     return this;
   }
 
-   /**
+  /**
    * Get name
    * @return name
-  **/
+   **/
+  @JsonProperty("name")
   @ApiModelProperty(required = true, value = "")
-  public String getName() {
+  @NotNull
+ @Size(max=64)  public String getName() {
     return name;
   }
 
@@ -68,12 +71,13 @@ public class MessageRef   {
     return this;
   }
 
-   /**
+  /**
    * Get msgType
    * @return msgType
-  **/
+   **/
+  @JsonProperty("msgType")
   @ApiModelProperty(value = "")
-  public String getMsgType() {
+ @Size(max=2)  public String getMsgType() {
     return msgType;
   }
 
@@ -86,12 +90,13 @@ public class MessageRef   {
     return this;
   }
 
-   /**
+  /**
    * Use case of a message type
    * @return scenario
-  **/
+   **/
+  @JsonProperty("scenario")
   @ApiModelProperty(value = "Use case of a message type")
-  public String getScenario() {
+ @Size(max=64)  public String getScenario() {
     return scenario;
   }
 

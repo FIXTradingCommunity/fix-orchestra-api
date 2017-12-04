@@ -7,6 +7,7 @@ import io.fixprotocol.orchestra.client.model.Flow;
 import io.fixprotocol.orchestra.client.model.Response;
 import io.fixprotocol.orchestra.client.model.StateMachine;
 import org.junit.Test;
+import org.junit.Ignore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +17,7 @@ import java.util.Map;
 /**
  * API tests for WorkflowApi
  */
+@Ignore
 public class WorkflowApiTest {
 
     private final WorkflowApi api = new WorkflowApi();
@@ -34,7 +36,7 @@ public class WorkflowApiTest {
         String reposName = null;
         String version = null;
         Actor actor = null;
-        // api.addActor(reposName, version, actor);
+        api.addActor(reposName, version, actor);
 
         // TODO: test validations
     }
@@ -52,7 +54,7 @@ public class WorkflowApiTest {
         String reposName = null;
         String version = null;
         Flow flow = null;
-        // api.addFlow(reposName, version, flow);
+        api.addFlow(reposName, version, flow);
 
         // TODO: test validations
     }
@@ -71,7 +73,7 @@ public class WorkflowApiTest {
         String version = null;
         Integer id = null;
         Response response = null;
-        // api.addMessageResponse(reposName, version, id, response);
+        api.addMessageResponse(reposName, version, id, response);
 
         // TODO: test validations
     }
@@ -90,7 +92,7 @@ public class WorkflowApiTest {
         String version = null;
         String name = null;
         StateMachine stateMachine = null;
-        // api.addStateMachine(reposName, version, name, stateMachine);
+        api.addStateMachine(reposName, version, name, stateMachine);
 
         // TODO: test validations
     }
@@ -108,7 +110,7 @@ public class WorkflowApiTest {
         String reposName = null;
         String version = null;
         String name = null;
-        // api.deleteActor(reposName, version, name);
+        api.deleteActor(reposName, version, name);
 
         // TODO: test validations
     }
@@ -126,7 +128,7 @@ public class WorkflowApiTest {
         String reposName = null;
         String version = null;
         String name = null;
-        // api.deleteFlow(reposName, version, name);
+        api.deleteFlow(reposName, version, name);
 
         // TODO: test validations
     }
@@ -145,7 +147,7 @@ public class WorkflowApiTest {
         String version = null;
         Integer id = null;
         String name = null;
-        // api.deleteMessageResponse(reposName, version, id, name);
+        api.deleteMessageResponse(reposName, version, id, name);
 
         // TODO: test validations
     }
@@ -164,7 +166,7 @@ public class WorkflowApiTest {
         String version = null;
         String name = null;
         String smName = null;
-        // api.deleteStateMachine(reposName, version, name, smName);
+        api.deleteStateMachine(reposName, version, name, smName);
 
         // TODO: test validations
     }
@@ -182,7 +184,7 @@ public class WorkflowApiTest {
         String reposName = null;
         String version = null;
         String name = null;
-        // Actor response = api.findActorByName(reposName, version, name);
+        Actor response = api.findActorByName(reposName, version, name);
 
         // TODO: test validations
     }
@@ -200,7 +202,7 @@ public class WorkflowApiTest {
         String reposName = null;
         String version = null;
         String name = null;
-        // Flow response = api.findFlowByName(reposName, version, name);
+        Flow response = api.findFlowByName(reposName, version, name);
 
         // TODO: test validations
     }
@@ -219,7 +221,7 @@ public class WorkflowApiTest {
         String version = null;
         Integer id = null;
         String name = null;
-        // Response response = api.findMessageResponseById(reposName, version, id, name);
+        Response response = api.findMessageResponseById(reposName, version, id, name);
 
         // TODO: test validations
     }
@@ -238,7 +240,7 @@ public class WorkflowApiTest {
         String version = null;
         String name = null;
         String smName = null;
-        // StateMachine response = api.findStateMachine(reposName, version, name, smName);
+        StateMachine response = api.findStateMachine(reposName, version, name, smName);
 
         // TODO: test validations
     }
@@ -258,7 +260,7 @@ public class WorkflowApiTest {
         String searchString = null;
         Integer skip = null;
         Integer limit = null;
-        // List<Actor> response = api.searchActors(reposName, version, searchString, skip, limit);
+        List<Actor> response = api.searchActors(reposName, version, searchString, skip, limit);
 
         // TODO: test validations
     }
@@ -278,7 +280,7 @@ public class WorkflowApiTest {
         String searchString = null;
         Integer skip = null;
         Integer limit = null;
-        // List<Flow> response = api.searchFlows(reposName, version, searchString, skip, limit);
+        List<Flow> response = api.searchFlows(reposName, version, searchString, skip, limit);
 
         // TODO: test validations
     }
@@ -299,7 +301,7 @@ public class WorkflowApiTest {
         String searchString = null;
         Integer skip = null;
         Integer limit = null;
-        // List<Response> response = api.searchMessageResponses(reposName, version, id, searchString, skip, limit);
+        List<Response> response = api.searchMessageResponses(reposName, version, id, searchString, skip, limit);
 
         // TODO: test validations
     }
@@ -320,7 +322,7 @@ public class WorkflowApiTest {
         String searchString = null;
         Integer skip = null;
         Integer limit = null;
-        // List<StateMachine> response = api.searchStateMachines(reposName, version, name, searchString, skip, limit);
+        List<StateMachine> response = api.searchStateMachines(reposName, version, name, searchString, skip, limit);
 
         // TODO: test validations
     }
@@ -339,7 +341,7 @@ public class WorkflowApiTest {
         String version = null;
         String name = null;
         Actor actor = null;
-        // api.updateActorByName(reposName, version, name, actor);
+        api.updateActorByName(reposName, version, name, actor);
 
         // TODO: test validations
     }
@@ -358,7 +360,7 @@ public class WorkflowApiTest {
         String version = null;
         String name = null;
         Flow actor = null;
-        // api.updateFlowByName(reposName, version, name, actor);
+        api.updateFlowByName(reposName, version, name, actor);
 
         // TODO: test validations
     }
@@ -378,7 +380,7 @@ public class WorkflowApiTest {
         Integer id = null;
         String name = null;
         Response response = null;
-        // api.updateMessageResponse(reposName, version, id, name, response);
+        api.updateMessageResponse(reposName, version, id, name, response);
 
         // TODO: test validations
     }
@@ -398,7 +400,7 @@ public class WorkflowApiTest {
         String name = null;
         String smName = null;
         StateMachine stateMachine = null;
-        // api.updateStateMachine(reposName, version, name, smName, stateMachine);
+        api.updateStateMachine(reposName, version, name, smName, stateMachine);
 
         // TODO: test validations
     }

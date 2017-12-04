@@ -3,13 +3,14 @@ package io.fixprotocol.orchestra.client.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
  * ErrorModel
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-29T15:57:45.378Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-30T16:31:59.574Z")
 public class ErrorModel {
   @JsonProperty("code")
   private Integer code = null;
@@ -94,6 +95,6 @@ public class ErrorModel {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
 }
 

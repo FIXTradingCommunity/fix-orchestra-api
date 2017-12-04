@@ -30,11 +30,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.*;
 
 /**
  * Documentation
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-29T15:58:53.146Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-30T16:33:12.690Z")
 public class Documentation   {
   @JsonProperty("$")
   private String value = null;
@@ -50,11 +51,13 @@ public class Documentation   {
     return this;
   }
 
-   /**
+  /**
    * text of Documentation
    * @return value
-  **/
+   **/
+  @JsonProperty("$")
   @ApiModelProperty(required = true, value = "text of Documentation")
+  @NotNull
   public String getValue() {
     return value;
   }
@@ -68,10 +71,11 @@ public class Documentation   {
     return this;
   }
 
-   /**
+  /**
    * a language code (ISO 639-1)
    * @return langId
-  **/
+   **/
+  @JsonProperty("langId")
   @ApiModelProperty(example = "en", value = "a language code (ISO 639-1)")
   public String getLangId() {
     return langId;
@@ -86,10 +90,11 @@ public class Documentation   {
     return this;
   }
 
-   /**
+  /**
    * Get purpose
    * @return purpose
-  **/
+   **/
+  @JsonProperty("purpose")
   @ApiModelProperty(example = "SYNOPSIS", value = "")
   public String getPurpose() {
     return purpose;

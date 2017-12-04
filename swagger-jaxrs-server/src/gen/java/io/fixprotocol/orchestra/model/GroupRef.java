@@ -30,11 +30,12 @@ import io.fixprotocol.orchestra.model.Annotation;
 import io.fixprotocol.orchestra.model.ElementRef;
 import io.fixprotocol.orchestra.model.EntityAttributes;
 import io.fixprotocol.orchestra.model.ObjectId;
+import javax.validation.constraints.*;
 
 /**
  * GroupRef
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-29T15:58:53.146Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-30T16:33:12.690Z")
 public class GroupRef extends ElementRef  {
 
   @Override

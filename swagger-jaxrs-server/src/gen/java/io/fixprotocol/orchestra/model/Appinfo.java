@@ -30,12 +30,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import javax.validation.constraints.*;
 
 /**
  * Usage specific annotation, optionally with link to an external reference or standard
  */
 @ApiModel(description = "Usage specific annotation, optionally with link to an external reference or standard")
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-29T15:58:53.146Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-30T16:33:12.690Z")
 public class Appinfo   {
   @JsonProperty("$")
   private String value = null;
@@ -54,11 +55,13 @@ public class Appinfo   {
     return this;
   }
 
-   /**
+  /**
    * Get value
    * @return value
-  **/
+   **/
+  @JsonProperty("$")
   @ApiModelProperty(required = true, value = "")
+  @NotNull
   public String getValue() {
     return value;
   }
@@ -72,10 +75,11 @@ public class Appinfo   {
     return this;
   }
 
-   /**
+  /**
    * Get specURL
    * @return specURL
-  **/
+   **/
+  @JsonProperty("specURL")
   @ApiModelProperty(value = "")
   public String getSpecURL() {
     return specURL;
@@ -90,10 +94,11 @@ public class Appinfo   {
     return this;
   }
 
-   /**
+  /**
    * a language code (ISO 639-1)
    * @return langId
-  **/
+   **/
+  @JsonProperty("langId")
   @ApiModelProperty(example = "en", value = "a language code (ISO 639-1)")
   public String getLangId() {
     return langId;
@@ -108,10 +113,11 @@ public class Appinfo   {
     return this;
   }
 
-   /**
+  /**
    * Get purpose
    * @return purpose
-  **/
+   **/
+  @JsonProperty("purpose")
   @ApiModelProperty(example = "SYNOPSIS", value = "")
   public String getPurpose() {
     return purpose;

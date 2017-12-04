@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-29T15:57:45.378Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-30T16:31:59.574Z")
 public class RepositoryApi {
   private ApiClient apiClient;
 
@@ -71,7 +71,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/codesets/{codesetid}/codes".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/codesets/{codesetid}/codes"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "codesetid" + "\\}", apiClient.escapeString(codesetid.toString()));
@@ -121,7 +121,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/codesets".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/codesets"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()));
 
@@ -171,7 +171,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/components".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/components"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()));
 
@@ -221,7 +221,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/datatypes".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/datatypes"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()));
 
@@ -270,7 +270,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/fields".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/fields"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()));
 
@@ -320,7 +320,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/groups".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/groups"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()));
 
@@ -371,7 +371,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/messages".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/messages"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()));
 
@@ -416,7 +416,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories".replaceAll("\\{format\\}","json");
+    String localVarPath = "/repositories";
 
     // query params
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -476,7 +476,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/codesets/{codesetid}/codes/{id}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/codesets/{codesetid}/codes/{id}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "codesetid" + "\\}", apiClient.escapeString(codesetid.toString()))
@@ -532,7 +532,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/codesets/{id}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/codesets/{id}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -587,7 +587,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/components/{id}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/components/{id}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -642,7 +642,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/datatypes/{name}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/datatypes/{name}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "name" + "\\}", apiClient.escapeString(name.toString()));
@@ -697,7 +697,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/fields/{id}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/fields/{id}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -752,7 +752,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/groups/{id}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/groups/{id}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -807,7 +807,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/messages/{id}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/messages/{id}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -856,7 +856,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()));
 
@@ -905,7 +905,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/file".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/file"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()));
 
@@ -966,7 +966,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/codesets/{codesetid}/codes/{id}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/codesets/{codesetid}/codes/{id}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "codesetid" + "\\}", apiClient.escapeString(codesetid.toString()))
@@ -1023,7 +1023,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/codesets/{id}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/codesets/{id}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -1079,7 +1079,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/components/{id}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/components/{id}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -1135,7 +1135,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/datatypes/{name}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/datatypes/{name}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "name" + "\\}", apiClient.escapeString(name.toString()));
@@ -1191,7 +1191,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/fields/{id}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/fields/{id}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -1247,7 +1247,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/groups/{id}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/groups/{id}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -1303,7 +1303,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/messages/{id}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/messages/{id}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -1353,7 +1353,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()));
 
@@ -1388,7 +1388,7 @@ public class RepositoryApi {
    * @param searchString pass an optional search string for looking up CodeSets (optional)
    * @param skip number of records to skip for pagination (optional)
    * @param limit maximum number of records to return (optional)
-   * @return List<CodeSet>
+   * @return List&lt;CodeSet&gt;
    * @throws ApiException if fails to make API call
    */
   public List<CodeSet> searchCodeSets(String reposName, String version, String searchString, Integer skip, Integer limit) throws ApiException {
@@ -1405,7 +1405,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/codesets".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/codesets"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()));
 
@@ -1444,7 +1444,7 @@ public class RepositoryApi {
    * @param searchString pass an optional search string for looking up Codes (optional)
    * @param skip number of records to skip for pagination (optional)
    * @param limit maximum number of records to return (optional)
-   * @return List<Code>
+   * @return List&lt;Code&gt;
    * @throws ApiException if fails to make API call
    */
   public List<Code> searchCodes(String reposName, String version, Integer codesetid, String searchString, Integer skip, Integer limit) throws ApiException {
@@ -1466,7 +1466,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/codesets/{codesetid}/codes".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/codesets/{codesetid}/codes"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "codesetid" + "\\}", apiClient.escapeString(codesetid.toString()));
@@ -1505,7 +1505,7 @@ public class RepositoryApi {
    * @param searchString pass an optional search string for looking up components (optional)
    * @param skip number of records to skip for pagination (optional)
    * @param limit maximum number of records to return (optional)
-   * @return List<Component>
+   * @return List&lt;Component&gt;
    * @throws ApiException if fails to make API call
    */
   public List<Component> searchComponents(String reposName, String version, String searchString, Integer skip, Integer limit) throws ApiException {
@@ -1522,7 +1522,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/components".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/components"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()));
 
@@ -1560,7 +1560,7 @@ public class RepositoryApi {
    * @param searchString pass an optional search string for looking up datatypes (optional)
    * @param skip number of records to skip for pagination (optional)
    * @param limit maximum number of records to return (optional)
-   * @return List<Datatype>
+   * @return List&lt;Datatype&gt;
    * @throws ApiException if fails to make API call
    */
   public List<Datatype> searchDatatypes(String reposName, String version, String searchString, Integer skip, Integer limit) throws ApiException {
@@ -1577,7 +1577,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/datatypes".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/datatypes"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()));
 
@@ -1615,7 +1615,7 @@ public class RepositoryApi {
    * @param searchString pass an optional search string for looking up fields (optional)
    * @param skip number of records to skip for pagination (optional)
    * @param limit maximum number of records to return (optional)
-   * @return List<Field>
+   * @return List&lt;Field&gt;
    * @throws ApiException if fails to make API call
    */
   public List<Field> searchFields(String reposName, String version, String searchString, Integer skip, Integer limit) throws ApiException {
@@ -1632,7 +1632,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/fields".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/fields"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()));
 
@@ -1670,7 +1670,7 @@ public class RepositoryApi {
    * @param searchString pass an optional search string for looking up groups (optional)
    * @param skip number of records to skip for pagination (optional)
    * @param limit maximum number of records to return (optional)
-   * @return List<Group>
+   * @return List&lt;Group&gt;
    * @throws ApiException if fails to make API call
    */
   public List<Group> searchGroups(String reposName, String version, String searchString, Integer skip, Integer limit) throws ApiException {
@@ -1687,7 +1687,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/groups".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/groups"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()));
 
@@ -1725,7 +1725,7 @@ public class RepositoryApi {
    * @param searchString pass an optional search string for looking up messages (optional)
    * @param skip number of records to skip for pagination (optional)
    * @param limit maximum number of records to return (optional)
-   * @return List<Message>
+   * @return List&lt;Message&gt;
    * @throws ApiException if fails to make API call
    */
   public List<Message> searchMessages(String reposName, String version, String searchString, Integer skip, Integer limit) throws ApiException {
@@ -1742,7 +1742,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/messages".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/messages"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()));
 
@@ -1778,14 +1778,14 @@ public class RepositoryApi {
    * @param searchString pass an optional search string for looking up repositories (optional)
    * @param skip number of records to skip for pagination (optional)
    * @param limit maximum number of records to return (optional)
-   * @return List<Repository>
+   * @return List&lt;Repository&gt;
    * @throws ApiException if fails to make API call
    */
   public List<Repository> searchRepositories(String searchString, Integer skip, Integer limit) throws ApiException {
     Object localVarPostBody = null;
     
     // create path and map variables
-    String localVarPath = "/repositories".replaceAll("\\{format\\}","json");
+    String localVarPath = "/repositories";
 
     // query params
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -1852,7 +1852,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/codesets/{codesetid}/codes/{id}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/codesets/{codesetid}/codes/{id}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "codesetid" + "\\}", apiClient.escapeString(codesetid.toString()))
@@ -1914,7 +1914,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/codesets/{id}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/codesets/{id}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -1975,7 +1975,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/components/{id}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/components/{id}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -2036,7 +2036,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/datatypes/{name}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/datatypes/{name}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "name" + "\\}", apiClient.escapeString(name.toString()));
@@ -2097,7 +2097,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/fields/{id}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/fields/{id}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -2158,7 +2158,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/groups/{id}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/groups/{id}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -2219,7 +2219,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/messages/{id}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/messages/{id}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -2274,7 +2274,7 @@ public class RepositoryApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()));
 

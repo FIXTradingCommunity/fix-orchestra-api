@@ -3,6 +3,7 @@ package io.fixprotocol.orchestra.client.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import io.fixprotocol.orchestra.client.model.Annotation;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -10,8 +11,11 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * Transition
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-29T15:57:45.378Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-30T16:31:59.574Z")
 public class Transition {
+  @JsonProperty("name")
+  private String name = null;
+
   @JsonProperty("when")
   private String when = null;
 
@@ -20,6 +24,24 @@ public class Transition {
 
   @JsonProperty("annotation")
   private Annotation annotation = null;
+
+  public Transition name(String name) {
+    this.name = name;
+    return this;
+  }
+
+   /**
+   * Get name
+   * @return name
+  **/
+  @ApiModelProperty(value = "")
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
 
   public Transition when(String when) {
     this.when = when;
@@ -85,14 +107,15 @@ public class Transition {
       return false;
     }
     Transition transition = (Transition) o;
-    return Objects.equals(this.when, transition.when) &&
+    return Objects.equals(this.name, transition.name) &&
+        Objects.equals(this.when, transition.when) &&
         Objects.equals(this.target, transition.target) &&
         Objects.equals(this.annotation, transition.annotation);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(when, target, annotation);
+    return Objects.hash(name, when, target, annotation);
   }
 
 
@@ -101,6 +124,7 @@ public class Transition {
     StringBuilder sb = new StringBuilder();
     sb.append("class Transition {\n");
     
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    when: ").append(toIndentedString(when)).append("\n");
     sb.append("    target: ").append(toIndentedString(target)).append("\n");
     sb.append("    annotation: ").append(toIndentedString(annotation)).append("\n");
@@ -118,6 +142,6 @@ public class Transition {
     }
     return o.toString().replace("\n", "\n    ");
   }
-  
+
 }
 

@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-29T15:57:45.378Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-30T16:31:59.574Z")
 public class WorkflowApi {
   private ApiClient apiClient;
 
@@ -60,7 +60,7 @@ public class WorkflowApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/actors".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/actors"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()));
 
@@ -109,7 +109,7 @@ public class WorkflowApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/flows".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/flows"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()));
 
@@ -164,7 +164,7 @@ public class WorkflowApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/messages/{id}/responses".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/messages/{id}/responses"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -220,7 +220,7 @@ public class WorkflowApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/actors/{name}/statemachines".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/actors/{name}/statemachines"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "name" + "\\}", apiClient.escapeString(name.toString()));
@@ -275,7 +275,7 @@ public class WorkflowApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/actors/{name}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/actors/{name}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "name" + "\\}", apiClient.escapeString(name.toString()));
@@ -330,7 +330,7 @@ public class WorkflowApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/flows/{name}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/flows/{name}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "name" + "\\}", apiClient.escapeString(name.toString()));
@@ -391,7 +391,7 @@ public class WorkflowApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/messages/{id}/responses/{name}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/messages/{id}/responses/{name}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()))
@@ -453,7 +453,7 @@ public class WorkflowApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/actors/{name}/statemachines/{sm-name}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/actors/{name}/statemachines/{sm-name}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "name" + "\\}", apiClient.escapeString(name.toString()))
@@ -510,7 +510,7 @@ public class WorkflowApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/actors/{name}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/actors/{name}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "name" + "\\}", apiClient.escapeString(name.toString()));
@@ -566,7 +566,7 @@ public class WorkflowApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/flows/{name}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/flows/{name}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "name" + "\\}", apiClient.escapeString(name.toString()));
@@ -628,7 +628,7 @@ public class WorkflowApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/messages/{id}/responses/{name}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/messages/{id}/responses/{name}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()))
@@ -691,7 +691,7 @@ public class WorkflowApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/actors/{name}/statemachines/{sm-name}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/actors/{name}/statemachines/{sm-name}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "name" + "\\}", apiClient.escapeString(name.toString()))
@@ -728,7 +728,7 @@ public class WorkflowApi {
    * @param searchString pass an optional search string for looking up actors (optional)
    * @param skip number of records to skip for pagination (optional)
    * @param limit maximum number of records to return (optional)
-   * @return List<Actor>
+   * @return List&lt;Actor&gt;
    * @throws ApiException if fails to make API call
    */
   public List<Actor> searchActors(String reposName, String version, String searchString, Integer skip, Integer limit) throws ApiException {
@@ -745,7 +745,7 @@ public class WorkflowApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/actors".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/actors"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()));
 
@@ -783,7 +783,7 @@ public class WorkflowApi {
    * @param searchString pass an optional search string for looking up flows (optional)
    * @param skip number of records to skip for pagination (optional)
    * @param limit maximum number of records to return (optional)
-   * @return List<Flow>
+   * @return List&lt;Flow&gt;
    * @throws ApiException if fails to make API call
    */
   public List<Flow> searchFlows(String reposName, String version, String searchString, Integer skip, Integer limit) throws ApiException {
@@ -800,7 +800,7 @@ public class WorkflowApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/flows".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/flows"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()));
 
@@ -839,7 +839,7 @@ public class WorkflowApi {
    * @param searchString pass an optional search string for looking up responses (optional)
    * @param skip number of records to skip for pagination (optional)
    * @param limit maximum number of records to return (optional)
-   * @return List<Response>
+   * @return List&lt;Response&gt;
    * @throws ApiException if fails to make API call
    */
   public List<Response> searchMessageResponses(String reposName, String version, Integer id, String searchString, Integer skip, Integer limit) throws ApiException {
@@ -861,7 +861,7 @@ public class WorkflowApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/messages/{id}/responses".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/messages/{id}/responses"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()));
@@ -901,7 +901,7 @@ public class WorkflowApi {
    * @param searchString pass an optional search string for looking up actors (optional)
    * @param skip number of records to skip for pagination (optional)
    * @param limit maximum number of records to return (optional)
-   * @return List<StateMachine>
+   * @return List&lt;StateMachine&gt;
    * @throws ApiException if fails to make API call
    */
   public List<StateMachine> searchStateMachines(String reposName, String version, String name, String searchString, Integer skip, Integer limit) throws ApiException {
@@ -923,7 +923,7 @@ public class WorkflowApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/actors/{name}/statemachines".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/actors/{name}/statemachines"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "name" + "\\}", apiClient.escapeString(name.toString()));
@@ -987,7 +987,7 @@ public class WorkflowApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/actors/{name}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/actors/{name}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "name" + "\\}", apiClient.escapeString(name.toString()));
@@ -1048,7 +1048,7 @@ public class WorkflowApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/flows/{name}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/flows/{name}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "name" + "\\}", apiClient.escapeString(name.toString()));
@@ -1115,7 +1115,7 @@ public class WorkflowApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/messages/{id}/responses/{name}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/messages/{id}/responses/{name}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "id" + "\\}", apiClient.escapeString(id.toString()))
@@ -1183,7 +1183,7 @@ public class WorkflowApi {
     }
     
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/actors/{name}/statemachines/{sm-name}".replaceAll("\\{format\\}","json")
+    String localVarPath = "/repositories/{repos-name}/{version}/actors/{name}/statemachines/{sm-name}"
       .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
       .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()))
       .replaceAll("\\{" + "name" + "\\}", apiClient.escapeString(name.toString()))

@@ -34,17 +34,18 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.constraints.*;
 
 /**
  * Annotation
  */
-@javax.annotation.Generated(value = "class io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-29T15:58:53.146Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-30T16:33:12.690Z")
 public class Annotation   {
   @JsonProperty("appinfo")
-  private List<Appinfo> appinfo = new ArrayList<Appinfo>();
+  private List<Appinfo> appinfo = null;
 
   @JsonProperty("documentation")
-  private List<Documentation> documentation = new ArrayList<Documentation>();
+  private List<Documentation> documentation = null;
 
   public Annotation appinfo(List<Appinfo> appinfo) {
     this.appinfo = appinfo;
@@ -52,14 +53,18 @@ public class Annotation   {
   }
 
   public Annotation addAppinfoItem(Appinfo appinfoItem) {
+    if (this.appinfo == null) {
+      this.appinfo = new ArrayList<>();
+    }
     this.appinfo.add(appinfoItem);
     return this;
   }
 
-   /**
+  /**
    * Get appinfo
    * @return appinfo
-  **/
+   **/
+  @JsonProperty("appinfo")
   @ApiModelProperty(value = "")
   public List<Appinfo> getAppinfo() {
     return appinfo;
@@ -75,14 +80,18 @@ public class Annotation   {
   }
 
   public Annotation addDocumentationItem(Documentation documentationItem) {
+    if (this.documentation == null) {
+      this.documentation = new ArrayList<>();
+    }
     this.documentation.add(documentationItem);
     return this;
   }
 
-   /**
+  /**
    * Get documentation
    * @return documentation
-  **/
+   **/
+  @JsonProperty("documentation")
   @ApiModelProperty(value = "")
   public List<Documentation> getDocumentation() {
     return documentation;
