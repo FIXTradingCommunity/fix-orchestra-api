@@ -10,10 +10,10 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * Documentation
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-30T16:31:59.574Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-12-04T16:02:31.392Z")
 public class Documentation {
-  @JsonProperty("$")
-  private String value = null;
+  @JsonProperty("text")
+  private String text = null;
 
   @JsonProperty("langId")
   private String langId = null;
@@ -21,22 +21,22 @@ public class Documentation {
   @JsonProperty("purpose")
   private String purpose = null;
 
-  public Documentation value(String value) {
-    this.value = value;
+  public Documentation text(String text) {
+    this.text = text;
     return this;
   }
 
    /**
    * text of Documentation
-   * @return value
+   * @return text
   **/
   @ApiModelProperty(required = true, value = "text of Documentation")
-  public String getValue() {
-    return value;
+  public String getText() {
+    return text;
   }
 
-  public void setValue(String value) {
-    this.value = value;
+  public void setText(String text) {
+    this.text = text;
   }
 
   public Documentation langId(String langId) {
@@ -85,14 +85,14 @@ public class Documentation {
       return false;
     }
     Documentation documentation = (Documentation) o;
-    return Objects.equals(this.value, documentation.value) &&
+    return Objects.equals(this.text, documentation.text) &&
         Objects.equals(this.langId, documentation.langId) &&
         Objects.equals(this.purpose, documentation.purpose);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(value, langId, purpose);
+    return Objects.hash(text, langId, purpose);
   }
 
 
@@ -101,7 +101,7 @@ public class Documentation {
     StringBuilder sb = new StringBuilder();
     sb.append("class Documentation {\n");
     
-    sb.append("    value: ").append(toIndentedString(value)).append("\n");
+    sb.append("    text: ").append(toIndentedString(text)).append("\n");
     sb.append("    langId: ").append(toIndentedString(langId)).append("\n");
     sb.append("    purpose: ").append(toIndentedString(purpose)).append("\n");
     sb.append("}");

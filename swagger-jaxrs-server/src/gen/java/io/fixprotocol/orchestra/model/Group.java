@@ -41,7 +41,7 @@ import javax.validation.constraints.*;
 /**
  * Group
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-30T16:33:12.690Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-12-04T16:01:43.421Z")
 public class Group extends Component  {
   @JsonProperty("groupProperties")
   private GroupProperties groupProperties = null;

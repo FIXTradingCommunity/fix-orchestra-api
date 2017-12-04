@@ -65,6 +65,7 @@
 							<value>${project.basedir}/src/main/resources/logback.xml</value>
 						</systemProperty>
 					</systemProperties>
+					<jvmArgs>-Xdebug -agentlib:jdwp=transport=dt_socket,server=y,address=8888,suspend=n</jvmArgs>
 				</configuration>
 				<executions>
 					<execution>

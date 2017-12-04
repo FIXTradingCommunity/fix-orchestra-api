@@ -52,6 +52,7 @@ public class Client {
     mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
     repositoryApi.setApiClient(apiClient);
     workflowApi.setApiClient(apiClient);
+    documentationApi.setApiClient(apiClient);
   }
 
   /**

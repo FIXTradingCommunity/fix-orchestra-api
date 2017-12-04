@@ -71,7 +71,10 @@ public final class OrchestraAPItoDOM {
     Structure structure = actor.getStructure();
     List<Object> objects = actorType.getFieldOrFieldRefOrComponent();
     populateStructureDOM(structure, objects);
-    actorType.setAnnotation(new Annotation());
+    final io.fixprotocol.orchestra.model.Annotation annotation = actor.getAnnotation();
+    if (annotation != null) {
+      actorType.setAnnotation(AnnotationToDOM(annotation));
+    }
     return actorType;
   }
 
@@ -96,7 +99,7 @@ public final class OrchestraAPItoDOM {
     Appinfo appinfoDOM = new Appinfo();
     appinfoDOM.setLangId(appinfo.getLangId());
     appinfoDOM.setPurpose(appinfo.getPurpose());
-    appinfoDOM.setContent(appinfo.getValue());
+    appinfoDOM.setContent(appinfo.getText());
     return appinfoDOM;
   }
 
@@ -111,7 +114,10 @@ public final class OrchestraAPItoDOM {
     if (codeSet.getCodes() != null) {
       codeSetType.getCode().addAll(codeSet.getCodes().stream().map(OrchestraAPItoDOM::CodeToDOM)
           .collect(Collectors.toList()));
-      codeSetType.setAnnotation(new Annotation());
+    }
+    final io.fixprotocol.orchestra.model.Annotation annotation = codeSet.getAnnotation();
+    if (annotation != null) {
+      codeSetType.setAnnotation(AnnotationToDOM(annotation));
     }
     return codeSetType;
   }
@@ -123,7 +129,10 @@ public final class OrchestraAPItoDOM {
     codeType.setName(code.getOid().getName());
     codeType.setOid(code.getOid().getOid());
     codeType.setValue(code.getValue());
-    codeType.setAnnotation(new Annotation());
+    final io.fixprotocol.orchestra.model.Annotation annotation = code.getAnnotation();
+    if (annotation != null) {
+      codeType.setAnnotation(AnnotationToDOM(annotation));
+    }
     return codeType;
   }
 
@@ -157,7 +166,10 @@ public final class OrchestraAPItoDOM {
         new io.fixprotocol._2016.fixrepository.Datatype();
     datatypeDOM.setName(datatype.getName());
     datatypeDOM.setBaseType(datatype.getBaseType());
-    datatypeDOM.setAnnotation(new Annotation());
+    final io.fixprotocol.orchestra.model.Annotation annotation = datatype.getAnnotation();
+    if (annotation != null) {
+      datatypeDOM.setAnnotation(AnnotationToDOM(annotation));
+    }
     return datatypeDOM;
   }
 
@@ -166,7 +178,7 @@ public final class OrchestraAPItoDOM {
     Documentation documentationDOM = new Documentation();
     documentationDOM.setLangId(documentation.getLangId());
     documentationDOM.setPurpose(documentation.getPurpose());
-    documentationDOM.getContent().add(documentation.getValue());
+    documentationDOM.getContent().add(documentation.getText());
     return documentationDOM;
   }
 
@@ -178,6 +190,10 @@ public final class OrchestraAPItoDOM {
     actor.setStructure(structure);
     List<Object> objects = actorType.getFieldOrFieldRefOrComponent();
     populateStructure(objects, structure);
+    Annotation annotation = actorType.getAnnotation();
+    if (annotation != null) {
+      actor.setAnnotation(DOMToAnnotation(annotation));
+    }
     return actor;
   }
 
@@ -198,7 +214,7 @@ public final class OrchestraAPItoDOM {
     io.fixprotocol.orchestra.model.Appinfo appinfo = new io.fixprotocol.orchestra.model.Appinfo();
     appinfo.setLangId(appinfoDOM.getLangId());
     appinfo.setPurpose(appinfoDOM.getPurpose());
-    appinfo.setValue(appinfoDOM.getContent());
+    appinfo.setText(appinfoDOM.getContent());
     return appinfo;
   }
 
@@ -211,6 +227,10 @@ public final class OrchestraAPItoDOM {
     oid.setOid(codeType.getOid());
     code.setOid(oid);
     code.setValue(codeType.getValue());
+    Annotation annotation = codeType.getAnnotation();
+    if (annotation != null) {
+      code.setAnnotation(DOMToAnnotation(annotation));
+    }
     return code;
   }
 
@@ -226,6 +246,10 @@ public final class OrchestraAPItoDOM {
     codeSet.setType(codeSetType.getType());
     codeSet.codes(codeSetType.getCode().stream().map(OrchestraAPItoDOM::DOMToCode)
         .collect(Collectors.toList()));
+    Annotation annotation = codeSetType.getAnnotation();
+    if (annotation != null) {
+      codeSet.setAnnotation(DOMToAnnotation(annotation));
+    }
     return codeSet;
   }
 
@@ -241,6 +265,10 @@ public final class OrchestraAPItoDOM {
         new io.fixprotocol.orchestra.model.Datatype();
     datatype.setName(datatypeDOM.getName());
     datatype.setBaseType(datatypeDOM.getBaseType());
+    Annotation annotation = datatypeDOM.getAnnotation();
+    if (annotation != null) {
+      datatype.setAnnotation(DOMToAnnotation(annotation));
+    }
     return datatype;
   }
 
@@ -250,7 +278,7 @@ public final class OrchestraAPItoDOM {
         new io.fixprotocol.orchestra.model.Documentation();
     documentation.setLangId(documentationDOM.getLangId());
     documentation.setPurpose(documentationDOM.getPurpose());
-    documentation.setValue(documentationDOM.getContent().get(0).toString());
+    documentation.setText(documentationDOM.getContent().get(0).toString());
     return documentation;
   }
 
@@ -263,6 +291,10 @@ public final class OrchestraAPItoDOM {
     field.setOid(oid);
     field.setType(fieldType.getType());
     field.setCategory(fieldType.getBaseCategory());
+    Annotation annotation = fieldType.getAnnotation();
+    if (annotation != null) {
+      field.setAnnotation(DOMToAnnotation(annotation));
+    }
     return field;
   }
 
@@ -271,6 +303,10 @@ public final class OrchestraAPItoDOM {
     flow.setDestination(flowType.getDestination());
     flow.setName(flowType.getName());
     flow.setSource(flowType.getSource());
+    Annotation annotation = flowType.getAnnotation();
+    if (annotation != null) {
+      flow.setAnnotation(DOMToAnnotation(annotation));
+    }
     return flow;
   }
 
@@ -378,6 +414,10 @@ public final class OrchestraAPItoDOM {
     responseType.getMessageRefOrAssignOrTrigger().stream().filter(o -> o instanceof TriggerType)
         .map(o -> (TriggerType) o).map(OrchestraAPItoDOM::DOMToTrigger).findFirst()
         .ifPresent(response::setTrigger);
+    Annotation annotation = responseType.getAnnotation();
+    if (annotation != null) {
+      response.setAnnotation(DOMToAnnotation(annotation));
+    }    
 
     return response;
   }
@@ -396,6 +436,11 @@ public final class OrchestraAPItoDOM {
     stateMachine.setInitial(DOMToState(stateMachineType.getInitial()));
     stateMachine.setStates(stateMachineType.getState().stream().map(OrchestraAPItoDOM::DOMToState)
         .collect(Collectors.toList()));
+    Annotation annotation = stateMachineType.getAnnotation();
+    if (annotation != null) {
+      stateMachine.setAnnotation(DOMToAnnotation(annotation));
+    }    
+
     return stateMachine;
   }
 
@@ -421,8 +466,10 @@ public final class OrchestraAPItoDOM {
     fieldType.setAbbrName(field.getOid().getAbbrName());
     fieldType.setType(field.getType());
     fieldType.setBaseCategory(field.getCategory());
-    fieldType.setAnnotation(new Annotation());
-    return fieldType;
+    final io.fixprotocol.orchestra.model.Annotation annotation = field.getAnnotation();
+    if (annotation != null) {
+      fieldType.setAnnotation(AnnotationToDOM(annotation));
+    }    return fieldType;
   }
 
   public static FlowType FlowToDOM(Flow flow) {
@@ -430,7 +477,10 @@ public final class OrchestraAPItoDOM {
     flowType.setDestination(flow.getDestination());
     flowType.setName(flow.getName());
     flowType.setSource(flow.getSource());
-    flowType.setAnnotation(new Annotation());
+    final io.fixprotocol.orchestra.model.Annotation annotation = flow.getAnnotation();
+    if (annotation != null) {
+      flowType.setAnnotation(AnnotationToDOM(annotation));
+    }  
     return flowType;
   }
 
@@ -460,7 +510,10 @@ public final class OrchestraAPItoDOM {
     List<Object> elements = messageType.getStructure().getComponentOrComponentRefOrGroup();
     Structure structure = message.getStructure();
     populateStructureDOM(structure, elements);
-    messageType.setAnnotation(new Annotation());
+//    final io.fixprotocol.orchestra.model.Annotation annotation = message.getAnnotation();
+//    if (annotation != null) {
+//      messageType.setAnnotation(AnnotationToDOM(annotation));
+//    }  
     return messageType;
   }
 
@@ -558,7 +611,10 @@ public final class OrchestraAPItoDOM {
     if (response.getTrigger() != null) {
       responseType.getMessageRefOrAssignOrTrigger().add(TriggerToDOM(response.getTrigger()));
     }
-    responseType.setAnnotation(new Annotation());
+    final io.fixprotocol.orchestra.model.Annotation annotation = response.getAnnotation();
+    if (annotation != null) {
+      responseType.setAnnotation(AnnotationToDOM(annotation));
+    } 
     return responseType;
   }
 
@@ -568,6 +624,10 @@ public final class OrchestraAPItoDOM {
     stateMachineType.setInitial(StateToDOM(stateMachine.getInitial()));
     stateMachineType.getState().addAll(stateMachine.getStates().stream()
         .map(OrchestraAPItoDOM::StateToDOM).collect(Collectors.toList()));
+    final io.fixprotocol.orchestra.model.Annotation annotation = stateMachine.getAnnotation();
+    if (annotation != null) {
+      stateMachineType.setAnnotation(AnnotationToDOM(annotation));
+    } 
     return stateMachineType;
   }
 
@@ -610,6 +670,10 @@ public final class OrchestraAPItoDOM {
     component.setStructure(structure);
     List<Object> elements = componentType.getComponentRefOrGroupRefOrFieldRef();
     populateStructure(elements, structure);
+    Annotation annotation = componentType.getAnnotation();
+    if (annotation != null) {
+      component.setAnnotation(DOMToAnnotation(annotation));
+    }
   }
 
   private static void populateComponentType(Component component, ComponentType componentType) {
@@ -622,7 +686,10 @@ public final class OrchestraAPItoDOM {
     List<Object> elements = componentType.getComponentRefOrGroupRefOrFieldRef();
     Structure structure = component.getStructure();
     populateStructureDOM(structure, elements);
-
+    final io.fixprotocol.orchestra.model.Annotation annotation = component.getAnnotation();
+    if (annotation != null) {
+      componentType.setAnnotation(AnnotationToDOM(annotation));
+    }
     componentType.setAnnotation(new Annotation());
   }
 

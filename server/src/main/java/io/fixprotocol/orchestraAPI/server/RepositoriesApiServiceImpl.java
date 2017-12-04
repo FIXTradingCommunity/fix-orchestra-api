@@ -702,6 +702,10 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
 
       return Response.ok().entity(range).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
+      return Response.serverError().build();
+    } catch (Exception e) {
+      logger.log(Level.SEVERE, "Server error", e);
       return Response.serverError().build();
     }
   }
@@ -742,6 +746,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
           filtered.subList(skip != null ? skip : 0, limit != null ? limit : filtered.size());
       return Response.ok().entity(range).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
   }
@@ -778,6 +783,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
           filtered.subList(skip != null ? skip : 0, limit != null ? limit : filtered.size());
       return Response.ok().entity(range).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
   }
@@ -797,6 +803,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
           filtered.subList(skip != null ? skip : 0, limit != null ? limit : filtered.size());
       return Response.ok().entity(range).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
   }
@@ -813,6 +820,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
           filtered.subList(skip != null ? skip : 0, limit != null ? limit : filtered.size());
       return Response.ok().entity(range).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
   }
@@ -887,6 +895,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
           filtered.subList(skip != null ? skip : 0, limit != null ? limit : filtered.size());
       return Response.ok().entity(range).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
   }
@@ -905,6 +914,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
           filtered.subList(skip != null ? skip : 0, limit != null ? limit : filtered.size());
       return Response.ok().entity(range).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
   }
@@ -918,13 +928,14 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (ResourceNotFoundException e) {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
   }
 
   @Override
   public Response updateAnnotation(String reposName, String version, String elementId,
-      String parentId, Annotation annotation, String elementType, SecurityContext securityContext)
+      String elementType, Annotation annotation, String parentId, SecurityContext securityContext)
       throws NotFoundException {
     try {
       repositoryStore.updateAnnotation(reposName, version, elementId,
@@ -933,6 +944,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (ResourceNotFoundException e) {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
   }
@@ -946,6 +958,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (ResourceNotFoundException e) {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
   }
@@ -959,6 +972,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (ResourceNotFoundException e) {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
   }
@@ -972,6 +986,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (ResourceNotFoundException e) {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
   }
@@ -985,6 +1000,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (ResourceNotFoundException e) {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
   }
@@ -998,6 +1014,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (ResourceNotFoundException e) {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
   }
@@ -1011,6 +1028,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (ResourceNotFoundException e) {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
   }
@@ -1024,6 +1042,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (ResourceNotFoundException e) {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
   }
@@ -1037,6 +1056,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (ResourceNotFoundException e) {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
   }
@@ -1051,6 +1071,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (ResourceNotFoundException e) {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
 
@@ -1065,6 +1086,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (ResourceNotFoundException e) {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
   }
@@ -1078,6 +1100,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (ResourceNotFoundException e) {
       return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
+      logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
   }

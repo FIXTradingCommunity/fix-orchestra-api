@@ -11,7 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * Repository
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-30T16:31:59.574Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-12-04T16:02:31.392Z")
 public class Repository {
   @JsonProperty("name")
   private String name = null;

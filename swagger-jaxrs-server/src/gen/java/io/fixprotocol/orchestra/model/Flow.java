@@ -37,7 +37,7 @@ import javax.validation.constraints.*;
  * A stream of messages in one direction
  */
 @ApiModel(description = "A stream of messages in one direction")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-30T16:33:12.690Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-12-04T16:01:43.421Z")
 public class Flow   {
   @JsonProperty("name")
   private String name = null;

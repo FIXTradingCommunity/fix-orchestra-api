@@ -36,10 +36,10 @@ import javax.validation.constraints.*;
  * Usage specific annotation, optionally with link to an external reference or standard
  */
 @ApiModel(description = "Usage specific annotation, optionally with link to an external reference or standard")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-30T16:33:12.690Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-12-04T16:01:43.421Z")
 public class Appinfo   {
-  @JsonProperty("$")
-  private String value = null;
+  @JsonProperty("text")
+  private String text = null;
 
   @JsonProperty("specURL")
   private String specURL = null;
@@ -50,24 +50,24 @@ public class Appinfo   {
   @JsonProperty("purpose")
   private String purpose = null;
 
-  public Appinfo value(String value) {
-    this.value = value;
+  public Appinfo text(String text) {
+    this.text = text;
     return this;
   }
 
   /**
-   * Get value
-   * @return value
+   * Get text
+   * @return text
    **/
-  @JsonProperty("$")
+  @JsonProperty("text")
   @ApiModelProperty(required = true, value = "")
   @NotNull
-  public String getValue() {
-    return value;
+  public String getText() {
+    return text;
   }
 
-  public void setValue(String value) {
-    this.value = value;
+  public void setText(String text) {
+    this.text = text;
   }
 
   public Appinfo specURL(String specURL) {
@@ -137,7 +137,7 @@ public class Appinfo   {
       return false;
     }
     Appinfo appinfo = (Appinfo) o;
-    return Objects.equals(this.value, appinfo.value) &&
+    return Objects.equals(this.text, appinfo.text) &&
         Objects.equals(this.specURL, appinfo.specURL) &&
         Objects.equals(this.langId, appinfo.langId) &&
         Objects.equals(this.purpose, appinfo.purpose);
@@ -145,7 +145,7 @@ public class Appinfo   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(value, specURL, langId, purpose);
+    return Objects.hash(text, specURL, langId, purpose);
   }
 
 
@@ -154,7 +154,7 @@ public class Appinfo   {
     StringBuilder sb = new StringBuilder();
     sb.append("class Appinfo {\n");
     
-    sb.append("    value: ").append(toIndentedString(value)).append("\n");
+    sb.append("    text: ").append(toIndentedString(text)).append("\n");
     sb.append("    specURL: ").append(toIndentedString(specURL)).append("\n");
     sb.append("    langId: ").append(toIndentedString(langId)).append("\n");
     sb.append("    purpose: ").append(toIndentedString(purpose)).append("\n");

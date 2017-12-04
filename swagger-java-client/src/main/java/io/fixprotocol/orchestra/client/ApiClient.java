@@ -50,7 +50,7 @@ import io.fixprotocol.orchestra.client.auth.HttpBasicAuth;
 import io.fixprotocol.orchestra.client.auth.ApiKeyAuth;
 import io.fixprotocol.orchestra.client.auth.OAuth;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-11-30T16:31:59.574Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-12-04T16:02:31.392Z")
 public class ApiClient {
   protected Map<String, String> defaultHeaderMap = new HashMap<String, String>();
   protected String basePath = "https://virtserver.swaggerhub.com/FIXTradingCommunity/orchestra-api/1.0.0";

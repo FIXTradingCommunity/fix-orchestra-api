@@ -1,8 +1,6 @@
----
 swagger: "2.0"
 info:
-  description: "API to edit FIX Orchestra (machine readable rules of engagement) specification\
-    \ version 1.0 RC3"
+  description: "API to edit FIX Orchestra (machine readable rules of engagement) specification version 1.0 RC3"
   version: "1.0.0"
   title: "Orchestra API"
   license:
@@ -25,8 +23,7 @@ paths:
       tags:
       - "repository"
       summary: "searches Orchestra repositories"
-      description: "By passing in the appropriate options, you can search for Orchestra\
-        \ repositories"
+      description: "By passing in the appropriate options, you can search for Orchestra repositories"
       operationId: "searchRepositories"
       produces:
       - "application/json"
@@ -225,8 +222,8 @@ paths:
       - name: "version"
         in: "path"
         description: "version of Orchestra repository"
-        required: true
         type: "string"
+        required: true         
       - name: "searchString"
         in: "query"
         description: "pass an optional search string for looking up actors"
@@ -274,7 +271,7 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"        
       - in: "body"
         name: "actor"
         description: "Actor to add"
@@ -343,7 +340,7 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"        
       - name: "name"
         in: "path"
         description: "name of CodeSet to update"
@@ -377,7 +374,7 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"        
       - name: "name"
         in: "path"
         description: "name of Actor to delete"
@@ -393,8 +390,7 @@ paths:
       tags:
       - "workflow"
       summary: "searches state machines"
-      description: "By passing in the appropriate options, you can search for state\
-        \ machines"
+      description: "By passing in the appropriate options, you can search for state machines"
       operationId: "searchStateMachines"
       produces:
       - "application/json"
@@ -407,8 +403,8 @@ paths:
       - name: "version"
         in: "path"
         description: "version of Orchestra repository"
-        required: true
         type: "string"
+        required: true        
       - name: "name"
         in: "path"
         description: "name of Actor to search"
@@ -461,7 +457,7 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"  
       - name: "name"
         in: "path"
         description: "name of Actor to update"
@@ -513,7 +509,7 @@ paths:
         in: "path"
         description: "name of StateMachine to fetch"
         required: true
-        type: "string"
+        type: "string"        
       responses:
         200:
           description: "StateMachine response"
@@ -540,7 +536,7 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"        
       - name: "name"
         in: "path"
         description: "name of Actor to update"
@@ -550,7 +546,7 @@ paths:
         in: "path"
         description: "name of StateMachine to update"
         required: true
-        type: "string"
+        type: "string"             
       - in: "body"
         name: "stateMachine"
         description: "StateMachine to update"
@@ -579,7 +575,7 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"        
       - name: "name"
         in: "path"
         description: "name of Actor to update"
@@ -589,12 +585,12 @@ paths:
         in: "path"
         description: "name of StateMachine to delete"
         required: true
-        type: "string"
+        type: "string"             
       responses:
         204:
           description: "StateMachine deleted"
         404:
-          description: "StateMachine not found"
+          description: "StateMachine not found"          
   /repositories/{repos-name}/{version}/codesets/{codesetid}/codes:
     get:
       tags:
@@ -669,8 +665,8 @@ paths:
       - name: "version"
         in: "path"
         description: "version of Orchestra repository"
-        required: true
         type: "string"
+        required: true        
       - name: "codesetid"
         in: "path"
         description: "ID of CodeSet"
@@ -751,8 +747,8 @@ paths:
       - name: "version"
         in: "path"
         description: "version of Orchestra repository"
-        required: true
         type: "string"
+        required: true         
       - name: "codesetid"
         in: "path"
         description: "ID of CodeSet"
@@ -792,8 +788,8 @@ paths:
       - name: "version"
         in: "path"
         description: "version of Orchestra repository"
-        required: true
         type: "string"
+        required: true         
       - name: "codesetid"
         in: "path"
         description: "ID of CodeSet"
@@ -829,8 +825,8 @@ paths:
       - name: "version"
         in: "path"
         description: "version of Orchestra repository"
-        required: true
         type: "string"
+        required: true         
       - name: "searchString"
         in: "query"
         description: "pass an optional search string for looking up CodeSets"
@@ -880,7 +876,7 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"        
       - in: "body"
         name: "CodeSet"
         description: "CodeSet to add"
@@ -950,7 +946,7 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"        
       - name: "id"
         in: "path"
         description: "ID of CodeSet to update"
@@ -985,7 +981,7 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"        
       - name: "id"
         in: "path"
         description: "ID of CodeSet to delete"
@@ -1041,7 +1037,7 @@ paths:
         200:
           description: "search results matching criteria"
           schema:
-            type: "array"
+            type: array
             items:
               $ref: "#/definitions/Component"
         400:
@@ -1064,7 +1060,7 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"            
       - in: "body"
         name: "component"
         description: "Component to add"
@@ -1140,7 +1136,7 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"            
       - name: "id"
         in: "path"
         description: "ID of component to update"
@@ -1175,7 +1171,7 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"            
       - name: "id"
         in: "path"
         description: "ID of component to delete"
@@ -1256,7 +1252,7 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"            
       - in: "body"
         name: "datatype"
         description: "Datatype to add"
@@ -1325,7 +1321,7 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"            
       - name: "name"
         in: "path"
         description: "name of datatype to update"
@@ -1359,7 +1355,7 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"            
       - name: "name"
         in: "path"
         description: "name of datatype to delete"
@@ -1439,7 +1435,7 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"            
       - in: "body"
         name: "field"
         description: "field to add"
@@ -1509,7 +1505,7 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"            
       - name: "id"
         in: "path"
         description: "ID of field to update"
@@ -1544,7 +1540,7 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"            
       - name: "id"
         in: "path"
         description: "ID of field to delete"
@@ -1574,8 +1570,8 @@ paths:
       - name: "version"
         in: "path"
         description: "version of Orchestra repository"
-        required: true
         type: "string"
+        required: true         
       - name: "searchString"
         in: "query"
         description: "pass an optional search string for looking up flows"
@@ -1623,7 +1619,7 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"        
       - in: "body"
         name: "flow"
         description: "Flow to add"
@@ -1692,7 +1688,7 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"        
       - name: "name"
         in: "path"
         description: "name of Flow to update"
@@ -1726,7 +1722,7 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"        
       - name: "name"
         in: "path"
         description: "name of Flow to delete"
@@ -1781,7 +1777,7 @@ paths:
         200:
           description: "search results matching criteria"
           schema:
-            type: "array"
+            type: array
             items:
               $ref: "#/definitions/Group"
         400:
@@ -1804,7 +1800,7 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"            
       - in: "body"
         name: "group"
         description: "Group to add"
@@ -1880,7 +1876,7 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"            
       - name: "id"
         in: "path"
         description: "ID of group to update"
@@ -1915,7 +1911,7 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"            
       - name: "id"
         in: "path"
         description: "ID of group to delete"
@@ -1996,7 +1992,7 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"            
       - in: "body"
         name: "message"
         description: "message to add"
@@ -2072,7 +2068,7 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"            
       - name: "id"
         in: "path"
         description: "ID of message to update"
@@ -2107,7 +2103,7 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"            
       - name: "id"
         in: "path"
         description: "ID of message to delete"
@@ -2124,8 +2120,7 @@ paths:
       tags:
       - "workflow"
       summary: "searches message responses"
-      description: "By passing in the appropriate options, you can search for message\
-        \ responses"
+      description: "By passing in the appropriate options, you can search for message responses"
       operationId: "searchMessageResponses"
       produces:
       - "application/json"
@@ -2144,7 +2139,7 @@ paths:
         in: "path"
         description: "ID of message to search"
         required: true
-        type: "integer"
+        type: "integer"        
       - name: "searchString"
         in: "query"
         description: "pass an optional search string for looking up responses"
@@ -2192,12 +2187,12 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"  
       - name: "id"
         in: "path"
         description: "ID of message to update"
         required: true
-        type: "integer"
+        type: "integer"        
       - in: "body"
         name: "response"
         description: "message response to add"
@@ -2240,7 +2235,7 @@ paths:
         description: "ID of message"
         required: true
         type: "integer"
-        format: "int32"
+        format: "int32"        
       - name: "name"
         in: "path"
         description: "name of message response to fetch"
@@ -2278,7 +2273,7 @@ paths:
         description: "ID of message"
         required: true
         type: "integer"
-        format: "int32"
+        format: "int32"        
       - name: "name"
         in: "path"
         description: "name of message response to update"
@@ -2312,7 +2307,7 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"            
       - name: "id"
         in: "path"
         description: "ID of message"
@@ -2328,7 +2323,7 @@ paths:
         204:
           description: "message response deleted"
         404:
-          description: "message not found"
+          description: "message not found"      
   /repositories/{repos-name}/{version}/annotations:
     get:
       tags:
@@ -2347,36 +2342,34 @@ paths:
       - name: "version"
         in: "path"
         description: "version of Orchestra repository"
-        required: true
         type: "string"
+        required: true      
       - name: "elementId"
         in: "query"
-        description: "name or ID as a string of the element to annotate"
-        required: true
         type: "string"
+        required: true
+        description: "name or ID as a string of the element to annotate"
       - name: "parentId"
         in: "query"
-        description: "name or ID as a string of the parent of the element to annotate.\
-          \ Required for code, actor, stateMachine."
-        required: false
         type: "string"
+        description: "name or ID as a string of the parent of the element to annotate. Required for code, actor, stateMachine."
       - name: "elementType"
         in: "query"
+        type: "string"
         description: "type of element to annotate"
         required: true
-        type: "string"
         enum:
-        - "code"
-        - "codeSet"
-        - "component"
-        - "datatype"
-        - "field"
-        - "group"
-        - "message"
-        - "actor"
-        - "flow"
-        - "response"
-        - "stateMachine"
+        - code
+        - codeSet
+        - component
+        - datatype
+        - field
+        - group
+        - message
+        - actor
+        - flow
+        - response
+        - stateMachine
       - name: "searchString"
         in: "query"
         description: "pass an optional search string for looking up annotations"
@@ -2422,35 +2415,33 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string" 
       - name: "elementId"
         in: "query"
-        description: "name or ID as a string of the element to annotate"
-        required: true
         type: "string"
+        required: true
+        description: "name or ID as a string of the element to annotate"
       - name: "parentId"
         in: "query"
-        description: "name or ID as a string of the parent of the element to annotate.\
-          \ Required for code, actor, stateMachine."
-        required: false
         type: "string"
+        description: "name or ID as a string of the parent of the element to annotate. Required for code, actor, stateMachine."
       - name: "elementType"
         in: "query"
+        type: "string"
         description: "type of element to annotate"
         required: true
-        type: "string"
         enum:
-        - "code"
-        - "codeSet"
-        - "component"
-        - "datatype"
-        - "field"
-        - "group"
-        - "message"
-        - "actor"
-        - "flow"
-        - "response"
-        - "stateMachine"
+        - code
+        - codeSet
+        - component
+        - datatype
+        - field
+        - group
+        - message
+        - actor
+        - flow
+        - response
+        - stateMachine
       - in: "body"
         name: "annotation"
         description: "Annotation to add"
@@ -2486,37 +2477,35 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"        
       - name: "elementId"
         in: "query"
-        description: "name or ID as a string of the element to annotate"
-        required: true
         type: "string"
+        required: true
+        description: "name or ID as a string of the element to annotate"
       - name: "parentId"
         in: "query"
-        description: "name or ID as a string of the parent of the element to annotate.\
-          \ Required for code, actor, stateMachine."
-        required: false
         type: "string"
+        description: "name or ID as a string of the parent of the element to annotate. Required for code, actor, stateMachine."
       - name: "elementType"
         in: "query"
+        type: "string"
         description: "type of element to annotate"
         required: true
-        type: "string"
         enum:
-        - "code"
-        - "codeSet"
-        - "component"
-        - "datatype"
-        - "field"
-        - "group"
-        - "message"
-        - "actor"
-        - "flow"
-        - "response"
-        - "stateMachine"
-      - in: "body"
-        name: "annotation"
+        - code
+        - codeSet
+        - component
+        - datatype
+        - field
+        - group
+        - message
+        - actor
+        - flow
+        - response
+        - stateMachine
+      - name: "annotation"
+        in: "body"
         description: "Annotation to update"
         required: true
         schema:
@@ -2543,35 +2532,33 @@ paths:
         in: "path"
         description: "version of Orchestra repository"
         required: true
-        type: "string"
+        type: "string"        
       - name: "elementId"
         in: "query"
-        description: "name or ID as a string of the element to annotate"
-        required: true
         type: "string"
+        required: true
+        description: "name or ID as a string of the element to annotate"
       - name: "parentId"
         in: "query"
-        description: "name or ID as a string of the parent of the element to annotate.\
-          \ Required for code, actor, stateMachine."
-        required: false
         type: "string"
+        description: "name or ID as a string of the parent of the element to annotate. Required for code, actor, stateMachine."
       - name: "elementType"
         in: "query"
+        type: "string"
         description: "type of element to annotate"
         required: true
-        type: "string"
         enum:
-        - "code"
-        - "codeSet"
-        - "component"
-        - "datatype"
-        - "field"
-        - "group"
-        - "message"
-        - "actor"
-        - "flow"
-        - "response"
-        - "stateMachine"
+        - code
+        - codeSet
+        - component
+        - datatype
+        - field
+        - group
+        - message
+        - actor
+        - flow
+        - response
+        - stateMachine
       responses:
         204:
           description: "Annotation deleted"
@@ -2580,8 +2567,9 @@ paths:
 definitions:
   Actor:
     type: "object"
+    description: "Represents a class of participants"
     required:
-    - "name"
+    - name
     properties:
       name:
         type: "string"
@@ -2593,40 +2581,9 @@ definitions:
         maxLength: 64
       structure:
         description: "State variables"
-        $ref: "#/definitions/Structure"
+        $ref: "#/definitions/Structure"        
       annotation:
-        $ref: "#/definitions/Annotation"
-    description: "Represents a class of participants"
-    example:
-      annotation:
-        documentation:
-        - $: "$"
-          purpose: "SYNOPSIS"
-          langId: "en"
-        - $: "$"
-          purpose: "SYNOPSIS"
-          langId: "en"
-        appinfo:
-        - $: "$"
-          purpose: "SYNOPSIS"
-          specURL: "http://example.com/aeiou"
-          langId: "en"
-        - $: "$"
-          purpose: "SYNOPSIS"
-          specURL: "http://example.com/aeiou"
-          langId: "en"
-      extends: "extends"
-      name: "name"
-      structure:
-        components:
-        - ""
-        - ""
-        groups:
-        - ""
-        - ""
-        fields:
-        - ""
-        - ""
+        $ref: "#/definitions/Annotation"        
   Annotation:
     type: "object"
     properties:
@@ -2638,29 +2595,12 @@ definitions:
         type: "array"
         items:
           $ref: "#/definitions/Documentation"
-    example:
-      documentation:
-      - $: "$"
-        purpose: "SYNOPSIS"
-        langId: "en"
-      - $: "$"
-        purpose: "SYNOPSIS"
-        langId: "en"
-      appinfo:
-      - $: "$"
-        purpose: "SYNOPSIS"
-        specURL: "http://example.com/aeiou"
-        langId: "en"
-      - $: "$"
-        purpose: "SYNOPSIS"
-        specURL: "http://example.com/aeiou"
-        langId: "en"
   Appinfo:
     type: "object"
     required:
-    - "$"
+    - "text"
     properties:
-      $:
+      text:
         type: "string"
       specURL:
         type: "string"
@@ -2674,11 +2614,6 @@ definitions:
         example: "SYNOPSIS"
     description: "Usage specific annotation, optionally with link to an external reference\
       \ or standard"
-    example:
-      $: "$"
-      purpose: "SYNOPSIS"
-      specURL: "http://example.com/aeiou"
-      langId: "en"
   Code:
     type: "object"
     required:
@@ -2693,44 +2628,6 @@ definitions:
         $ref: "#/definitions/Annotation"
       entityAttributes:
         $ref: "#/definitions/EntityAttributes"
-    example:
-      annotation:
-        documentation:
-        - $: "$"
-          purpose: "SYNOPSIS"
-          langId: "en"
-        - $: "$"
-          purpose: "SYNOPSIS"
-          langId: "en"
-        appinfo:
-        - $: "$"
-          purpose: "SYNOPSIS"
-          specURL: "http://example.com/aeiou"
-          langId: "en"
-        - $: "$"
-          purpose: "SYNOPSIS"
-          specURL: "http://example.com/aeiou"
-          langId: "en"
-      entityAttributes:
-        issue: "issue"
-        added: "added"
-        changeType: "Editorial"
-        deprecated: "deprecated"
-        replaced: "replaced"
-        replacedByField: 5
-        deprecatedEP: 6
-        updatedEP: 5
-        addedEP: 0
-        replacedEP: 1
-        lastModified: "lastModified"
-        updated: "updated"
-        supported: "supported"
-      oid:
-        abbrName: "Acct"
-        name: "Account"
-        id: 1
-        oid: "oid"
-      value: "value"
   CodeSet:
     type: "object"
     required:
@@ -2754,140 +2651,24 @@ definitions:
         $ref: "#/definitions/Annotation"
       entityAttributes:
         $ref: "#/definitions/EntityAttributes"
-    example:
-      annotation:
-        documentation:
-        - $: "$"
-          purpose: "SYNOPSIS"
-          langId: "en"
-        - $: "$"
-          purpose: "SYNOPSIS"
-          langId: "en"
-        appinfo:
-        - $: "$"
-          purpose: "SYNOPSIS"
-          specURL: "http://example.com/aeiou"
-          langId: "en"
-        - $: "$"
-          purpose: "SYNOPSIS"
-          specURL: "http://example.com/aeiou"
-          langId: "en"
-      codes:
-      - annotation:
-          documentation:
-          - $: "$"
-            purpose: "SYNOPSIS"
-            langId: "en"
-          - $: "$"
-            purpose: "SYNOPSIS"
-            langId: "en"
-          appinfo:
-          - $: "$"
-            purpose: "SYNOPSIS"
-            specURL: "http://example.com/aeiou"
-            langId: "en"
-          - $: "$"
-            purpose: "SYNOPSIS"
-            specURL: "http://example.com/aeiou"
-            langId: "en"
-        entityAttributes:
-          issue: "issue"
-          added: "added"
-          changeType: "Editorial"
-          deprecated: "deprecated"
-          replaced: "replaced"
-          replacedByField: 5
-          deprecatedEP: 6
-          updatedEP: 5
-          addedEP: 0
-          replacedEP: 1
-          lastModified: "lastModified"
-          updated: "updated"
-          supported: "supported"
-        oid:
-          abbrName: "Acct"
-          name: "Account"
-          id: 1
-          oid: "oid"
-        value: "value"
-      - annotation:
-          documentation:
-          - $: "$"
-            purpose: "SYNOPSIS"
-            langId: "en"
-          - $: "$"
-            purpose: "SYNOPSIS"
-            langId: "en"
-          appinfo:
-          - $: "$"
-            purpose: "SYNOPSIS"
-            specURL: "http://example.com/aeiou"
-            langId: "en"
-          - $: "$"
-            purpose: "SYNOPSIS"
-            specURL: "http://example.com/aeiou"
-            langId: "en"
-        entityAttributes:
-          issue: "issue"
-          added: "added"
-          changeType: "Editorial"
-          deprecated: "deprecated"
-          replaced: "replaced"
-          replacedByField: 5
-          deprecatedEP: 6
-          updatedEP: 5
-          addedEP: 0
-          replacedEP: 1
-          lastModified: "lastModified"
-          updated: "updated"
-          supported: "supported"
-        oid:
-          abbrName: "Acct"
-          name: "Account"
-          id: 1
-          oid: "oid"
-        value: "value"
-      default: "default"
-      entityAttributes:
-        issue: "issue"
-        added: "added"
-        changeType: "Editorial"
-        deprecated: "deprecated"
-        replaced: "replaced"
-        replacedByField: 5
-        deprecatedEP: 6
-        updatedEP: 5
-        addedEP: 0
-        replacedEP: 1
-        lastModified: "lastModified"
-        updated: "updated"
-        supported: "supported"
-      oid:
-        abbrName: "Acct"
-        name: "Account"
-        id: 1
-        oid: "oid"
-      type: "type"
-      specURL: "http://example.com/aeiou"
   Component:
     allOf:
     - $ref: "#/definitions/MessageElement"
     - type: "object"
       required:
-      - "structure"
+      - structure
       properties:
         structure:
           $ref: "#/definitions/Structure"
   ComponentRef:
     allOf:
     - $ref: "#/definitions/ElementRef"
-    - {}
   Documentation:
     type: "object"
     required:
-    - "$"
+    - "text"
     properties:
-      $:
+      text:
         type: "string"
         description: "text of Documentation"
       langId:
@@ -2897,10 +2678,6 @@ definitions:
       purpose:
         type: "string"
         example: "SYNOPSIS"
-    example:
-      $: "$"
-      purpose: "SYNOPSIS"
-      langId: "en"
   Datatype:
     type: "object"
     required:
@@ -2914,40 +2691,6 @@ definitions:
         $ref: "#/definitions/Annotation"
       entityAttributes:
         $ref: "#/definitions/EntityAttributes"
-    example:
-      annotation:
-        documentation:
-        - $: "$"
-          purpose: "SYNOPSIS"
-          langId: "en"
-        - $: "$"
-          purpose: "SYNOPSIS"
-          langId: "en"
-        appinfo:
-        - $: "$"
-          purpose: "SYNOPSIS"
-          specURL: "http://example.com/aeiou"
-          langId: "en"
-        - $: "$"
-          purpose: "SYNOPSIS"
-          specURL: "http://example.com/aeiou"
-          langId: "en"
-      entityAttributes:
-        issue: "issue"
-        added: "added"
-        changeType: "Editorial"
-        deprecated: "deprecated"
-        replaced: "replaced"
-        replacedByField: 5
-        deprecatedEP: 6
-        updatedEP: 5
-        addedEP: 0
-        replacedEP: 1
-        lastModified: "lastModified"
-        updated: "updated"
-        supported: "supported"
-      name: "name"
-      baseType: "baseType"
   EntityAttributes:
     type: "object"
     properties:
@@ -2986,20 +2729,6 @@ definitions:
       updatedEP:
         type: "integer"
     description: "element metadata including pedigree"
-    example:
-      issue: "issue"
-      added: "added"
-      changeType: "Editorial"
-      deprecated: "deprecated"
-      replaced: "replaced"
-      replacedByField: 5
-      deprecatedEP: 6
-      updatedEP: 5
-      addedEP: 0
-      replacedEP: 1
-      lastModified: "lastModified"
-      updated: "updated"
-      supported: "supported"
   ErrorModel:
     type: "object"
     required:
@@ -3023,7 +2752,6 @@ definitions:
   FieldRef:
     allOf:
     - $ref: "#/definitions/ElementRef"
-    - {}
   ElementRef:
     type: "object"
     required:
@@ -3039,47 +2767,26 @@ definitions:
         type: "string"
   Flow:
     type: "object"
+    description: "A stream of messages in one direction"
     required:
-    - "destination"
-    - "name"
-    - "source"
+    - name
+    - source
+    - destination
     properties:
       name:
         type: "string"
         description: "unique flow name"
-        maxLength: 64
+        maxLength: 64  
       source:
         type: "string"
         description: "Name of the actor that originates messages"
-        maxLength: 64
+        maxLength: 64   
       destination:
         type: "string"
         description: "Name of the actor that receives messages"
-        maxLength: 64
+        maxLength: 64   
       annotation:
-        $ref: "#/definitions/Annotation"
-    description: "A stream of messages in one direction"
-    example:
-      annotation:
-        documentation:
-        - $: "$"
-          purpose: "SYNOPSIS"
-          langId: "en"
-        - $: "$"
-          purpose: "SYNOPSIS"
-          langId: "en"
-        appinfo:
-        - $: "$"
-          purpose: "SYNOPSIS"
-          specURL: "http://example.com/aeiou"
-          langId: "en"
-        - $: "$"
-          purpose: "SYNOPSIS"
-          specURL: "http://example.com/aeiou"
-          langId: "en"
-      name: "name"
-      destination: "destination"
-      source: "source"
+        $ref: "#/definitions/Annotation"         
   Group:
     allOf:
     - $ref: "#/definitions/Component"
@@ -3106,11 +2813,10 @@ definitions:
   GroupRef:
     allOf:
     - $ref: "#/definitions/ElementRef"
-    - {}
   Message:
     type: "object"
     required:
-    - "oid"
+    - oid
     properties:
       oid:
         $ref: "#/definitions/ObjectId"
@@ -3138,84 +2844,6 @@ definitions:
         type: "array"
         items:
           $ref: "#/definitions/Response"
-    example:
-      msgType: "msgType"
-      extends: "extends"
-      scenario: "base"
-      responses:
-      - annotation:
-          documentation:
-          - $: "$"
-            purpose: "SYNOPSIS"
-            langId: "en"
-          - $: "$"
-            purpose: "SYNOPSIS"
-            langId: "en"
-          appinfo:
-          - $: "$"
-            purpose: "SYNOPSIS"
-            specURL: "http://example.com/aeiou"
-            langId: "en"
-          - $: "$"
-            purpose: "SYNOPSIS"
-            specURL: "http://example.com/aeiou"
-            langId: "en"
-        messageRef:
-          msgType: "msgType"
-          scenario: "base"
-          name: "name"
-        name: "name"
-        trigger:
-          actor: "actor"
-          stateMachine: "stateMachine"
-          name: "name"
-        when: "when"
-        assign: "assign"
-      - annotation:
-          documentation:
-          - $: "$"
-            purpose: "SYNOPSIS"
-            langId: "en"
-          - $: "$"
-            purpose: "SYNOPSIS"
-            langId: "en"
-          appinfo:
-          - $: "$"
-            purpose: "SYNOPSIS"
-            specURL: "http://example.com/aeiou"
-            langId: "en"
-          - $: "$"
-            purpose: "SYNOPSIS"
-            specURL: "http://example.com/aeiou"
-            langId: "en"
-        messageRef:
-          msgType: "msgType"
-          scenario: "base"
-          name: "name"
-        name: "name"
-        trigger:
-          actor: "actor"
-          stateMachine: "stateMachine"
-          name: "name"
-        when: "when"
-        assign: "assign"
-      oid:
-        abbrName: "Acct"
-        name: "Account"
-        id: 1
-        oid: "oid"
-      category: "category"
-      flow: "flow"
-      structure:
-        components:
-        - ""
-        - ""
-        groups:
-        - ""
-        - ""
-        fields:
-        - ""
-        - ""
   MessageElement:
     type: "object"
     required:
@@ -3232,7 +2860,7 @@ definitions:
   MessageRef:
     type: "object"
     required:
-    - "name"
+    - name
     properties:
       name:
         type: "string"
@@ -3245,10 +2873,6 @@ definitions:
         description: "Use case of a message type"
         maxLength: 64
         default: "base"
-    example:
-      msgType: "msgType"
-      scenario: "base"
-      name: "name"
   Metadata:
     type: "object"
     required:
@@ -3294,24 +2918,7 @@ definitions:
         type: "string"
       type:
         type: "string"
-    description: "description of an Orchestra repository, conforms to Dublin Core\
-      \ Terms"
-    example:
-      coverage: "SingleGeneralOrderHandling"
-      date: "2000-01-23"
-      identifier: "identifier"
-      creator: "creator"
-      subject: "subject"
-      format: "format"
-      description: "description"
-      language: "language"
-      source: "source"
-      title: "title"
-      type: "type"
-      relation: "relation"
-      contributor: "contributor"
-      rights: "rights"
-      publisher: "FIX Trading Community"
+    description: "description of an Orchestra repository, conforms to Dublin Core Terms"
   ObjectId:
     type: "object"
     required:
@@ -3336,11 +2943,6 @@ definitions:
       oid:
         type: "string"
         description: "Globally unique object identifier, a URI or UUID"
-    example:
-      abbrName: "Acct"
-      name: "Account"
-      id: 1
-      oid: "oid"
   Repository:
     type: "object"
     required:
@@ -3367,422 +2969,87 @@ definitions:
         type: "boolean"
       metadata:
         $ref: "#/definitions/Metadata"
-    example:
-      metadata:
-        coverage: "SingleGeneralOrderHandling"
-        date: "2000-01-23"
-        identifier: "identifier"
-        creator: "creator"
-        subject: "subject"
-        format: "format"
-        description: "description"
-        language: "language"
-        source: "source"
-        title: "title"
-        type: "type"
-        relation: "relation"
-        contributor: "contributor"
-        rights: "rights"
-        publisher: "FIX Trading Community"
-      name: "name"
-      namespace: "http://example.com/aeiou"
-      oid: "oid"
-      specURL: "http://example.com/aeiou"
-      hasComponents: true
-      version: "version"
   Response:
     type: "object"
     required:
-    - "name"
+    - name
     properties:
       name:
-        type: "string"
+        type: string
         maxLength: 64
       when:
-        type: "string"
+        type: string
         description: "conditional expression; if not present, then response is unconditional"
       messageRef:
+        $ref: "#/definitions/MessageRef" 
         description: "send a response message"
-        $ref: "#/definitions/MessageRef"
       assign:
-        type: "string"
+        type: string
         description: "assignment expression"
       trigger:
-        $ref: "#/definitions/Trigger"
+        $ref: "#/definitions/Trigger" 
       annotation:
-        $ref: "#/definitions/Annotation"
-    example:
-      annotation:
-        documentation:
-        - $: "$"
-          purpose: "SYNOPSIS"
-          langId: "en"
-        - $: "$"
-          purpose: "SYNOPSIS"
-          langId: "en"
-        appinfo:
-        - $: "$"
-          purpose: "SYNOPSIS"
-          specURL: "http://example.com/aeiou"
-          langId: "en"
-        - $: "$"
-          purpose: "SYNOPSIS"
-          specURL: "http://example.com/aeiou"
-          langId: "en"
-      messageRef:
-        msgType: "msgType"
-        scenario: "base"
-        name: "name"
-      name: "name"
-      trigger:
-        actor: "actor"
-        stateMachine: "stateMachine"
-        name: "name"
-      when: "when"
-      assign: "assign"
+        $ref: "#/definitions/Annotation" 
   StateMachine:
     type: "object"
     required:
-    - "name"
+    - name
     properties:
       name:
-        type: "string"
+        type: string
         maxLength: 64
       initial:
         $ref: "#/definitions/State"
       states:
-        type: "array"
+        type: array
         items:
           $ref: "#/definitions/State"
       annotation:
-        $ref: "#/definitions/Annotation"
-    example:
-      annotation:
-        documentation:
-        - $: "$"
-          purpose: "SYNOPSIS"
-          langId: "en"
-        - $: "$"
-          purpose: "SYNOPSIS"
-          langId: "en"
-        appinfo:
-        - $: "$"
-          purpose: "SYNOPSIS"
-          specURL: "http://example.com/aeiou"
-          langId: "en"
-        - $: "$"
-          purpose: "SYNOPSIS"
-          specURL: "http://example.com/aeiou"
-          langId: "en"
-      initial:
-        annotation:
-          documentation:
-          - $: "$"
-            purpose: "SYNOPSIS"
-            langId: "en"
-          - $: "$"
-            purpose: "SYNOPSIS"
-            langId: "en"
-          appinfo:
-          - $: "$"
-            purpose: "SYNOPSIS"
-            specURL: "http://example.com/aeiou"
-            langId: "en"
-          - $: "$"
-            purpose: "SYNOPSIS"
-            specURL: "http://example.com/aeiou"
-            langId: "en"
-        name: "name"
-        transitions:
-        - annotation:
-            documentation:
-            - $: "$"
-              purpose: "SYNOPSIS"
-              langId: "en"
-            - $: "$"
-              purpose: "SYNOPSIS"
-              langId: "en"
-            appinfo:
-            - $: "$"
-              purpose: "SYNOPSIS"
-              specURL: "http://example.com/aeiou"
-              langId: "en"
-            - $: "$"
-              purpose: "SYNOPSIS"
-              specURL: "http://example.com/aeiou"
-              langId: "en"
-          name: "name"
-          when: "when"
-          target: "target"
-        - annotation:
-            documentation:
-            - $: "$"
-              purpose: "SYNOPSIS"
-              langId: "en"
-            - $: "$"
-              purpose: "SYNOPSIS"
-              langId: "en"
-            appinfo:
-            - $: "$"
-              purpose: "SYNOPSIS"
-              specURL: "http://example.com/aeiou"
-              langId: "en"
-            - $: "$"
-              purpose: "SYNOPSIS"
-              specURL: "http://example.com/aeiou"
-              langId: "en"
-          name: "name"
-          when: "when"
-          target: "target"
-      name: "name"
-      states:
-      - annotation:
-          documentation:
-          - $: "$"
-            purpose: "SYNOPSIS"
-            langId: "en"
-          - $: "$"
-            purpose: "SYNOPSIS"
-            langId: "en"
-          appinfo:
-          - $: "$"
-            purpose: "SYNOPSIS"
-            specURL: "http://example.com/aeiou"
-            langId: "en"
-          - $: "$"
-            purpose: "SYNOPSIS"
-            specURL: "http://example.com/aeiou"
-            langId: "en"
-        name: "name"
-        transitions:
-        - annotation:
-            documentation:
-            - $: "$"
-              purpose: "SYNOPSIS"
-              langId: "en"
-            - $: "$"
-              purpose: "SYNOPSIS"
-              langId: "en"
-            appinfo:
-            - $: "$"
-              purpose: "SYNOPSIS"
-              specURL: "http://example.com/aeiou"
-              langId: "en"
-            - $: "$"
-              purpose: "SYNOPSIS"
-              specURL: "http://example.com/aeiou"
-              langId: "en"
-          name: "name"
-          when: "when"
-          target: "target"
-        - annotation:
-            documentation:
-            - $: "$"
-              purpose: "SYNOPSIS"
-              langId: "en"
-            - $: "$"
-              purpose: "SYNOPSIS"
-              langId: "en"
-            appinfo:
-            - $: "$"
-              purpose: "SYNOPSIS"
-              specURL: "http://example.com/aeiou"
-              langId: "en"
-            - $: "$"
-              purpose: "SYNOPSIS"
-              specURL: "http://example.com/aeiou"
-              langId: "en"
-          name: "name"
-          when: "when"
-          target: "target"
-      - annotation:
-          documentation:
-          - $: "$"
-            purpose: "SYNOPSIS"
-            langId: "en"
-          - $: "$"
-            purpose: "SYNOPSIS"
-            langId: "en"
-          appinfo:
-          - $: "$"
-            purpose: "SYNOPSIS"
-            specURL: "http://example.com/aeiou"
-            langId: "en"
-          - $: "$"
-            purpose: "SYNOPSIS"
-            specURL: "http://example.com/aeiou"
-            langId: "en"
-        name: "name"
-        transitions:
-        - annotation:
-            documentation:
-            - $: "$"
-              purpose: "SYNOPSIS"
-              langId: "en"
-            - $: "$"
-              purpose: "SYNOPSIS"
-              langId: "en"
-            appinfo:
-            - $: "$"
-              purpose: "SYNOPSIS"
-              specURL: "http://example.com/aeiou"
-              langId: "en"
-            - $: "$"
-              purpose: "SYNOPSIS"
-              specURL: "http://example.com/aeiou"
-              langId: "en"
-          name: "name"
-          when: "when"
-          target: "target"
-        - annotation:
-            documentation:
-            - $: "$"
-              purpose: "SYNOPSIS"
-              langId: "en"
-            - $: "$"
-              purpose: "SYNOPSIS"
-              langId: "en"
-            appinfo:
-            - $: "$"
-              purpose: "SYNOPSIS"
-              specURL: "http://example.com/aeiou"
-              langId: "en"
-            - $: "$"
-              purpose: "SYNOPSIS"
-              specURL: "http://example.com/aeiou"
-              langId: "en"
-          name: "name"
-          when: "when"
-          target: "target"
+        $ref: "#/definitions/Annotation"          
   State:
     type: "object"
     required:
-    - "name"
+    - name
     properties:
       name:
-        type: "string"
+        type: string
         maxLength: 64
       transitions:
-        type: "array"
+        type: array
         items:
           $ref: "#/definitions/Transition"
       annotation:
-        $ref: "#/definitions/Annotation"
-    example:
-      annotation:
-        documentation:
-        - $: "$"
-          purpose: "SYNOPSIS"
-          langId: "en"
-        - $: "$"
-          purpose: "SYNOPSIS"
-          langId: "en"
-        appinfo:
-        - $: "$"
-          purpose: "SYNOPSIS"
-          specURL: "http://example.com/aeiou"
-          langId: "en"
-        - $: "$"
-          purpose: "SYNOPSIS"
-          specURL: "http://example.com/aeiou"
-          langId: "en"
-      name: "name"
-      transitions:
-      - annotation:
-          documentation:
-          - $: "$"
-            purpose: "SYNOPSIS"
-            langId: "en"
-          - $: "$"
-            purpose: "SYNOPSIS"
-            langId: "en"
-          appinfo:
-          - $: "$"
-            purpose: "SYNOPSIS"
-            specURL: "http://example.com/aeiou"
-            langId: "en"
-          - $: "$"
-            purpose: "SYNOPSIS"
-            specURL: "http://example.com/aeiou"
-            langId: "en"
-        name: "name"
-        when: "when"
-        target: "target"
-      - annotation:
-          documentation:
-          - $: "$"
-            purpose: "SYNOPSIS"
-            langId: "en"
-          - $: "$"
-            purpose: "SYNOPSIS"
-            langId: "en"
-          appinfo:
-          - $: "$"
-            purpose: "SYNOPSIS"
-            specURL: "http://example.com/aeiou"
-            langId: "en"
-          - $: "$"
-            purpose: "SYNOPSIS"
-            specURL: "http://example.com/aeiou"
-            langId: "en"
-        name: "name"
-        when: "when"
-        target: "target"
+        $ref: "#/definitions/Annotation" 
   Transition:
     type: "object"
     properties:
       name:
         type: "string"
       when:
-        type: "string"
+        type: string
         description: "Optional guard condition"
       target:
-        type: "string"
-        description: "name of the target state"
+        type: string
         maxLength: 64
+        description: "name of the target state"
       annotation:
-        $ref: "#/definitions/Annotation"
-    example:
-      annotation:
-        documentation:
-        - $: "$"
-          purpose: "SYNOPSIS"
-          langId: "en"
-        - $: "$"
-          purpose: "SYNOPSIS"
-          langId: "en"
-        appinfo:
-        - $: "$"
-          purpose: "SYNOPSIS"
-          specURL: "http://example.com/aeiou"
-          langId: "en"
-        - $: "$"
-          purpose: "SYNOPSIS"
-          specURL: "http://example.com/aeiou"
-          langId: "en"
-      name: "name"
-      when: "when"
-      target: "target"
+        $ref: "#/definitions/Annotation" 
   Trigger:
-    type: "object"
+    type: object
     required:
-    - "actor"
-    - "name"
-    - "stateMachine"
+    - stateMachine
+    - actor
+    - name
     properties:
       stateMachine:
-        type: "string"
+        type: string
         description: "name of StateMachine"
       actor:
-        type: "string"
+        type: string
         description: "name of the Actor that owns the StateMachine"
       name:
-        type: "string"
+        type: string
         description: "name of Transition to invoke"
-    example:
-      actor: "actor"
-      stateMachine: "stateMachine"
-      name: "name"
   Structure:
     properties:
       fields:
@@ -3797,13 +3064,3 @@ definitions:
         type: "array"
         items:
           $ref: "#/definitions/GroupRef"
-    example:
-      components:
-      - ""
-      - ""
-      groups:
-      - ""
-      - ""
-      fields:
-      - ""
-      - ""

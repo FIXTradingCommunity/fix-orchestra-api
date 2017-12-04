@@ -88,10 +88,10 @@ public class RepositoryDOMStoreTest {
     Documentation documentation = new Documentation();
     documentation.setLangId("en");
     documentation.setPurpose("SYNOPSIS");
-    documentation.setValue("The best actor");
+    documentation.setText("The best actor");
     annotation.addDocumentationItem(documentation );
     Appinfo appinfo = new Appinfo();
-    appinfo.setValue("my app info");
+    appinfo.setText("my app info");
     annotation.addAppinfoItem(appinfo);
     store.createAnnotation("test1", identifier, "actor1", ElementType.actor, null, annotation );
     
