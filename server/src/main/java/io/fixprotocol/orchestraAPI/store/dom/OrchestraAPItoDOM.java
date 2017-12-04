@@ -203,10 +203,10 @@ public final class OrchestraAPItoDOM {
         new io.fixprotocol.orchestra.model.Annotation();
     annotation.setAppinfo(
         annotationDOM.getDocumentationOrAppinfo().stream().filter(o -> o instanceof Appinfo)
-            .map(o -> (Appinfo) o).map(a -> DOMToAppinfo(a)).collect(Collectors.toList()));
+            .map(o -> (Appinfo) o).map(OrchestraAPItoDOM::DOMToAppinfo).collect(Collectors.toList()));
     annotation.setDocumentation(annotationDOM.getDocumentationOrAppinfo().stream()
         .filter(o -> o instanceof Documentation).map(o -> (Documentation) o)
-        .map(d -> DOMToDocumentation(d)).collect(Collectors.toList()));
+        .map(OrchestraAPItoDOM::DOMToDocumentation).collect(Collectors.toList()));
     return annotation;
   }
 
@@ -695,9 +695,9 @@ public final class OrchestraAPItoDOM {
 
   private static void populateStructure(List<Object> elements, Structure structure) {
     // don't let any structure arrays be null
-    structure.setComponents(new ArrayList<ComponentRef>());
-    structure.setFields(new ArrayList<FieldRef>());
-    structure.setGroups(new ArrayList<GroupRef>());
+    structure.setComponents(new ArrayList<>());
+    structure.setFields(new ArrayList<>());
+    structure.setGroups(new ArrayList<>());
     for (Object element : elements) {
       if (element instanceof FieldRefType) {
         FieldRefType fieldRefType = (FieldRefType) element;

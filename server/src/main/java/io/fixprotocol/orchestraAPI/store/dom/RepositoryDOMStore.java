@@ -69,7 +69,7 @@ public class RepositoryDOMStore implements RepositoryStore {
     final String reposName;
     final String version;
 
-    public RepositoryKey(String reposName, String version) {
+    RepositoryKey(String reposName, String version) {
       this.reposName = reposName;
       this.version = version;
     }
@@ -97,13 +97,8 @@ public class RepositoryDOMStore implements RepositoryStore {
         return false;
       }
       if (version == null) {
-        if (other.version != null) {
-          return false;
-        }
-      } else if (!version.equals(other.version)) {
-        return false;
-      }
-      return true;
+        return other.version == null;
+      } else return version.equals(other.version);
     }
 
     @Override
@@ -1334,9 +1329,9 @@ public class RepositoryDOMStore implements RepositoryStore {
     }
     Annotation filtered = new Annotation();
     annotation.getAppinfo().stream().filter(appInfoPredicate)
-        .forEach(a -> filtered.addAppinfoItem(a));
+        .forEach(filtered::addAppinfoItem);
     annotation.getDocumentation().stream().filter(documentationPredicate)
-        .forEach(d -> filtered.addDocumentationItem(d));
+        .forEach(filtered::addDocumentationItem);
     return filtered;
   }
 

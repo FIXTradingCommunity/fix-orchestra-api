@@ -28,7 +28,7 @@ import io.fixprotocol.orchestra.client.model.StateMachine;
 
 public class Client {
 
-  private final DocumentationApi documentationApi = new DocumentationApi();;
+  private final DocumentationApi documentationApi = new DocumentationApi();
   private final RepositoryApi repositoryApi = new RepositoryApi();
   private final WorkflowApi workflowApi = new WorkflowApi();
 
