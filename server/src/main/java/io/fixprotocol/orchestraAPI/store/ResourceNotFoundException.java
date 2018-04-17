@@ -9,6 +9,8 @@ package io.fixprotocol.orchestraAPI.store;
  */
 public class ResourceNotFoundException extends RepositoryStoreException {
 
+  private static final long serialVersionUID = 7829473656069402402L;
+
   /**
    * 
    */

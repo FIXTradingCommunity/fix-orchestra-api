@@ -55,9 +55,9 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
+		<jetty.version>9.4.9.v20180320</jetty.version>
 		<junit.version>4.11</junit.version>
-		<orchestra.version>1.2.0-RC3-SNAPSHOT</orchestra.version>
-		<saxon.version>9.8.0-3</saxon.version>
+		<orchestra.version>1.2.0-RC3</orchestra.version>
 	</properties>
 
 	<dependencies>
