@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **category** | **String** |  |  [optional]
 **structure** | [**Structure**](Structure.md) |  |  [optional]
 **responses** | [**List&lt;Response&gt;**](Response.md) |  |  [optional]
+**annotation** | [**Annotation**](Annotation.md) |  |  [optional]
 
 
 

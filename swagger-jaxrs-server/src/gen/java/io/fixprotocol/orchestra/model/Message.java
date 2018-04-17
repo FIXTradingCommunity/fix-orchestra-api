@@ -28,6 +28,7 @@ package io.fixprotocol.orchestra.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import io.fixprotocol.orchestra.model.Annotation;
 import io.fixprotocol.orchestra.model.ObjectId;
 import io.fixprotocol.orchestra.model.Response;
 import io.fixprotocol.orchestra.model.Structure;
@@ -40,7 +41,7 @@ import javax.validation.constraints.*;
 /**
  * Message
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-12-04T16:01:43.421Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2018-04-17T14:14:51.195Z")
 public class Message   {
   @JsonProperty("oid")
   private ObjectId oid = null;
@@ -65,6 +66,9 @@ public class Message   {
 
   @JsonProperty("responses")
   private List<Response> responses = null;
+
+  @JsonProperty("annotation")
+  private Annotation annotation = null;
 
   public Message oid(ObjectId oid) {
     this.oid = oid;
@@ -227,6 +231,25 @@ public class Message   {
     this.responses = responses;
   }
 
+  public Message annotation(Annotation annotation) {
+    this.annotation = annotation;
+    return this;
+  }
+
+  /**
+   * Get annotation
+   * @return annotation
+   **/
+  @JsonProperty("annotation")
+  @ApiModelProperty(value = "")
+  public Annotation getAnnotation() {
+    return annotation;
+  }
+
+  public void setAnnotation(Annotation annotation) {
+    this.annotation = annotation;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -244,12 +267,13 @@ public class Message   {
         Objects.equals(this.msgType, message.msgType) &&
         Objects.equals(this.category, message.category) &&
         Objects.equals(this.structure, message.structure) &&
-        Objects.equals(this.responses, message.responses);
+        Objects.equals(this.responses, message.responses) &&
+        Objects.equals(this.annotation, message.annotation);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(oid, scenario, _extends, flow, msgType, category, structure, responses);
+    return Objects.hash(oid, scenario, _extends, flow, msgType, category, structure, responses, annotation);
   }
 
 
@@ -266,6 +290,7 @@ public class Message   {
     sb.append("    category: ").append(toIndentedString(category)).append("\n");
     sb.append("    structure: ").append(toIndentedString(structure)).append("\n");
     sb.append("    responses: ").append(toIndentedString(responses)).append("\n");
+    sb.append("    annotation: ").append(toIndentedString(annotation)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -82,8 +82,8 @@ export default class WorkflowApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json'];
-      let accepts = [];
+      let contentTypes = ['application/json', 'application/xml'];
+      let accepts = ['application/json', 'application/xml'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -137,8 +137,8 @@ export default class WorkflowApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json'];
-      let accepts = [];
+      let contentTypes = ['application/json', 'application/xml'];
+      let accepts = ['application/json', 'application/xml'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -199,8 +199,8 @@ export default class WorkflowApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json'];
-      let accepts = [];
+      let contentTypes = ['application/json', 'application/xml'];
+      let accepts = ['application/json', 'application/xml'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -261,8 +261,8 @@ export default class WorkflowApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json'];
-      let accepts = [];
+      let contentTypes = ['application/json', 'application/xml'];
+      let accepts = ['application/json', 'application/xml'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -319,8 +319,8 @@ export default class WorkflowApi {
       };
 
       let authNames = [];
-      let contentTypes = [];
-      let accepts = [];
+      let contentTypes = ['application/json', 'application/xml'];
+      let accepts = ['application/json', 'application/xml'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -377,8 +377,8 @@ export default class WorkflowApi {
       };
 
       let authNames = [];
-      let contentTypes = [];
-      let accepts = [];
+      let contentTypes = ['application/json', 'application/xml'];
+      let accepts = ['application/json', 'application/xml'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -442,8 +442,8 @@ export default class WorkflowApi {
       };
 
       let authNames = [];
-      let contentTypes = [];
-      let accepts = [];
+      let contentTypes = ['application/json', 'application/xml'];
+      let accepts = ['application/json', 'application/xml'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -507,8 +507,8 @@ export default class WorkflowApi {
       };
 
       let authNames = [];
-      let contentTypes = [];
-      let accepts = [];
+      let contentTypes = ['application/json', 'application/xml'];
+      let accepts = ['application/json', 'application/xml'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -566,8 +566,8 @@ export default class WorkflowApi {
       };
 
       let authNames = [];
-      let contentTypes = [];
-      let accepts = ['application/json'];
+      let contentTypes = ['application/json', 'application/xml'];
+      let accepts = ['application/json', 'application/xml'];
       let returnType = Actor;
 
       return this.apiClient.callApi(
@@ -625,8 +625,8 @@ export default class WorkflowApi {
       };
 
       let authNames = [];
-      let contentTypes = [];
-      let accepts = ['application/json'];
+      let contentTypes = ['application/json', 'application/xml'];
+      let accepts = ['application/json', 'application/xml'];
       let returnType = Flow;
 
       return this.apiClient.callApi(
@@ -691,8 +691,8 @@ export default class WorkflowApi {
       };
 
       let authNames = [];
-      let contentTypes = [];
-      let accepts = ['application/json'];
+      let contentTypes = ['application/json', 'application/xml'];
+      let accepts = ['application/json', 'application/xml'];
       let returnType = Response;
 
       return this.apiClient.callApi(
@@ -757,8 +757,8 @@ export default class WorkflowApi {
       };
 
       let authNames = [];
-      let contentTypes = [];
-      let accepts = ['application/json'];
+      let contentTypes = ['application/json', 'application/xml'];
+      let accepts = ['application/json', 'application/xml'];
       let returnType = StateMachine;
 
       return this.apiClient.callApi(
@@ -818,8 +818,8 @@ export default class WorkflowApi {
       };
 
       let authNames = [];
-      let contentTypes = [];
-      let accepts = ['application/json'];
+      let contentTypes = ['application/json', 'application/xml'];
+      let accepts = ['application/json', 'application/xml'];
       let returnType = [Actor];
 
       return this.apiClient.callApi(
@@ -879,8 +879,8 @@ export default class WorkflowApi {
       };
 
       let authNames = [];
-      let contentTypes = [];
-      let accepts = ['application/json'];
+      let contentTypes = ['application/json', 'application/xml'];
+      let accepts = ['application/json', 'application/xml'];
       let returnType = [Flow];
 
       return this.apiClient.callApi(
@@ -947,8 +947,8 @@ export default class WorkflowApi {
       };
 
       let authNames = [];
-      let contentTypes = [];
-      let accepts = ['application/json'];
+      let contentTypes = ['application/json', 'application/xml'];
+      let accepts = ['application/json', 'application/xml'];
       let returnType = [Response];
 
       return this.apiClient.callApi(
@@ -1015,8 +1015,8 @@ export default class WorkflowApi {
       };
 
       let authNames = [];
-      let contentTypes = [];
-      let accepts = ['application/json'];
+      let contentTypes = ['application/json', 'application/xml'];
+      let accepts = ['application/json', 'application/xml'];
       let returnType = [StateMachine];
 
       return this.apiClient.callApi(
@@ -1079,8 +1079,8 @@ export default class WorkflowApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json'];
-      let accepts = [];
+      let contentTypes = ['application/json', 'application/xml'];
+      let accepts = ['application/json', 'application/xml'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -1143,8 +1143,8 @@ export default class WorkflowApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json'];
-      let accepts = [];
+      let contentTypes = ['application/json', 'application/xml'];
+      let accepts = ['application/json', 'application/xml'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -1214,8 +1214,8 @@ export default class WorkflowApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json'];
-      let accepts = [];
+      let contentTypes = ['application/json', 'application/xml'];
+      let accepts = ['application/json', 'application/xml'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -1285,8 +1285,8 @@ export default class WorkflowApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json'];
-      let accepts = [];
+      let contentTypes = ['application/json', 'application/xml'];
+      let accepts = ['application/json', 'application/xml'];
       let returnType = null;
 
       return this.apiClient.callApi(

@@ -39,7 +39,7 @@ import javax.validation.constraints.*;
 /**
  * Annotation
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-12-04T16:01:43.421Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2018-04-17T14:14:51.195Z")
 public class Annotation   {
   @JsonProperty("appinfo")
   private List<Appinfo> appinfo = null;

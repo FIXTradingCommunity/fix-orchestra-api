@@ -17,6 +17,12 @@ tags:
   description: "Documentation of repository or workflow elements"
 schemes:
 - "https"
+consumes:
+- "application/json"
+- "application/xml"
+produces: 
+- "application/json"
+- "application/xml"
 paths:
   /repositories:
     get:
@@ -25,8 +31,6 @@ paths:
       summary: "searches Orchestra repositories"
       description: "By passing in the appropriate options, you can search for Orchestra repositories"
       operationId: "searchRepositories"
-      produces:
-      - "application/json"
       parameters:
       - name: "searchString"
         in: "query"
@@ -63,10 +67,6 @@ paths:
       summary: "adds an Orchestra repository"
       description: "Adds an Orchestra repository"
       operationId: "addRepository"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
       parameters:
       - in: "body"
         name: "repository"
@@ -102,8 +102,6 @@ paths:
       - "repository"
       summary: "Returns a single Orchestra repository metadata, if found"
       operationId: "findRepositoryById"
-      produces:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -129,8 +127,6 @@ paths:
       - "repository"
       summary: "Updates an Orchestra repository, if found (idempotent)"
       operationId: "updateRepositoryById"
-      consumes:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -211,8 +207,6 @@ paths:
       summary: "searches actors"
       description: "By passing in the appropriate options, you can search for actors "
       operationId: "searchActors"
-      produces:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -259,8 +253,6 @@ paths:
       summary: "adds an Actor"
       description: "Adds an Actor"
       operationId: "addActor"
-      consumes:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -296,8 +288,6 @@ paths:
       - "workflow"
       summary: "Returns a single Actor, if found"
       operationId: "findActorByName"
-      produces:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -328,8 +318,6 @@ paths:
       - "workflow"
       summary: "Updates a single Actor, if found (idempotent)"
       operationId: "updateActorByName"
-      consumes:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -392,8 +380,6 @@ paths:
       summary: "searches state machines"
       description: "By passing in the appropriate options, you can search for state machines"
       operationId: "searchStateMachines"
-      produces:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -445,8 +431,6 @@ paths:
       summary: "adds a state machine"
       description: "Adds a StateMachine"
       operationId: "addStateMachine"
-      consumes:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -487,8 +471,6 @@ paths:
       - "workflow"
       summary: "Returns a single StateMachine, if found"
       operationId: "findStateMachine"
-      produces:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -524,8 +506,6 @@ paths:
       - "workflow"
       summary: "Updates a single StateMachine, if found (idempotent)"
       operationId: "updateStateMachine"
-      consumes:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -598,8 +578,6 @@ paths:
       summary: "searches Codes within a CodeSet"
       description: "By passing in the appropriate options, you can search for Codes"
       operationId: "searchCodes"
-      produces:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -652,10 +630,6 @@ paths:
       summary: "adds a Code to CodeSet"
       description: "Adds a Code"
       operationId: "addCode"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -697,8 +671,6 @@ paths:
       - "repository"
       summary: "Returns a single Code, if found"
       operationId: "findCodeById"
-      produces:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -736,8 +708,6 @@ paths:
       - "repository"
       summary: "Updates a single Code, if found (idempotent)"
       operationId: "updateCodeById"
-      consumes:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -814,8 +784,6 @@ paths:
       summary: "searches CodeSets"
       description: "By passing in the appropriate options, you can search for CodeSets "
       operationId: "searchCodeSets"
-      produces:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -862,10 +830,6 @@ paths:
       summary: "adds a CodeSet"
       description: "Adds a CodeSet"
       operationId: "addCodeSet"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -901,8 +865,6 @@ paths:
       - "repository"
       summary: "Returns a single CodeSet, if found"
       operationId: "findCodeSetById"
-      produces:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -934,8 +896,6 @@ paths:
       - "repository"
       summary: "Updates a single CodeSet, if found (idempotent)"
       operationId: "updateCodeSetById"
-      consumes:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -1000,8 +960,6 @@ paths:
       summary: "searches components"
       description: "By passing in the appropriate options, you can search for components "
       operationId: "searchComponents"
-      produces:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -1048,8 +1006,6 @@ paths:
       summary: "adds a component"
       description: "Adds a component"
       operationId: "addComponent"
-      consumes:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -1091,8 +1047,6 @@ paths:
       - "repository"
       summary: "Returns a single component, if found"
       operationId: "findComponentById"
-      produces:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -1124,8 +1078,6 @@ paths:
       - "repository"
       summary: "Updates a single component, if found (idempotent)"
       operationId: "updateComponentById"
-      consumes:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -1190,8 +1142,6 @@ paths:
       summary: "searches datatypes"
       description: "By passing in the appropriate options, you can search for datatypes "
       operationId: "searchDatatypes"
-      produces:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -1238,10 +1188,6 @@ paths:
       summary: "adds a datatype"
       description: "Adds a datatype"
       operationId: "addDatatype"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -1277,8 +1223,6 @@ paths:
       - "repository"
       summary: "Returns a single datatype, if found"
       operationId: "findDatatypeByName"
-      produces:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -1309,8 +1253,6 @@ paths:
       - "repository"
       summary: "Updates a single datatype, if found (idempotent)"
       operationId: "updateDatatypeByName"
-      consumes:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -1373,8 +1315,6 @@ paths:
       summary: "searches fields"
       description: "By passing in the appropriate options, you can search for fields "
       operationId: "searchFields"
-      produces:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -1421,10 +1361,6 @@ paths:
       summary: "adds a field"
       description: "Adds a field"
       operationId: "addField"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -1460,8 +1396,6 @@ paths:
       - "repository"
       summary: "Returns a single field, if found"
       operationId: "findFieldById"
-      produces:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -1493,8 +1427,6 @@ paths:
       - "repository"
       summary: "Updates a single field, if found (idempotent)"
       operationId: "updateFieldById"
-      consumes:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -1559,8 +1491,6 @@ paths:
       summary: "searches flows"
       description: "By passing in the appropriate options, you can search for flows "
       operationId: "searchFlows"
-      produces:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -1607,8 +1537,6 @@ paths:
       summary: "adds a Flow"
       description: "Adds a Flow"
       operationId: "addFlow"
-      consumes:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -1644,8 +1572,6 @@ paths:
       - "workflow"
       summary: "Returns a single Flow, if found"
       operationId: "findFlowByName"
-      produces:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -1676,8 +1602,6 @@ paths:
       - "workflow"
       summary: "Updates a single Flow, if found (idempotent)"
       operationId: "updateFlowByName"
-      consumes:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -1740,8 +1664,6 @@ paths:
       summary: "searches groups"
       description: "By passing in the appropriate options, you can search for groups "
       operationId: "searchGroups"
-      produces:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -1788,8 +1710,6 @@ paths:
       summary: "adds a repeating group"
       description: "Adds a group"
       operationId: "addGroup"
-      consumes:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -1831,8 +1751,6 @@ paths:
       - "repository"
       summary: "Returns a single group, if found"
       operationId: "findGroupById"
-      produces:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -1864,8 +1782,6 @@ paths:
       - "repository"
       summary: "Updates a single group, if found (idempotent)"
       operationId: "updateGroupById"
-      consumes:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -1930,8 +1846,6 @@ paths:
       summary: "searches messages"
       description: "By passing in the appropriate options, you can search for messages "
       operationId: "searchMessages"
-      produces:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -1978,10 +1892,6 @@ paths:
       summary: "adds a message scenario"
       description: "Adds a message scenario"
       operationId: "addMessage"
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -2023,8 +1933,6 @@ paths:
       - "repository"
       summary: "Returns a single message scenario, if found"
       operationId: "findMessageById"
-      produces:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -2056,8 +1964,6 @@ paths:
       - "repository"
       summary: "Updates a single message scenario, if found (idempotent)"
       operationId: "updateMessageById"
-      consumes:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -2122,8 +2028,6 @@ paths:
       summary: "searches message responses"
       description: "By passing in the appropriate options, you can search for message responses"
       operationId: "searchMessageResponses"
-      produces:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -2175,8 +2079,6 @@ paths:
       summary: "adds a response to a message scenario"
       description: "Adds a message scenario response"
       operationId: "addMessageResponse"
-      consumes:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -2217,8 +2119,6 @@ paths:
       - "workflow"
       summary: "Returns a single response to a message scenario, if found"
       operationId: "findMessageResponseById"
-      produces:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -2255,8 +2155,6 @@ paths:
       - "workflow"
       summary: "Updates a single response to a message scenario, if found (idempotent)"
       operationId: "updateMessageResponse"
-      consumes:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -2331,8 +2229,6 @@ paths:
       summary: "searches annotations"
       description: "By passing in the appropriate options, you can search for annotations"
       operationId: "searchAnnotations"
-      produces:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -2403,8 +2299,6 @@ paths:
       summary: "adds an Annotation"
       description: "Adds an Annotation"
       operationId: "addAnnotation"
-      consumes:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -2465,8 +2359,6 @@ paths:
       - "documentation"
       summary: "Updates a single Annotation, if found (idempotent)"
       operationId: "updateAnnotation"
-      consumes:
-      - "application/json"
       parameters:
       - name: "repos-name"
         in: "path"
@@ -2844,6 +2736,8 @@ definitions:
         type: "array"
         items:
           $ref: "#/definitions/Response"
+      annotation:
+        $ref: "#/definitions/Annotation"
   MessageElement:
     type: "object"
     required:

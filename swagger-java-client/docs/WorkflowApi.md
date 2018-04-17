@@ -71,8 +71,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: Not defined
+ - **Content-Type**: application/json, application/xml
+ - **Accept**: application/json, application/xml
 
 <a name="addFlow"></a>
 # **addFlow**
@@ -119,8 +119,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: Not defined
+ - **Content-Type**: application/json, application/xml
+ - **Accept**: application/json, application/xml
 
 <a name="addMessageResponse"></a>
 # **addMessageResponse**
@@ -169,8 +169,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: Not defined
+ - **Content-Type**: application/json, application/xml
+ - **Accept**: application/json, application/xml
 
 <a name="addStateMachine"></a>
 # **addStateMachine**
@@ -219,8 +219,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: Not defined
+ - **Content-Type**: application/json, application/xml
+ - **Accept**: application/json, application/xml
 
 <a name="deleteActor"></a>
 # **deleteActor**
@@ -265,8 +265,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Content-Type**: application/json, application/xml
+ - **Accept**: application/json, application/xml
 
 <a name="deleteFlow"></a>
 # **deleteFlow**
@@ -311,8 +311,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Content-Type**: application/json, application/xml
+ - **Accept**: application/json, application/xml
 
 <a name="deleteMessageResponse"></a>
 # **deleteMessageResponse**
@@ -359,8 +359,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Content-Type**: application/json, application/xml
+ - **Accept**: application/json, application/xml
 
 <a name="deleteStateMachine"></a>
 # **deleteStateMachine**
@@ -407,8 +407,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Content-Type**: application/json, application/xml
+ - **Accept**: application/json, application/xml
 
 <a name="findActorByName"></a>
 # **findActorByName**
@@ -454,8 +454,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Content-Type**: application/json, application/xml
+ - **Accept**: application/json, application/xml
 
 <a name="findFlowByName"></a>
 # **findFlowByName**
@@ -501,8 +501,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Content-Type**: application/json, application/xml
+ - **Accept**: application/json, application/xml
 
 <a name="findMessageResponseById"></a>
 # **findMessageResponseById**
@@ -550,8 +550,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Content-Type**: application/json, application/xml
+ - **Accept**: application/json, application/xml
 
 <a name="findStateMachine"></a>
 # **findStateMachine**
@@ -599,8 +599,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Content-Type**: application/json, application/xml
+ - **Accept**: application/json, application/xml
 
 <a name="searchActors"></a>
 # **searchActors**
@@ -652,8 +652,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Content-Type**: application/json, application/xml
+ - **Accept**: application/json, application/xml
 
 <a name="searchFlows"></a>
 # **searchFlows**
@@ -705,8 +705,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Content-Type**: application/json, application/xml
+ - **Accept**: application/json, application/xml
 
 <a name="searchMessageResponses"></a>
 # **searchMessageResponses**
@@ -760,8 +760,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Content-Type**: application/json, application/xml
+ - **Accept**: application/json, application/xml
 
 <a name="searchStateMachines"></a>
 # **searchStateMachines**
@@ -815,8 +815,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Content-Type**: application/json, application/xml
+ - **Accept**: application/json, application/xml
 
 <a name="updateActorByName"></a>
 # **updateActorByName**
@@ -863,8 +863,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: Not defined
+ - **Content-Type**: application/json, application/xml
+ - **Accept**: application/json, application/xml
 
 <a name="updateFlowByName"></a>
 # **updateFlowByName**
@@ -911,8 +911,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: Not defined
+ - **Content-Type**: application/json, application/xml
+ - **Accept**: application/json, application/xml
 
 <a name="updateMessageResponse"></a>
 # **updateMessageResponse**
@@ -961,8 +961,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: Not defined
+ - **Content-Type**: application/json, application/xml
+ - **Accept**: application/json, application/xml
 
 <a name="updateStateMachine"></a>
 # **updateStateMachine**
@@ -1011,6 +1011,6 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
- - **Accept**: Not defined
+ - **Content-Type**: application/json, application/xml
+ - **Accept**: application/json, application/xml
 

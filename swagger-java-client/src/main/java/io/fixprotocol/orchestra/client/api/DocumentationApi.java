@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-12-04T16:02:31.392Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-17T14:15:39.486Z")
 public class DocumentationApi {
   private ApiClient apiClient;
 
@@ -86,12 +86,12 @@ public class DocumentationApi {
     
     
     final String[] localVarAccepts = {
-      
+      "application/json", "application/xml"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json"
+      "application/json", "application/xml"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -150,12 +150,12 @@ public class DocumentationApi {
     
     
     final String[] localVarAccepts = {
-      
+      "application/json", "application/xml"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      
+      "application/json", "application/xml"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -221,12 +221,12 @@ public class DocumentationApi {
     
     
     final String[] localVarAccepts = {
-      "application/json"
+      "application/json", "application/xml"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      
+      "application/json", "application/xml"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -291,12 +291,12 @@ public class DocumentationApi {
     
     
     final String[] localVarAccepts = {
-      
+      "application/json", "application/xml"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json"
+      "application/json", "application/xml"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 

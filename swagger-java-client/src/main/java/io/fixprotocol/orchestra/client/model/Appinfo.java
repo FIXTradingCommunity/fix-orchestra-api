@@ -11,7 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
  * Usage specific annotation, optionally with link to an external reference or standard
  */
 @ApiModel(description = "Usage specific annotation, optionally with link to an external reference or standard")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-12-04T16:02:31.392Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-17T14:15:39.486Z")
 public class Appinfo {
   @JsonProperty("text")
   private String text = null;

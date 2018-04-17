@@ -36,7 +36,7 @@ import javax.validation.constraints.*;
  * Usage specific annotation, optionally with link to an external reference or standard
  */
 @ApiModel(description = "Usage specific annotation, optionally with link to an external reference or standard")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-12-04T16:01:43.421Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2018-04-17T14:14:51.195Z")
 public class Appinfo   {
   @JsonProperty("text")
   private String text = null;

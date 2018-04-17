@@ -13,7 +13,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * Code
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2017-12-04T16:02:31.392Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-17T14:15:39.486Z")
 public class Code {
   @JsonProperty("oid")
   private ObjectId oid = null;

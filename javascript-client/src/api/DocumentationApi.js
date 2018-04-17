@@ -95,8 +95,8 @@ export default class DocumentationApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json'];
-      let accepts = [];
+      let contentTypes = ['application/json', 'application/xml'];
+      let accepts = ['application/json', 'application/xml'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -164,8 +164,8 @@ export default class DocumentationApi {
       };
 
       let authNames = [];
-      let contentTypes = [];
-      let accepts = [];
+      let contentTypes = ['application/json', 'application/xml'];
+      let accepts = ['application/json', 'application/xml'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -241,8 +241,8 @@ export default class DocumentationApi {
       };
 
       let authNames = [];
-      let contentTypes = [];
-      let accepts = ['application/json'];
+      let contentTypes = ['application/json', 'application/xml'];
+      let accepts = ['application/json', 'application/xml'];
       let returnType = Annotation;
 
       return this.apiClient.callApi(
@@ -316,8 +316,8 @@ export default class DocumentationApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json'];
-      let accepts = [];
+      let contentTypes = ['application/json', 'application/xml'];
+      let accepts = ['application/json', 'application/xml'];
       let returnType = null;
 
       return this.apiClient.callApi(
