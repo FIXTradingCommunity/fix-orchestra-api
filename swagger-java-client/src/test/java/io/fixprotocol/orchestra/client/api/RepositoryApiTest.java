@@ -323,7 +323,7 @@ public class RepositoryApiTest {
     /**
      * Retreives a single Orchestra repository file, if found
      *
-     * 
+     * Support XML or JSON serialization (to-do)
      *
      * @throws ApiException
      *          if the Api call fails

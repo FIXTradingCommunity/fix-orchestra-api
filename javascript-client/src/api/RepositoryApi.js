@@ -93,8 +93,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -148,8 +148,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -205,8 +205,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -260,8 +260,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -315,8 +315,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -372,8 +372,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -429,8 +429,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -479,8 +479,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -544,8 +544,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -602,8 +602,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -660,8 +660,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -718,8 +718,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -776,8 +776,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -834,8 +834,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -892,8 +892,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -943,8 +943,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -964,6 +964,7 @@ export default class RepositoryApi {
 
     /**
      * Retreives a single Orchestra repository file, if found
+     * Support XML or JSON serialization (to-do)
      * @param {String} reposName name of Orchestra repository to fetch
      * @param {String} version version of Orchestra repository to fetch
      * @param {module:api/RepositoryApi~downloadRepositoryByIdCallback} callback The callback function, accepting three arguments: error, data, response
@@ -995,7 +996,7 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
       let accepts = ['application/xml'];
       let returnType = File;
 
@@ -1061,8 +1062,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = Code;
 
       return this.apiClient.callApi(
@@ -1120,8 +1121,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = CodeSet;
 
       return this.apiClient.callApi(
@@ -1179,8 +1180,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = Component;
 
       return this.apiClient.callApi(
@@ -1238,8 +1239,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = Datatype;
 
       return this.apiClient.callApi(
@@ -1297,8 +1298,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = Field;
 
       return this.apiClient.callApi(
@@ -1356,8 +1357,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = Group;
 
       return this.apiClient.callApi(
@@ -1415,8 +1416,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = Message;
 
       return this.apiClient.callApi(
@@ -1467,8 +1468,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = Repository;
 
       return this.apiClient.callApi(
@@ -1528,8 +1529,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = [CodeSet];
 
       return this.apiClient.callApi(
@@ -1596,8 +1597,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = [Code];
 
       return this.apiClient.callApi(
@@ -1657,8 +1658,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = [Component];
 
       return this.apiClient.callApi(
@@ -1718,8 +1719,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = [Datatype];
 
       return this.apiClient.callApi(
@@ -1779,8 +1780,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = [Field];
 
       return this.apiClient.callApi(
@@ -1840,8 +1841,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = [Group];
 
       return this.apiClient.callApi(
@@ -1901,8 +1902,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = [Message];
 
       return this.apiClient.callApi(
@@ -1948,8 +1949,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = [Repository];
 
       return this.apiClient.callApi(
@@ -2019,8 +2020,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -2083,8 +2084,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -2147,8 +2148,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -2211,8 +2212,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -2275,8 +2276,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -2339,8 +2340,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -2403,8 +2404,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = null;
 
       return this.apiClient.callApi(
@@ -2460,8 +2461,8 @@ export default class RepositoryApi {
       };
 
       let authNames = [];
-      let contentTypes = ['application/json', 'application/xml'];
-      let accepts = ['application/json', 'application/xml'];
+      let contentTypes = ['application/json'];
+      let accepts = ['application/json'];
       let returnType = null;
 
       return this.apiClient.callApi(

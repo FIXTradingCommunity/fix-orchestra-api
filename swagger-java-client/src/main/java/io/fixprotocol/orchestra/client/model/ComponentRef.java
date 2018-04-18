@@ -9,7 +9,7 @@ import io.fixprotocol.orchestra.client.model.ObjectId;
 /**
  * ComponentRef
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-17T14:15:39.486Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-18T14:22:43.321Z")
 public class ComponentRef extends ElementRef {
 
   @Override

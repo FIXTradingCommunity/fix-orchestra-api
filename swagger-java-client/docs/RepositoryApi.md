@@ -94,8 +94,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="addCodeSet"></a>
 # **addCodeSet**
@@ -142,8 +142,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="addComponent"></a>
 # **addComponent**
@@ -192,8 +192,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="addDatatype"></a>
 # **addDatatype**
@@ -240,8 +240,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="addField"></a>
 # **addField**
@@ -288,8 +288,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="addGroup"></a>
 # **addGroup**
@@ -338,8 +338,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="addMessage"></a>
 # **addMessage**
@@ -388,8 +388,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="addRepository"></a>
 # **addRepository**
@@ -436,8 +436,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="deleteCode"></a>
 # **deleteCode**
@@ -484,8 +484,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="deleteCodeSet"></a>
 # **deleteCodeSet**
@@ -530,8 +530,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="deleteComponent"></a>
 # **deleteComponent**
@@ -576,8 +576,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="deleteDatatype"></a>
 # **deleteDatatype**
@@ -622,8 +622,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="deleteField"></a>
 # **deleteField**
@@ -668,8 +668,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="deleteGroup"></a>
 # **deleteGroup**
@@ -714,8 +714,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="deleteMessage"></a>
 # **deleteMessage**
@@ -760,8 +760,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="deleteRepository"></a>
 # **deleteRepository**
@@ -804,14 +804,16 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="downloadRepositoryById"></a>
 # **downloadRepositoryById**
 > File downloadRepositoryById(reposName, version)
 
 Retreives a single Orchestra repository file, if found
+
+Support XML or JSON serialization (to-do)
 
 ### Example
 ```java
@@ -849,7 +851,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
+ - **Content-Type**: application/json
  - **Accept**: application/xml
 
 <a name="findCodeById"></a>
@@ -898,8 +900,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="findCodeSetById"></a>
 # **findCodeSetById**
@@ -945,8 +947,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="findComponentById"></a>
 # **findComponentById**
@@ -992,8 +994,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="findDatatypeByName"></a>
 # **findDatatypeByName**
@@ -1039,8 +1041,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="findFieldById"></a>
 # **findFieldById**
@@ -1086,8 +1088,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="findGroupById"></a>
 # **findGroupById**
@@ -1133,8 +1135,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="findMessageById"></a>
 # **findMessageById**
@@ -1180,8 +1182,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="findRepositoryById"></a>
 # **findRepositoryById**
@@ -1225,8 +1227,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="searchCodeSets"></a>
 # **searchCodeSets**
@@ -1278,8 +1280,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="searchCodes"></a>
 # **searchCodes**
@@ -1333,8 +1335,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="searchComponents"></a>
 # **searchComponents**
@@ -1386,8 +1388,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="searchDatatypes"></a>
 # **searchDatatypes**
@@ -1439,8 +1441,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="searchFields"></a>
 # **searchFields**
@@ -1492,8 +1494,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="searchGroups"></a>
 # **searchGroups**
@@ -1545,8 +1547,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="searchMessages"></a>
 # **searchMessages**
@@ -1598,8 +1600,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="searchRepositories"></a>
 # **searchRepositories**
@@ -1647,8 +1649,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="updateCodeById"></a>
 # **updateCodeById**
@@ -1697,8 +1699,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="updateCodeSetById"></a>
 # **updateCodeSetById**
@@ -1745,8 +1747,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="updateComponentById"></a>
 # **updateComponentById**
@@ -1793,8 +1795,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="updateDatatypeByName"></a>
 # **updateDatatypeByName**
@@ -1841,8 +1843,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="updateFieldById"></a>
 # **updateFieldById**
@@ -1889,8 +1891,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="updateGroupById"></a>
 # **updateGroupById**
@@ -1937,8 +1939,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="updateMessageById"></a>
 # **updateMessageById**
@@ -1985,8 +1987,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="updateRepositoryById"></a>
 # **updateRepositoryById**
@@ -2031,6 +2033,6 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 

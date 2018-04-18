@@ -7,7 +7,7 @@ import io.fixprotocol.orchestra.client.Pair;
 import java.util.Map;
 import java.util.List;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-17T14:15:39.486Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-18T14:22:43.321Z")
 public class ApiKeyAuth implements Authentication {
   private final String location;
   private final String paramName;

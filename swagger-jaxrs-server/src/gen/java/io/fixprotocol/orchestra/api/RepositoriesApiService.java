@@ -18,8 +18,7 @@ import io.fixprotocol.orchestra.model.Group;
 import io.fixprotocol.orchestra.model.Message;
 import io.fixprotocol.orchestra.model.Repository;
 import io.fixprotocol.orchestra.model.StateMachine;
-
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2017-11-30T16:33:12.690Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2018-04-18T14:50:34.102Z")
 public abstract class RepositoriesApiService {
     public abstract Response addActor(String reposName,String version,Actor actor,SecurityContext securityContext) throws NotFoundException;
     public abstract Response addAnnotation(String reposName,String version, @NotNull String elementId, @NotNull String elementType, String parentId,Annotation annotation,SecurityContext securityContext) throws NotFoundException;

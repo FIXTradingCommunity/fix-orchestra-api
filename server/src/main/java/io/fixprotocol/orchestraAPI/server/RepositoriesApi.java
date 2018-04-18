@@ -34,10 +34,10 @@ import io.fixprotocol.orchestra.model.StateMachine;
 import io.swagger.annotations.ApiParam;
 
 @Path("/repositories")
-@Consumes({ "application/json", "application/xml" })
-@Produces({ "application/json", "application/xml" })
+@Consumes({ "application/json" })
+@Produces({ "application/json" })
 @io.swagger.annotations.Api(description = "the repositories API")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2018-04-17T14:14:51.195Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2018-04-18T14:21:53.325Z")
 public class RepositoriesApi  {
    private final RepositoriesApiService delegate;
 
@@ -64,8 +64,8 @@ public class RepositoriesApi  {
 
     @POST
     @Path("/{repos-name}/{version}/actors")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "adds an Actor", notes = "Adds an Actor", response = Void.class, tags={ "workflow", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 201, message = "item created", response = Void.class),
@@ -82,8 +82,8 @@ public class RepositoriesApi  {
     }
     @POST
     @Path("/{repos-name}/{version}/annotations")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "adds an Annotation", notes = "Adds an Annotation", response = Void.class, tags={ "documentation", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 201, message = "item created", response = Void.class),
@@ -103,8 +103,8 @@ public class RepositoriesApi  {
     }
     @POST
     @Path("/{repos-name}/{version}/codesets/{codesetid}/codes")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "adds a Code to CodeSet", notes = "Adds a Code", response = Void.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 201, message = "item created", response = Void.class),
@@ -122,8 +122,8 @@ public class RepositoriesApi  {
     }
     @POST
     @Path("/{repos-name}/{version}/codesets")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "adds a CodeSet", notes = "Adds a CodeSet", response = Void.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 201, message = "item created", response = Void.class),
@@ -140,8 +140,8 @@ public class RepositoriesApi  {
     }
     @POST
     @Path("/{repos-name}/{version}/components")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "adds a component", notes = "Adds a component", response = Void.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 201, message = "item created", response = Void.class),
@@ -159,8 +159,8 @@ public class RepositoriesApi  {
     }
     @POST
     @Path("/{repos-name}/{version}/datatypes")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "adds a datatype", notes = "Adds a datatype", response = Void.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 201, message = "item created", response = Void.class),
@@ -177,8 +177,8 @@ public class RepositoriesApi  {
     }
     @POST
     @Path("/{repos-name}/{version}/fields")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "adds a field", notes = "Adds a field", response = Void.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 201, message = "item created", response = Void.class),
@@ -195,8 +195,8 @@ public class RepositoriesApi  {
     }
     @POST
     @Path("/{repos-name}/{version}/flows")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "adds a Flow", notes = "Adds a Flow", response = Void.class, tags={ "workflow", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 201, message = "item created", response = Void.class),
@@ -213,8 +213,8 @@ public class RepositoriesApi  {
     }
     @POST
     @Path("/{repos-name}/{version}/groups")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "adds a repeating group", notes = "Adds a group", response = Void.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 201, message = "item created", response = Void.class),
@@ -232,8 +232,8 @@ public class RepositoriesApi  {
     }
     @POST
     @Path("/{repos-name}/{version}/messages")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "adds a message scenario", notes = "Adds a message scenario", response = Void.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 201, message = "item created", response = Void.class),
@@ -251,8 +251,8 @@ public class RepositoriesApi  {
     }
     @POST
     @Path("/{repos-name}/{version}/messages/{id}/responses")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "adds a response to a message scenario", notes = "Adds a message scenario response", response = Void.class, tags={ "workflow", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 201, message = "item created", response = Void.class),
@@ -270,8 +270,8 @@ public class RepositoriesApi  {
     }
     @POST
     
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "adds an Orchestra repository", notes = "Adds an Orchestra repository", response = Void.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 201, message = "item created", response = Void.class),
@@ -288,8 +288,8 @@ public class RepositoriesApi  {
     }
     @POST
     @Path("/{repos-name}/{version}/actors/{name}/statemachines")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "adds a state machine", notes = "Adds a StateMachine", response = Void.class, tags={ "workflow", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 201, message = "item created", response = Void.class),
@@ -307,8 +307,8 @@ public class RepositoriesApi  {
     }
     @DELETE
     @Path("/{repos-name}/{version}/actors/{name}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "deletes a single Actor based on the name supplied", notes = "", response = Void.class, tags={ "workflow", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 204, message = "Actor deleted", response = Void.class),
@@ -323,8 +323,8 @@ public class RepositoriesApi  {
     }
     @DELETE
     @Path("/{repos-name}/{version}/annotations")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "deletes a single Annotation", notes = "", response = Void.class, tags={ "documentation", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 204, message = "Annotation deleted", response = Void.class),
@@ -341,8 +341,8 @@ public class RepositoriesApi  {
     }
     @DELETE
     @Path("/{repos-name}/{version}/codesets/{codesetid}/codes/{id}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "deletes a single Code based on the ID supplied", notes = "", response = Void.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 204, message = "Code deleted", response = Void.class),
@@ -358,8 +358,8 @@ public class RepositoriesApi  {
     }
     @DELETE
     @Path("/{repos-name}/{version}/codesets/{id}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "deletes a single CodeSet based on the ID supplied", notes = "", response = Void.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 204, message = "CodeSet deleted", response = Void.class),
@@ -374,8 +374,8 @@ public class RepositoriesApi  {
     }
     @DELETE
     @Path("/{repos-name}/{version}/components/{id}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "deletes a single component based on the ID supplied", notes = "", response = Void.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 204, message = "component deleted", response = Void.class),
@@ -390,8 +390,8 @@ public class RepositoriesApi  {
     }
     @DELETE
     @Path("/{repos-name}/{version}/datatypes/{name}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "deletes a single datatype based on the name supplied", notes = "", response = Void.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 204, message = "datatype deleted", response = Void.class),
@@ -406,8 +406,8 @@ public class RepositoriesApi  {
     }
     @DELETE
     @Path("/{repos-name}/{version}/fields/{id}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "deletes a single field based on the ID supplied", notes = "", response = Void.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 204, message = "field deleted", response = Void.class),
@@ -422,8 +422,8 @@ public class RepositoriesApi  {
     }
     @DELETE
     @Path("/{repos-name}/{version}/flows/{name}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "deletes a single Flow based on the name supplied", notes = "", response = Void.class, tags={ "workflow", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 204, message = "Flow deleted", response = Void.class),
@@ -438,8 +438,8 @@ public class RepositoriesApi  {
     }
     @DELETE
     @Path("/{repos-name}/{version}/groups/{id}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "deletes a single group based on the ID supplied", notes = "", response = Void.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 204, message = "group deleted", response = Void.class),
@@ -454,8 +454,8 @@ public class RepositoriesApi  {
     }
     @DELETE
     @Path("/{repos-name}/{version}/messages/{id}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "deletes a single message scenario based on the ID supplied", notes = "", response = Void.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 204, message = "message deleted", response = Void.class),
@@ -470,8 +470,8 @@ public class RepositoriesApi  {
     }
     @DELETE
     @Path("/{repos-name}/{version}/messages/{id}/responses/{name}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "deletes a single response to a message scenario based on the ID supplied", notes = "", response = Void.class, tags={ "workflow", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 204, message = "message response deleted", response = Void.class),
@@ -487,8 +487,8 @@ public class RepositoriesApi  {
     }
     @DELETE
     @Path("/{repos-name}/{version}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "deletes a single Orchestra repository based on the ID supplied", notes = "", response = Void.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 204, message = "repository deleted", response = Void.class),
@@ -502,8 +502,8 @@ public class RepositoriesApi  {
     }
     @DELETE
     @Path("/{repos-name}/{version}/actors/{name}/statemachines/{sm-name}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "deletes a single StateMachine based on the name supplied", notes = "", response = Void.class, tags={ "workflow", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 204, message = "StateMachine deleted", response = Void.class),
@@ -519,9 +519,9 @@ public class RepositoriesApi  {
     }
     @GET
     @Path("/{repos-name}/{version}/file")
-    @Consumes({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
     @Produces({ "application/xml" })
-    @io.swagger.annotations.ApiOperation(value = "Retreives a single Orchestra repository file, if found", notes = "", response = File.class, tags={ "repository", })
+    @io.swagger.annotations.ApiOperation(value = "Retreives a single Orchestra repository file, if found", notes = "Support XML or JSON serialization (to-do)", response = File.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "repository file", response = File.class),
         
@@ -534,8 +534,8 @@ public class RepositoriesApi  {
     }
     @GET
     @Path("/{repos-name}/{version}/actors/{name}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Returns a single Actor, if found", notes = "", response = Actor.class, tags={ "workflow", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "Actor response", response = Actor.class),
@@ -550,8 +550,8 @@ public class RepositoriesApi  {
     }
     @GET
     @Path("/{repos-name}/{version}/codesets/{codesetid}/codes/{id}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Returns a single Code, if found", notes = "", response = Code.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "Code response", response = Code.class),
@@ -567,8 +567,8 @@ public class RepositoriesApi  {
     }
     @GET
     @Path("/{repos-name}/{version}/codesets/{id}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Returns a single CodeSet, if found", notes = "", response = CodeSet.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "CodeSet response", response = CodeSet.class),
@@ -583,8 +583,8 @@ public class RepositoriesApi  {
     }
     @GET
     @Path("/{repos-name}/{version}/components/{id}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Returns a single component, if found", notes = "", response = Component.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "component response", response = Component.class),
@@ -599,8 +599,8 @@ public class RepositoriesApi  {
     }
     @GET
     @Path("/{repos-name}/{version}/datatypes/{name}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Returns a single datatype, if found", notes = "", response = Datatype.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "datatype response", response = Datatype.class),
@@ -615,8 +615,8 @@ public class RepositoriesApi  {
     }
     @GET
     @Path("/{repos-name}/{version}/fields/{id}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Returns a single field, if found", notes = "", response = Field.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "field response", response = Field.class),
@@ -631,8 +631,8 @@ public class RepositoriesApi  {
     }
     @GET
     @Path("/{repos-name}/{version}/flows/{name}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Returns a single Flow, if found", notes = "", response = Flow.class, tags={ "workflow", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "Flow response", response = Flow.class),
@@ -647,8 +647,8 @@ public class RepositoriesApi  {
     }
     @GET
     @Path("/{repos-name}/{version}/groups/{id}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Returns a single group, if found", notes = "", response = Group.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "group response", response = Group.class),
@@ -663,8 +663,8 @@ public class RepositoriesApi  {
     }
     @GET
     @Path("/{repos-name}/{version}/messages/{id}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Returns a single message scenario, if found", notes = "", response = Message.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "message response", response = Message.class),
@@ -679,8 +679,8 @@ public class RepositoriesApi  {
     }
     @GET
     @Path("/{repos-name}/{version}/messages/{id}/responses/{name}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Returns a single response to a message scenario, if found", notes = "", response = Response.class, tags={ "workflow", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "message response", response = Response.class),
@@ -696,8 +696,8 @@ public class RepositoriesApi  {
     }
     @GET
     @Path("/{repos-name}/{version}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Returns a single Orchestra repository metadata, if found", notes = "", response = Repository.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "repository response", response = Repository.class),
@@ -711,8 +711,8 @@ public class RepositoriesApi  {
     }
     @GET
     @Path("/{repos-name}/{version}/actors/{name}/statemachines/{sm-name}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Returns a single StateMachine, if found", notes = "", response = StateMachine.class, tags={ "workflow", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "StateMachine response", response = StateMachine.class),
@@ -728,8 +728,8 @@ public class RepositoriesApi  {
     }
     @GET
     @Path("/{repos-name}/{version}/actors")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "searches actors", notes = "By passing in the appropriate options, you can search for actors ", response = Actor.class, responseContainer = "List", tags={ "workflow", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "search results matching criteria", response = Actor.class, responseContainer = "List"),
@@ -746,8 +746,8 @@ public class RepositoriesApi  {
     }
     @GET
     @Path("/{repos-name}/{version}/annotations")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "searches annotations", notes = "By passing in the appropriate options, you can search for annotations", response = Annotation.class, tags={ "documentation", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "search results matching criteria", response = Annotation.class),
@@ -767,8 +767,8 @@ public class RepositoriesApi  {
     }
     @GET
     @Path("/{repos-name}/{version}/codesets")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "searches CodeSets", notes = "By passing in the appropriate options, you can search for CodeSets ", response = CodeSet.class, responseContainer = "List", tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "search results matching criteria", response = CodeSet.class, responseContainer = "List"),
@@ -785,8 +785,8 @@ public class RepositoriesApi  {
     }
     @GET
     @Path("/{repos-name}/{version}/codesets/{codesetid}/codes")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "searches Codes within a CodeSet", notes = "By passing in the appropriate options, you can search for Codes", response = Code.class, responseContainer = "List", tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "search results matching criteria", response = Code.class, responseContainer = "List"),
@@ -804,8 +804,8 @@ public class RepositoriesApi  {
     }
     @GET
     @Path("/{repos-name}/{version}/components")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "searches components", notes = "By passing in the appropriate options, you can search for components ", response = Component.class, responseContainer = "List", tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "search results matching criteria", response = Component.class, responseContainer = "List"),
@@ -822,8 +822,8 @@ public class RepositoriesApi  {
     }
     @GET
     @Path("/{repos-name}/{version}/datatypes")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "searches datatypes", notes = "By passing in the appropriate options, you can search for datatypes ", response = Datatype.class, responseContainer = "List", tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "search results matching criteria", response = Datatype.class, responseContainer = "List"),
@@ -840,8 +840,8 @@ public class RepositoriesApi  {
     }
     @GET
     @Path("/{repos-name}/{version}/fields")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "searches fields", notes = "By passing in the appropriate options, you can search for fields ", response = Field.class, responseContainer = "List", tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "search results matching criteria", response = Field.class, responseContainer = "List"),
@@ -858,8 +858,8 @@ public class RepositoriesApi  {
     }
     @GET
     @Path("/{repos-name}/{version}/flows")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "searches flows", notes = "By passing in the appropriate options, you can search for flows ", response = Flow.class, responseContainer = "List", tags={ "workflow", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "search results matching criteria", response = Flow.class, responseContainer = "List"),
@@ -876,8 +876,8 @@ public class RepositoriesApi  {
     }
     @GET
     @Path("/{repos-name}/{version}/groups")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "searches groups", notes = "By passing in the appropriate options, you can search for groups ", response = Group.class, responseContainer = "List", tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "search results matching criteria", response = Group.class, responseContainer = "List"),
@@ -894,8 +894,8 @@ public class RepositoriesApi  {
     }
     @GET
     @Path("/{repos-name}/{version}/messages/{id}/responses")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "searches message responses", notes = "By passing in the appropriate options, you can search for message responses", response = Response.class, responseContainer = "List", tags={ "workflow", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "search results matching criteria", response = Response.class, responseContainer = "List"),
@@ -913,8 +913,8 @@ public class RepositoriesApi  {
     }
     @GET
     @Path("/{repos-name}/{version}/messages")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "searches messages", notes = "By passing in the appropriate options, you can search for messages ", response = Message.class, responseContainer = "List", tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "search results matching criteria", response = Message.class, responseContainer = "List"),
@@ -931,8 +931,8 @@ public class RepositoriesApi  {
     }
     @GET
     
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "searches Orchestra repositories", notes = "By passing in the appropriate options, you can search for Orchestra repositories", response = Repository.class, responseContainer = "List", tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "search results matching criteria", response = Repository.class, responseContainer = "List"),
@@ -947,8 +947,8 @@ public class RepositoriesApi  {
     }
     @GET
     @Path("/{repos-name}/{version}/actors/{name}/statemachines")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "searches state machines", notes = "By passing in the appropriate options, you can search for state machines", response = StateMachine.class, responseContainer = "List", tags={ "workflow", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "search results matching criteria", response = StateMachine.class, responseContainer = "List"),
@@ -966,8 +966,8 @@ public class RepositoriesApi  {
     }
     @PUT
     @Path("/{repos-name}/{version}/actors/{name}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Updates a single Actor, if found (idempotent)", notes = "", response = Void.class, tags={ "workflow", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 204, message = "Actor updated", response = Void.class),
@@ -983,8 +983,8 @@ public class RepositoriesApi  {
     }
     @PUT
     @Path("/{repos-name}/{version}/annotations")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Updates a single Annotation, if found (idempotent)", notes = "", response = Void.class, tags={ "documentation", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 204, message = "Annotation updated", response = Void.class),
@@ -1002,8 +1002,8 @@ public class RepositoriesApi  {
     }
     @PUT
     @Path("/{repos-name}/{version}/codesets/{codesetid}/codes/{id}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Updates a single Code, if found (idempotent)", notes = "", response = Void.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 204, message = "Code updated", response = Void.class),
@@ -1020,8 +1020,8 @@ public class RepositoriesApi  {
     }
     @PUT
     @Path("/{repos-name}/{version}/codesets/{id}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Updates a single CodeSet, if found (idempotent)", notes = "", response = Void.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 204, message = "CodeSet updated", response = Void.class),
@@ -1037,8 +1037,8 @@ public class RepositoriesApi  {
     }
     @PUT
     @Path("/{repos-name}/{version}/components/{id}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Updates a single component, if found (idempotent)", notes = "", response = Void.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 204, message = "component updated", response = Void.class),
@@ -1054,8 +1054,8 @@ public class RepositoriesApi  {
     }
     @PUT
     @Path("/{repos-name}/{version}/datatypes/{name}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Updates a single datatype, if found (idempotent)", notes = "", response = Void.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 204, message = "datatype updated", response = Void.class),
@@ -1071,8 +1071,8 @@ public class RepositoriesApi  {
     }
     @PUT
     @Path("/{repos-name}/{version}/fields/{id}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Updates a single field, if found (idempotent)", notes = "", response = Void.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 204, message = "field updated", response = Void.class),
@@ -1088,8 +1088,8 @@ public class RepositoriesApi  {
     }
     @PUT
     @Path("/{repos-name}/{version}/flows/{name}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Updates a single Flow, if found (idempotent)", notes = "", response = Void.class, tags={ "workflow", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 204, message = "Flow updated", response = Void.class),
@@ -1105,8 +1105,8 @@ public class RepositoriesApi  {
     }
     @PUT
     @Path("/{repos-name}/{version}/groups/{id}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Updates a single group, if found (idempotent)", notes = "", response = Void.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 204, message = "group updated", response = Void.class),
@@ -1122,8 +1122,8 @@ public class RepositoriesApi  {
     }
     @PUT
     @Path("/{repos-name}/{version}/messages/{id}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Updates a single message scenario, if found (idempotent)", notes = "", response = Void.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 204, message = "message updated", response = Void.class),
@@ -1139,8 +1139,8 @@ public class RepositoriesApi  {
     }
     @PUT
     @Path("/{repos-name}/{version}/messages/{id}/responses/{name}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Updates a single response to a message scenario, if found (idempotent)", notes = "", response = Void.class, tags={ "workflow", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 204, message = "message response updated", response = Void.class),
@@ -1157,8 +1157,8 @@ public class RepositoriesApi  {
     }
     @PUT
     @Path("/{repos-name}/{version}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Updates an Orchestra repository, if found (idempotent)", notes = "", response = Void.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 204, message = "repository updated", response = Void.class),
@@ -1173,8 +1173,8 @@ public class RepositoriesApi  {
     }
     @PUT
     @Path("/{repos-name}/{version}/actors/{name}/statemachines/{sm-name}")
-    @Consumes({ "application/json", "application/xml" })
-    @Produces({ "application/json", "application/xml" })
+    @Consumes({ "application/json" })
+    @Produces({ "application/json" })
     @io.swagger.annotations.ApiOperation(value = "Updates a single StateMachine, if found (idempotent)", notes = "", response = Void.class, tags={ "workflow", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 204, message = "StateMachine updated", response = Void.class),

@@ -36,7 +36,7 @@ import javax.validation.constraints.*;
 /**
  * Transition
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2018-04-17T14:14:51.195Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2018-04-18T14:21:53.325Z")
 public class Transition   {
   @JsonProperty("name")
   private String name = null;

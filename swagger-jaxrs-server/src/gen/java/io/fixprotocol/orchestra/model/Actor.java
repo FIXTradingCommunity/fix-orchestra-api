@@ -38,7 +38,7 @@ import javax.validation.constraints.*;
  * Represents a class of participants
  */
 @ApiModel(description = "Represents a class of participants")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2018-04-17T14:14:51.195Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2018-04-18T14:21:53.325Z")
 public class Actor   {
   @JsonProperty("name")
   private String name = null;

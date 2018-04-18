@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
  * A stream of messages in one direction
  */
 @ApiModel(description = "A stream of messages in one direction")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-17T14:15:39.486Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-18T14:22:43.321Z")
 public class Flow {
   @JsonProperty("name")
   private String name = null;

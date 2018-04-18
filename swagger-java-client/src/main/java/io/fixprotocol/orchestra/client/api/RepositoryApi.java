@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-17T14:15:39.486Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-18T14:22:43.321Z")
 public class RepositoryApi {
   private ApiClient apiClient;
 
@@ -85,12 +85,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -134,12 +134,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -185,12 +185,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -234,12 +234,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -283,12 +283,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -334,12 +334,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -385,12 +385,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -429,12 +429,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -491,12 +491,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -546,12 +546,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -601,12 +601,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -656,12 +656,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -711,12 +711,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -766,12 +766,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -821,12 +821,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -869,12 +869,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -885,7 +885,7 @@ public class RepositoryApi {
   }
   /**
    * Retreives a single Orchestra repository file, if found
-   * 
+   * Support XML or JSON serialization (to-do)
    * @param reposName name of Orchestra repository to fetch (required)
    * @param version version of Orchestra repository to fetch (required)
    * @return File
@@ -923,7 +923,7 @@ public class RepositoryApi {
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -981,12 +981,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -1037,12 +1037,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -1093,12 +1093,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -1149,12 +1149,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -1205,12 +1205,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -1261,12 +1261,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -1317,12 +1317,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -1366,12 +1366,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -1421,12 +1421,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -1483,12 +1483,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -1538,12 +1538,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -1593,12 +1593,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -1648,12 +1648,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -1703,12 +1703,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -1758,12 +1758,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -1799,12 +1799,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -1867,12 +1867,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -1928,12 +1928,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -1989,12 +1989,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -2050,12 +2050,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -2111,12 +2111,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -2172,12 +2172,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -2233,12 +2233,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 
@@ -2287,12 +2287,12 @@ public class RepositoryApi {
     
     
     final String[] localVarAccepts = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
 
     final String[] localVarContentTypes = {
-      "application/json", "application/xml"
+      "application/json"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 

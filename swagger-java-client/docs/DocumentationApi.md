@@ -61,8 +61,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="deleteAnnotation"></a>
 # **deleteAnnotation**
@@ -111,8 +111,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="searchAnnotations"></a>
 # **searchAnnotations**
@@ -170,8 +170,8 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 
 <a name="updateAnnotation"></a>
 # **updateAnnotation**
@@ -222,6 +222,6 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, application/xml
- - **Accept**: application/json, application/xml
+ - **Content-Type**: application/json
+ - **Accept**: application/json
 

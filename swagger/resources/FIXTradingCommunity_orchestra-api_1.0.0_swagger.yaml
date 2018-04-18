@@ -19,10 +19,8 @@ schemes:
 - "https"
 consumes:
 - "application/json"
-- "application/xml"
 produces: 
 - "application/json"
-- "application/xml"
 paths:
   /repositories:
     get:
@@ -177,6 +175,7 @@ paths:
       tags:
       - "repository"
       summary: "Retreives a single Orchestra repository file, if found"
+      description: "Support XML or JSON serialization (to-do)"
       operationId: "downloadRepositoryById"
       produces:
       - "application/xml"
