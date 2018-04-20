@@ -21,6 +21,11 @@ import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.MultiPart;
 import org.glassfish.jersey.media.multipart.MultiPartFeature;
 
+import io.fixprotocol.orchestra.client.auth.ApiKeyAuth;
+import io.fixprotocol.orchestra.client.auth.Authentication;
+import io.fixprotocol.orchestra.client.auth.HttpBasicAuth;
+import io.fixprotocol.orchestra.client.auth.OAuth;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -45,12 +50,9 @@ import java.text.DateFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import io.fixprotocol.orchestra.client.auth.Authentication;
-import io.fixprotocol.orchestra.client.auth.HttpBasicAuth;
-import io.fixprotocol.orchestra.client.auth.ApiKeyAuth;
-import io.fixprotocol.orchestra.client.auth.OAuth;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-18T14:22:43.321Z")
+
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-20T19:56:10.305Z")
 public class ApiClient {
   protected Map<String, String> defaultHeaderMap = new HashMap<String, String>();
   protected String basePath = "https://virtserver.swaggerhub.com/FIXTradingCommunity/orchestra-api/1.0.0";
@@ -76,7 +78,7 @@ public class ApiClient {
     this.dateFormat = new RFC3339DateFormat();
 
     // Set default User-Agent.
-    setUserAgent("Swagger-Codegen/1.0.0-RC3-SNAPSHOT/java");
+    setUserAgent("Swagger-Codegen/1.0.0/java");
 
     // Setup authentications (key: authentication name, value: authentication).
     authentications = new HashMap<String, Authentication>();

@@ -1021,7 +1021,7 @@ public class Client {
       throws ApiException {
     repositoryApi.updateRepositoryById(reposName, version, repository);
   }
-
+  
   /**
    * Updates a single StateMachine, if found (idempotent)
    * 
@@ -1035,6 +1035,30 @@ public class Client {
   public void updateStateMachine(String reposName, String version, String name, String smName,
       StateMachine stateMachine) throws ApiException {
     workflowApi.updateStateMachine(reposName, version, name, smName, stateMachine);
+  }
+  
+  /**
+   * Uploads a file.
+   * 
+   * @param reposName name of Orchestra repository to update (required)
+   * @param version version of Orchestra repository to update (required)
+   * @param upfile The file to upload. (optional)
+   * @throws ApiException if fails to make API call
+   */
+  public void uploadRepositoryById(String reposName, String version, File upfile) throws ApiException {
+    repositoryApi.uploadRepositoryById(reposName, version, upfile);
+  }
+
+  /**
+   * Uploads an updated file.
+   * 
+   * @param reposName name of Orchestra repository to store (required)
+   * @param version version of Orchestra repository to store (required)
+   * @param upfile The file to upload. (optional)
+   * @throws ApiException if fails to make API call
+   */
+  public void uploadRepositoryForUpdateById(String reposName, String version, File upfile) throws ApiException {
+    repositoryApi.uploadRepositoryForUpdateById(reposName, version, upfile);
   }
 
 }

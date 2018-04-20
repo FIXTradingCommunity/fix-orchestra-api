@@ -1,29 +1,27 @@
 package io.fixprotocol.orchestra.client.api;
 
-import io.fixprotocol.orchestra.client.ApiException;
-import io.fixprotocol.orchestra.client.ApiClient;
-import io.fixprotocol.orchestra.client.Configuration;
-import io.fixprotocol.orchestra.client.Pair;
-
-import javax.ws.rs.core.GenericType;
-
-import io.fixprotocol.orchestra.client.model.Code;
-import io.fixprotocol.orchestra.client.model.CodeSet;
-import io.fixprotocol.orchestra.client.model.Component;
-import io.fixprotocol.orchestra.client.model.Datatype;
-import io.fixprotocol.orchestra.client.model.ErrorModel;
-import io.fixprotocol.orchestra.client.model.Field;
 import java.io.File;
-import io.fixprotocol.orchestra.client.model.Group;
-import io.fixprotocol.orchestra.client.model.Message;
-import io.fixprotocol.orchestra.client.model.Repository;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-18T14:22:43.321Z")
+import javax.ws.rs.core.GenericType;
+
+import io.fixprotocol.orchestra.client.ApiClient;
+import io.fixprotocol.orchestra.client.ApiException;
+import io.fixprotocol.orchestra.client.Configuration;
+import io.fixprotocol.orchestra.client.Pair;
+import io.fixprotocol.orchestra.client.model.Code;
+import io.fixprotocol.orchestra.client.model.CodeSet;
+import io.fixprotocol.orchestra.client.model.Component;
+import io.fixprotocol.orchestra.client.model.Datatype;
+import io.fixprotocol.orchestra.client.model.Field;
+import io.fixprotocol.orchestra.client.model.Group;
+import io.fixprotocol.orchestra.client.model.Message;
+import io.fixprotocol.orchestra.client.model.Repository;
+
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-20T19:56:10.305Z")
 public class RepositoryApi {
   private ApiClient apiClient;
 
@@ -2293,6 +2291,108 @@ public class RepositoryApi {
 
     final String[] localVarContentTypes = {
       "application/json"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+
+    apiClient.invokeAPI(localVarPath, "PUT", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+  }
+  /**
+   * Uploads a file.
+   * 
+   * @param reposName name of Orchestra repository to update (required)
+   * @param version version of Orchestra repository to update (required)
+   * @param upfile The file to upload. (optional)
+   * @throws ApiException if fails to make API call
+   */
+  public void uploadRepositoryById(String reposName, String version, File upfile) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'reposName' is set
+    if (reposName == null) {
+      throw new ApiException(400, "Missing the required parameter 'reposName' when calling uploadRepositoryById");
+    }
+    
+    // verify the required parameter 'version' is set
+    if (version == null) {
+      throw new ApiException(400, "Missing the required parameter 'version' when calling uploadRepositoryById");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/repositories/{repos-name}/{version}/file"
+      .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
+      .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    
+    if (upfile != null)
+      localVarFormParams.put("upfile", upfile);
+
+    final String[] localVarAccepts = {
+      "application/json"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "multipart/form-data"
+    };
+    final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
+
+    String[] localVarAuthNames = new String[] {  };
+
+
+    apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
+  }
+  /**
+   * Uploads an updated file.
+   * 
+   * @param reposName name of Orchestra repository to store (required)
+   * @param version version of Orchestra repository to store (required)
+   * @param upfile The file to upload. (optional)
+   * @throws ApiException if fails to make API call
+   */
+  public void uploadRepositoryForUpdateById(String reposName, String version, File upfile) throws ApiException {
+    Object localVarPostBody = null;
+    
+    // verify the required parameter 'reposName' is set
+    if (reposName == null) {
+      throw new ApiException(400, "Missing the required parameter 'reposName' when calling uploadRepositoryForUpdateById");
+    }
+    
+    // verify the required parameter 'version' is set
+    if (version == null) {
+      throw new ApiException(400, "Missing the required parameter 'version' when calling uploadRepositoryForUpdateById");
+    }
+    
+    // create path and map variables
+    String localVarPath = "/repositories/{repos-name}/{version}/file"
+      .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
+      .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()));
+
+    // query params
+    List<Pair> localVarQueryParams = new ArrayList<Pair>();
+    Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+    Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+
+    
+    if (upfile != null)
+      localVarFormParams.put("upfile", upfile);
+
+    final String[] localVarAccepts = {
+      "application/json"
+    };
+    final String localVarAccept = apiClient.selectHeaderAccept(localVarAccepts);
+
+    final String[] localVarContentTypes = {
+      "multipart/form-data"
     };
     final String localVarContentType = apiClient.selectHeaderContentType(localVarContentTypes);
 

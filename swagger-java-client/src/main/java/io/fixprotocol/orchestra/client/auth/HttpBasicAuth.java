@@ -2,16 +2,15 @@
 
 package io.fixprotocol.orchestra.client.auth;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+import java.util.List;
+import java.util.Map;
+
 import io.fixprotocol.orchestra.client.Pair;
 
-import java.util.Base64;
-import java.nio.charset.StandardCharsets;
 
-import java.util.Map;
-import java.util.List;
-
-
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-18T14:22:43.321Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-20T19:56:10.305Z")
 public class HttpBasicAuth implements Authentication {
   private String username;
   private String password;

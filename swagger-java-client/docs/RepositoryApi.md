@@ -45,6 +45,8 @@ Method | HTTP request | Description
 [**updateGroupById**](RepositoryApi.md#updateGroupById) | **PUT** /repositories/{repos-name}/{version}/groups/{id} | Updates a single group, if found (idempotent)
 [**updateMessageById**](RepositoryApi.md#updateMessageById) | **PUT** /repositories/{repos-name}/{version}/messages/{id} | Updates a single message scenario, if found (idempotent)
 [**updateRepositoryById**](RepositoryApi.md#updateRepositoryById) | **PUT** /repositories/{repos-name}/{version} | Updates an Orchestra repository, if found (idempotent)
+[**uploadRepositoryById**](RepositoryApi.md#uploadRepositoryById) | **POST** /repositories/{repos-name}/{version}/file | Uploads a file.
+[**uploadRepositoryForUpdateById**](RepositoryApi.md#uploadRepositoryForUpdateById) | **PUT** /repositories/{repos-name}/{version}/file | Uploads an updated file.
 
 
 <a name="addCode"></a>
@@ -58,8 +60,8 @@ Adds a Code
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -108,8 +110,8 @@ Adds a CodeSet
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -156,8 +158,8 @@ Adds a component
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -206,8 +208,8 @@ Adds a datatype
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -254,8 +256,8 @@ Adds a field
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -302,8 +304,8 @@ Adds a group
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -352,8 +354,8 @@ Adds a message scenario
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -402,8 +404,8 @@ Adds an Orchestra repository
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -448,8 +450,8 @@ deletes a single Code based on the ID supplied
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -496,8 +498,8 @@ deletes a single CodeSet based on the ID supplied
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -542,8 +544,8 @@ deletes a single component based on the ID supplied
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -588,8 +590,8 @@ deletes a single datatype based on the name supplied
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -634,8 +636,8 @@ deletes a single field based on the ID supplied
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -680,8 +682,8 @@ deletes a single group based on the ID supplied
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -726,8 +728,8 @@ deletes a single message scenario based on the ID supplied
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -772,8 +774,8 @@ deletes a single Orchestra repository based on the ID supplied
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -818,8 +820,8 @@ Support XML or JSON serialization (to-do)
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -863,8 +865,8 @@ Returns a single Code, if found
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -912,8 +914,8 @@ Returns a single CodeSet, if found
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -959,8 +961,8 @@ Returns a single component, if found
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -1006,8 +1008,8 @@ Returns a single datatype, if found
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -1053,8 +1055,8 @@ Returns a single field, if found
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -1100,8 +1102,8 @@ Returns a single group, if found
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -1147,8 +1149,8 @@ Returns a single message scenario, if found
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -1194,8 +1196,8 @@ Returns a single Orchestra repository metadata, if found
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -1241,8 +1243,8 @@ By passing in the appropriate options, you can search for CodeSets
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -1294,8 +1296,8 @@ By passing in the appropriate options, you can search for Codes
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -1349,8 +1351,8 @@ By passing in the appropriate options, you can search for components
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -1402,8 +1404,8 @@ By passing in the appropriate options, you can search for datatypes
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -1455,8 +1457,8 @@ By passing in the appropriate options, you can search for fields
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -1508,8 +1510,8 @@ By passing in the appropriate options, you can search for groups
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -1561,8 +1563,8 @@ By passing in the appropriate options, you can search for messages
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -1614,8 +1616,8 @@ By passing in the appropriate options, you can search for Orchestra repositories
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -1661,8 +1663,8 @@ Updates a single Code, if found (idempotent)
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -1711,8 +1713,8 @@ Updates a single CodeSet, if found (idempotent)
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -1759,8 +1761,8 @@ Updates a single component, if found (idempotent)
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -1807,8 +1809,8 @@ Updates a single datatype, if found (idempotent)
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -1855,8 +1857,8 @@ Updates a single field, if found (idempotent)
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -1903,8 +1905,8 @@ Updates a single group, if found (idempotent)
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -1951,8 +1953,8 @@ Updates a single message scenario, if found (idempotent)
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -1999,8 +2001,8 @@ Updates an Orchestra repository, if found (idempotent)
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.RepositoryApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
 
 
 RepositoryApi apiInstance = new RepositoryApi();
@@ -2034,5 +2036,97 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="uploadRepositoryById"></a>
+# **uploadRepositoryById**
+> uploadRepositoryById(reposName, version, upfile)
+
+Uploads a file.
+
+### Example
+```java
+// Import classes:
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
+
+
+RepositoryApi apiInstance = new RepositoryApi();
+String reposName = "reposName_example"; // String | name of Orchestra repository to update
+String version = "version_example"; // String | version of Orchestra repository to update
+File upfile = new File("/path/to/file.txt"); // File | The file to upload.
+try {
+    apiInstance.uploadRepositoryById(reposName, version, upfile);
+} catch (ApiException e) {
+    System.err.println("Exception when calling RepositoryApi#uploadRepositoryById");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **reposName** | **String**| name of Orchestra repository to update |
+ **version** | **String**| version of Orchestra repository to update |
+ **upfile** | **File**| The file to upload. | [optional]
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
+ - **Accept**: application/json
+
+<a name="uploadRepositoryForUpdateById"></a>
+# **uploadRepositoryForUpdateById**
+> uploadRepositoryForUpdateById(reposName, version, upfile)
+
+Uploads an updated file.
+
+### Example
+```java
+// Import classes:
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.RepositoryApi;
+
+
+RepositoryApi apiInstance = new RepositoryApi();
+String reposName = "reposName_example"; // String | name of Orchestra repository to store
+String version = "version_example"; // String | version of Orchestra repository to store
+File upfile = new File("/path/to/file.txt"); // File | The file to upload.
+try {
+    apiInstance.uploadRepositoryForUpdateById(reposName, version, upfile);
+} catch (ApiException e) {
+    System.err.println("Exception when calling RepositoryApi#uploadRepositoryForUpdateById");
+    e.printStackTrace();
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **reposName** | **String**| name of Orchestra repository to store |
+ **version** | **String**| version of Orchestra repository to store |
+ **upfile** | **File**| The file to upload. | [optional]
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
  - **Accept**: application/json
 

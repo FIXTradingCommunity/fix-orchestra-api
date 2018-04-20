@@ -1,15 +1,13 @@
 package io.fixprotocol.orchestra.client.model;
 
 import java.util.Objects;
-import io.fixprotocol.orchestra.client.model.Annotation;
-import io.fixprotocol.orchestra.client.model.ElementRef;
-import io.fixprotocol.orchestra.client.model.EntityAttributes;
+
 import io.fixprotocol.orchestra.client.model.ObjectId;
 
 /**
  * FieldRef
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-18T14:22:43.321Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-20T19:56:10.305Z")
 public class FieldRef extends ElementRef {
 
   @Override

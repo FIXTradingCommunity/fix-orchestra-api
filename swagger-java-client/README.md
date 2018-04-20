@@ -58,10 +58,10 @@ Please follow the [installation](#installation) instruction and execute the foll
 
 ```java
 
-import io.fixprotocol.orchestra.client.*;
-import io.fixprotocol.orchestra.client.auth.*;
+import io.fixprotocol.orchestra.*;
+import io.fixprotocol.orchestra.auth.*;
 import io.fixprotocol.orchestra.client.model.*;
-import io.fixprotocol.orchestra.client.api.DocumentationApi;
+import io.fixprotocol.orchestra.client.DocumentationApi;
 
 import java.io.File;
 import java.util.*;
@@ -139,6 +139,8 @@ Class | Method | HTTP request | Description
 *RepositoryApi* | [**updateGroupById**](docs/RepositoryApi.md#updateGroupById) | **PUT** /repositories/{repos-name}/{version}/groups/{id} | Updates a single group, if found (idempotent)
 *RepositoryApi* | [**updateMessageById**](docs/RepositoryApi.md#updateMessageById) | **PUT** /repositories/{repos-name}/{version}/messages/{id} | Updates a single message scenario, if found (idempotent)
 *RepositoryApi* | [**updateRepositoryById**](docs/RepositoryApi.md#updateRepositoryById) | **PUT** /repositories/{repos-name}/{version} | Updates an Orchestra repository, if found (idempotent)
+*RepositoryApi* | [**uploadRepositoryById**](docs/RepositoryApi.md#uploadRepositoryById) | **POST** /repositories/{repos-name}/{version}/file | Uploads a file.
+*RepositoryApi* | [**uploadRepositoryForUpdateById**](docs/RepositoryApi.md#uploadRepositoryForUpdateById) | **PUT** /repositories/{repos-name}/{version}/file | Uploads an updated file.
 *WorkflowApi* | [**addActor**](docs/WorkflowApi.md#addActor) | **POST** /repositories/{repos-name}/{version}/actors | adds an Actor
 *WorkflowApi* | [**addFlow**](docs/WorkflowApi.md#addFlow) | **POST** /repositories/{repos-name}/{version}/flows | adds a Flow
 *WorkflowApi* | [**addMessageResponse**](docs/WorkflowApi.md#addMessageResponse) | **POST** /repositories/{repos-name}/{version}/messages/{id}/responses | adds a response to a message scenario

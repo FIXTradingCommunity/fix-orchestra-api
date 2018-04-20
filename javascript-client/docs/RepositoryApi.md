@@ -45,6 +45,8 @@ Method | HTTP request | Description
 [**updateGroupById**](RepositoryApi.md#updateGroupById) | **PUT** /repositories/{repos-name}/{version}/groups/{id} | Updates a single group, if found (idempotent)
 [**updateMessageById**](RepositoryApi.md#updateMessageById) | **PUT** /repositories/{repos-name}/{version}/messages/{id} | Updates a single message scenario, if found (idempotent)
 [**updateRepositoryById**](RepositoryApi.md#updateRepositoryById) | **PUT** /repositories/{repos-name}/{version} | Updates an Orchestra repository, if found (idempotent)
+[**uploadRepositoryById**](RepositoryApi.md#uploadRepositoryById) | **POST** /repositories/{repos-name}/{version}/file | Uploads a file.
+[**uploadRepositoryForUpdateById**](RepositoryApi.md#uploadRepositoryForUpdateById) | **PUT** /repositories/{repos-name}/{version}/file | Uploads an updated file.
 
 
 <a name="addCode"></a>
@@ -2162,5 +2164,105 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: application/json
+
+<a name="uploadRepositoryById"></a>
+# **uploadRepositoryById**
+> uploadRepositoryById(reposName, version, opts)
+
+Uploads a file.
+
+### Example
+```javascript
+import OrchestraApi from 'orchestra_api';
+
+let apiInstance = new OrchestraApi.RepositoryApi();
+
+let reposName = "reposName_example"; // String | name of Orchestra repository to update
+
+let version = "version_example"; // String | version of Orchestra repository to update
+
+let opts = { 
+  'upfile': "/path/to/file.txt" // File | The file to upload.
+};
+
+apiInstance.uploadRepositoryById(reposName, version, opts, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+});
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **reposName** | **String**| name of Orchestra repository to update | 
+ **version** | **String**| version of Orchestra repository to update | 
+ **upfile** | **File**| The file to upload. | [optional] 
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
+ - **Accept**: application/json
+
+<a name="uploadRepositoryForUpdateById"></a>
+# **uploadRepositoryForUpdateById**
+> uploadRepositoryForUpdateById(reposName, version, opts)
+
+Uploads an updated file.
+
+### Example
+```javascript
+import OrchestraApi from 'orchestra_api';
+
+let apiInstance = new OrchestraApi.RepositoryApi();
+
+let reposName = "reposName_example"; // String | name of Orchestra repository to store
+
+let version = "version_example"; // String | version of Orchestra repository to store
+
+let opts = { 
+  'upfile': "/path/to/file.txt" // File | The file to upload.
+};
+
+apiInstance.uploadRepositoryForUpdateById(reposName, version, opts, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+});
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **reposName** | **String**| name of Orchestra repository to store | 
+ **version** | **String**| version of Orchestra repository to store | 
+ **upfile** | **File**| The file to upload. | [optional] 
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: multipart/form-data
  - **Accept**: application/json
 

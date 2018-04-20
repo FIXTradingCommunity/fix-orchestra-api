@@ -1,6 +1,6 @@
 {
   "name": "orchestra_api",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "API_to_edit_FIX_Orchestra__machine_readable_rules_of_engagement_specification_version_1_0_RC3",
   "license": "Apache 2.0",
   "main": "src/index.js",

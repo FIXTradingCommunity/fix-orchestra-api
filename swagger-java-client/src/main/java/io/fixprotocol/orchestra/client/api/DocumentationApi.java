@@ -1,21 +1,19 @@
 package io.fixprotocol.orchestra.client.api;
 
-import io.fixprotocol.orchestra.client.ApiException;
-import io.fixprotocol.orchestra.client.ApiClient;
-import io.fixprotocol.orchestra.client.Configuration;
-import io.fixprotocol.orchestra.client.Pair;
-
-import javax.ws.rs.core.GenericType;
-
-import io.fixprotocol.orchestra.client.model.Annotation;
-import io.fixprotocol.orchestra.client.model.ErrorModel;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-18T14:22:43.321Z")
+import javax.ws.rs.core.GenericType;
+
+import io.fixprotocol.orchestra.client.ApiClient;
+import io.fixprotocol.orchestra.client.ApiException;
+import io.fixprotocol.orchestra.client.Configuration;
+import io.fixprotocol.orchestra.client.Pair;
+import io.fixprotocol.orchestra.client.model.Annotation;
+
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-20T19:56:10.305Z")
 public class DocumentationApi {
   private ApiClient apiClient;
 

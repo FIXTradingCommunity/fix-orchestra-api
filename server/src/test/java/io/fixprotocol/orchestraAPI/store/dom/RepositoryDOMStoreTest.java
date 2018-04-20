@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -549,7 +550,7 @@ public class RepositoryDOMStoreTest {
       }
 
       try {
-        store.createRepositoryFromFile(file);
+        store.createRepositoryFromFile(new FileInputStream(file));
         fail("Expected DuplicateKeyException");
       } catch (DuplicateKeyException e) {
 

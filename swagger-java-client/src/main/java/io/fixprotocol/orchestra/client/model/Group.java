@@ -4,9 +4,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import io.fixprotocol.orchestra.client.model.Annotation;
-import io.fixprotocol.orchestra.client.model.Component;
-import io.fixprotocol.orchestra.client.model.EntityAttributes;
+
 import io.fixprotocol.orchestra.client.model.GroupProperties;
 import io.fixprotocol.orchestra.client.model.ObjectId;
 import io.fixprotocol.orchestra.client.model.Structure;
@@ -16,7 +14,7 @@ import io.swagger.annotations.ApiModelProperty;
 /**
  * Group
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-18T14:22:43.321Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-20T19:56:10.305Z")
 public class Group extends Component {
   @JsonProperty("groupProperties")
   private GroupProperties groupProperties = null;

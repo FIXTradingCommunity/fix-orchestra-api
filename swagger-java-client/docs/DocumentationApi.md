@@ -21,8 +21,8 @@ Adds an Annotation
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.DocumentationApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.DocumentationApi;
 
 
 DocumentationApi apiInstance = new DocumentationApi();
@@ -73,8 +73,8 @@ deletes a single Annotation
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.DocumentationApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.DocumentationApi;
 
 
 DocumentationApi apiInstance = new DocumentationApi();
@@ -125,8 +125,8 @@ By passing in the appropriate options, you can search for annotations
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.DocumentationApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.DocumentationApi;
 
 
 DocumentationApi apiInstance = new DocumentationApi();
@@ -182,8 +182,8 @@ Updates a single Annotation, if found (idempotent)
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.DocumentationApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.DocumentationApi;
 
 
 DocumentationApi apiInstance = new DocumentationApi();

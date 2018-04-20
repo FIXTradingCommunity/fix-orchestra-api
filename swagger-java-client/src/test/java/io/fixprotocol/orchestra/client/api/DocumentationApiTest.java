@@ -1,15 +1,10 @@
 package io.fixprotocol.orchestra.client.api;
 
+import org.junit.Ignore;
+import org.junit.Test;
+
 import io.fixprotocol.orchestra.client.ApiException;
 import io.fixprotocol.orchestra.client.model.Annotation;
-import io.fixprotocol.orchestra.client.model.ErrorModel;
-import org.junit.Test;
-import org.junit.Ignore;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * API tests for DocumentationApi

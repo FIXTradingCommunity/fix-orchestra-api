@@ -1,6 +1,8 @@
 package io.fixprotocol.orchestraAPI.server;
 
+
 import java.io.File;
+import java.io.InputStream;
 
 import javax.servlet.ServletConfig;
 import javax.ws.rs.Consumes;
@@ -15,6 +17,9 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import io.fixprotocol.orchestra.api.NotFoundException;
 import io.fixprotocol.orchestra.api.RepositoriesApiService;
@@ -37,7 +42,7 @@ import io.swagger.annotations.ApiParam;
 @Consumes({ "application/json" })
 @Produces({ "application/json" })
 @io.swagger.annotations.Api(description = "the repositories API")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2018-04-18T14:21:53.325Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2018-04-20T16:19:31.788Z")
 public class RepositoriesApi  {
    private final RepositoriesApiService delegate;
 
@@ -1188,5 +1193,43 @@ public class RepositoriesApi  {
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
         return delegate.updateStateMachine(reposName,version,name,smName,stateMachine,securityContext);
+    }
+    @POST
+    @Path("/{repos-name}/{version}/file")
+    @Consumes({ "multipart/form-data" })
+    @Produces({ "application/json" })
+    @io.swagger.annotations.ApiOperation(value = "Uploads a file.", notes = "", response = Void.class, tags={ "repository", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 201, message = "item created", response = Void.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 400, message = "invalid input, object invalid", response = Void.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 409, message = "an existing item already exists", response = Void.class) })
+    public Response uploadRepositoryById(@ApiParam(value = "name of Orchestra repository to update",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository to update",required=true) @PathParam("version") String version
+,
+            @FormDataParam("upfile") InputStream upfileInputStream,
+            @FormDataParam("upfile") FormDataContentDisposition upfileDetail
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.uploadRepositoryById(reposName,version,upfileInputStream, upfileDetail,securityContext);
+    }
+    @PUT
+    @Path("/{repos-name}/{version}/file")
+    @Consumes({ "multipart/form-data" })
+    @Produces({ "application/json" })
+    @io.swagger.annotations.ApiOperation(value = "Uploads an updated file.", notes = "", response = Void.class, tags={ "repository", })
+    @io.swagger.annotations.ApiResponses(value = { 
+        @io.swagger.annotations.ApiResponse(code = 204, message = "Repository updated", response = Void.class),
+        
+        @io.swagger.annotations.ApiResponse(code = 200, message = "unexpected error", response = ErrorModel.class) })
+    public Response uploadRepositoryForUpdateById(@ApiParam(value = "name of Orchestra repository to store",required=true) @PathParam("repos-name") String reposName
+,@ApiParam(value = "version of Orchestra repository to store",required=true) @PathParam("version") String version
+,
+            @FormDataParam("upfile") InputStream upfileInputStream,
+            @FormDataParam("upfile") FormDataContentDisposition upfileDetail
+,@Context SecurityContext securityContext)
+    throws NotFoundException {
+        return delegate.uploadRepositoryForUpdateById(reposName,version,upfileInputStream, upfileDetail,securityContext);
     }
 }

@@ -1,23 +1,20 @@
 package io.fixprotocol.orchestra.client.api;
 
+import java.io.File;
+import java.util.List;
+
+import org.junit.Ignore;
+import org.junit.Test;
+
 import io.fixprotocol.orchestra.client.ApiException;
 import io.fixprotocol.orchestra.client.model.Code;
 import io.fixprotocol.orchestra.client.model.CodeSet;
 import io.fixprotocol.orchestra.client.model.Component;
 import io.fixprotocol.orchestra.client.model.Datatype;
-import io.fixprotocol.orchestra.client.model.ErrorModel;
 import io.fixprotocol.orchestra.client.model.Field;
-import java.io.File;
 import io.fixprotocol.orchestra.client.model.Group;
 import io.fixprotocol.orchestra.client.model.Message;
 import io.fixprotocol.orchestra.client.model.Repository;
-import org.junit.Test;
-import org.junit.Ignore;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * API tests for RepositoryApi
@@ -788,6 +785,42 @@ public class RepositoryApiTest {
         String version = null;
         Repository repository = null;
         api.updateRepositoryById(reposName, version, repository);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * Uploads a file.
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void uploadRepositoryByIdTest() throws ApiException {
+        String reposName = null;
+        String version = null;
+        File upfile = null;
+        api.uploadRepositoryById(reposName, version, upfile);
+
+        // TODO: test validations
+    }
+    
+    /**
+     * Uploads an updated file.
+     *
+     * 
+     *
+     * @throws ApiException
+     *          if the Api call fails
+     */
+    @Test
+    public void uploadRepositoryForUpdateByIdTest() throws ApiException {
+        String reposName = null;
+        String version = null;
+        File upfile = null;
+        api.uploadRepositoryForUpdateById(reposName, version, upfile);
 
         // TODO: test validations
     }

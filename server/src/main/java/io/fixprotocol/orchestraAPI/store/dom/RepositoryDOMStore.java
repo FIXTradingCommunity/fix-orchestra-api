@@ -2,6 +2,7 @@ package io.fixprotocol.orchestraAPI.store.dom;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
@@ -98,7 +99,8 @@ public class RepositoryDOMStore implements RepositoryStore {
       }
       if (version == null) {
         return other.version == null;
-      } else return version.equals(other.version);
+      } else
+        return version.equals(other.version);
     }
 
     @Override
@@ -276,8 +278,8 @@ public class RepositoryDOMStore implements RepositoryStore {
 
         List<MessageType> messages2 = getMessageList(repository);
 
-        Optional<MessageType> optMessage2 =
-            messages2.stream().filter(m -> Integer.parseInt(parentId) == m.getId().intValue()).findFirst();
+        Optional<MessageType> optMessage2 = messages2.stream()
+            .filter(m -> Integer.parseInt(parentId) == m.getId().intValue()).findFirst();
 
         if (optMessage2.isPresent()) {
           List<ResponseType> responses = getResponseList(optMessage2.get());
@@ -286,10 +288,12 @@ public class RepositoryDOMStore implements RepositoryStore {
           if (optResponse.isPresent()) {
             optResponse.get().setAnnotation(OrchestraAPItoDOM.AnnotationToDOM(annotation));
           } else {
-            throw new ResourceNotFoundException(String.format("Message response %s not found", elementId));
+            throw new ResourceNotFoundException(
+                String.format("Message response %s not found", elementId));
           }
         } else {
-          throw new ResourceNotFoundException(String.format("Message with ID=%s not found", parentId));
+          throw new ResourceNotFoundException(
+              String.format("Message with ID=%s not found", parentId));
         }
         break;
       case stateMachine:
@@ -299,13 +303,14 @@ public class RepositoryDOMStore implements RepositoryStore {
 
         if (optActor2.isPresent()) {
           List<Object> elements = optActor2.get().getFieldOrFieldRefOrComponent();
-          Optional<StateMachineType> optStateMachine =
-              elements.stream().filter(o -> o instanceof StateMachineType)
-                  .map(o -> (StateMachineType) o).filter(sm -> elementId.equals(sm.getName())).findFirst();
+          Optional<StateMachineType> optStateMachine = elements.stream()
+              .filter(o -> o instanceof StateMachineType).map(o -> (StateMachineType) o)
+              .filter(sm -> elementId.equals(sm.getName())).findFirst();
           if (optStateMachine.isPresent()) {
             optStateMachine.get().setAnnotation(OrchestraAPItoDOM.AnnotationToDOM(annotation));
           } else {
-            throw new ResourceNotFoundException(String.format("StateMachine %s not found", elementId));
+            throw new ResourceNotFoundException(
+                String.format("StateMachine %s not found", elementId));
           }
 
         } else {
@@ -568,10 +573,10 @@ public class RepositoryDOMStore implements RepositoryStore {
   }
 
   @Override
-  public void createRepositoryFromFile(File file) throws RepositoryStoreException {
+  public Metadata createRepositoryFromFile(InputStream stream) throws RepositoryStoreException {
     try {
-      Objects.requireNonNull(file, "File missing");
-      Repository repository = unMarshal(file);
+      Objects.requireNonNull(stream, "File missing");
+      Repository repository = unMarshal(stream);
       final RepositoryKey key = new RepositoryKey(repository.getName(), repository.getVersion());
       Repository exists = repositories.get(key);
       if (exists != null) {
@@ -580,6 +585,8 @@ public class RepositoryDOMStore implements RepositoryStore {
                 repository.getVersion()));
       }
       repositories.putIfAbsent(key, repository);
+      final Repository repository2 = repositories.get(key);
+      return OrchestraAPItoDOM.DOMToMetadata(repository2.getMetadata());
     } catch (JAXBException e) {
       throw new RepositoryStoreException("Unable to read or parse repository file", e);
     }
@@ -785,8 +792,8 @@ public class RepositoryDOMStore implements RepositoryStore {
 
         List<MessageType> messages2 = getMessageList(repository);
 
-        Optional<MessageType> optMessage2 =
-            messages2.stream().filter(m -> Integer.parseInt(parentId) == m.getId().intValue()).findFirst();
+        Optional<MessageType> optMessage2 = messages2.stream()
+            .filter(m -> Integer.parseInt(parentId) == m.getId().intValue()).findFirst();
 
         if (optMessage2.isPresent()) {
           List<ResponseType> responses = getResponseList(optMessage2.get());
@@ -795,10 +802,12 @@ public class RepositoryDOMStore implements RepositoryStore {
           if (optResponse.isPresent()) {
             optResponse.get().setAnnotation(null);
           } else {
-            throw new ResourceNotFoundException(String.format("Message response %s not found", elementId));
+            throw new ResourceNotFoundException(
+                String.format("Message response %s not found", elementId));
           }
         } else {
-          throw new ResourceNotFoundException(String.format("Message with ID=%s not found", parentId));
+          throw new ResourceNotFoundException(
+              String.format("Message with ID=%s not found", parentId));
         }
         break;
       case stateMachine:
@@ -808,13 +817,14 @@ public class RepositoryDOMStore implements RepositoryStore {
 
         if (optActor2.isPresent()) {
           List<Object> elements = optActor2.get().getFieldOrFieldRefOrComponent();
-          Optional<StateMachineType> optStateMachine =
-              elements.stream().filter(o -> o instanceof StateMachineType)
-                  .map(o -> (StateMachineType) o).filter(sm -> elementId.equals(sm.getName())).findFirst();
+          Optional<StateMachineType> optStateMachine = elements.stream()
+              .filter(o -> o instanceof StateMachineType).map(o -> (StateMachineType) o)
+              .filter(sm -> elementId.equals(sm.getName())).findFirst();
           if (optStateMachine.isPresent()) {
             optStateMachine.get().setAnnotation(null);
           } else {
-            throw new ResourceNotFoundException(String.format("StateMachine %s not found", elementId));
+            throw new ResourceNotFoundException(
+                String.format("StateMachine %s not found", elementId));
           }
 
         } else {
@@ -1154,9 +1164,10 @@ public class RepositoryDOMStore implements RepositoryStore {
           String.format("Repository with name=%s version=%s not found", reposName, version));
     }
 
-    Predicate<Documentation> documentationPredicate = documentationSearch != null ? documentationSearch : t -> true;
+    Predicate<Documentation> documentationPredicate =
+        documentationSearch != null ? documentationSearch : t -> true;
     Predicate<Appinfo> appInfoPredicate = appInfoSearch != null ? appInfoSearch : t -> true;
-    
+
     Annotation annotation = null;
     switch (elementType) {
       case actor:
@@ -1328,8 +1339,7 @@ public class RepositoryDOMStore implements RepositoryStore {
       throw new ResourceNotFoundException("Annotation not found");
     }
     Annotation filtered = new Annotation();
-    annotation.getAppinfo().stream().filter(appInfoPredicate)
-        .forEach(filtered::addAppinfoItem);
+    annotation.getAppinfo().stream().filter(appInfoPredicate).forEach(filtered::addAppinfoItem);
     annotation.getDocumentation().stream().filter(documentationPredicate)
         .forEach(filtered::addDocumentationItem);
     return filtered;
@@ -1883,7 +1893,8 @@ public class RepositoryDOMStore implements RepositoryStore {
 
   @Override
   public void updateAnnotation(String reposName, String version, String elementId,
-      ElementType elementType, String parentId, Annotation annotation) throws RepositoryStoreException {
+      ElementType elementType, String parentId, Annotation annotation)
+      throws RepositoryStoreException {
     Objects.requireNonNull(reposName, "Repository name missing");
     Objects.requireNonNull(version, "Repository version missing");
     Objects.requireNonNull(elementType, "Element type missing");
@@ -2018,8 +2029,8 @@ public class RepositoryDOMStore implements RepositoryStore {
 
         List<MessageType> messages2 = getMessageList(repository);
 
-        Optional<MessageType> optMessage2 =
-            messages2.stream().filter(m -> Integer.parseInt(parentId) == m.getId().intValue()).findFirst();
+        Optional<MessageType> optMessage2 = messages2.stream()
+            .filter(m -> Integer.parseInt(parentId) == m.getId().intValue()).findFirst();
 
         if (optMessage2.isPresent()) {
           List<ResponseType> responses = getResponseList(optMessage2.get());
@@ -2028,10 +2039,12 @@ public class RepositoryDOMStore implements RepositoryStore {
           if (optResponse.isPresent()) {
             optResponse.get().setAnnotation(OrchestraAPItoDOM.AnnotationToDOM(annotation));
           } else {
-            throw new ResourceNotFoundException(String.format("Message response %s not found", elementId));
+            throw new ResourceNotFoundException(
+                String.format("Message response %s not found", elementId));
           }
         } else {
-          throw new ResourceNotFoundException(String.format("Message with ID=%s not found", parentId));
+          throw new ResourceNotFoundException(
+              String.format("Message with ID=%s not found", parentId));
         }
         break;
       case stateMachine:
@@ -2041,13 +2054,14 @@ public class RepositoryDOMStore implements RepositoryStore {
 
         if (optActor2.isPresent()) {
           List<Object> elements = optActor2.get().getFieldOrFieldRefOrComponent();
-          Optional<StateMachineType> optStateMachine =
-              elements.stream().filter(o -> o instanceof StateMachineType)
-                  .map(o -> (StateMachineType) o).filter(sm -> elementId.equals(sm.getName())).findFirst();
+          Optional<StateMachineType> optStateMachine = elements.stream()
+              .filter(o -> o instanceof StateMachineType).map(o -> (StateMachineType) o)
+              .filter(sm -> elementId.equals(sm.getName())).findFirst();
           if (optStateMachine.isPresent()) {
             optStateMachine.get().setAnnotation(OrchestraAPItoDOM.AnnotationToDOM(annotation));
           } else {
-            throw new ResourceNotFoundException(String.format("StateMachine %s not found", elementId));
+            throw new ResourceNotFoundException(
+                String.format("StateMachine %s not found", elementId));
           }
 
         } else {
@@ -2318,6 +2332,25 @@ public class RepositoryDOMStore implements RepositoryStore {
   }
 
   @Override
+  public void updateRepositoryFromFile(InputStream stream)
+      throws ResourceNotFoundException, RepositoryStoreException {
+    Objects.requireNonNull(stream, "File missing");
+    try {
+      Repository repository = unMarshal(stream);
+      final RepositoryKey key = new RepositoryKey(repository.getName(), repository.getVersion());
+      Repository exists = repositories.get(key);
+      if (exists == null) {
+        throw new ResourceNotFoundException(
+            String.format("Repository not found with name=%s version=%s", repository.getName(),
+                repository.getVersion()));
+      }
+      repositories.put(key, repository);
+    } catch (JAXBException e) {
+      throw new RepositoryStoreException("Unable to read or parse repository file", e);
+    }
+  }
+
+  @Override
   public void updateRepositoryMetadata(String reposName, String version,
       io.fixprotocol.orchestra.model.Repository repository) throws RepositoryStoreException {
     Objects.requireNonNull(reposName, "Repository name missing");
@@ -2455,10 +2488,9 @@ public class RepositoryDOMStore implements RepositoryStore {
     return file;
   }
 
-  private Repository unMarshal(File file) throws JAXBException {
+  private Repository unMarshal(InputStream stream) throws JAXBException {
     JAXBContext jaxbContext = JAXBContext.newInstance(Repository.class);
     Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-    return (Repository) unmarshaller.unmarshal(file);
+    return (Repository) unmarshaller.unmarshal(stream);
   }
-
 }

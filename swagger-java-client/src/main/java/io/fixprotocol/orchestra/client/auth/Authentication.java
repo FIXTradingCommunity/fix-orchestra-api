@@ -2,10 +2,10 @@
 
 package io.fixprotocol.orchestra.client.auth;
 
-import io.fixprotocol.orchestra.client.Pair;
-
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
+
+import io.fixprotocol.orchestra.client.Pair;
 
 public interface Authentication {
     /**

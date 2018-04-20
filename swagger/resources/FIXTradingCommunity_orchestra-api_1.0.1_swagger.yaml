@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
   description: "API to edit FIX Orchestra (machine readable rules of engagement) specification version 1.0 RC3"
-  version: "1.0.0"
+  version: "1.0.1"
   title: "Orchestra API"
   license:
     name: "Apache 2.0"
@@ -171,6 +171,71 @@ paths:
         404:
           description: "repository not found"
   /repositories/{repos-name}/{version}/file:
+    put:
+      tags:
+      - "repository"
+      summary: Uploads an updated file.
+      operationId: "uploadRepositoryForUpdateById"
+      consumes:
+       - multipart/form-data
+      x-mimetype: application/xml
+      parameters:
+      - in: formData
+        name: upfile
+        type: file
+        description: The file to upload.
+      - name: "repos-name"
+        in: "path"
+        description: "name of Orchestra repository to store"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version of Orchestra repository to store"
+        required: true
+        type: "string"
+      responses:
+        204:
+          description: "Repository updated"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/ErrorModel"
+    post:
+      tags:
+      - "repository"
+      summary: Uploads a file.
+      operationId: "uploadRepositoryById"
+      consumes:
+       - multipart/form-data
+      x-mimetype: application/xml
+      parameters:
+      - in: formData
+        name: upfile
+        type: file
+        description: The file to upload.
+      - name: "repos-name"
+        in: "path"
+        description: "name of Orchestra repository to update"
+        required: true
+        type: "string"
+      - name: "version"
+        in: "path"
+        description: "version of Orchestra repository to update"
+        required: true
+        type: "string"
+      responses:
+        201:
+          description: "item created"
+          headers:
+            Location:
+              type: "string"
+              format: "uri"
+              description: "URL of created resource"
+        400:
+          description: "invalid input, object invalid"
+        409:
+          description: "an existing item already exists"
     get:
       tags:
       - "repository"

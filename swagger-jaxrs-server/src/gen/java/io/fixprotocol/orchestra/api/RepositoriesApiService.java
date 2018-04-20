@@ -1,11 +1,5 @@
 package io.fixprotocol.orchestra.api;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.SecurityContext;
-
 import io.fixprotocol.orchestra.model.Actor;
 import io.fixprotocol.orchestra.model.Annotation;
 import io.fixprotocol.orchestra.model.Code;
@@ -18,7 +12,17 @@ import io.fixprotocol.orchestra.model.Group;
 import io.fixprotocol.orchestra.model.Message;
 import io.fixprotocol.orchestra.model.Repository;
 import io.fixprotocol.orchestra.model.StateMachine;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2018-04-18T14:50:34.102Z")
+
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+
+
+
+import java.io.InputStream;
+
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+import javax.validation.constraints.*;
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2018-04-20T16:19:31.788Z")
 public abstract class RepositoriesApiService {
     public abstract Response addActor(String reposName,String version,Actor actor,SecurityContext securityContext) throws NotFoundException;
     public abstract Response addAnnotation(String reposName,String version, @NotNull String elementId, @NotNull String elementType, String parentId,Annotation annotation,SecurityContext securityContext) throws NotFoundException;
@@ -85,4 +89,6 @@ public abstract class RepositoriesApiService {
     public abstract Response updateMessageResponse(String reposName,String version,Integer id,String name,io.fixprotocol.orchestra.model.Response response,SecurityContext securityContext) throws NotFoundException;
     public abstract Response updateRepositoryById(String reposName,String version,Repository repository,SecurityContext securityContext) throws NotFoundException;
     public abstract Response updateStateMachine(String reposName,String version,String name,String smName,StateMachine stateMachine,SecurityContext securityContext) throws NotFoundException;
+    public abstract Response uploadRepositoryById(String reposName,String version,InputStream upfileInputStream, FormDataContentDisposition upfileDetail,SecurityContext securityContext) throws NotFoundException;
+    public abstract Response uploadRepositoryForUpdateById(String reposName,String version,InputStream upfileInputStream, FormDataContentDisposition upfileDetail,SecurityContext securityContext) throws NotFoundException;
 }

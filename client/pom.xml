@@ -11,18 +11,10 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>io.fixprotocol.orchestra.api</groupId>
+			<groupId>io.fixprotocol.orchestra-api</groupId>
 			<artifactId>swagger-java-client</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		<!-- 
-		<dependency>
-			<groupId>io.fixprotocol.orchestra-api</groupId>
-			<artifactId>server</artifactId>
-			<version>${project.version}</version>
-			<scope>test</scope>
-		</dependency>
-		 -->
 	</dependencies>
 
 	<build>

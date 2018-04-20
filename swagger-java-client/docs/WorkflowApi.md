@@ -37,8 +37,8 @@ Adds an Actor
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.WorkflowApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.WorkflowApi;
 
 
 WorkflowApi apiInstance = new WorkflowApi();
@@ -85,8 +85,8 @@ Adds a Flow
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.WorkflowApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.WorkflowApi;
 
 
 WorkflowApi apiInstance = new WorkflowApi();
@@ -133,8 +133,8 @@ Adds a message scenario response
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.WorkflowApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.WorkflowApi;
 
 
 WorkflowApi apiInstance = new WorkflowApi();
@@ -183,8 +183,8 @@ Adds a StateMachine
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.WorkflowApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.WorkflowApi;
 
 
 WorkflowApi apiInstance = new WorkflowApi();
@@ -231,8 +231,8 @@ deletes a single Actor based on the name supplied
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.WorkflowApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.WorkflowApi;
 
 
 WorkflowApi apiInstance = new WorkflowApi();
@@ -277,8 +277,8 @@ deletes a single Flow based on the name supplied
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.WorkflowApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.WorkflowApi;
 
 
 WorkflowApi apiInstance = new WorkflowApi();
@@ -323,8 +323,8 @@ deletes a single response to a message scenario based on the ID supplied
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.WorkflowApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.WorkflowApi;
 
 
 WorkflowApi apiInstance = new WorkflowApi();
@@ -371,8 +371,8 @@ deletes a single StateMachine based on the name supplied
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.WorkflowApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.WorkflowApi;
 
 
 WorkflowApi apiInstance = new WorkflowApi();
@@ -419,8 +419,8 @@ Returns a single Actor, if found
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.WorkflowApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.WorkflowApi;
 
 
 WorkflowApi apiInstance = new WorkflowApi();
@@ -466,8 +466,8 @@ Returns a single Flow, if found
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.WorkflowApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.WorkflowApi;
 
 
 WorkflowApi apiInstance = new WorkflowApi();
@@ -513,8 +513,8 @@ Returns a single response to a message scenario, if found
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.WorkflowApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.WorkflowApi;
 
 
 WorkflowApi apiInstance = new WorkflowApi();
@@ -562,8 +562,8 @@ Returns a single StateMachine, if found
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.WorkflowApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.WorkflowApi;
 
 
 WorkflowApi apiInstance = new WorkflowApi();
@@ -613,8 +613,8 @@ By passing in the appropriate options, you can search for actors
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.WorkflowApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.WorkflowApi;
 
 
 WorkflowApi apiInstance = new WorkflowApi();
@@ -666,8 +666,8 @@ By passing in the appropriate options, you can search for flows
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.WorkflowApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.WorkflowApi;
 
 
 WorkflowApi apiInstance = new WorkflowApi();
@@ -719,8 +719,8 @@ By passing in the appropriate options, you can search for message responses
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.WorkflowApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.WorkflowApi;
 
 
 WorkflowApi apiInstance = new WorkflowApi();
@@ -774,8 +774,8 @@ By passing in the appropriate options, you can search for state machines
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.WorkflowApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.WorkflowApi;
 
 
 WorkflowApi apiInstance = new WorkflowApi();
@@ -827,8 +827,8 @@ Updates a single Actor, if found (idempotent)
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.WorkflowApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.WorkflowApi;
 
 
 WorkflowApi apiInstance = new WorkflowApi();
@@ -875,8 +875,8 @@ Updates a single Flow, if found (idempotent)
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.WorkflowApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.WorkflowApi;
 
 
 WorkflowApi apiInstance = new WorkflowApi();
@@ -923,8 +923,8 @@ Updates a single response to a message scenario, if found (idempotent)
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.WorkflowApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.WorkflowApi;
 
 
 WorkflowApi apiInstance = new WorkflowApi();
@@ -973,8 +973,8 @@ Updates a single StateMachine, if found (idempotent)
 ### Example
 ```java
 // Import classes:
-//import io.fixprotocol.orchestra.client.ApiException;
-//import io.fixprotocol.orchestra.client.api.WorkflowApi;
+//import io.fixprotocol.orchestra.ApiException;
+//import io.fixprotocol.orchestra.client.WorkflowApi;
 
 
 WorkflowApi apiInstance = new WorkflowApi();

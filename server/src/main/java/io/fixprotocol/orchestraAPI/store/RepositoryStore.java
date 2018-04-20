@@ -1,6 +1,7 @@
 package io.fixprotocol.orchestraAPI.store;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -43,7 +44,7 @@ public interface RepositoryStore {
    * @param version version of Orchestra repository (required)
    * @param elementId identifier of the element to annotate
    * @param elementType type of the element
-   * @param parentId  identifier of the parent of the element to annotate
+   * @param parentId identifier of the parent of the element to annotate
    * @param annotation to add to an element
    * @throws ResourceNotFoundException if the repository to update does not exist
    * @throws RepositoryStoreException if the store operation fails
@@ -171,11 +172,12 @@ public interface RepositoryStore {
   /**
    * Creates a new repository if it does not already exist.
    * 
-   * @param file contains a repository
+   * @param stream input stream contains a repository
+   * @return
    * @throws DuplicateKeyException if the repository already exists
    * @throws RepositoryStoreException if the store operation fails
    */
-  void createRepositoryFromFile(File file) throws RepositoryStoreException;
+  Metadata createRepositoryFromFile(InputStream stream) throws RepositoryStoreException;
 
   /**
    * Creates a new Actor in a repository
@@ -207,14 +209,13 @@ public interface RepositoryStore {
    * @param version version of Orchestra repository (required)
    * @param elementId identifier of the element to remove Annotation
    * @param elementType type of the element
-   * @param parentId  identifier of the parent of the element to annotate
+   * @param parentId identifier of the parent of the element to annotate
    * @throws ResourceNotFoundException if the repository or actor to delete does not exist
    * @throws RepositoryStoreException if the store operation fails
    * @throws IllegalArgumentException if elementType is not a supported type
    */
   void deleteAnnotation(String reposName, String version, String elementId, ElementType elementType,
-      String parentId)
-      throws RepositoryStoreException;
+      String parentId) throws RepositoryStoreException;
 
   /**
    * Deletes one Code if it exists
@@ -704,7 +705,7 @@ public interface RepositoryStore {
    * @param version version of Orchestra repository (required)
    * @param elementId identifier of the element to annotate
    * @param elementType type of the element
-   * @param parentId  identifier of the parent of the element to annotate
+   * @param parentId identifier of the parent of the element to annotate
    * @param annotation new value of Annotation
    * @throws ResourceNotFoundException if the repository or element to update does not exist
    * @throws RepositoryStoreException if the store operation fails
@@ -819,6 +820,16 @@ public interface RepositoryStore {
    */
   void updateMessageResponse(String reposName, String version, Integer id, String name,
       Response response) throws RepositoryStoreException;
+
+  /**
+   * Update an existing repository from an input stream
+   * 
+   * @param upfileInputStream input stream containing a repository
+   * @throws ResourceNotFoundException if the repository to update does not exist
+   * @throws RepositoryStoreException if the store operation fails
+   */
+  void updateRepositoryFromFile(InputStream upfileInputStream)
+      throws ResourceNotFoundException, RepositoryStoreException;
 
   /**
    * Update the metadata of an existing repository
