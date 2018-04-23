@@ -276,9 +276,13 @@ public final class OrchestraAPItoDOM {
       Documentation documentationDOM) {
     io.fixprotocol.orchestra.model.Documentation documentation =
         new io.fixprotocol.orchestra.model.Documentation();
-    documentation.setLangId(documentationDOM.getLangId());
-    documentation.setPurpose(documentationDOM.getPurpose());
-    documentation.setText(documentationDOM.getContent().get(0).toString());
+
+    final List<Object> content = documentationDOM.getContent();
+    if (!content.isEmpty()) {
+      documentation.setText(content.get(0).toString());
+      documentation.setLangId(documentationDOM.getLangId());
+      documentation.setPurpose(documentationDOM.getPurpose());
+    }
     return documentation;
   }
 
@@ -365,38 +369,41 @@ public final class OrchestraAPItoDOM {
     List<JAXBElement<SimpleLiteral>> literals = element.getAny();
     literals.forEach(l -> {
       String name = l.getName().getLocalPart();
-      String value = l.getValue().getContent().get(0);
-      switch (name) {
-        case "coverage":
-          metadata.setCoverage(value);
-          break;
-        case "creator":
-          metadata.setCreator(value);
-          break;
-        case "description":
-          metadata.setDescription(value);
-          break;
-        case "date":
-          try {
-            metadata.setDate(
-                dateFormat.parse(value).toInstant().atZone(ZoneId.of("UTC")).toLocalDate());
-          } catch (ParseException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-          }
-          break;
-        case "identifier":
-          metadata.setIdentifier(value);
-          break;
-        case "publisher":
-          metadata.setPublisher(value);
-          break;
-        case "subject":
-          metadata.setSubject(value);
-          break;
-        case "title":
-          metadata.setTitle(value);
-          break;
+      final List<String> content = l.getValue().getContent();
+      if (!content.isEmpty()) {
+        String value = content.get(0);
+        switch (name) {
+          case "coverage":
+            metadata.setCoverage(value);
+            break;
+          case "creator":
+            metadata.setCreator(value);
+            break;
+          case "description":
+            metadata.setDescription(value);
+            break;
+          case "date":
+            try {
+              metadata.setDate(
+                  dateFormat.parse(value).toInstant().atZone(ZoneId.of("UTC")).toLocalDate());
+            } catch (ParseException e) {
+              // TODO Auto-generated catch block
+              e.printStackTrace();
+            }
+            break;
+          case "identifier":
+            metadata.setIdentifier(value);
+            break;
+          case "publisher":
+            metadata.setPublisher(value);
+            break;
+          case "subject":
+            metadata.setSubject(value);
+            break;
+          case "title":
+            metadata.setTitle(value);
+            break;
+        }
       }
     });
     return metadata;

@@ -2676,4 +2676,17 @@ public class ClientTest {
     
     client.deleteRepository("FIX.4.4", "FIX.4.4");
   }
+  
+  @Test
+  public void uploadAndDownload2() throws ApiException {
+    File upfile = new File("FixRepository44.xml");
+    client.uploadRepositoryById("FIX50SP2", "1", upfile );
+    client.findRepositoryById("FIX.4.4", "FIX.4.4");
+    client.uploadRepositoryForUpdateById("FIX.4.4", "FIX.4.4", upfile);
+    client.findRepositoryById("FIX.4.4", "FIX.4.4");
+    File downFile = client.downloadRepository("FIX.4.4", "FIX.4.4");
+    System.out.println("Downloaded file: " + downFile.toString());
+    
+    client.deleteRepository("FIX.4.4", "FIX.4.4");
+  }
 }
