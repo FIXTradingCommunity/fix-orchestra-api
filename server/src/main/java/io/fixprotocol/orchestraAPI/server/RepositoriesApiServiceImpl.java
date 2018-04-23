@@ -895,12 +895,17 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   }
 
   /**
-   * Search string matches if contained within Group Message name, abbrName, scenario or category, case insensitive
+   * Search string matches if MsgType matches exactly OR contained within Message name, abbrName,
+   * scenario or category, case insensitive
    */
   @Override
   public Response searchMessages(String reposName, String version, String searchString,
       Integer skip, Integer limit, SecurityContext securityContext) throws NotFoundException {
     try {
+      Predicate<Message> predicateExact = searchString != null
+          ? m -> ServiceUtil.isExactMatch(searchString, new String[] {m.getMsgType()})
+          : t -> true;
+
       Predicate<Message> predicate = searchString != null
           ? m -> ServiceUtil
               .isMatch(
@@ -909,10 +914,16 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
                       m.getCategory()})
           : t -> true;
 
-      List<Message> filtered = repositoryStore.getMessages(reposName, version, predicate);
-      List<Message> range =
-          filtered.subList(skip != null ? skip : 0, limit != null ? limit : filtered.size());
-      return Response.ok().entity(range).build();
+      List<Message> exact = repositoryStore.getMessages(reposName, version, predicateExact);
+      if (!exact.isEmpty()) {
+        return Response.ok().entity(exact).build();
+      } else {
+        List<Message> filtered = repositoryStore.getMessages(reposName, version, predicate);
+        List<Message> range =
+            filtered.subList(skip != null ? skip : 0, limit != null ? limit : filtered.size());
+        return Response.ok().entity(range).build();
+      }
+
     } catch (RepositoryStoreException e) {
       logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();

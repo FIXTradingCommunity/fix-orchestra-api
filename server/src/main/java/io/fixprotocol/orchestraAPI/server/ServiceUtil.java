@@ -22,4 +22,23 @@ final class ServiceUtil {
     }
     return false;
   }
+  
+  /**
+   * Test match of search string one or more candidates. The match is exact for length and case sensitive
+   * @param searchString a string to match
+   * @param candidates an array of candidates to test for a match
+   * @return Returns {@code true} if at least one candidate matches
+   */
+  public static boolean isExactMatch(String searchString, String[] candidates) {
+    if (searchString != null && candidates != null && candidates.length > 0) {
+      for (String candidate : candidates) {
+        if (candidate != null) {
+          if (candidate.equals(searchString)) {
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
 }

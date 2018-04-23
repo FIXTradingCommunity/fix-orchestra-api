@@ -20,6 +20,7 @@ import io.fixprotocol.orchestra.model.CodeSet;
 import io.fixprotocol.orchestra.model.Component;
 import io.fixprotocol.orchestra.model.Documentation;
 import io.fixprotocol.orchestra.model.Field;
+import io.fixprotocol.orchestra.model.Message;
 import io.fixprotocol.orchestra.model.Structure;
 import io.fixprotocol.orchestra.model.Metadata;
 import io.fixprotocol.orchestra.model.Repository;
@@ -98,7 +99,24 @@ public class RepositoriesApiServiceImplTest {
     response = impl.searchFields("FIX.4.4", "FIX.4.4", "CommTyp", null, null, null);
     Object fields = response.getEntity();
     assertNotNull(fields);
-    assertTrue(((List<Field>)fields).size() == 1);
+    assertEquals(1, ((List<Field>)fields).size());
+    
+    response = impl.searchMessages("FIX.4.4", "FIX.4.4", null, null, null, null);
+    Object allMessages = response.getEntity();
+    assertNotNull(allMessages);
+    response = impl.searchMessages("FIX.4.4", "FIX.4.4", "SingleGeneralOrderHandling", null, null, null);
+    Object orderMessages = response.getEntity();
+    assertNotNull(orderMessages);
+    assertTrue(((List<Component>)allMessages).size() > ((List<Component>)orderMessages).size());
+    response = impl.searchMessages("FIX.4.4", "FIX.4.4", "neworder", null, null, null);
+    Object newOrderMessages = response.getEntity();
+    assertNotNull(newOrderMessages);
+    assertTrue(((List<Message>)newOrderMessages).size() >= 1);
+    // MsgType is an exact match only
+    response = impl.searchMessages("FIX.4.4", "FIX.4.4", "D", null, null, null);
+    Object theNewOrderMessages = response.getEntity();
+    assertNotNull(theNewOrderMessages);
+    assertEquals(1, ((List<Message>)theNewOrderMessages).size());
 
     impl.deleteRepository("FIX.4.4", "FIX.4.4", null);
   }
