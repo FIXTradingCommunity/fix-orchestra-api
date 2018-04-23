@@ -2,6 +2,7 @@ package io.fixprotocol.orchestraAPI.store.dom;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.File;
@@ -637,4 +638,5 @@ public class RepositoryDOMStoreTest {
     Validator validator = schema.newValidator();
     validator.validate(new StreamSource(xmlFile));
   }
+
 }

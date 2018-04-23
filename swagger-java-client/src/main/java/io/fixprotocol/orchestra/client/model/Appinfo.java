@@ -1,9 +1,9 @@
 package io.fixprotocol.orchestra.client.model;
 
 import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -11,7 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
  * Usage specific annotation, optionally with link to an external reference or standard
  */
 @ApiModel(description = "Usage specific annotation, optionally with link to an external reference or standard")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-20T19:56:10.305Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-23T17:52:38.213Z")
 public class Appinfo {
   @JsonProperty("text")
   private String text = null;

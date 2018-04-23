@@ -7,7 +7,7 @@ info:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
 host: "virtserver.swaggerhub.com"
-basePath: "/FIXTradingCommunity/orchestra-api/1.0.0"
+basePath: "/FIXTradingCommunity/orchestra-api/1.0.1"
 tags:
 - name: "repository"
   description: "Message structure operations"
@@ -32,7 +32,7 @@ paths:
       parameters:
       - name: "searchString"
         in: "query"
-        description: "pass an optional search string for looking up repositories"
+        description: "Pass an optional search string for looking up repositories. It may match on name or version."
         required: false
         type: "string"
       - name: "skip"
@@ -170,11 +170,11 @@ paths:
           description: "repository deleted"
         404:
           description: "repository not found"
-  /repositories/{repos-name}/{version}/file:
+  /repositories/file:
     put:
       tags:
       - "repository"
-      summary: Uploads an updated file.
+      summary: Uploads an updated file. Name and version are extracted from the file.
       operationId: "uploadRepositoryForUpdateById"
       consumes:
        - multipart/form-data
@@ -183,17 +183,7 @@ paths:
       - in: formData
         name: upfile
         type: file
-        description: The file to upload.
-      - name: "repos-name"
-        in: "path"
-        description: "name of Orchestra repository to store"
-        required: true
-        type: "string"
-      - name: "version"
-        in: "path"
-        description: "version of Orchestra repository to store"
-        required: true
-        type: "string"
+        description: An XML file to upload.
       responses:
         204:
           description: "Repository updated"
@@ -204,7 +194,7 @@ paths:
     post:
       tags:
       - "repository"
-      summary: Uploads a file.
+      summary: Uploads a file. Name and version are extracted from the file.
       operationId: "uploadRepositoryById"
       consumes:
        - multipart/form-data
@@ -213,7 +203,7 @@ paths:
       - in: formData
         name: upfile
         type: file
-        description: The file to upload.
+        description: An XML file to upload.
       - name: "repos-name"
         in: "path"
         description: "name of Orchestra repository to update"
@@ -236,11 +226,12 @@ paths:
           description: "invalid input, object invalid"
         409:
           description: "an existing item already exists"
+  /repositories/{repos-name}/{version}/file:          
     get:
       tags:
       - "repository"
-      summary: "Retreives a single Orchestra repository file, if found"
-      description: "Support XML or JSON serialization (to-do)"
+      summary: "Downloads a single Orchestra repository file, if found"
+      description: "Serializes to an XML file"
       operationId: "downloadRepositoryById"
       produces:
       - "application/xml"
@@ -284,7 +275,7 @@ paths:
         required: true         
       - name: "searchString"
         in: "query"
-        description: "pass an optional search string for looking up actors"
+        description: "Pass an optional search string for looking up actors. It may match on name or abbrName."
         required: false
         type: "string"
       - name: "skip"
@@ -661,7 +652,7 @@ paths:
         format: "int32"
       - name: "searchString"
         in: "query"
-        description: "pass an optional search string for looking up Codes"
+        description: "Pass an optional search string for looking up Codes. It may match on name or abbrName."
         required: false
         type: "string"
       - name: "skip"
@@ -1037,7 +1028,7 @@ paths:
         type: "string"
       - name: "searchString"
         in: "query"
-        description: "pass an optional search string for looking up components"
+        description: "Pass an optional search string for looking up components. It may match on name, abbrName, or category."
         required: false
         type: "string"
       - name: "skip"
@@ -1219,7 +1210,7 @@ paths:
         type: "string"
       - name: "searchString"
         in: "query"
-        description: "pass an optional search string for looking up datatypes"
+        description: "Pass an optional search string for looking up datatypes. It may match on name or basetype."
         required: false
         type: "string"
       - name: "skip"
@@ -1392,7 +1383,7 @@ paths:
         type: "string"
       - name: "searchString"
         in: "query"
-        description: "pass an optional search string for looking up fields"
+        description: "Pass an optional search string for looking up fields. It may match on name, abbrName, or category."
         required: false
         type: "string"
       - name: "skip"
@@ -1568,7 +1559,7 @@ paths:
         required: true         
       - name: "searchString"
         in: "query"
-        description: "pass an optional search string for looking up flows"
+        description: "Pass an optional search string for looking up flows. It may match on name, source, or destination."
         required: false
         type: "string"
       - name: "skip"
@@ -1741,7 +1732,7 @@ paths:
         type: "string"
       - name: "searchString"
         in: "query"
-        description: "pass an optional search string for looking up groups"
+        description: "Pass an optional search string for looking up groups. It may match on name, abbrName, or category."
         required: false
         type: "string"
       - name: "skip"
@@ -1923,7 +1914,7 @@ paths:
         type: "string"
       - name: "searchString"
         in: "query"
-        description: "pass an optional search string for looking up messages"
+        description: "Pass an optional search string for looking up messages. It may match on name, abbrName, scenario, or category."
         required: false
         type: "string"
       - name: "skip"

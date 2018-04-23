@@ -3,8 +3,10 @@ package io.fixprotocol.orchestra.client;
 import java.util.Map;
 import java.util.List;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-20T19:56:10.305Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-23T17:52:38.213Z")
 public class ApiException extends Exception {
+
+  private static final long serialVersionUID = -5357082844663295286L;
     private int code = 0;
     private Map<String, List<String>> responseHeaders = null;
     private String responseBody = null;

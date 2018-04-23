@@ -1,28 +1,11 @@
 package io.fixprotocol.orchestraAPI.server;
 
-
-import java.io.File;
-import java.io.InputStream;
-
-import javax.servlet.ServletConfig;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.SecurityContext;
-
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
-import org.glassfish.jersey.media.multipart.FormDataParam;
-
-import io.fixprotocol.orchestra.api.NotFoundException;
+import io.fixprotocol.orchestra.model.*;
 import io.fixprotocol.orchestra.api.RepositoriesApiService;
+
+import io.swagger.annotations.ApiParam;
+import io.swagger.jaxrs.*;
+
 import io.fixprotocol.orchestra.model.Actor;
 import io.fixprotocol.orchestra.model.Annotation;
 import io.fixprotocol.orchestra.model.Code;
@@ -31,18 +14,34 @@ import io.fixprotocol.orchestra.model.Component;
 import io.fixprotocol.orchestra.model.Datatype;
 import io.fixprotocol.orchestra.model.ErrorModel;
 import io.fixprotocol.orchestra.model.Field;
+import java.io.File;
 import io.fixprotocol.orchestra.model.Flow;
 import io.fixprotocol.orchestra.model.Group;
 import io.fixprotocol.orchestra.model.Message;
 import io.fixprotocol.orchestra.model.Repository;
 import io.fixprotocol.orchestra.model.StateMachine;
-import io.swagger.annotations.ApiParam;
+
+import java.util.Map;
+import java.util.List;
+import io.fixprotocol.orchestra.api.NotFoundException;
+
+import java.io.InputStream;
+
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+import org.glassfish.jersey.media.multipart.FormDataParam;
+
+import javax.servlet.ServletConfig;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+import javax.ws.rs.*;
+import javax.validation.constraints.*;
 
 @Path("/repositories")
 @Consumes({ "application/json" })
 @Produces({ "application/json" })
 @io.swagger.annotations.Api(description = "the repositories API")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2018-04-20T16:19:31.788Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2018-04-23T17:55:01.425Z")
 public class RepositoriesApi  {
    private final RepositoriesApiService delegate;
 
@@ -526,7 +525,7 @@ public class RepositoriesApi  {
     @Path("/{repos-name}/{version}/file")
     @Consumes({ "application/json" })
     @Produces({ "application/xml" })
-    @io.swagger.annotations.ApiOperation(value = "Retreives a single Orchestra repository file, if found", notes = "Support XML or JSON serialization (to-do)", response = File.class, tags={ "repository", })
+    @io.swagger.annotations.ApiOperation(value = "Downloads a single Orchestra repository file, if found", notes = "Serializes to an XML file", response = File.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 200, message = "repository file", response = File.class),
         
@@ -742,7 +741,7 @@ public class RepositoriesApi  {
         @io.swagger.annotations.ApiResponse(code = 400, message = "bad input parameter", response = Void.class) })
     public Response searchActors(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
 ,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
-,@ApiParam(value = "pass an optional search string for looking up actors") @QueryParam("searchString") String searchString
+,@ApiParam(value = "Pass an optional search string for looking up actors. It may match on name or abbrName.") @QueryParam("searchString") String searchString
 ,@ApiParam(value = "number of records to skip for pagination") @QueryParam("skip") Integer skip
 ,@ApiParam(value = "maximum number of records to return") @QueryParam("limit") Integer limit
 ,@Context SecurityContext securityContext)
@@ -800,7 +799,7 @@ public class RepositoriesApi  {
     public Response searchCodes(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
 ,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
 ,@ApiParam(value = "ID of CodeSet",required=true) @PathParam("codesetid") Integer codesetid
-,@ApiParam(value = "pass an optional search string for looking up Codes") @QueryParam("searchString") String searchString
+,@ApiParam(value = "Pass an optional search string for looking up Codes. It may match on name or abbrName.") @QueryParam("searchString") String searchString
 ,@ApiParam(value = "number of records to skip for pagination") @QueryParam("skip") Integer skip
 ,@ApiParam(value = "maximum number of records to return") @QueryParam("limit") Integer limit
 ,@Context SecurityContext securityContext)
@@ -818,7 +817,7 @@ public class RepositoriesApi  {
         @io.swagger.annotations.ApiResponse(code = 400, message = "bad input parameter", response = Void.class) })
     public Response searchComponents(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
 ,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
-,@ApiParam(value = "pass an optional search string for looking up components") @QueryParam("searchString") String searchString
+,@ApiParam(value = "Pass an optional search string for looking up components. It may match on name, abbrName, or category.") @QueryParam("searchString") String searchString
 ,@ApiParam(value = "number of records to skip for pagination") @QueryParam("skip") Integer skip
 ,@ApiParam(value = "maximum number of records to return") @QueryParam("limit") Integer limit
 ,@Context SecurityContext securityContext)
@@ -836,7 +835,7 @@ public class RepositoriesApi  {
         @io.swagger.annotations.ApiResponse(code = 400, message = "bad input parameter", response = Void.class) })
     public Response searchDatatypes(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
 ,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
-,@ApiParam(value = "pass an optional search string for looking up datatypes") @QueryParam("searchString") String searchString
+,@ApiParam(value = "Pass an optional search string for looking up datatypes. It may match on name or basetype.") @QueryParam("searchString") String searchString
 ,@ApiParam(value = "number of records to skip for pagination") @QueryParam("skip") Integer skip
 ,@ApiParam(value = "maximum number of records to return") @QueryParam("limit") Integer limit
 ,@Context SecurityContext securityContext)
@@ -854,7 +853,7 @@ public class RepositoriesApi  {
         @io.swagger.annotations.ApiResponse(code = 400, message = "bad input parameter", response = Void.class) })
     public Response searchFields(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
 ,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
-,@ApiParam(value = "pass an optional search string for looking up fields") @QueryParam("searchString") String searchString
+,@ApiParam(value = "Pass an optional search string for looking up fields. It may match on name, abbrName, or category.") @QueryParam("searchString") String searchString
 ,@ApiParam(value = "number of records to skip for pagination") @QueryParam("skip") Integer skip
 ,@ApiParam(value = "maximum number of records to return") @QueryParam("limit") Integer limit
 ,@Context SecurityContext securityContext)
@@ -872,7 +871,7 @@ public class RepositoriesApi  {
         @io.swagger.annotations.ApiResponse(code = 400, message = "bad input parameter", response = Void.class) })
     public Response searchFlows(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
 ,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
-,@ApiParam(value = "pass an optional search string for looking up flows") @QueryParam("searchString") String searchString
+,@ApiParam(value = "Pass an optional search string for looking up flows. It may match on name, source, or destination.") @QueryParam("searchString") String searchString
 ,@ApiParam(value = "number of records to skip for pagination") @QueryParam("skip") Integer skip
 ,@ApiParam(value = "maximum number of records to return") @QueryParam("limit") Integer limit
 ,@Context SecurityContext securityContext)
@@ -890,7 +889,7 @@ public class RepositoriesApi  {
         @io.swagger.annotations.ApiResponse(code = 400, message = "bad input parameter", response = Void.class) })
     public Response searchGroups(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
 ,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
-,@ApiParam(value = "pass an optional search string for looking up groups") @QueryParam("searchString") String searchString
+,@ApiParam(value = "Pass an optional search string for looking up groups. It may match on name, abbrName, or category.") @QueryParam("searchString") String searchString
 ,@ApiParam(value = "number of records to skip for pagination") @QueryParam("skip") Integer skip
 ,@ApiParam(value = "maximum number of records to return") @QueryParam("limit") Integer limit
 ,@Context SecurityContext securityContext)
@@ -927,7 +926,7 @@ public class RepositoriesApi  {
         @io.swagger.annotations.ApiResponse(code = 400, message = "bad input parameter", response = Void.class) })
     public Response searchMessages(@ApiParam(value = "name of Orchestra repository",required=true) @PathParam("repos-name") String reposName
 ,@ApiParam(value = "version of Orchestra repository",required=true) @PathParam("version") String version
-,@ApiParam(value = "pass an optional search string for looking up messages") @QueryParam("searchString") String searchString
+,@ApiParam(value = "Pass an optional search string for looking up messages. It may match on name, abbrName, scenario, or category.") @QueryParam("searchString") String searchString
 ,@ApiParam(value = "number of records to skip for pagination") @QueryParam("skip") Integer skip
 ,@ApiParam(value = "maximum number of records to return") @QueryParam("limit") Integer limit
 ,@Context SecurityContext securityContext)
@@ -943,7 +942,7 @@ public class RepositoriesApi  {
         @io.swagger.annotations.ApiResponse(code = 200, message = "search results matching criteria", response = Repository.class, responseContainer = "List"),
         
         @io.swagger.annotations.ApiResponse(code = 400, message = "bad input parameter", response = Void.class) })
-    public Response searchRepositories(@ApiParam(value = "pass an optional search string for looking up repositories") @QueryParam("searchString") String searchString
+    public Response searchRepositories(@ApiParam(value = "Pass an optional search string for looking up repositories. It may match on name or version.") @QueryParam("searchString") String searchString
 ,@ApiParam(value = "number of records to skip for pagination") @QueryParam("skip") Integer skip
 ,@ApiParam(value = "maximum number of records to return") @QueryParam("limit") Integer limit
 ,@Context SecurityContext securityContext)
@@ -1195,41 +1194,37 @@ public class RepositoriesApi  {
         return delegate.updateStateMachine(reposName,version,name,smName,stateMachine,securityContext);
     }
     @POST
-    @Path("/{repos-name}/{version}/file")
+    @Path("/file")
     @Consumes({ "multipart/form-data" })
     @Produces({ "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "Uploads a file.", notes = "", response = Void.class, tags={ "repository", })
+    @io.swagger.annotations.ApiOperation(value = "Uploads a file. Name and version are extracted from the file.", notes = "", response = Void.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 201, message = "item created", response = Void.class),
         
         @io.swagger.annotations.ApiResponse(code = 400, message = "invalid input, object invalid", response = Void.class),
         
         @io.swagger.annotations.ApiResponse(code = 409, message = "an existing item already exists", response = Void.class) })
-    public Response uploadRepositoryById(@ApiParam(value = "name of Orchestra repository to update",required=true) @PathParam("repos-name") String reposName
-,@ApiParam(value = "version of Orchestra repository to update",required=true) @PathParam("version") String version
-,
+    public Response uploadRepositoryById(
             @FormDataParam("upfile") InputStream upfileInputStream,
             @FormDataParam("upfile") FormDataContentDisposition upfileDetail
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.uploadRepositoryById(reposName,version,upfileInputStream, upfileDetail,securityContext);
+        return delegate.uploadRepositoryById(upfileInputStream, upfileDetail,securityContext);
     }
     @PUT
-    @Path("/{repos-name}/{version}/file")
+    @Path("/file")
     @Consumes({ "multipart/form-data" })
     @Produces({ "application/json" })
-    @io.swagger.annotations.ApiOperation(value = "Uploads an updated file.", notes = "", response = Void.class, tags={ "repository", })
+    @io.swagger.annotations.ApiOperation(value = "Uploads an updated file. Name and version are extracted from the file.", notes = "", response = Void.class, tags={ "repository", })
     @io.swagger.annotations.ApiResponses(value = { 
         @io.swagger.annotations.ApiResponse(code = 204, message = "Repository updated", response = Void.class),
         
         @io.swagger.annotations.ApiResponse(code = 200, message = "unexpected error", response = ErrorModel.class) })
-    public Response uploadRepositoryForUpdateById(@ApiParam(value = "name of Orchestra repository to store",required=true) @PathParam("repos-name") String reposName
-,@ApiParam(value = "version of Orchestra repository to store",required=true) @PathParam("version") String version
-,
+    public Response uploadRepositoryForUpdateById(
             @FormDataParam("upfile") InputStream upfileInputStream,
             @FormDataParam("upfile") FormDataContentDisposition upfileDetail
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.uploadRepositoryForUpdateById(reposName,version,upfileInputStream, upfileDetail,securityContext);
+        return delegate.uploadRepositoryForUpdateById(upfileInputStream, upfileDetail,securityContext);
     }
 }

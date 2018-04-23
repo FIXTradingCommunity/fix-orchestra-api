@@ -1,5 +1,15 @@
 package io.fixprotocol.orchestra.api;
 
+import java.io.InputStream;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+
+import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
+
 import io.fixprotocol.orchestra.model.Actor;
 import io.fixprotocol.orchestra.model.Annotation;
 import io.fixprotocol.orchestra.model.Code;
@@ -10,19 +20,9 @@ import io.fixprotocol.orchestra.model.Field;
 import io.fixprotocol.orchestra.model.Flow;
 import io.fixprotocol.orchestra.model.Group;
 import io.fixprotocol.orchestra.model.Message;
-import io.fixprotocol.orchestra.model.Repository;
 import io.fixprotocol.orchestra.model.StateMachine;
 
-import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
-
-
-
-import java.io.InputStream;
-
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.SecurityContext;
-import javax.validation.constraints.*;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2018-04-20T16:19:31.788Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaJerseyServerCodegen", date = "2018-04-23T17:55:01.425Z")
 public abstract class RepositoriesApiService {
     public abstract Response addActor(String reposName,String version,Actor actor,SecurityContext securityContext) throws NotFoundException;
     public abstract Response addAnnotation(String reposName,String version, @NotNull String elementId, @NotNull String elementType, String parentId,Annotation annotation,SecurityContext securityContext) throws NotFoundException;
@@ -35,7 +35,7 @@ public abstract class RepositoriesApiService {
     public abstract Response addGroup(String reposName,String version,Group group, Integer toClone,SecurityContext securityContext) throws NotFoundException;
     public abstract Response addMessage(String reposName,String version,Message message, Integer toClone,SecurityContext securityContext) throws NotFoundException;
     public abstract Response addMessageResponse(String reposName,String version,Integer id,io.fixprotocol.orchestra.model.Response response,SecurityContext securityContext) throws NotFoundException;
-    public abstract Response addRepository(Repository repository, String nameToClone, String versionToClone,SecurityContext securityContext) throws NotFoundException;
+    public abstract Response addRepository(io.fixprotocol.orchestra.model.Repository repository, String nameToClone, String versionToClone,SecurityContext securityContext) throws NotFoundException;
     public abstract Response addStateMachine(String reposName,String version,String name,StateMachine stateMachine,SecurityContext securityContext) throws NotFoundException;
     public abstract Response deleteActor(String reposName,String version,String name,SecurityContext securityContext) throws NotFoundException;
     public abstract Response deleteAnnotation(String reposName,String version, @NotNull String elementId, @NotNull String elementType, String parentId,SecurityContext securityContext) throws NotFoundException;
@@ -87,8 +87,8 @@ public abstract class RepositoriesApiService {
     public abstract Response updateGroupById(String reposName,String version,Integer id,Group group,SecurityContext securityContext) throws NotFoundException;
     public abstract Response updateMessageById(String reposName,String version,Integer id,Message message,SecurityContext securityContext) throws NotFoundException;
     public abstract Response updateMessageResponse(String reposName,String version,Integer id,String name,io.fixprotocol.orchestra.model.Response response,SecurityContext securityContext) throws NotFoundException;
-    public abstract Response updateRepositoryById(String reposName,String version,Repository repository,SecurityContext securityContext) throws NotFoundException;
+    public abstract Response updateRepositoryById(String reposName,String version,io.fixprotocol.orchestra.model.Repository repository,SecurityContext securityContext) throws NotFoundException;
     public abstract Response updateStateMachine(String reposName,String version,String name,String smName,StateMachine stateMachine,SecurityContext securityContext) throws NotFoundException;
-    public abstract Response uploadRepositoryById(String reposName,String version,InputStream upfileInputStream, FormDataContentDisposition upfileDetail,SecurityContext securityContext) throws NotFoundException;
-    public abstract Response uploadRepositoryForUpdateById(String reposName,String version,InputStream upfileInputStream, FormDataContentDisposition upfileDetail,SecurityContext securityContext) throws NotFoundException;
+    public abstract Response uploadRepositoryById(InputStream upfileInputStream, FormDataContentDisposition upfileDetail,SecurityContext securityContext) throws NotFoundException;
+    public abstract Response uploadRepositoryForUpdateById(InputStream upfileInputStream, FormDataContentDisposition upfileDetail,SecurityContext securityContext) throws NotFoundException;
 }

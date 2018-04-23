@@ -10,7 +10,7 @@ import java.util.Map;
 import io.fixprotocol.orchestra.client.Pair;
 
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-20T19:56:10.305Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-23T17:52:38.213Z")
 public class HttpBasicAuth implements Authentication {
   private String username;
   private String password;

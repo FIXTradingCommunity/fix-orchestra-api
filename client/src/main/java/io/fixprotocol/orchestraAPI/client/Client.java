@@ -6,25 +6,26 @@ import java.util.List;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import io.fixprotocol.orchestra.client.ApiClient;
-import io.fixprotocol.orchestra.client.ApiException;
-import io.fixprotocol.orchestra.client.JSON;
-import io.fixprotocol.orchestra.client.api.DocumentationApi;
-import io.fixprotocol.orchestra.client.api.RepositoryApi;
-import io.fixprotocol.orchestra.client.api.WorkflowApi;
-import io.fixprotocol.orchestra.client.model.Actor;
-import io.fixprotocol.orchestra.client.model.Annotation;
-import io.fixprotocol.orchestra.client.model.Code;
-import io.fixprotocol.orchestra.client.model.CodeSet;
-import io.fixprotocol.orchestra.client.model.Component;
-import io.fixprotocol.orchestra.client.model.Datatype;
-import io.fixprotocol.orchestra.client.model.Field;
-import io.fixprotocol.orchestra.client.model.Flow;
-import io.fixprotocol.orchestra.client.model.Group;
-import io.fixprotocol.orchestra.client.model.Message;
-import io.fixprotocol.orchestra.client.model.Repository;
-import io.fixprotocol.orchestra.client.model.Response;
-import io.fixprotocol.orchestra.client.model.StateMachine;
+import io.fixprotocol.orchestra.ApiClient;
+import io.fixprotocol.orchestra.ApiException;
+import io.fixprotocol.orchestra.JSON;
+import io.fixprotocol.orchestra.client.DocumentationApi;
+import io.fixprotocol.orchestra.client.RepositoryApi;
+import io.fixprotocol.orchestra.client.WorkflowApi;
+
+import io.swagger.client.model.Actor;
+import io.swagger.client.model.Annotation;
+import io.swagger.client.model.Code;
+import io.swagger.client.model.CodeSet;
+import io.swagger.client.model.Component;
+import io.swagger.client.model.Datatype;
+import io.swagger.client.model.Field;
+import io.swagger.client.model.Flow;
+import io.swagger.client.model.Group;
+import io.swagger.client.model.Message;
+import io.swagger.client.model.Repository;
+import io.swagger.client.model.Response;
+import io.swagger.client.model.StateMachine;
 
 public class Client {
 
@@ -1040,25 +1041,21 @@ public class Client {
   /**
    * Uploads a file.
    * 
-   * @param reposName name of Orchestra repository to update (required)
-   * @param version version of Orchestra repository to update (required)
    * @param upfile The file to upload. (optional)
    * @throws ApiException if fails to make API call
    */
-  public void uploadRepositoryById(String reposName, String version, File upfile) throws ApiException {
-    repositoryApi.uploadRepositoryById(reposName, version, upfile);
+  public void uploadRepositoryById(File upfile) throws ApiException {
+    repositoryApi.uploadRepositoryById(upfile);
   }
 
   /**
    * Uploads an updated file.
    * 
-   * @param reposName name of Orchestra repository to store (required)
-   * @param version version of Orchestra repository to store (required)
    * @param upfile The file to upload. (optional)
    * @throws ApiException if fails to make API call
    */
-  public void uploadRepositoryForUpdateById(String reposName, String version, File upfile) throws ApiException {
-    repositoryApi.uploadRepositoryForUpdateById(reposName, version, upfile);
+  public void uploadRepositoryForUpdateById(File upfile) throws ApiException {
+    repositoryApi.uploadRepositoryForUpdateById(upfile);
   }
 
 }

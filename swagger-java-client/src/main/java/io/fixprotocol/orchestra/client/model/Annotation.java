@@ -1,22 +1,17 @@
 package io.fixprotocol.orchestra.client.model;
 
-import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-
-import io.fixprotocol.orchestra.client.model.Appinfo;
-import io.fixprotocol.orchestra.client.model.Documentation;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Annotation
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-20T19:56:10.305Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-23T17:52:38.213Z")
 public class Annotation {
   @JsonProperty("appinfo")
   private List<Appinfo> appinfo = null;

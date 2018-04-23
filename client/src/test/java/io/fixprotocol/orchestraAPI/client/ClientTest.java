@@ -3,7 +3,10 @@
  */
 package io.fixprotocol.orchestraAPI.client;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -15,34 +18,34 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import io.fixprotocol.orchestra.client.ApiClient;
-import io.fixprotocol.orchestra.client.ApiException;
-import io.fixprotocol.orchestra.client.model.Actor;
-import io.fixprotocol.orchestra.client.model.Annotation;
-import io.fixprotocol.orchestra.client.model.Appinfo;
-import io.fixprotocol.orchestra.client.model.Code;
-import io.fixprotocol.orchestra.client.model.CodeSet;
-import io.fixprotocol.orchestra.client.model.Component;
-import io.fixprotocol.orchestra.client.model.Datatype;
-import io.fixprotocol.orchestra.client.model.Documentation;
-import io.fixprotocol.orchestra.client.model.Field;
-import io.fixprotocol.orchestra.client.model.FieldRef;
-import io.fixprotocol.orchestra.client.model.Flow;
-import io.fixprotocol.orchestra.client.model.Group;
-import io.fixprotocol.orchestra.client.model.GroupProperties;
-import io.fixprotocol.orchestra.client.model.GroupRef;
-import io.fixprotocol.orchestra.client.model.Metadata;
-import io.fixprotocol.orchestra.client.model.ObjectId;
-import io.fixprotocol.orchestra.client.model.Repository;
-import io.fixprotocol.orchestra.client.model.Response;
-import io.fixprotocol.orchestra.client.model.State;
-import io.fixprotocol.orchestra.client.model.StateMachine;
-import io.fixprotocol.orchestra.client.model.Structure;
-import io.fixprotocol.orchestra.client.model.Transition;
-import io.fixprotocol.orchestra.client.model.Trigger;
-import io.fixprotocol.orchestra.client.model.ComponentRef;
-import io.fixprotocol.orchestra.client.model.Message;
-import io.fixprotocol.orchestra.client.model.MessageRef;
+import io.fixprotocol.orchestra.ApiClient;
+import io.fixprotocol.orchestra.ApiException;
+import io.swagger.client.model.Actor;
+import io.swagger.client.model.Annotation;
+import io.swagger.client.model.Appinfo;
+import io.swagger.client.model.Code;
+import io.swagger.client.model.CodeSet;
+import io.swagger.client.model.Component;
+import io.swagger.client.model.ComponentRef;
+import io.swagger.client.model.Datatype;
+import io.swagger.client.model.Documentation;
+import io.swagger.client.model.Field;
+import io.swagger.client.model.FieldRef;
+import io.swagger.client.model.Flow;
+import io.swagger.client.model.Group;
+import io.swagger.client.model.GroupProperties;
+import io.swagger.client.model.GroupRef;
+import io.swagger.client.model.Message;
+import io.swagger.client.model.MessageRef;
+import io.swagger.client.model.Metadata;
+import io.swagger.client.model.ObjectId;
+import io.swagger.client.model.Repository;
+import io.swagger.client.model.Response;
+import io.swagger.client.model.State;
+import io.swagger.client.model.StateMachine;
+import io.swagger.client.model.Structure;
+import io.swagger.client.model.Transition;
+import io.swagger.client.model.Trigger;
 
 
 /**
@@ -2667,9 +2670,9 @@ public class ClientTest {
   @Test
   public void uploadAndDownload() throws ApiException {
     File upfile = new File("FixRepository44.xml");
-    client.uploadRepositoryById("FIX.4.4", "FIX.4.4", upfile );
+    client.uploadRepositoryById(upfile );
     client.findRepositoryById("FIX.4.4", "FIX.4.4");
-    client.uploadRepositoryForUpdateById("FIX.4.4", "FIX.4.4", upfile);
+    client.uploadRepositoryForUpdateById(upfile);
     client.findRepositoryById("FIX.4.4", "FIX.4.4");
     File downFile = client.downloadRepository("FIX.4.4", "FIX.4.4");
     System.out.println("Downloaded file: " + downFile.toString());
@@ -2678,15 +2681,26 @@ public class ClientTest {
   }
   
   @Test
-  public void uploadAndDownload2() throws ApiException {
+  public void uploadAndSearch() throws ApiException {
     File upfile = new File("FixRepository44.xml");
-    client.uploadRepositoryById("FIX50SP2", "1", upfile );
+    client.uploadRepositoryById(upfile );
     client.findRepositoryById("FIX.4.4", "FIX.4.4");
-    client.uploadRepositoryForUpdateById("FIX.4.4", "FIX.4.4", upfile);
-    client.findRepositoryById("FIX.4.4", "FIX.4.4");
-    File downFile = client.downloadRepository("FIX.4.4", "FIX.4.4");
-    System.out.println("Downloaded file: " + downFile.toString());
     
+    List<CodeSet> codeSets = client.searchCodeSets("FIX.4.4", "FIX.4.4", "CorporateAction", null, null);
+    assertNotNull(codeSets);
+    assertTrue(codeSets.size() >= 1);
+    
+    List<Component> allComponents = client.searchComponents("FIX.4.4", "FIX.4.4", null, null, null);
+    assertNotNull(allComponents);
+    List<Component> someComponents = client.searchComponents("FIX.4.4", "FIX.4.4", "Common", null, null);
+    assertNotNull(someComponents);
+    assertTrue(allComponents.size() > someComponents.size());
+    
+    List<Field> fields = client.searchFields("FIX.4.4", "FIX.4.4", "CommTyp", null, null);
+    assertNotNull(fields);
+    assertTrue(fields.size() == 1);
+
     client.deleteRepository("FIX.4.4", "FIX.4.4");
   }
+  
 }

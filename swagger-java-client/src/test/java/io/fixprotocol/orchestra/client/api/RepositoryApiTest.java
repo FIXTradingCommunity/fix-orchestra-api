@@ -318,9 +318,9 @@ public class RepositoryApiTest {
     }
     
     /**
-     * Retreives a single Orchestra repository file, if found
+     * Downloads a single Orchestra repository file, if found
      *
-     * Support XML or JSON serialization (to-do)
+     * Serializes to an XML file
      *
      * @throws ApiException
      *          if the Api call fails
@@ -790,7 +790,7 @@ public class RepositoryApiTest {
     }
     
     /**
-     * Uploads a file.
+     * Uploads a file. Name and version are extracted from the file.
      *
      * 
      *
@@ -799,16 +799,14 @@ public class RepositoryApiTest {
      */
     @Test
     public void uploadRepositoryByIdTest() throws ApiException {
-        String reposName = null;
-        String version = null;
         File upfile = null;
-        api.uploadRepositoryById(reposName, version, upfile);
+        api.uploadRepositoryById(upfile);
 
         // TODO: test validations
     }
     
     /**
-     * Uploads an updated file.
+     * Uploads an updated file. Name and version are extracted from the file.
      *
      * 
      *
@@ -817,10 +815,8 @@ public class RepositoryApiTest {
      */
     @Test
     public void uploadRepositoryForUpdateByIdTest() throws ApiException {
-        String reposName = null;
-        String version = null;
         File upfile = null;
-        api.uploadRepositoryForUpdateById(reposName, version, upfile);
+        api.uploadRepositoryForUpdateById(upfile);
 
         // TODO: test validations
     }

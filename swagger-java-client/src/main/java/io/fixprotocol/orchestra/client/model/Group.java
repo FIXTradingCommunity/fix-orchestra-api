@@ -1,20 +1,15 @@
 package io.fixprotocol.orchestra.client.model;
 
 import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 
-import io.fixprotocol.orchestra.client.model.GroupProperties;
-import io.fixprotocol.orchestra.client.model.ObjectId;
-import io.fixprotocol.orchestra.client.model.Structure;
-import io.swagger.annotations.ApiModel;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Group
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-20T19:56:10.305Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-23T17:52:38.213Z")
 public class Group extends Component {
   @JsonProperty("groupProperties")
   private GroupProperties groupProperties = null;

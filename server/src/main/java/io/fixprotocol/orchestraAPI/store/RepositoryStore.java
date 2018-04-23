@@ -173,11 +173,11 @@ public interface RepositoryStore {
    * Creates a new repository if it does not already exist.
    * 
    * @param stream input stream contains a repository
-   * @return
+   * @return created Repository
    * @throws DuplicateKeyException if the repository already exists
    * @throws RepositoryStoreException if the store operation fails
    */
-  Metadata createRepositoryFromFile(InputStream stream) throws RepositoryStoreException;
+  Repository createRepositoryFromFile(InputStream stream) throws RepositoryStoreException;
 
   /**
    * Creates a new Actor in a repository

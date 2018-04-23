@@ -573,7 +573,7 @@ public class RepositoryDOMStore implements RepositoryStore {
   }
 
   @Override
-  public Metadata createRepositoryFromFile(InputStream stream) throws RepositoryStoreException {
+  public io.fixprotocol.orchestra.model.Repository createRepositoryFromFile(InputStream stream) throws RepositoryStoreException {
     try {
       Objects.requireNonNull(stream, "File missing");
       Repository repository = unMarshal(stream);
@@ -585,8 +585,7 @@ public class RepositoryDOMStore implements RepositoryStore {
                 repository.getVersion()));
       }
       repositories.putIfAbsent(key, repository);
-      final Repository repository2 = repositories.get(key);
-      return OrchestraAPItoDOM.DOMToMetadata(repository2.getMetadata());
+      return OrchestraAPItoDOM.DOMToRepository(repository);
     } catch (JAXBException e) {
       throw new RepositoryStoreException("Unable to read or parse repository file", e);
     }

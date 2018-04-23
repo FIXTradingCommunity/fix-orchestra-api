@@ -2,6 +2,10 @@ package io.fixprotocol.orchestraAPI.server;
  
 import static org.junit.Assert.*;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.List;
+
 import javax.ws.rs.core.Response;
 
 import org.junit.After;
@@ -12,7 +16,10 @@ import io.fixprotocol.orchestra.api.NotFoundException;
 import io.fixprotocol.orchestra.model.Actor;
 import io.fixprotocol.orchestra.model.Annotation;
 import io.fixprotocol.orchestra.model.Appinfo;
+import io.fixprotocol.orchestra.model.CodeSet;
+import io.fixprotocol.orchestra.model.Component;
 import io.fixprotocol.orchestra.model.Documentation;
+import io.fixprotocol.orchestra.model.Field;
 import io.fixprotocol.orchestra.model.Structure;
 import io.fixprotocol.orchestra.model.Metadata;
 import io.fixprotocol.orchestra.model.Repository;
@@ -67,6 +74,33 @@ public class RepositoriesApiServiceImplTest {
     assertEquals("en", documentation2.getLangId());
     assertEquals("ELABORATION", documentation2.getPurpose());
     assertEquals("The best actor", documentation2.getText());
+  }
+
+  @SuppressWarnings("unchecked")
+  @Test
+  public void uploadAndSearch() throws NotFoundException, FileNotFoundException {
+    impl.uploadRepositoryById(new FileInputStream("FixRepository44.xml"), 
+        null, null);
+   
+    Response response = impl.searchCodeSets("FIX.4.4", "FIX.4.4", "CorporateAction", null, null, null);
+    Object codeSets = response.getEntity();
+    assertNotNull(codeSets);
+    assertTrue(((List<CodeSet>)codeSets).size() >= 1);
+    
+    response = impl.searchComponents("FIX.4.4", "FIX.4.4", null, null, null, null);
+    Object allComponents = response.getEntity();
+    assertNotNull(allComponents);
+    response = impl.searchComponents("FIX.4.4", "FIX.4.4", "Common", null, null, null);
+    Object someComponents = response.getEntity();
+    assertNotNull(someComponents);
+    assertTrue(((List<Component>)allComponents).size() > ((List<Component>)someComponents).size());
+    
+    response = impl.searchFields("FIX.4.4", "FIX.4.4", "CommTyp", null, null, null);
+    Object fields = response.getEntity();
+    assertNotNull(fields);
+    assertTrue(((List<Field>)fields).size() == 1);
+
+    impl.deleteRepository("FIX.4.4", "FIX.4.4", null);
   }
 
 }

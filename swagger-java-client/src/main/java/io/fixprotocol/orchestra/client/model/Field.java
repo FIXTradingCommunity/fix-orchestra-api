@@ -1,19 +1,15 @@
 package io.fixprotocol.orchestra.client.model;
 
 import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 
-import io.fixprotocol.orchestra.client.model.MessageElement;
-import io.fixprotocol.orchestra.client.model.ObjectId;
-import io.swagger.annotations.ApiModel;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Field
  */
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-20T19:56:10.305Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-23T17:52:38.213Z")
 public class Field extends MessageElement {
   @JsonProperty("type")
   private String type = null;

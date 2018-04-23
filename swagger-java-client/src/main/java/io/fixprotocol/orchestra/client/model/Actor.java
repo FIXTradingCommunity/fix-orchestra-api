@@ -1,12 +1,9 @@
 package io.fixprotocol.orchestra.client.model;
 
 import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
 
-import io.fixprotocol.orchestra.client.model.Annotation;
-import io.fixprotocol.orchestra.client.model.Structure;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -14,7 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
  * Represents a class of participants
  */
 @ApiModel(description = "Represents a class of participants")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-20T19:56:10.305Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-23T17:52:38.213Z")
 public class Actor {
   @JsonProperty("name")
   private String name = null;

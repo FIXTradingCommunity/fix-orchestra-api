@@ -1141,12 +1141,11 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     }
   }
 
-  public Response uploadRepositoryById(String reposName, String version,
-      InputStream upfileInputStream, FormDataContentDisposition upfileDetail,
+  public Response uploadRepositoryById(InputStream upfileInputStream, FormDataContentDisposition upfileDetail,
       SecurityContext securityContext) throws NotFoundException {
     try {
-      repositoryStore.createRepositoryFromFile(upfileInputStream);
-      return Response.created(createRepositoryUri(reposName, version)).build();
+      Repository repository = repositoryStore.createRepositoryFromFile(upfileInputStream);
+      return Response.created(createRepositoryUri(repository.getName(), repository.getVersion())).build();
     } catch (DuplicateKeyException e) {
       return Response.noContent().status(Status.CONFLICT).build();
     } catch (ResourceNotFoundException e) {
@@ -1157,8 +1156,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     }
   }
 
-  public Response uploadRepositoryForUpdateById(String reposName, String version,
-      InputStream upfileInputStream, FormDataContentDisposition upfileDetail,
+  public Response uploadRepositoryForUpdateById(InputStream upfileInputStream, FormDataContentDisposition upfileDetail,
       SecurityContext securityContext) throws NotFoundException {
     try {
       repositoryStore.updateRepositoryFromFile(upfileInputStream);
@@ -1168,7 +1166,8 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     } catch (RepositoryStoreException e) {
       logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
-    }  }
+    }  
+    }
 
   private URI createActorUri(String reposName, String version, String actorName) {
     return UriBuilder.fromPath("repositories").path(reposName).path(version).path("actors")
@@ -1226,7 +1225,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     return UriBuilder.fromPath("repositories").path(reposName).path(version).path("messages")
         .path(messageIdAsString).path("responses").path(name).build();
   }
-
+  
   private URI createMessageUri(String reposName, String version, String idAsString) {
     return UriBuilder.fromPath("repositories").path(reposName).path(version).path("messages")
         .path(idAsString).build();
@@ -1240,7 +1239,7 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     return UriBuilder.fromPath("repositories").path(name)
         .path(version).build();
   }
-  
+
   private URI createStateMachineUri(String reposName, String version, String actor,
       String stateMachine) {
     return UriBuilder.fromPath("repositories").path(reposName).path(version).path("actors")

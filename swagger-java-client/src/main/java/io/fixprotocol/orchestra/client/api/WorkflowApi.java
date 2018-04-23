@@ -16,7 +16,7 @@ import io.fixprotocol.orchestra.client.model.Flow;
 import io.fixprotocol.orchestra.client.model.Response;
 import io.fixprotocol.orchestra.client.model.StateMachine;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-20T19:56:10.305Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-23T17:52:38.213Z")
 public class WorkflowApi {
   private ApiClient apiClient;
 
@@ -723,7 +723,7 @@ public class WorkflowApi {
    * By passing in the appropriate options, you can search for actors 
    * @param reposName name of Orchestra repository (required)
    * @param version version of Orchestra repository (required)
-   * @param searchString pass an optional search string for looking up actors (optional)
+   * @param searchString Pass an optional search string for looking up actors. It may match on name or abbrName. (optional)
    * @param skip number of records to skip for pagination (optional)
    * @param limit maximum number of records to return (optional)
    * @return List&lt;Actor&gt;
@@ -778,7 +778,7 @@ public class WorkflowApi {
    * By passing in the appropriate options, you can search for flows 
    * @param reposName name of Orchestra repository (required)
    * @param version version of Orchestra repository (required)
-   * @param searchString pass an optional search string for looking up flows (optional)
+   * @param searchString Pass an optional search string for looking up flows. It may match on name, source, or destination. (optional)
    * @param skip number of records to skip for pagination (optional)
    * @param limit maximum number of records to return (optional)
    * @return List&lt;Flow&gt;

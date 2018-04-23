@@ -1,5 +1,24 @@
 package io.fixprotocol.orchestra.client;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -26,36 +45,10 @@ import io.fixprotocol.orchestra.client.auth.Authentication;
 import io.fixprotocol.orchestra.client.auth.HttpBasicAuth;
 import io.fixprotocol.orchestra.client.auth.OAuth;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.TimeZone;
-
-import java.net.URLEncoder;
-
-import java.io.File;
-import java.io.UnsupportedEncodingException;
-
-import java.text.DateFormat;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-
-
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-20T19:56:10.305Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-23T17:52:38.213Z")
 public class ApiClient {
   protected Map<String, String> defaultHeaderMap = new HashMap<String, String>();
-  protected String basePath = "https://virtserver.swaggerhub.com/FIXTradingCommunity/orchestra-api/1.0.0";
+  protected String basePath = "https://virtserver.swaggerhub.com/FIXTradingCommunity/orchestra-api/1.0.1";
   protected boolean debugging = false;
   protected int connectionTimeout = 0;
   private int readTimeout = 0;
@@ -78,7 +71,7 @@ public class ApiClient {
     this.dateFormat = new RFC3339DateFormat();
 
     // Set default User-Agent.
-    setUserAgent("Swagger-Codegen/1.0.0/java");
+    setUserAgent("Swagger-Codegen/1.0.1-RC3-SNAPSHOT/java");
 
     // Setup authentications (key: authentication name, value: authentication).
     authentications = new HashMap<String, Authentication>();

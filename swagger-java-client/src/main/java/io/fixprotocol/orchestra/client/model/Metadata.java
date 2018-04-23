@@ -1,18 +1,19 @@
 package io.fixprotocol.orchestra.client.model;
 
 import java.util.Objects;
+
+import org.threeten.bp.LocalDate;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.threeten.bp.LocalDate;
 
 /**
  * description of an Orchestra repository, conforms to Dublin Core Terms
  */
 @ApiModel(description = "description of an Orchestra repository, conforms to Dublin Core Terms")
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-20T19:56:10.305Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-23T17:52:38.213Z")
 public class Metadata {
   @JsonProperty("identifier")
   private String identifier = null;

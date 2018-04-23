@@ -21,7 +21,7 @@ import io.fixprotocol.orchestra.client.model.Group;
 import io.fixprotocol.orchestra.client.model.Message;
 import io.fixprotocol.orchestra.client.model.Repository;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-20T19:56:10.305Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.JavaClientCodegen", date = "2018-04-23T17:52:38.213Z")
 public class RepositoryApi {
   private ApiClient apiClient;
 
@@ -882,8 +882,8 @@ public class RepositoryApi {
     apiClient.invokeAPI(localVarPath, "DELETE", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
   }
   /**
-   * Retreives a single Orchestra repository file, if found
-   * Support XML or JSON serialization (to-do)
+   * Downloads a single Orchestra repository file, if found
+   * Serializes to an XML file
    * @param reposName name of Orchestra repository to fetch (required)
    * @param version version of Orchestra repository to fetch (required)
    * @return File
@@ -1439,7 +1439,7 @@ public class RepositoryApi {
    * @param reposName name of Orchestra repository (required)
    * @param version version of Orchestra repository (required)
    * @param codesetid ID of CodeSet (required)
-   * @param searchString pass an optional search string for looking up Codes (optional)
+   * @param searchString Pass an optional search string for looking up Codes. It may match on name or abbrName. (optional)
    * @param skip number of records to skip for pagination (optional)
    * @param limit maximum number of records to return (optional)
    * @return List&lt;Code&gt;
@@ -1500,7 +1500,7 @@ public class RepositoryApi {
    * By passing in the appropriate options, you can search for components 
    * @param reposName name of Orchestra repository (required)
    * @param version version of Orchestra repository (required)
-   * @param searchString pass an optional search string for looking up components (optional)
+   * @param searchString Pass an optional search string for looking up components. It may match on name, abbrName, or category. (optional)
    * @param skip number of records to skip for pagination (optional)
    * @param limit maximum number of records to return (optional)
    * @return List&lt;Component&gt;
@@ -1555,7 +1555,7 @@ public class RepositoryApi {
    * By passing in the appropriate options, you can search for datatypes 
    * @param reposName name of Orchestra repository (required)
    * @param version version of Orchestra repository (required)
-   * @param searchString pass an optional search string for looking up datatypes (optional)
+   * @param searchString Pass an optional search string for looking up datatypes. It may match on name or basetype. (optional)
    * @param skip number of records to skip for pagination (optional)
    * @param limit maximum number of records to return (optional)
    * @return List&lt;Datatype&gt;
@@ -1610,7 +1610,7 @@ public class RepositoryApi {
    * By passing in the appropriate options, you can search for fields 
    * @param reposName name of Orchestra repository (required)
    * @param version version of Orchestra repository (required)
-   * @param searchString pass an optional search string for looking up fields (optional)
+   * @param searchString Pass an optional search string for looking up fields. It may match on name, abbrName, or category. (optional)
    * @param skip number of records to skip for pagination (optional)
    * @param limit maximum number of records to return (optional)
    * @return List&lt;Field&gt;
@@ -1665,7 +1665,7 @@ public class RepositoryApi {
    * By passing in the appropriate options, you can search for groups 
    * @param reposName name of Orchestra repository (required)
    * @param version version of Orchestra repository (required)
-   * @param searchString pass an optional search string for looking up groups (optional)
+   * @param searchString Pass an optional search string for looking up groups. It may match on name, abbrName, or category. (optional)
    * @param skip number of records to skip for pagination (optional)
    * @param limit maximum number of records to return (optional)
    * @return List&lt;Group&gt;
@@ -1720,7 +1720,7 @@ public class RepositoryApi {
    * By passing in the appropriate options, you can search for messages 
    * @param reposName name of Orchestra repository (required)
    * @param version version of Orchestra repository (required)
-   * @param searchString pass an optional search string for looking up messages (optional)
+   * @param searchString Pass an optional search string for looking up messages. It may match on name, abbrName, scenario, or category. (optional)
    * @param skip number of records to skip for pagination (optional)
    * @param limit maximum number of records to return (optional)
    * @return List&lt;Message&gt;
@@ -1773,7 +1773,7 @@ public class RepositoryApi {
   /**
    * searches Orchestra repositories
    * By passing in the appropriate options, you can search for Orchestra repositories
-   * @param searchString pass an optional search string for looking up repositories (optional)
+   * @param searchString Pass an optional search string for looking up repositories. It may match on name or version. (optional)
    * @param skip number of records to skip for pagination (optional)
    * @param limit maximum number of records to return (optional)
    * @return List&lt;Repository&gt;
@@ -2300,30 +2300,16 @@ public class RepositoryApi {
     apiClient.invokeAPI(localVarPath, "PUT", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
   }
   /**
-   * Uploads a file.
+   * Uploads a file. Name and version are extracted from the file.
    * 
-   * @param reposName name of Orchestra repository to update (required)
-   * @param version version of Orchestra repository to update (required)
-   * @param upfile The file to upload. (optional)
+   * @param upfile An XML file to upload. (optional)
    * @throws ApiException if fails to make API call
    */
-  public void uploadRepositoryById(String reposName, String version, File upfile) throws ApiException {
+  public void uploadRepositoryById(File upfile) throws ApiException {
     Object localVarPostBody = null;
     
-    // verify the required parameter 'reposName' is set
-    if (reposName == null) {
-      throw new ApiException(400, "Missing the required parameter 'reposName' when calling uploadRepositoryById");
-    }
-    
-    // verify the required parameter 'version' is set
-    if (version == null) {
-      throw new ApiException(400, "Missing the required parameter 'version' when calling uploadRepositoryById");
-    }
-    
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/file"
-      .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
-      .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()));
+    String localVarPath = "/repositories/file";
 
     // query params
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
@@ -2351,30 +2337,16 @@ public class RepositoryApi {
     apiClient.invokeAPI(localVarPath, "POST", localVarQueryParams, localVarPostBody, localVarHeaderParams, localVarFormParams, localVarAccept, localVarContentType, localVarAuthNames, null);
   }
   /**
-   * Uploads an updated file.
+   * Uploads an updated file. Name and version are extracted from the file.
    * 
-   * @param reposName name of Orchestra repository to store (required)
-   * @param version version of Orchestra repository to store (required)
-   * @param upfile The file to upload. (optional)
+   * @param upfile An XML file to upload. (optional)
    * @throws ApiException if fails to make API call
    */
-  public void uploadRepositoryForUpdateById(String reposName, String version, File upfile) throws ApiException {
+  public void uploadRepositoryForUpdateById(File upfile) throws ApiException {
     Object localVarPostBody = null;
     
-    // verify the required parameter 'reposName' is set
-    if (reposName == null) {
-      throw new ApiException(400, "Missing the required parameter 'reposName' when calling uploadRepositoryForUpdateById");
-    }
-    
-    // verify the required parameter 'version' is set
-    if (version == null) {
-      throw new ApiException(400, "Missing the required parameter 'version' when calling uploadRepositoryForUpdateById");
-    }
-    
     // create path and map variables
-    String localVarPath = "/repositories/{repos-name}/{version}/file"
-      .replaceAll("\\{" + "repos-name" + "\\}", apiClient.escapeString(reposName.toString()))
-      .replaceAll("\\{" + "version" + "\\}", apiClient.escapeString(version.toString()));
+    String localVarPath = "/repositories/file";
 
     // query params
     List<Pair> localVarQueryParams = new ArrayList<Pair>();
