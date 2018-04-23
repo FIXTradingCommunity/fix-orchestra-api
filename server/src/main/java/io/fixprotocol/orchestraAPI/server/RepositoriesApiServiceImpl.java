@@ -650,12 +650,16 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   }
 
 
+  /**
+   * Search string matches if contained within Actor name, case insensitive
+   */
   @Override
   public Response searchActors(String reposName, String version, String searchString, Integer skip,
       Integer limit, SecurityContext securityContext) throws NotFoundException {
     try {
-      Predicate<Actor> predicate =
-          searchString != null ? actor -> searchString.equals(actor.getName()) : t -> true;
+      Predicate<Actor> predicate = searchString != null
+          ? actor -> ServiceUtil.isMatch(searchString, new String[] {actor.getName()})
+          : t -> true;
 
       List<Actor> filtered = repositoryStore.getActors(reposName, version, predicate);
       List<Actor> range =
@@ -714,16 +718,17 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     }
   }
 
+  /**
+   * Search string matches if contained within Code name or abbrName, case insensitive
+   */
   @Override
   public Response searchCodes(String reposName, String version, Integer codesetid,
       String searchString, Integer skip, Integer limit, SecurityContext securityContext)
       throws NotFoundException {
     try {
-      Predicate<Code> predicate =
-          searchString != null
-              ? code -> searchString.equals(code.getOid().getName())
-                  || searchString.equals(code.getOid().getAbbrName())
-              : t -> true;
+      Predicate<Code> predicate = searchString != null 
+          ? code -> ServiceUtil.isMatch(searchString, new String[] {code.getOid().getName(), code.getOid().getAbbrName()}) 
+          : t -> true;
 
       List<Code> filtered = repositoryStore.getCodes(reposName, version, codesetid, predicate);
       List<Code> range =
@@ -735,15 +740,17 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     }
   }
 
+  /**
+   * Search string matches if contained within CodeSet name or abbrName, case insensitive
+   */
   @Override
   public Response searchCodeSets(String reposName, String version, String searchString,
       Integer skip, Integer limit, SecurityContext securityContext) throws NotFoundException {
     try {
-      Predicate<CodeSet> predicate =
-          searchString != null
-              ? cs -> searchString.equals(cs.getOid().getName())
-                  || searchString.equals(cs.getOid().getAbbrName())
-              : t -> true;
+      Predicate<CodeSet> predicate = searchString != null
+          ? codeSet -> ServiceUtil.isMatch(searchString,
+              new String[] {codeSet.getOid().getName(), codeSet.getOid().getAbbrName()})
+          : t -> true;
 
       List<CodeSet> filtered = repositoryStore.getCodeSets(reposName, version, predicate);
       List<CodeSet> range =
@@ -755,14 +762,17 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     }
   }
 
+  /**
+   * Search string matches if contained within Component name, abbrName or category, case insensitive
+   */
   @Override
   public Response searchComponents(String reposName, String version, String searchString,
       Integer skip, Integer limit, SecurityContext securityContext) throws NotFoundException {
     try {
       Predicate<Component> predicate =
           searchString != null
-              ? c -> searchString.equals(c.getOid().getName())
-                  || searchString.equals(c.getOid().getAbbrName())
+              ? c -> ServiceUtil.isMatch(searchString,
+                  new String[] {c.getOid().getName(), c.getOid().getAbbrName(), c.getCategory()})
               : t -> true;
 
       List<Component> filtered = repositoryStore.getComponents(reposName, version, predicate);
@@ -775,12 +785,16 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     }
   }
 
+  /**
+   * Search string matches if contained within Datatype name or basetype, case insensitive
+   */
   @Override
   public Response searchDatatypes(String reposName, String version, String searchString,
       Integer skip, Integer limit, SecurityContext securityContext) throws NotFoundException {
     try {
-      Predicate<Datatype> predicate =
-          searchString != null ? datatype -> searchString.equals(datatype.getName()) : t -> true;
+      Predicate<Datatype> predicate = searchString != null
+          ? datatype -> ServiceUtil.isMatch(searchString, new String[] {datatype.getName(), datatype.getBaseType()})
+          : t -> true;
 
       List<Datatype> filtered = repositoryStore.getDatatypes(reposName, version, predicate);
       List<Datatype> range =
@@ -792,14 +806,17 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     }
   }
 
+  /**
+   * Search string matches if contained within Field name, abbrName or category, case insensitive
+   */
   @Override
   public Response searchFields(String reposName, String version, String searchString, Integer skip,
       Integer limit, SecurityContext securityContext) throws NotFoundException {
     try {
       Predicate<Field> predicate =
           searchString != null
-              ? field -> searchString.equals(field.getOid().getName())
-                  || searchString.equals(field.getOid().getAbbrName())
+              ? field -> ServiceUtil.isMatch(searchString,
+                  new String[] {field.getOid().getName(), field.getOid().getAbbrName(), field.getCategory()})
               : t -> true;
 
       List<Field> filtered = repositoryStore.getFields(reposName, version, predicate);
@@ -812,12 +829,18 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     }
   }
 
+  /**
+   * Search string matches if contained within Flow name, source or destination, case insensitive
+   */
   @Override
   public Response searchFlows(String reposName, String version, String searchString, Integer skip,
       Integer limit, SecurityContext securityContext) throws NotFoundException {
     try {
       Predicate<Flow> predicate =
-          searchString != null ? flow -> searchString.equals(flow.getName()) : t -> true;
+          searchString != null 
+              ? flow -> ServiceUtil.isMatch(searchString,
+                  new String[] {flow.getName(), flow.getSource(), flow.getDestination()})
+              : t -> true;
 
       List<Flow> filtered = repositoryStore.getFlows(reposName, version, predicate);
       List<Flow> range =
@@ -829,14 +852,17 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     }
   }
 
+  /**
+   * Search string matches if contained within Group name, abbrName or category, case insensitive
+   */
   @Override
   public Response searchGroups(String reposName, String version, String searchString, Integer skip,
       Integer limit, SecurityContext securityContext) throws NotFoundException {
     try {
       Predicate<Group> predicate =
           searchString != null
-              ? group -> searchString.equals(group.getOid().getName())
-                  || searchString.equals(group.getOid().getAbbrName())
+              ? g -> ServiceUtil.isMatch(searchString,
+                  new String[] {g.getOid().getName(), g.getOid().getAbbrName(), g.getCategory()})
               : t -> true;
 
       List<Group> filtered = repositoryStore.getGroups(reposName, version, predicate);
@@ -868,16 +894,20 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     }
   }
 
+  /**
+   * Search string matches if contained within Group Message name, abbrName, scenario or category, case insensitive
+   */
   @Override
   public Response searchMessages(String reposName, String version, String searchString,
       Integer skip, Integer limit, SecurityContext securityContext) throws NotFoundException {
     try {
-      Predicate<Message> predicate =
-          searchString != null
-              ? m -> searchString.equals(m.getOid().getName())
-                  || searchString.equals(m.getOid().getAbbrName())
-                  || searchString.equals(m.getScenario())
-              : t -> true;
+      Predicate<Message> predicate = searchString != null
+          ? m -> ServiceUtil
+              .isMatch(
+                  searchString,
+                  new String[] {m.getOid().getName(), m.getOid().getAbbrName(), m.getScenario(),
+                      m.getCategory()})
+          : t -> true;
 
       List<Message> filtered = repositoryStore.getMessages(reposName, version, predicate);
       List<Message> range =
@@ -893,8 +923,10 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
   public Response searchRepositories(String searchString, Integer skip, Integer limit,
       SecurityContext securityContext) throws NotFoundException {
     try {
-      // todo: translate search string to a Predicate
-      List<Metadata> filtered = repositoryStore.getRepositoriesMetadata(null);
+      Predicate<Repository> predicate = searchString != null
+          ? r -> ServiceUtil.isMatch(searchString, new String[] {r.getName(), r.getVersion()})
+          : t -> true;
+      List<Metadata> filtered = repositoryStore.getRepositoriesMetadata(predicate);
       List<Metadata> range =
           filtered.subList(skip != null ? skip : 0, limit != null ? limit : filtered.size());
       return Response.ok().entity(range).build();
@@ -1214,4 +1246,5 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     return UriBuilder.fromPath("repositories").path(reposName).path(version).path("actors")
         .path(actor).path("statemachines").path(stateMachine).build();
   }
+
 }

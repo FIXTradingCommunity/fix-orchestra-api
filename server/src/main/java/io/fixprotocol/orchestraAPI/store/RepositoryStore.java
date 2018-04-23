@@ -628,12 +628,12 @@ public interface RepositoryStore {
   /**
    * Retrieves the metadata of all repositories
    * 
-   * @param search filter for selection of repositories by their Metadata
+   * @param search filter for selection of repositories 
    * @return list of Metadata. The identifier field of a Metadata carries the identifier of its
    *         containing repository.
    * @throws RepositoryStoreException if the store operation fails
    */
-  List<Metadata> getRepositoriesMetadata(Predicate<Metadata> search)
+  List<Metadata> getRepositoriesMetadata(Predicate<Repository> search)
       throws RepositoryStoreException;
 
   /**

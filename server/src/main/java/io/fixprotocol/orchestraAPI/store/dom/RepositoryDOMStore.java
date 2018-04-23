@@ -1762,10 +1762,15 @@ public class RepositoryDOMStore implements RepositoryStore {
   }
 
   @Override
-  public List<Metadata> getRepositoriesMetadata(Predicate<Metadata> search) {
-    Predicate<Metadata> predicate = search != null ? search : t -> true;
-    return repositories.values().stream().map(r -> OrchestraAPItoDOM.DOMToMetadata(r.getMetadata()))
-        .filter(predicate).collect(Collectors.toList());
+  public List<Metadata> getRepositoriesMetadata(Predicate<io.fixprotocol.orchestra.model.Repository> search)
+      throws RepositoryStoreException {
+    Predicate<io.fixprotocol.orchestra.model.Repository> predicate = search != null ? search : t -> true;
+
+    return repositories.values().stream()
+        .map(r -> OrchestraAPItoDOM.DOMToRepository(r))
+        .filter(predicate)
+        .map(r -> r.getMetadata())
+        .collect(Collectors.toList());
   }
 
   @Override
@@ -2493,4 +2498,5 @@ public class RepositoryDOMStore implements RepositoryStore {
     Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
     return (Repository) unmarshaller.unmarshal(stream);
   }
+
 }

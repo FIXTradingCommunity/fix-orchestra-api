@@ -409,6 +409,21 @@ public final class OrchestraAPItoDOM {
     return metadata;
   }
 
+  public static io.fixprotocol.orchestra.model.Repository DOMToRepository(
+      io.fixprotocol._2016.fixrepository.Repository repositoryDOM) {
+    io.fixprotocol.orchestra.model.Repository repository = new io.fixprotocol.orchestra.model.Repository();
+    repository.setName(repositoryDOM.getName());
+    repository.setVersion(repositoryDOM.getVersion());
+    repository.setHasComponents(repositoryDOM.isHasComponents());
+    repository.setNamespace(repositoryDOM.getNamespace());
+    repository.setOid(repositoryDOM.getGuid());
+    repository.setSpecURL(repositoryDOM.getSpecUrl());
+    if (repositoryDOM.getMetadata() != null) {
+      repository.setMetadata(DOMToMetadata(repositoryDOM.getMetadata()));
+    }
+    return repository;
+  }
+
   public static Response DOMToResponse(ResponseType responseType) {
     Response response = new Response();
     response.setName(responseType.getName());
@@ -604,7 +619,6 @@ public final class OrchestraAPItoDOM {
     }
     return repositoryDOM;
   }
-
   public static ResponseType ResponseToDOM(Response response) {
     ResponseType responseType = new ResponseType();
     responseType.setName(response.getName());
