@@ -335,7 +335,7 @@ public final class OrchestraAPItoDOM {
     return group;
   }
 
-  public static Message DOMToMessage(MessageType messageType) {
+  public static Message DOMToMessage(MessageType messageType, boolean withStructure) {
     Message message = new Message();
     ObjectId oid = new ObjectId();
     oid.setAbbrName(messageType.getAbbrName());
@@ -348,11 +348,12 @@ public final class OrchestraAPItoDOM {
     message.setScenario(messageType.getScenario());
     message.setCategory(messageType.getCategory());
     message.setExtends(messageType.getExtends());
-    Structure structure = new Structure();
-    message.setStructure(structure);
-    List<Object> elements = messageType.getStructure().getComponentOrComponentRefOrGroup();
-    populateStructure(elements, structure);
-
+    if (withStructure) {
+      Structure structure = new Structure();
+      message.setStructure(structure);
+      List<Object> elements = messageType.getStructure().getComponentOrComponentRefOrGroup();
+      populateStructure(elements, structure);
+    }
     return message;
   }
 

@@ -1678,7 +1678,7 @@ public class RepositoryDOMStore implements RepositoryStore {
         messages.stream().filter(f -> id == f.getId().intValue()).findFirst();
 
     if (optMessage.isPresent()) {
-      return OrchestraAPItoDOM.DOMToMessage(optMessage.get());
+      return OrchestraAPItoDOM.DOMToMessage(optMessage.get(), true);
     } else {
       throw new ResourceNotFoundException(String.format("Message with ID=%d not found", id));
     }
@@ -1756,7 +1756,7 @@ public class RepositoryDOMStore implements RepositoryStore {
     Predicate<Message> predicate = search != null ? search : t -> true;
     List<MessageType> messages = getMessageList(repository);
 
-    return messages.stream().map(OrchestraAPItoDOM::DOMToMessage).filter(predicate)
+    return messages.stream().map(m -> OrchestraAPItoDOM.DOMToMessage(m, false)).filter(predicate)
         .collect(Collectors.toList());
   }
 
