@@ -1204,12 +1204,12 @@ public class RepositoriesApi  {
         @io.swagger.annotations.ApiResponse(code = 400, message = "invalid input, object invalid", response = Void.class),
         
         @io.swagger.annotations.ApiResponse(code = 409, message = "an existing item already exists", response = Void.class) })
-    public Response uploadRepositoryById(
+    public Response uploadRepositoryForCreation(
             @FormDataParam("upfile") InputStream upfileInputStream,
             @FormDataParam("upfile") FormDataContentDisposition upfileDetail
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.uploadRepositoryById(upfileInputStream, upfileDetail,securityContext);
+        return delegate.uploadRepositoryForCreation(upfileInputStream, upfileDetail,securityContext);
     }
     @PUT
     @Path("/file")
@@ -1220,11 +1220,11 @@ public class RepositoriesApi  {
         @io.swagger.annotations.ApiResponse(code = 204, message = "Repository updated", response = Void.class),
         
         @io.swagger.annotations.ApiResponse(code = 200, message = "unexpected error", response = ErrorModel.class) })
-    public Response uploadRepositoryForUpdateById(
+    public Response uploadRepositoryForUpdate(
             @FormDataParam("upfile") InputStream upfileInputStream,
             @FormDataParam("upfile") FormDataContentDisposition upfileDetail
 ,@Context SecurityContext securityContext)
     throws NotFoundException {
-        return delegate.uploadRepositoryForUpdateById(upfileInputStream, upfileDetail,securityContext);
+        return delegate.uploadRepositoryForUpdate(upfileInputStream, upfileDetail,securityContext);
     }
 }

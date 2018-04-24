@@ -693,7 +693,7 @@ public class ClientTest {
   @Before
   public void setUp() throws Exception {
     final ApiClient apiClient = new ApiClient();
-    apiClient.setBasePath("http://localhost:8080/FIXTradingCommunity/orchestra-api/1.0.0");
+    apiClient.setBasePath("http://localhost:8080/FIXTradingCommunity/orchestra-api/1.0.1");
     // apiClient.setDebugging(true);
     client = new Client(apiClient);
   }
@@ -2670,9 +2670,9 @@ public class ClientTest {
   @Test
   public void uploadAndDownload() throws ApiException {
     File upfile = new File("FixRepository44.xml");
-    client.uploadRepositoryById(upfile );
+    client.uploadRepositoryForCreation(upfile );
     client.findRepositoryById("FIX.4.4", "FIX.4.4");
-    client.uploadRepositoryForUpdateById(upfile);
+    client.uploadRepositoryForUpdate(upfile);
     client.findRepositoryById("FIX.4.4", "FIX.4.4");
     File downFile = client.downloadRepository("FIX.4.4", "FIX.4.4");
     System.out.println("Downloaded file: " + downFile.toString());
@@ -2683,7 +2683,7 @@ public class ClientTest {
   @Test
   public void uploadAndSearch() throws ApiException {
     File upfile = new File("FixRepository44.xml");
-    client.uploadRepositoryById(upfile );
+    client.uploadRepositoryForCreation(upfile );
     client.findRepositoryById("FIX.4.4", "FIX.4.4");
     
     List<CodeSet> codeSets = client.searchCodeSets("FIX.4.4", "FIX.4.4", "CorporateAction", null, null);

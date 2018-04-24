@@ -89,6 +89,6 @@ public abstract class RepositoriesApiService {
     public abstract Response updateMessageResponse(String reposName,String version,Integer id,String name,io.fixprotocol.orchestra.model.Response response,SecurityContext securityContext) throws NotFoundException;
     public abstract Response updateRepositoryById(String reposName,String version,io.fixprotocol.orchestra.model.Repository repository,SecurityContext securityContext) throws NotFoundException;
     public abstract Response updateStateMachine(String reposName,String version,String name,String smName,StateMachine stateMachine,SecurityContext securityContext) throws NotFoundException;
-    public abstract Response uploadRepositoryById(InputStream upfileInputStream, FormDataContentDisposition upfileDetail,SecurityContext securityContext) throws NotFoundException;
-    public abstract Response uploadRepositoryForUpdateById(InputStream upfileInputStream, FormDataContentDisposition upfileDetail,SecurityContext securityContext) throws NotFoundException;
+    public abstract Response uploadRepositoryForCreation(InputStream upfileInputStream, FormDataContentDisposition upfileDetail,SecurityContext securityContext) throws NotFoundException;
+    public abstract Response uploadRepositoryForUpdate(InputStream upfileInputStream, FormDataContentDisposition upfileDetail,SecurityContext securityContext) throws NotFoundException;
 }

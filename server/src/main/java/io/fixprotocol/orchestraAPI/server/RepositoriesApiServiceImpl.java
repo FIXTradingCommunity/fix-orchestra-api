@@ -1152,22 +1152,22 @@ public class RepositoriesApiServiceImpl extends RepositoriesApiService {
     }
   }
 
-  public Response uploadRepositoryById(InputStream upfileInputStream, FormDataContentDisposition upfileDetail,
+  @Override
+  public Response uploadRepositoryForCreation(InputStream upfileInputStream, FormDataContentDisposition upfileDetail,
       SecurityContext securityContext) throws NotFoundException {
     try {
       Repository repository = repositoryStore.createRepositoryFromFile(upfileInputStream);
       return Response.created(createRepositoryUri(repository.getName(), repository.getVersion())).build();
     } catch (DuplicateKeyException e) {
       return Response.noContent().status(Status.CONFLICT).build();
-    } catch (ResourceNotFoundException e) {
-      return Response.noContent().status(Status.NOT_FOUND).build();
     } catch (RepositoryStoreException e) {
       logger.log(Level.WARNING, "Server error", e);
       return Response.serverError().build();
     }
   }
 
-  public Response uploadRepositoryForUpdateById(InputStream upfileInputStream, FormDataContentDisposition upfileDetail,
+  @Override
+  public Response uploadRepositoryForUpdate(InputStream upfileInputStream, FormDataContentDisposition upfileDetail,
       SecurityContext securityContext) throws NotFoundException {
     try {
       repositoryStore.updateRepositoryFromFile(upfileInputStream);

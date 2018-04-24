@@ -1044,8 +1044,8 @@ public class Client {
    * @param upfile The file to upload. (optional)
    * @throws ApiException if fails to make API call
    */
-  public void uploadRepositoryById(File upfile) throws ApiException {
-    repositoryApi.uploadRepositoryById(upfile);
+  public void uploadRepositoryForCreation(File upfile) throws ApiException {
+    repositoryApi.uploadRepositoryForCreation(upfile);
   }
 
   /**
@@ -1054,8 +1054,8 @@ public class Client {
    * @param upfile The file to upload. (optional)
    * @throws ApiException if fails to make API call
    */
-  public void uploadRepositoryForUpdateById(File upfile) throws ApiException {
-    repositoryApi.uploadRepositoryForUpdateById(upfile);
+  public void uploadRepositoryForUpdate(File upfile) throws ApiException {
+    repositoryApi.uploadRepositoryForUpdate(upfile);
   }
 
 }

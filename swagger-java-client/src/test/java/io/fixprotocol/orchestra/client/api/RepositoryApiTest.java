@@ -800,7 +800,7 @@ public class RepositoryApiTest {
     @Test
     public void uploadRepositoryByIdTest() throws ApiException {
         File upfile = null;
-        api.uploadRepositoryById(upfile);
+        api.uploadRepositoryForCreation(upfile);
 
         // TODO: test validations
     }
@@ -814,9 +814,9 @@ public class RepositoryApiTest {
      *          if the Api call fails
      */
     @Test
-    public void uploadRepositoryForUpdateByIdTest() throws ApiException {
+    public void uploadRepositoryForUpdateTest() throws ApiException {
         File upfile = null;
-        api.uploadRepositoryForUpdateById(upfile);
+        api.uploadRepositoryForUpdate(upfile);
 
         // TODO: test validations
     }

@@ -175,7 +175,7 @@ paths:
       tags:
       - "repository"
       summary: Uploads an updated file. Name and version are extracted from the file.
-      operationId: "uploadRepositoryForUpdateById"
+      operationId: "uploadRepositoryForUpdate"
       consumes:
        - multipart/form-data
       x-mimetype: application/xml
@@ -195,7 +195,7 @@ paths:
       tags:
       - "repository"
       summary: Uploads a file. Name and version are extracted from the file.
-      operationId: "uploadRepositoryById"
+      operationId: "uploadRepositoryForCreation"
       consumes:
        - multipart/form-data
       x-mimetype: application/xml

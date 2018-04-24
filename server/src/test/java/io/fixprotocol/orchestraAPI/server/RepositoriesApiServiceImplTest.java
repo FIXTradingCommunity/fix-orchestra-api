@@ -80,7 +80,7 @@ public class RepositoriesApiServiceImplTest {
   @SuppressWarnings("unchecked")
   @Test
   public void uploadAndSearch() throws NotFoundException, FileNotFoundException {
-    impl.uploadRepositoryById(new FileInputStream("FixRepository44.xml"), 
+    impl.uploadRepositoryForCreation(new FileInputStream("FixRepository44.xml"), 
         null, null);
    
     Response response = impl.searchCodeSets("FIX.4.4", "FIX.4.4", "CorporateAction", null, null, null);
