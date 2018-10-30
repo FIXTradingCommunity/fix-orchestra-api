@@ -1,6 +1,13 @@
 # fix-orchestra-api
 **A REST API for querying or editing an Orchestra file**
 
+## NOTICE
+This project will no longer be maintained unless there is user demand to do so. If you would like it resumed, then enter an issue stating your expected benefit.
+
+GitHub has reported a security vulnerability in a dependency of Swagger-generated code, so beware of that if you choose to fork this project.
+
+### Overview
+
 FIX Orchestra is intended to provide a standard and some reference implementation for *machine readable rules of engagement* between counterparties. The goal is to reduce the time to get counterparties trading, and improve accuracy of implementations.
 
 The REST API provided by this project provides a standard programmatic means to query or edit Orchestra files. Any number of applications could be built atop the API, such as code and configuration generators or an editor user interface.
